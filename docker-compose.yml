@@ -1,0 +1,29 @@
+version: '2'
+services:
+  nginx.demo:
+    build: .
+    volumes:
+      - ./www/:/var/www/html
+    ports:
+      - "8080:80"
+    links:
+      - php.demo
+  php.demo:
+    build:
+      context: .
+      dockerfile: Dockerfile.php-fpm
+    volumes:
+      - ./www/:/var/www/html
+    ports:
+      - "9000:9000"
+    links:
+      - mysql.demo
+  mysql.demo:
+    image: mariadb:5.5
+    volumes:
+      - ./data/:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: wp
+      MYSQL_DATABASE: wp
+      MYSQL_USER: wp
+      MYSQL_PASSWORD: wp
