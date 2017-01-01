@@ -119,6 +119,7 @@
 		 */
 		open: function(content)
 		{
+			this._node.find('.fl-lightbox').attr( 'style', '' );
 			this._node.show();
 			this._visible = true;
 			
@@ -141,7 +142,7 @@
 		close: function()
 		{
 			// Temporary fix for link editor not closing since WP 4.5
-			if ( 'undefined' != typeof tinymce && 'undefined' != typeof tinymce.EditorManager.activeEditor ) {
+			if ( 'undefined' != typeof tinymce && 'undefined' != typeof tinymce.EditorManager.activeEditor && tinymce.EditorManager.activeEditor != null ) {
 				tinymce.EditorManager.activeEditor.hide();
 			}
 			

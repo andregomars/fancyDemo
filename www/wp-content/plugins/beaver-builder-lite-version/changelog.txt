@@ -1,3 +1,139 @@
+<h4>1.9.2 - 12/13/2016</h4>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed a bug introduced in 1.9.1 that broke live preview when editing settings.</li>
+	<li>Fixed gallery fields not working when images are saved as part of a template and don't exist on the site.</li>
+</ul>
+
+<h4>1.9.1 - 12/12/2016</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+	<li>Updated Google fonts.</li>
+	<li>Updated translations.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed rows and modules not appearing when first added to the page.</li>
+	<li>Fixed column settings dropdown disappearing when the column has a background overlay color.</li>
+	<li>Fixed the button module lightbox opening all lightboxes on the page.</li>
+	<li>Fixed multiple RTL language CSS issues.</li>
+	<li>Fixed row and column text colors affecting select inputs.</li>
+	<li>Fixed CSS conflicts with third party themes and the builder UI.</li>
+	<li>Fixed parallax backgrounds being applied to child rows when inserting layouts via a shortcode.</li>
+</ul>
+
+<h4>1.9 - 12/06/2016</h4>
+<p>This update adds a number of new features. Be sure to check out <a href="https://www.wpbeaverbuilder.com/beaver-builder-1-9-shasta/">the blog post</a> for detailed info on what was added.</p>
+<p><strong>Enhancements</strong></p>
+<ul>
+	<li>Added the ability to drop columns into columns.</li>
+	<li>Added the ability to drag and drop existing columns.</li>
+	<li>Made multiple improvements for more accurate dragging and dropping.</li>
+	<li>Added responsive settings for margins, padding and borders.</li>
+	<li>Added new content page templates.</li>
+	<li>Template images are now loaded via HTTPS.</li>
+	<li>Added the ability to open a lightbox via a button.</li>
+	<li>Added the ability to add an alpha slider to color fields.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed responsive spacing not working when defaults are zeroed out in the global settings.</li>
+	<li>Fixed format select not showing in text editor fields.</li>
+	<li>Fixed incorrect color picker width in third party themes.</li>
+	<li>Fixed incorrect column group positions when dropping an existing module into a row.</li>
+	<li>Fixed multiple issues with responsive margins/padding not working.</li>
+	<li>Fixed a fatal error caused by modules that are no longer registered.</li>
+	<li>Fixed broken modules that have nested forms such as the Accordion module.</li>
+	<li>Fixed live preview issues for nested columns when editing the parent column.</li>
+	<li>Fixed issues with live preview not working correctly for responsive fields.</li>
+	<li>Fixed issues with global responsive margins and padding not working.</li>
+	<li>Fixed issues with equal height columns and nested columns.</li>
+	<li>Fixed Button module lightbox close button jump when placing the mouse over it.</li>
+	<li>Fixed Button module lightbox close button positioning.</li>
+	<li>Fixed drag and drop placeholder animation lag.</li>
+</ul>
+
+<h4>1.8.8 - 11/08/2016</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+	<li>Updated FontAwesome to 4.7.</li>
+	<li>Add tags support for AWeber and ActiveCampaign.</li>
+	<li>Added the "site" parameter to the fl_builder_insert_layout shortcode for inserting layouts from other sites on a network.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed module settings not loading when the site language is set to Farsi.</li>
+	<li>Fixed HTML validation error with the Icon module.</li>
+	<li>Fixed an error when setting the default editor to HTML using the wp_default_editor filter.</li>
+	<li>Fixed YouTube videos not working when column stacking order is reversed.</li>
+	<li>Fixed Content Slider module's navigation arrows not showing in IE11.</li>
+	<li>Fixed not being able to translate the comments popup link in the Posts module.</li>
+	<li>Fixed long template names not showing ellipses in the content panel.</li>
+	<li>Fixed empty global rows when sending a global row to the trash in wp-admin.</li>
+	<li>Fixed the Posts module breaking the render_query method in certain cases.</li>
+	<li>Fixed the position of the settings lightbox resize icon on RTL sites.</li>
+	<li>Fixed not being able to close accordion submenus in the Menu module.</li>
+</ul>
+
+<h4>1.8.7.1 - 10/13/2016</h4>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed a bug with row and column text colors not working in 1.8.7.</li>
+</ul>
+
+<h4>1.8.7 - 10/09/2016</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+	<li>The mobile version of the Menu module now collapses when an anchor link is clicked.</li>
+	<li>Added the option to enable audio for YouTube and Vimeo row backgrounds.</li>
+	<li>Added MailerLite support to the Subscribe Form module.</li>
+	<li>Added the fl_builder_is_node_visible filter.</li>
+	<li>Added the fl_builder_form_field_preview_text filter.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed the lightbox not working in the Photo module.</li>
+	<li>Fixed broken slideshow backgrounds when no transition speed is set.</li>
+	<li>Fixed a CSS inheritance issue with the hamburger icon in the Menu module.</li>
+	<li>Fixed CSS compatibility issues with the builder UI in the Paperback theme from Array Themes.</li>
+	<li>Fixed a JS error on the post edit screen when the plugin branding contains a single quote.</li>
+	<li>Fixed the editing capability preventing editing of global templates.</li>
+	<li>Fixed layout CSS/JS 404 errors when the same layout is included on the page twice.</li>
+	<li>Fixed slideshow captions not changing on touch.</li>
+	<li>Fixed photo not removing when the remove link is clicked for the photo field.</li>
+	<li>Fixed a PHP warning with incorrect filter arguments in the Menu module.</li>
+	<li>Fixed SSL issue in IE caused by the YUI3 library.</li>
+</ul>
+
+<h4>1.8.6 - 09/19/2016</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+	<li>Added YouTube and Vimeo support for row backgrounds.</li>
+	<li>Added a no follow setting to the Button module and modules that have buttons in them.</li>
+	<li>Added a loader icon when opening a lightbox for the Gallery and Photo modules.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed Gallery module lightbox ordering when using the collage layout.</li>
+	<li>Fixed multiple color picker issues by changing the mode to HSV.</li>
+	<li>Fixed auto suggest fields breaking in the Posts module.</li>
+	<li>Fixed themes that load older versions of jQuery Waypoints breaking animations.</li>
+	<li>Fixed negative column and module margins covering row overlay actions.</li>
+	<li>Fixed SSL issues caused by the YUI3 script.</li>
+	<li>Fixed Posts Carousel error when added to an Accordion module via shortcode.</li>
+	<li>Fixed memory limit issue with loading in template data files.</li>
+	<li>Fixed width rounding issues in the Gallery module.</li>
+	<li>Fixed module animations not running when the module is too far down the page.</li>
+	<li>Fixed lightbox close button being hidden by the admin bar.</li>
+	<li>Fixed PHP notices when only user templates are enabled but none have been saved.</li>
+	<li>Fixed skipping slides in the Content Slider module when clicking too fast.</li>
+	<li>Fixed error caused by removing a photo from a photo field before the single photo selector is initialized.</li>
+	<li>Fixed Menu module dropdowns in older browsers.</li>
+	<li>Fixed API errors with the Active Campaign integration.</li>
+	<li>Fixed unstripped slashes in theme branding fields.</li>
+	<li>Fixed fonts not being enqueued for font fields in nested forms.</li>
+</ul>
+
 <h4>1.8.5 - 08/26/2016</h4>
 <p><strong>Enhancements</strong></p>
 <ul>

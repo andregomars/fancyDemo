@@ -41,13 +41,13 @@
 					<?php if($title == __('WordPress Widgets', 'fl-builder')) : ?>
 					<div class="fl-builder-blocks-section-content fl-builder-widgets">
 						<?php foreach($modules as $module) : ?>
-						<span class="fl-builder-block fl-builder-block-module" data-type="widget" data-widget="<?php echo $module->class; ?>"><span class="fl-builder-block-title"><?php echo $module->name; ?></span></span>
+						<span class="fl-builder-block fl-builder-block-module" data-type="widget" data-widget="<?php echo $module->class; ?>"><span class="fl-builder-block-title" title="<?php echo esc_attr( $module->name ); ?>"><?php echo $module->name; ?></span></span>
 						<?php endforeach; ?>
 					</div>
 					<?php else : ?>
 					<div class="fl-builder-blocks-section-content fl-builder-modules">
 						<?php foreach($modules as $module) : ?>
-						<span class="fl-builder-block fl-builder-block-module" data-type="<?php echo $module->slug; ?>"><span class="fl-builder-block-title"><?php echo $module->name; ?></span></span>
+						<span class="fl-builder-block fl-builder-block-module" data-type="<?php echo $module->slug; ?>"><span class="fl-builder-block-title" title="<?php echo esc_attr( $module->name ); ?>"><?php echo $module->name; ?></span></span>
 						<?php endforeach; ?>
 					</div>
 					<?php endif; ?>
@@ -58,7 +58,7 @@
 
 				<?php if ( true === FL_BUILDER_LITE ) : ?>
 				<div class="fl-builder-modules-cta">
-					<a href="#" onclick="window.open('<?php echo FLBuilderModel::get_upgrade_url( array( 'utm_medium' => 'bb-lite', 'utm_source' => 'builder-ui', 'utm_campaign' => 'modules-panel-cta' ) ); ?>');" target="_blank"><i class="fa fa-external-link-square"></i> Get more time-saving features, modules, and expert support.</a>
+					<a href="#" onclick="window.open('<?php echo FLBuilderModel::get_store_url( '', array( 'utm_medium' => 'bb-lite', 'utm_source' => 'builder-ui', 'utm_campaign' => 'modules-panel-cta' ) ); ?>');" target="_blank"><i class="fa fa-external-link-square"></i> Get more time-saving features, modules, and expert support.</a>
 				</div>
 				<?php endif; ?>
 

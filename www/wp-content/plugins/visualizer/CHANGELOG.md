@@ -1,4 +1,22 @@
 
+### 1.7.5 - 14/12/2016
+**Changes:** 
+- Removed footer banner upsell
+- Fixed series settings issue
+- Fixed issue with comas being used in numbers
+
+### 1.7.2 - 23/11/2016
+**Changes:** 
+- Improved responsive mechanism
+
+### 1.7.1 - 20/10/2016
+**Changes:** 
+- Fixed bad link on grid lines
+
+### 1.7.0 - 20/10/2016
+**Changes:** 
+- Release 1.7.0
+
 ### 1.6.6 - 14/09/2016
 **Changes:** 
 - Fixed issue on chart resizing on tabbed system

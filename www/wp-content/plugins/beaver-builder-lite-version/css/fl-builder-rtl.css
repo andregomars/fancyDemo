@@ -27,7 +27,7 @@
 ------------------------------------------------------ */
 
 .fl-lightbox-header .fl-builder-preview-loader {
-	left: 15px;
+	left: 40px;
 	right: auto;
 }
 .fl-form-table th {
@@ -79,7 +79,8 @@
 	text-align: left;
 }
 
-.fl-lightbox-header .fl-builder-settings-fields {
+.fl-lightbox-header .fl-builder-settings-fields,
+.fl-lightbox-controls {
 	right: auto;
 	left: 10px;
 }
