@@ -1092,3 +1092,64 @@ function disable_wp_emojicons() {
 	add_filter( 'tiny_mce_plugins', 'disable_emojicons_tinymce' );
 }
 add_action( 'init', 'disable_wp_emojicons' );
+
+//add by andre
+function fundraising_chart(){
+ 
+ 
+//if (is_page('page_name')){
+ wp_enqueue_script('chart', 'https://www.google.com/jsapi');
+ wp_enqueue_script('chart_main', get_template_directory_uri() . '/js/fundraising.min.js', array('jquery'));
+//}
+ 
+}
+ 
+/*Add Javascript Action and our ajax actions that will be used in the fundraising chart script  */
+ add_action( 'wp_enqueue_scripts', 'fundraising_chart' );
+
+
+//build graph function
+ add_action( 'wp_ajax_build_graph', 'build_graph' );//admin
+ add_action('wp_ajax_nopriv_build_graph', 'build_graph');//frontend
+ 
+function build_graph() {
+ 
+ //$url = get_template_directory_uri() .'/data/donations.json';
+ // $url = 'http://nginx.demo/wp-content/themes/TESSERACT/data/donations.json';
+ $url = 'http://www.mocky.io/v2/586b419711000081012e0d28';
+ $request =   wp_remote_get($url);
+ // Get the body of the response
+ $response = wp_remote_retrieve_body( $request );
+// error_log('buld graph response is: '+print_r($response, true));
+ error_log('the url is: ' . print_r($url,true));
+ /*function get_sum will add all the amounts together and return the sum*/
+ function get_sum($json){
+ $keys = array();// Creates a new variable as an array
+ foreach( $json as $key){//loops through the sections
+   $sum[] = $key['amount'];//finds all amount values  and adds them to an array
+ }
+ return array_sum($sum);//adds the all the values together
+ 
+ }
+ 
+ $myJson= json_decode($response, true);//decode file as an array
+ 
+ $company = get_sum($myJson['Company']);
+ $ct = get_sum($myJson['Collection Tins']);
+ $ourevents = get_sum($myJson['Our Events']);
+ $individual = get_sum($myJson['Individual']);
+ $misc = get_sum($myJson['Miscellaneous']);
+ $school = get_sum($myJson['School']);
+ 
+/*echo json encoded array*/
+echo json_encode(
+ array( 'company'=>$company,
+ 'ct'=>$ct,
+    'ourevents'=>$ourevents,
+    'individual'=>$individual,
+    'misc'=>$misc,
+    'school'=>$school));
+ 
+die();//required for ajax
+}
+ //add by andre end

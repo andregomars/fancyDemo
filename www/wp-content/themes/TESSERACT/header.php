@@ -14,6 +14,15 @@
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 
+
+<!--add by andre-->
+<?php if (!is_admin()){?>
+        <script type="text/javascript">
+            var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+        </script>
+    <?php }?>
+<!--add by andre end-->
+
 <?php wp_head(); ?>
 
 <!--[if gte IE 9]>
