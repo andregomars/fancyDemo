@@ -1120,18 +1120,17 @@ function build_graph() {
  $request =   wp_remote_get($url);
  // Get the body of the response
  $response = wp_remote_retrieve_body( $request );
-// error_log('buld graph response is: '+print_r($response, true));
- error_log('the url is: ' . print_r($url,true));
+ // error_log('the url is: ' . print_r($url,true));
  /*function get_sum will add all the amounts together and return the sum*/
  function get_sum($json){
- $keys = array();// Creates a new variable as an array
- foreach( $json as $key){//loops through the sections
-   $sum[] = $key['amount'];//finds all amount values  and adds them to an array
- }
- return array_sum($sum);//adds the all the values together
- 
- }
- 
+	 $keys = array();// Creates a new variable as an array
+	 foreach( $json as $key){//loops through the sections
+	   $sum[] = $key['amount'];//finds all amount values  and adds them to an array
+	 }
+	 return array_sum($sum);//adds the all the values together
+	 
+}
+	 
  $myJson= json_decode($response, true);//decode file as an array
  
  $company = get_sum($myJson['Company']);
