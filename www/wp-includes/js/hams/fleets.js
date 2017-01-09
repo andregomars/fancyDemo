@@ -1,28 +1,21 @@
-var $ = jQuery;
+'use strict';
 
-$(document).ready(function(){
-// This is a simple *viewmodel* - JavaScript that defines the data and behavior of your UI
-	ReactDOM.render(
-	  React.createElement("div", null, "Hello World"),
-	  document.getElementById('container')
-	);
-
-});
-
-
-
-/*
-var $ = jQuery;
-
-$(document).ready(function(){
-// This is a simple *viewmodel* - JavaScript that defines the data and behavior of your UI
-function AppViewModel() {
-    this.firstName = "Bert";
-    this.lastName = "Bertington";
+function NumberList(props) {
+  var numbers = props.numbers;
+  var listItems = numbers.map(function (number) {
+    return React.createElement(
+      'li',
+      { key: number.toString() },
+      number
+    );
+  });
+  return React.createElement(
+    'ul',
+    null,
+    listItems
+  );
 }
 
-// Activates knockout.js
-ko.applyBindings(new AppViewModel());
-
-});
-*/
+var numbers = [1, 2, 3, 4, 5];
+ReactDOM.render(React.createElement(NumberList, { numbers: numbers }), 
+	document.getElementById('container'));
