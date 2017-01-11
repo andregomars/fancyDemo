@@ -8,7 +8,7 @@
 add_action('wp_enqueue_scripts', 'load_scripts');
 function load_scripts() {
     global $post;
-    wp_register_script( 'cards', includes_url() . 'js/hams/fleets.js', array('jquery'), false, true);
+    wp_register_script( 'cards', includes_url() . 'js/hams/cards-bundle.js', array('jquery'), false, true);
     wp_register_script( 'charts', includes_url() . 'js/hams/fundraising.js', array('jquery'), false, true);
 
     if( is_page() || is_single() )
@@ -16,8 +16,6 @@ function load_scripts() {
         switch($post->post_name) 
         {
             case 'cards':
-            	wp_enqueue_script('react-with-addons', 'https://unpkg.com/react@15/dist/react-with-addons.js');
-				wp_enqueue_script('react-dom', 'https://unpkg.com/react-dom@15/dist/react-dom.js', array('jquery'));
                 wp_enqueue_script('cards');
                 break;
             case 'googlechartdemo':
