@@ -37,7 +37,7 @@ const tableData = [
   },
 ];
 
-class TableExampleSimple extends React.Component {
+class TableAdvanced extends React.Component {
 
   constructor(props) {
     super(props);

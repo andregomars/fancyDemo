@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
-export default class Cards extends React.Component {
+class TableSimple extends React.Component {
 
   constructor(props) {
     super(props);
@@ -29,23 +29,30 @@ export default class Cards extends React.Component {
 
   render() {
     return (
-      <div className="card-deck p-3">
-        {this.state.persons.map((row, index) => (
-        <div className="card m-2">
-            <div className="card-block" key={index}>
-              <h4 className="card-title text-center">{index}</h4>
-              <p className="card-text text-center">{row.name}</p>
-              <p className="text-muted text-center">{row.status}</p>
-            </div>
-        </div>
-        ))}
-      </div>
+      <table className="table">
+        <thead>
+          <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.persons.map((row, index) => (
+            <tr key={index}>
+              <th>{index}</th>
+              <td>{row.name}</td>
+              <td>{row.status}</td>
+            </tr>
+            ))}
+        </tbody>
+      </table>
     );
   }
 }
 
 const App = () => (
-    <Cards url='http://www.mocky.io/v2/58789d370f0000a71f0d49ed' />
+    <TableSimple url='http://www.mocky.io/v2/58789d370f0000a71f0d49ed' />
 );
 
 // Render your table
