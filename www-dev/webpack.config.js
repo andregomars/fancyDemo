@@ -6,20 +6,20 @@ var APP_DIR = path.resolve(__dirname, 'src/hams/components');
 
 var config = {
   entry: {
-    awesome : APP_DIR + '/AwesomeComponent.jsx',
-    cards : APP_DIR + '/Cards.jsx',
-    table : APP_DIR + '/TableSimple.jsx',
-    toggleview : APP_DIR + '/ToggleView.jsx',
-    materialdemo : APP_DIR + '/MaterialDemo.jsx'
+    // awesome : APP_DIR + '/AwesomeComponent.jsx',
+    // cards : APP_DIR + '/Cards.jsx',
+    // table : APP_DIR + '/TableSimple.jsx',
+    toggleview : APP_DIR + '/ToggleView.jsx'
+    // materialdemo : APP_DIR + '/MaterialDemo.jsx'
   },
   output: {
     path: BUILD_DIR,
     publicPath: '/assets/',
     filename: '[name]-bundle.js'
   },
-  resolve: {
-    extensions: ['','.js', '.jsx']
-  },
+  // resolve: {
+  //   extensions: ['','.js', '.jsx']
+  // },
   plugins: [
 	new webpack.DefinePlugin({
 	  'process.env': {

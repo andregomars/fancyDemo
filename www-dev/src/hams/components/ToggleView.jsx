@@ -1,14 +1,59 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-// import {Cards} from './TableSimple.jsx';
+
+import CardsView from './Cards.jsx';
+import TableView from './TableSimple.jsx';
 
 class ToggleView extends React.Component {
   constructor(props) {
     super(props);
     this.handleCardsViewToggle = this.handleCardsViewToggle.bind(this);
     this.handleTableViewToggle = this.handleTableViewToggle.bind(this);
-    this.state = {viewComponent: "tableview"};
+    this.handleRefreshClick = this.handleRefreshClick.bind(this);
+    this.state = {
+      viewComponent: "tableview",
+      isRefreshing: false,
+      data: []
+    };
+  }
+
+  componentDidMount() {
+    this.getData();
+    this.startAutoRefresh();
+  }
+
+  componentWillUnmount() {
+    this.cancelAutoRefresh();
+  }
+
+  startAutoRefresh() {
+    this.timerID = setInterval(() => 
+      this.getData(),10000
+    );
+  }
+
+  cancelAutoRefresh() {
+    clearInterval(this.timerID);
+  }
+
+  getData() {
+    this.setState({isRefreshing: true});
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        this.setState({
+          data: data,
+          isRefreshing: false
+        });
+      }.bind(this),
+      error: function(xhr, status, err) {
+        this.setState({isRefreshing: false});
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
   }
 
   handleCardsViewToggle() {
@@ -17,6 +62,10 @@ class ToggleView extends React.Component {
 
   handleTableViewToggle() {
     this.setState({viewComponent: "tableview"});
+  }
+
+  handleRefreshClick() {
+    this.getData();
   }
 
   render() {
@@ -34,50 +83,59 @@ class ToggleView extends React.Component {
     }
 
     return (
-      <div>
-        <ToggledView viewComponent={viewComponent} />
-        {button}
+      <div className="container">
+        <div className="row m-3">
+          <div className="col text-right">
+            <div className="btn-group">
+              <button className="btn btn-link" onClick={this.handleRefreshClick}>
+                {
+                  this.state.isRefreshing ? 
+                  (<i className="fa fa-refresh fa-2x fa-spin" />)
+                  :
+                  (<i className="fa fa-refresh fa-2x" />)
+                }
+              </button>
+              {button} {/* view toggle button in the left */}
+            </div>
+          </div>
+        </div>
+        <div className="row m-3">
+          <div className="col">
+            <ToggledView viewComponent={viewComponent} data={this.state.data}/>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-function CardsView(props) {
-  return <h1>Cards View</h1>;
-}
-
-function TableView(props) {
-  return <h1>Table View</h1>;
-}
-
 function ToggledView(props) {
-  const viewComponent = props.viewComponent;
-  switch (viewComponent)
+  switch (props.viewComponent)
   {
     case "cardsview":
-      return <CardsView />;
+      return <CardsView data={props.data} />;
     case "tableview":
-      return <TableView />;
+      return <TableView data={props.data} />;
   }
 }
 
 function TableViewButton(props) {
   return (
-    <button onClick={props.onClick}>
-      Table
+    <button className="btn btn-link" onClick={props.onClick}>
+      <i className="fa fa-list fa-2x" />
     </button>
   );
 }
 
 function CardsViewButton(props) {
   return (
-    <button onClick={props.onClick}>
-      Cards
+    <button className="btn btn-link" onClick={props.onClick}>
+      <i className="fa fa-th-large fa-2x" />
     </button>
   );
 }
 
 ReactDOM.render(
-  <ToggleView />,
+  <ToggleView url='http://www.mocky.io/v2/58789d370f0000a71f0d49ed' />,
   document.getElementById('container')
 );

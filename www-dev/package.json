@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --content-base src/hams/public/ --open --no-info",
-    "build": "webpack -p",
-    "postbuild": "cp dist/hams/js/* ./../www/wp-includes/js/hams/",
+    "dev": "./node_modules/.bin/webpack-dev-server --content-base src/hams/public/ --open --no-info",
+    "build": "./node_modules/.bin/webpack -p",
+    "postbuild": "cp ./dist/hams/js/* ./../www/wp-includes/js/hams/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -21,6 +21,7 @@
     "material-ui": "^0.16.6",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "webpack": "^1.14.0"
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2"
   }
 }

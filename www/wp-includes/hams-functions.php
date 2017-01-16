@@ -8,7 +8,14 @@
 add_action('wp_enqueue_scripts', 'load_scripts');
 function load_scripts() {
     global $post;
-    wp_register_script( 'cards', includes_url() . 'js/hams/cards-bundle.js', array('jquery'), false, true);
+    wp_register_style('bootstrap-css', 
+    	'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css', 
+    	array(), '4.0.0-alpha.6', 'all');
+    wp_register_style('fontawesome-css', 
+    	'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', 
+    	array(), '4.7.0', 'all');
+    wp_register_script( 'cards', includes_url() . 'js/hams/toggleview-bundle.js', array('jquery'), false, true);
+    wp_register_script( 'cards', includes_url() . 'js/hams/toggleview-bundle.js', array('jquery'), false, true);
     wp_register_script( 'charts', includes_url() . 'js/hams/fundraising.js', array('jquery'), false, true);
 
     if( is_page() || is_single() )
@@ -17,6 +24,8 @@ function load_scripts() {
         {
             case 'cards':
                 wp_enqueue_script('cards');
+                wp_enqueue_style('bootstrap-css');
+                wp_enqueue_style('fontawesome-css');
                 break;
             case 'googlechartdemo':
             	wp_enqueue_script('jsapi', 'https://www.google.com/jsapi');
