@@ -1,12 +1,12 @@
-var wpAjaxUrl = 'http://localhost/wp-admin/admin-ajax.php';var flBuilderUrl = 'http://localhost/wp-content/plugins/beaver-builder-lite-version/';var FLBuilderLayoutConfig = {
+var wpAjaxUrl = 'http://fancydemo.com/wp-admin/admin-ajax.php';var flBuilderUrl = 'http://fancydemo.com/wp-content/plugins/beaver-builder-lite-version/';var FLBuilderLayoutConfig = {
 	anchorLinkAnimations : {
 		duration 	: 1000,
 		easing		: 'swing',
 		offset 		: 100
 	},
 	paths : {
-		pluginUrl : 'http://localhost/wp-content/plugins/beaver-builder-lite-version/',
-		wpAjaxUrl : 'http://localhost/wp-admin/admin-ajax.php'
+		pluginUrl : 'http://fancydemo.com/wp-content/plugins/beaver-builder-lite-version/',
+		wpAjaxUrl : 'http://fancydemo.com/wp-admin/admin-ajax.php'
 	}
 };(function($){
 
