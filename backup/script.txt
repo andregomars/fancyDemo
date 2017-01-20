@@ -1,7 +1,7 @@
 docker-compose up --build -d
 
-## export
+## export from mysql
 docker exec -i mysql.demo mysqldump -u wp -pwp --all-databases > ./backup/all_db_backup.sql
 
-## import
-docker exec -i mysql.demo mysqldump -u wp -pwp -h localhost < ./backup/all_db_backup.sql
+## import into mysql
+docker exec -i mysql.demo mysql -u wp -pwp -h localhost < ./backup/all_db_backup.sql
