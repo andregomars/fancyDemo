@@ -24,7 +24,7 @@ services:
     container_name: mysql.demo
     image: mariadb:5.5
     volumes:
-      - ./data/:/var/lib/mysql
+      - ./data/:/home
     environment:
       MYSQL_ROOT_PASSWORD: wp
       MYSQL_DATABASE: wp

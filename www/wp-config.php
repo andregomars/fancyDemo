@@ -79,6 +79,7 @@ $table_prefix  = 'wp_';
  */
 define('WP_DEBUG', true);
 define('WP_DEBUG_LOG', true);
+define('AUTOMATIC_UPDATER_DISABLED', true );
 
 /* That's all, stop editing! Happy blogging. */
 
