@@ -9,9 +9,11 @@ var config = {
     // awesome : APP_DIR + '/AwesomeComponent.jsx',
     // cards : APP_DIR + '/Cards.jsx',
     // table : APP_DIR + '/TableSimple.jsx',
-    // toggleview : APP_DIR + '/ToggleView.jsx'
+    toggleview : APP_DIR + '/ToggleView.jsx',
     // materialdemo : APP_DIR + '/MaterialDemo.jsx'
-    vehicleprogress : APP_DIR + '/VehicleProgress.jsx'
+    // vehicleprogress : APP_DIR + '/VehicleProgress.jsx',
+    // vehiclegauge : APP_DIR + '/VehicleGauge.jsx',
+    vehicle : APP_DIR + '/Vehicle.jsx'
   },
   output: {
     path: BUILD_DIR,

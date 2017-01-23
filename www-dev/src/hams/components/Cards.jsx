@@ -1,6 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+function Anchor(props) {
+  return (
+    <a href={"pages/vehicle.html?vid=" + props.vid}>{props.vid}</a>
+  );
+}
+
 export default class Cards extends React.Component {
   constructor(props) {
     super(props);
@@ -12,7 +18,7 @@ export default class Cards extends React.Component {
         {this.props.data.map((row, index) => (
         <div className="card m-2">
             <div className="card-block" key={index}>
-              <h4 className="card-title text-center">{index}</h4>
+              <h4 className="card-title text-center"><Anchor vid={index} /></h4>
               <p className="card-text text-center">{row.name}</p>
               <p className="text-muted text-center">{row.status}</p>
             </div>

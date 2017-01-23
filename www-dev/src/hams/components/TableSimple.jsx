@@ -1,6 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+function Anchor(props) {
+  return (
+    <a href={"pages/vehicle.html?vid=" + props.vid}>{props.vid}</a>
+  );
+}
+
 export default class TableSimple extends React.Component {
 
   constructor(props) {
@@ -20,7 +26,7 @@ export default class TableSimple extends React.Component {
         <tbody>
           {this.props.data.map((row, index) => (
             <tr key={index}>
-              <th>{index}</th>
+              <th><Anchor vid={index} /></th>
               <td>{row.name}</td>
               <td>{row.status}</td>
             </tr>
