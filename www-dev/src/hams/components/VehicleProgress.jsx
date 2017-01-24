@@ -41,16 +41,12 @@ export default class VehicleProgress extends React.Component {
 
   render() {
     return (
-      <div className="container" style={{padding: "20px"}}>
-        <div className="row align-items-center no-gutters">
-          <span className="col-sm-1">Voltage: </span>
-          <div className="progress col-sm-2" >
-            <div className={"progress-bar progress-bar-striped " + this.getVoltageProgressColor()} 
-              style={this.getVoltageStyle()}>
-              {this.props.vehicle.voltage}V
-            </div>
-          </div>
-          <div className="progress col-sm-9" style={{background: "white"}}>&nbsp;
+      <div>
+        {this.props.label}: 
+        <div className="progress" >
+          <div className={"progress-bar progress-bar-striped " + this.getVoltageProgressColor()} 
+            style={this.getVoltageStyle()}>
+            {this.props.vehicle.voltage}V
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import ProcessesView from './VehicleProgress.jsx';
 import GaugesView from './VehicleGauge.jsx';
+import ChartsStatic from './VehicleChartsStatic.jsx';
 
 
 const vehicles = [
@@ -70,9 +71,37 @@ export default class Vehicle extends React.Component {
 
   render () {
   	return (
-	    <div>
-	    	<ProcessesView vehicle={this.state.vehicle} />
-	    	<GaugesView vehicle={this.state.vehicle} />
+	    <div className="container">
+	    	<div className="row" align-items-center no-gutters 
+	    		style={{padding: "20px", margin: "10px"}}>
+		    	<div className="col-sm-2" />
+		    	<div className="col-sm-2">
+		    		<ProcessesView label="Voltage" vehicle={this.state.vehicle} />
+		    	</div>
+		    	<div className="col-sm-1" />
+		    	<div className="col-sm-2">
+		    		<ProcessesView label="Current" vehicle={this.state.vehicle} />
+		    	</div>
+		    	<div className="col-sm-1" />
+		    	<div className="col-sm-2">
+		    		<ProcessesView label="Temperature" vehicle={this.state.vehicle} />
+		    	</div>
+		    	<div className="col-sm-2" />
+	    	</div>
+	    	<div className="row">
+		    	<div className="col-sm-1" />
+		    	<div className="col-sm-10 text-center">
+		    		<GaugesView vehicle={this.state.vehicle} />
+		    	</div>
+		    	<div className="col-sm-1" />
+	    	</div>
+	    	<div className="row align-items-center ">
+		    	<div className="col-sm-1" />
+		    	<div className="col-sm-10 text-center">
+		    		<ChartsStatic />
+		    	</div>
+		    	<div className="col-sm-1" />
+	    	</div>
 	    </div>
 	);
   }
