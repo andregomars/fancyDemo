@@ -1,11 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-function Anchor(props) {
-  return (
-    <a href={"pages/vehicle.html?vid=" + props.vid}>{props.vid}</a>
-  );
-}
+import Anchor from './VehicleAnchor.jsx';
 
 export default class TableSimple extends React.Component {
 

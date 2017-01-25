@@ -14,22 +14,22 @@ function load_scripts() {
     wp_register_style('fontawesome-css', 
     	'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', 
     	array(), '4.7.0', 'all');
-    wp_register_script( 'cards', includes_url() . 'js/hams/toggleview-bundle.js', array('jquery'), false, true);
-    wp_register_script( 'cards', includes_url() . 'js/hams/toggleview-bundle.js', array('jquery'), false, true);
+    wp_register_script( 'fleet', includes_url() . 'js/hams/fleet-bundle.js', array('jquery'), false, true);
+    wp_register_script( 'vehicle', includes_url() . 'js/hams/vehicle-bundle.js', array('jquery'), false, true);
     wp_register_script( 'charts', includes_url() . 'js/hams/fundraising.js', array('jquery'), false, true);
 
     if( is_page() || is_single() )
     {
         switch($post->post_name) 
         {
-            case 'cards':
-                wp_enqueue_script('cards');
-                wp_enqueue_style('bootstrap-css');
+            case 'fleet':
+            	wp_enqueue_style('bootstrap-css');
                 wp_enqueue_style('fontawesome-css');
+                wp_enqueue_script('fleet');
                 break;
-            case 'googlechartdemo':
-            	wp_enqueue_script('jsapi', 'https://www.google.com/jsapi');
-                wp_enqueue_script('charts');
+            case 'vehicle':
+            	wp_enqueue_style('bootstrap-css');
+                wp_enqueue_script('vehicle');
                 break;
         }
     } 

@@ -148,5 +148,5 @@ function CardsViewButton(props) {
 
 ReactDOM.render(
   <ToggleView />,
-  document.getElementById('container')
+  document.getElementById('fleet')
 );
