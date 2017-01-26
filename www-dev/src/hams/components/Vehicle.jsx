@@ -11,24 +11,32 @@ const vehicles = [
     id: 0,
     name: "V-000",
     voltage: 50,
+    current: 20,
+    temperature: 150,
     speed: 75
   },
   {
     id: 1,
     name: "V-001",
     voltage: 110,
+    current: 15,
+    temperature: 225,
     speed: 45
   },
   {
     id: 2,
     name: "V-002",
     voltage: 220,
+    current: 60,
+    temperature: 110,
     speed: 100
   },
   {
     id: 3,
     name: "V-003",
     voltage: 300,
+    current: 90,
+    temperature: 80,
     speed: 35
   }
 ];
@@ -42,9 +50,36 @@ export default class Vehicle extends React.Component {
 	    	id: 0,
 	    	name: "",
 	    	voltage: 0,
+        current: 0,
+        temperature: 0,
 	    	speed: 0
-    	}
+    	},
+      voltageScope: {
+        unit: "V",
+        defaultVal: 0,
+        maxVal: 300,
+        minVal: 0,
+        warningVal: 200,
+        dangerVal: 240
+      },
+      currentScope: {
+        unit: "A",
+        defaultVal: 0,
+        maxVal: 100,
+        minVal: 0,
+        warningVal: 20,
+        dangerVal: 90
+      },
+      temperatureScope: {
+        unit: "F",
+        defaultVal: 0,
+        maxVal: 250,
+        minVal: 0,
+        warningVal: 105,
+        dangerVal: 212
+      } 
     };
+
   }
 
   componentWillMount() {
@@ -76,15 +111,18 @@ export default class Vehicle extends React.Component {
 	    		style={{padding: "20px", margin: "10px"}}>
 		    	<div className="col-sm-2" />
 		    	<div className="col-sm-2">
-		    		<ProcessesView label="Voltage" vehicle={this.state.vehicle} />
+		    		<ProcessesView label="Voltage" value={this.state.vehicle.voltage} 
+              processScope={this.state.voltageScope}/>
 		    	</div>
 		    	<div className="col-sm-1" />
 		    	<div className="col-sm-2">
-		    		<ProcessesView label="Current" vehicle={this.state.vehicle} />
+		    		<ProcessesView label="Current" value={this.state.vehicle.current} 
+              processScope={this.state.currentScope}/>
 		    	</div>
 		    	<div className="col-sm-1" />
 		    	<div className="col-sm-2">
-		    		<ProcessesView label="Temperature" vehicle={this.state.vehicle} />
+		    		<ProcessesView label="Temperature" value={this.state.vehicle.temperature} 
+              processScope={this.state.temperatureScope}/>
 		    	</div>
 		    	<div className="col-sm-2" />
 	    	</div>

@@ -14,16 +14,24 @@ export default class VehicleChartsStatic extends React.Component {
 		            "type": "string"
 		        },
 		        {
-		            "label": "SOC",
+		            "label": "Energy",
 		            "type": "number"
 		        },
-		        		        {
-		            "label": "Range",
+		        {
+		            "label": "Voltage",
+		            "type": "number"
+		        },
+		        {
+		            "label": "Current",
+		            "type": "number"
+		        },
+		        {
+		            "label": "Temperature",
 		            "type": "number"
 		        }
 		    ],
 		    "options": {
-		    		"title": "SOC | Range",
+		    		"title": "Energy | Voltage | Current | Temperature",
 		        "hAxis": {
 		            "title": "Time",
 		            "format": "h:mm a"
@@ -37,37 +45,51 @@ export default class VehicleChartsStatic extends React.Component {
 		        [
 		            "10:49",
 		            80,
-		            70
+		            70,
+		            40,
+		            30,
 		        ],
 		        [
 		            "11:49",
 		            50,
-		            30
+		            60,
+		            40,
+		            60
 		        ],
 		        [
 		            "12:49",
 		            30,
-		            55
+		            55,
+		            50,
+		            70
 		        ],
 		        [
 		            "13:49",
-		            5,
-		            15
+		            25,
+		            35,
+		            40,
+		            80
 		        ],
 		        [
 		            "14:49",
 		            25,
-		            22
+		            22,
+		            40,
+		            65
 		        ],
 		        [
 		            "15:49",
 		            45,
-		            35
+		            35,
+		            40,
+		            45
 		        ],
 		        [
 		            "16:49",
 		            30,
-		            60
+		            60,
+		            40,
+		            40
 		        ]
 		    ],
 		    "width": "100%",

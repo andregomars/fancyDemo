@@ -12,29 +12,23 @@ export default class VehicleProgress extends React.Component {
       danger : "bg-danger"
     };
 
-    this.voltageScope = {
-      defaultVal: 0,
-      maxVal: 300,
-      minVal: 0,
-      warningVal: 200,
-      dangerVal: 240
-    };    
+  
   }
 
-  getVoltagePercentage() {
-    var max = this.voltageScope.maxVal;
-    var voltage = this.props.vehicle.voltage;
-    return voltage > max ? 100 : Math.round(voltage*100/max);
+  getProcessPercentage() {
+    var max = this.props.processScope.maxVal;
+    var val = this.props.value;
+    return val > max ? 100 : Math.round(val*100/max);
   }
 
-  getVoltageStyle()  {
-      return { width: `${this.getVoltagePercentage()}%` };
+  getProcessStyle()  {
+      return { width: `${this.getProcessPercentage()}%` };
   }
 
-  getVoltageProgressColor() {
-    var voltage = this.props.vehicle.voltage;
-    if (voltage < this.voltageScope.warningVal) return this.bgStyle.success;
-    else if (voltage > this.voltageScope.dangerVal) return this.bgStyle.danger;
+  getProgressColor() {
+    var val = this.props.value;
+    if (val < this.props.processScope.warningVal) return this.bgStyle.success;
+    else if (val > this.props.processScope.dangerVal) return this.bgStyle.danger;
     else return this.bgStyle.warning;
   }
 
@@ -44,9 +38,10 @@ export default class VehicleProgress extends React.Component {
       <div>
         {this.props.label}: 
         <div className="progress" >
-          <div className={"progress-bar progress-bar-striped " + this.getVoltageProgressColor()} 
-            style={this.getVoltageStyle()}>
-            {this.props.vehicle.voltage}V
+          <div className={"progress-bar progress-bar-striped " + 
+            this.getProgressColor()} 
+            style={this.getProcessStyle()}>
+            {this.props.value}{this.props.processScope.unit}
           </div>
         </div>
       </div>
