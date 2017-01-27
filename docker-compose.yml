@@ -22,7 +22,10 @@ services:
       - mysql.demo
   mysql.demo:
     container_name: mysql.demo
-    image: mariadb:5.5
+   #image: mariadb:5.5
+    build:
+      context: .
+      dockerfile: Dockerfile.mariadb
     volumes:
       - ./data/:/var/lib/mysql
     environment:

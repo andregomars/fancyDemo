@@ -1,0 +1,6 @@
+FROM mariadb:5.5
+MAINTAINER Andre Shen 
+
+VOLUME /var/lib/mysql
+RUN chown -R mysql:mysql /var/lib/mysql
+
