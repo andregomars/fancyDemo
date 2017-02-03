@@ -1,8 +1,10 @@
-<template id="fleet">
-	<div>
-		<datatable items=:list/>
-		<h1>head</h1>
-	</div>
+<template>
+  <div id="fleet">
+  	<div id="fleet">
+  		<datatable :items="list"/>
+  		<h1>head</h1>
+  	</div>
+  </div>
 </template>
 
 <script>
@@ -27,7 +29,8 @@ import DataTable from './components/DataTable'
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  template: '<DataTable items={{list}} />',
+  //template: '<DataTable :items="list" />',
+  template: '#fleet',
   components: { DataTable },
   data () {
     return {
