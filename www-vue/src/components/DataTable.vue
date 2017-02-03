@@ -19,51 +19,16 @@
 
 <script>
 export default {
-  name: 'datatable',
+  name: 'data-table',
   props: {
     items: {
       type: Array
     }
-  },
-  // data () {
-  //   return {
-  //     items: [
-  //       {
-  //           "name": "Andre Shen",
-  //           "selected": true,
-  //           "status": "Employed"
-  //       },
-  //       {
-  //           "name": "Carol Liu",
-  //           "status": "Unemployed"
-  //       },
-  //       {
-  //           "name": "Steve Jobs",
-  //           "selected": true,
-  //           "status": "Employed"
-  //       }]
-  //   }
-  // }
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
 </style>
