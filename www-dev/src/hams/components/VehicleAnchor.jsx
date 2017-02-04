@@ -7,7 +7,7 @@ export default class VehicleAnchor extends React.Component {
 
   render () {
     return (
-	  <a href={"./../vehicle/?vid=" + this.props.vid}>{this.props.vid}</a>
+	  <a href={"./vehicle.html?vid=" + this.props.vid}>{this.props.vid}</a>
 	);
   }
 }
