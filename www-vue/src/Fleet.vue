@@ -1,14 +1,61 @@
 <script>
 import Vue from 'vue'
-import DataTable from './components/DataTable'
 import VueResource from 'vue-resource';
+
+import DataTable from './components/DataTable'
+import Cards from './components/Cards'
+
 
 Vue.use(VueResource);
 
+Vue.component("cards-view-button", {
+  template: `
+    <button class="btn btn-link" v-on:click="say('hi')" >
+      <i class="fa fa-th-large fa-2x" />
+    </button>
+  `,
+  props: ["click"],
+  methods: {
+    say(msg) {
+      alert(msg);
+    } 
+  }
+
+})
+
+Vue.component("table-view-button", {
+  template: `
+    <button className="btn btn-link" >
+      <i className="fa fa-list fa-2x" />
+    </button>
+  `
+})
+
 new Vue({
   el: '#app',
-  template: `<DataTable :items="list" />`,
-  components: { DataTable },
+  template: `
+    <div class="container">
+      <div class="row m-3">
+        <div class="col text-right">
+          <div class="btn-group">
+            <cards-view-button v-if="viewComponent === 'tableview'"
+              click=this.$root.handleCardsViewToggle />
+            <table-view-button v-else-if="viewComponent === 'cardsview'"
+              v-on:click="handleTableViewToggle" />
+            <div v-else />
+          </div>
+        </div>
+      </div>
+      <div class="row m-3">
+        <div class="col">
+          <DataTable v-if="viewComponent === 'tableview'" :items="list"  />
+          <Cards v-else-if="viewComponent === 'cardsview'" :items="list"  />
+          <div v-else />
+        </div>
+      </div>
+    </div>
+  `,
+  components: { DataTable, Cards },
   created: function() {
     this.getData();
   },
@@ -30,10 +77,18 @@ new Vue({
         ];
       return urls[Math.floor(Math.random()*urls.length)];
     },
+    handleCardsViewToggle() {
+      viewComponent = "cardsview";
+    },
+    handleTableViewToggle() {
+      viewComponent = "tableview";
+    }, 
+
   },
   data () {
     return {
-      list: []
+      list: [],
+      viewComponent: "tableview"
     }
   }
 })
