@@ -14,7 +14,8 @@ module.exports = {
   entry: {
     //app: './src/main.js'
     //app: './src/App.vue'
-    app: './src/Fleet.vue'
+    fleet: './src/FleetView.vue',
+    vehicle: './src/VehicleView.vue'
   },
   output: {
     path: config.build.assetsRoot,
