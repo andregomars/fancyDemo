@@ -8,7 +8,6 @@
 			:rows="rows"
 			:width="width"
 			:height="height"
-			legend-toggle
 	   />
 	</div>
 </template>
@@ -48,7 +47,7 @@ export default {
 		        }
 		    ],
 		    "options": {
-		    		"title": "Energy | Voltage | Current | Temperature",
+		    	"title": "Energy | Voltage | Current | Temperature",
 		        "hAxis": {
 		            "title": "Time",
 		            "format": "h:mm a"
