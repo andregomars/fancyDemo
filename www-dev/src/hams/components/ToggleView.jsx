@@ -14,7 +14,7 @@ class ToggleView extends React.Component {
     this.state = {
       viewComponent: "tableview",
       isRefreshing: false,
-      interval: 30000,
+      interval: 5000,
       data: []
     };
   }
