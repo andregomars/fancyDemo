@@ -1,45 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import $ from 'jquery';
 
 import ProcessesView from './VehicleProgress.jsx';
 import GaugesView from './VehicleGauge.jsx';
 import ChartsStatic from './VehicleChartsStatic.jsx';
-
-
-const vehicles = [
-  {
-    id: 0,
-    name: "V-000",
-    voltage: 50,
-    current: 20,
-    temperature: 150,
-    speed: 75
-  },
-  {
-    id: 1,
-    name: "V-001",
-    voltage: 110,
-    current: 15,
-    temperature: 225,
-    speed: 45
-  },
-  {
-    id: 2,
-    name: "V-002",
-    voltage: 220,
-    current: 60,
-    temperature: 110,
-    speed: 100
-  },
-  {
-    id: 3,
-    name: "V-003",
-    voltage: 300,
-    current: 90,
-    temperature: 80,
-    speed: 35
-  }
-];
 
 export default class Vehicle extends React.Component {
   constructor(props) {
@@ -83,9 +48,28 @@ export default class Vehicle extends React.Component {
   }
 
   componentWillMount() {
+    this.getData();
+  }
+
+  getData() {
+    $.ajax({
+      url: "http://www.mocky.io/v2/589ebc1f270000ab24ed0efe",
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        this.getVehicle(data);
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  }
+
+  getVehicle(vehicles) {
+    if (!vehicles || vehicles.length === 0) return;
     var vid = this.getUrlParam("vid", 0);
     var vFiltered = vehicles.filter( function(item) {
-      return item.id == vid;
+      return item.vid === vid;
     });
     if (vFiltered.length > 0) 
       this.setState({vehicle: vFiltered[0]});

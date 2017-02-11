@@ -13,17 +13,25 @@ export default class TableSimple extends React.Component {
       <table className="table">
         <thead>
           <tr>
-              <th>ID</th>
-              <th>Name</th>
+              <th>Vehicle#</th>
+              <th>SOC</th>
               <th>Status</th>
+              <th>Range</th>
+              <th>Mileage</th>
+              <th>Updated</th>
+              <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {this.props.data.map((row, index) => (
             <tr key={index}>
-              <th><Anchor vid={index} /></th>
-              <td>{row.name}</td>
+              <th><Anchor vid={row.vid} /></th>
+              <td>{row.soc}%</td>
               <td>{row.status}</td>
+              <td>{row.range}mi</td>
+              <td>{row.mileage}</td>
+              <td>{row.updated}</td>
+              <td><a href="#">Inquiry</a></td>
             </tr>
             ))}
         </tbody>

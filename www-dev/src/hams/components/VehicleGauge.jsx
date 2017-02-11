@@ -12,8 +12,8 @@ export default class VehicleGauge extends React.Component {
 			    	<canvas data-type="radial-gauge"
 					data-title="SOC"
 					data-minValue="0"
-					data-maxValue="150"
-					data-value={this.props.vehicle.speed + 50}   
+					data-maxValue="100"
+					data-value={this.props.vehicle.soc}   
 					data-valueInt="3"
 					data-valueDec="0"
 					data-width="200" />
@@ -23,7 +23,7 @@ export default class VehicleGauge extends React.Component {
 			    	<canvas data-type="radial-gauge"
 					data-title="MPH"
 					data-minValue="0"
-					data-maxValue="100"
+					data-maxValue="150"
 					data-value={this.props.vehicle.speed}   
 					data-valueInt="3"
 					data-valueDec="0"

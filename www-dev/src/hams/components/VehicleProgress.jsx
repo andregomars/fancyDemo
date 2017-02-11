@@ -22,7 +22,7 @@ export default class VehicleProgress extends React.Component {
   }
 
   getProcessStyle()  {
-      return { width: `${this.getProcessPercentage()}%` };
+      return { width: `${this.getProcessPercentage()}%`, height: "20px" };
   }
 
   getProgressColor() {
