@@ -1,8 +1,8 @@
 import { NgModule }      from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { FleetComponent } from './fleet.component';
-import { VehicleComponent } from './vehicle.component';
+import { FleetComponent } from './fleet/fleet.component';
+import { VehicleComponent } from './vehicle/vehicle.component';
 
 const routes: Routes = [
     { path: 'fleet', component: FleetComponent },

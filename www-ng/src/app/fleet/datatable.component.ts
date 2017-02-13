@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { DataService } from './data.service';
 
 @Component({
   selector: 'datatable',

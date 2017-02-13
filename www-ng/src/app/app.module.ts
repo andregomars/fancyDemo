@@ -2,15 +2,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import './rxjs-extensions';
+import './shared/rxjs-extensions';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { FleetComponent } from './fleet.component';
-import { VehicleComponent } from './vehicle.component';
-import { DataTableComponent } from './datatable.component';
-import { DataCardsComponent } from './datacards.component';
-import { DataService } from './data.service';
+import { FleetComponent } from './fleet/fleet.component';
+import { VehicleComponent } from './vehicle/vehicle.component';
+import { DataTableComponent } from './fleet/datatable.component';
+import { DataCardsComponent } from './fleet/datacards.component';
+import { DataService } from './shared/data.service';
 
 @NgModule({
   declarations: [

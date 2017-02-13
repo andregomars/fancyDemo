@@ -14,11 +14,15 @@ function load_scripts() {
     wp_register_style('fontawesome-css', 
     	'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', 
     	array(), '4.7.0', 'all');
+    wp_register_style('hams-css', includes_url() . 'css/hams/styles.bundle.css');
 
     wp_register_script( 'urlSearchParam', includes_url() . 'js/hams/url-search-params.js', array('jquery'), false, true);
     wp_register_script( 'fleet', includes_url() . 'js/hams/fleet-bundle.js', array('jquery'), false, true);
     wp_register_script( 'vehicle', includes_url() . 'js/hams/vehicle-bundle.js', array('jquery'), false, true);
     wp_register_script( 'charts', includes_url() . 'js/hams/fundraising.js', array('jquery'), false, true);
+    wp_register_script( 'hams-main-js', includes_url() . 'js/hams/main.bundle.js');
+    wp_register_script( 'hams-inline-js', includes_url() . 'js/hams/inline.bundle.js');
+    wp_register_script( 'hams-polyfills-js', includes_url() . 'js/hams/polyfills.bundle.js');
 
     if( is_page() || is_single() )
     {
@@ -33,6 +37,12 @@ function load_scripts() {
             	wp_enqueue_style('bootstrap-css');
                 wp_enqueue_script('urlSearchParam');
                 wp_enqueue_script('vehicle');
+                break;
+            case 'hams':
+            	wp_enqueue_style('hams-css');
+                wp_enqueue_script('hams-inline-js');
+                wp_enqueue_script('hams-polyfills-js');
+                wp_enqueue_script('hams-main-js');
                 break;
         }
     } 
