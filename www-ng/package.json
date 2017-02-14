@@ -9,7 +9,8 @@
     "test": "ng test",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
     "e2e": "protractor",
-    "build": "ng build -prod -vc false -oh none"
+    "build": "ng build -prod -vc false -oh none",
+    "postbuild": "cp ./dist/*.js ./../www/wp-includes/js/hams/ && cp ./dist/*.css ./../www/wp-includes/css/hams/"
   },
   "private": true,
   "dependencies": {

@@ -20,9 +20,9 @@ function load_scripts() {
     wp_register_script( 'fleet', includes_url() . 'js/hams/fleet-bundle.js', array('jquery'), false, true);
     wp_register_script( 'vehicle', includes_url() . 'js/hams/vehicle-bundle.js', array('jquery'), false, true);
     wp_register_script( 'charts', includes_url() . 'js/hams/fundraising.js', array('jquery'), false, true);
-    wp_register_script( 'hams-main-js', includes_url() . 'js/hams/main.bundle.js');
-    wp_register_script( 'hams-inline-js', includes_url() . 'js/hams/inline.bundle.js');
-    wp_register_script( 'hams-polyfills-js', includes_url() . 'js/hams/polyfills.bundle.js');
+    wp_register_script( 'hams-main-js', includes_url() . 'js/hams/main.bundle.js', null, false, true);
+    wp_register_script( 'hams-inline-js', includes_url() . 'js/hams/inline.bundle.js', null, false, true);
+    wp_register_script( 'hams-polyfills-js', includes_url() . 'js/hams/polyfills.bundle.js', null, false, true);
 
     if( is_page() || is_single() )
     {
