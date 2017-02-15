@@ -11,10 +11,10 @@ export class DataService {
 
 	getFleet(): Promise<any> {
         var url = this.getUrl();
-        console.log(url);
 		return this.http.get(url)
 			.toPromise()
 			.then(response => response.json())
+			// .then(response => {console.dir(response);return response.json()})
 			.catch(this.handleError);
 	}
 

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import './shared/rxjs-extensions';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +12,7 @@ import { VehicleComponent } from './vehicle/vehicle.component';
 import { DataTableComponent } from './fleet/datatable.component';
 import { DataCardsComponent } from './fleet/datacards.component';
 import { DataService } from './shared/data.service';
+import { DataLocalService } from './shared/data-local.service';
 
 @NgModule({
   declarations: [
@@ -24,10 +26,12 @@ import { DataService } from './shared/data.service';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    Ng2SmartTableModule
   ],
   providers: [
-    DataService
+    DataService,
+    DataLocalService
   ],
   bootstrap: [AppComponent]
 })
