@@ -7,7 +7,7 @@ import { DataLocalService } from '../shared/data-local.service';
   templateUrl: 'fleet.component.html'
 })
 export class FleetComponent implements OnInit {
-	viewComponent:string = "cards";
+	viewComponent:string = "table";
   data: any;
 
   constructor (

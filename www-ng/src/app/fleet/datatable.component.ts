@@ -12,7 +12,7 @@ export class DataTableComponent implements OnInit {
 
   public rows:Array<any> = [];
   public columns:Array<any> = [
-    {title: 'Vehicle#', name: 'vid', sort: 'asc'},
+    {title: 'Vehicle#', name: 'vid'},
     {title: 'SOC', name: 'soc'},
     {title: 'Status', name: 'status'},
     {title: 'Range', name: 'range', sort: false},

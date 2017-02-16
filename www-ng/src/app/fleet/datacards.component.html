@@ -1,78 +1,23 @@
 <div class="container">
     <div class="row" >
-        <div *ngFor="let row of items; let i = index">
-            <div class="col-2 p-2" [ngSwitch]="row.status" style="width: 150px">
-                <div *ngSwitchCase="'Charging'" class="card">
-                    <div class="card-block">
-                        <h4 class="card-title text-center text-primary ">{{row.vid}}</h4>
-                        <p class="card-text text-center ">{{row.soc}}</p>
-                        <p class="text-center ">{{row.status}}</p>
-                    </div>
+        <div class="col-md-2 col-xs-6 p-2" 
+          *ngFor="let row of items; let i = index" [ngSwitch]="row.status">
+            <div *ngSwitchCase="'Charging'" class="card card-outline-success ">
+                <div class="card-block iconcard">
+                    <h4 class="card-title text-center text-success inner">{{row.vid}}</h4>
+                    <p class="card-text text-center text-success inner">{{row.soc}}</p>
+                    <p class="text-center text-success inner">{{row.status}}</p>
                 </div>
-                <div *ngSwitchDefault class="card">
-                    <div class="card-block">
-                        <h4 class="card-title text-center ">{{row.vid}}</h4>
-                        <p class="card-text text-center ">{{row.soc}}</p>
-                        <p class="text-center ">{{row.status}}</p>
-                    </div>
+            </div>
+            <div *ngSwitchDefault class="card">
+                <div class="card-block iconcard">
+                    <h4 class="card-title text-center inner">{{row.vid}}</h4>
+                    <p class="card-text text-center inner">{{row.soc}}</p>
+                    <p class="text-center inner">{{row.status}}</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!--<div class="card-columns m-3">
-    <div class="card m-2" style="width: 20rem;" *ngFor="let row of items; let i = index">
-        <div class="iconcard" [ngSwitch]="row.status">
-            <div *ngSwitchCase="'Charging'" class="card-block card-success ">
-                <h4 class="card-title text-center text-primary inner">{{row.vid}}</h4>
-                <p class="card-text text-center inner">{{row.soc}}</p>
-                <p class="text-center inner">{{row.status}}</p>
-            </div>
-            <div *ngSwitchDefault class="card-block">
-                <h4 class="card-title text-center inner">{{row.vid}}</h4>
-                <p class="card-text text-center inner">{{row.soc}}</p>
-                <p class="text-center inner">{{row.status}}</p>
-            </div>
-        </div>
-    </div>
-</div>-->
-<!--<div class="row no-gutters">
-  <div class="col-lg-6">
-    <div class="card">card[0]</div>
-    <div class="card">card[2]</div>
-    <div class="card">card[4]</div>
-  </div>
-  <div class="col-lg-6">
-    <div class="card">card[1]</div>
-    <div class="card">card[3]</div>
-    <div class="card">card[5]</div>
-  </div>
-</div>
-
-
-<div class="row no-gutters">
-  <div class="col-3">
-    <div class="card">card</div>
-  </div>
-  <div class="col-3">
-    <div class="card">card</div>
-  </div>
-  <div class="col-3">
-    <div class="card">card</div>
-  </div>
-  <div class="col-3">
-    <div class="card">card</div>
-  </div>
-  <div class="col-3">
-    <div class="card">card</div>
-  </div>
-  <div class="col-3">
-    <div class="card">card</div>
-  </div>
-    <div class="col-3">
-    <div class="card">card</div>
-  </div>
-</div>
--->
 
