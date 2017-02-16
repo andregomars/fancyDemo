@@ -1,0 +1,21 @@
+.inner {
+  position: relative;
+  z-index: 1;
+}
+
+.iconcard {
+    position:relative;
+}    
+
+.iconcard:before {
+    content: "\f207"; 
+    font-family: FontAwesome;
+    font-size: 100px;
+    color: #f9fbff;
+    /*left:-5px;
+    top:0;*/
+    left: 40%;
+    position:absolute;
+    text-decoration: inherit;
+    z-index: 0;
+ }
