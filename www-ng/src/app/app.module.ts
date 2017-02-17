@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
 import './shared/rxjs-extensions';
+import './shared/vendor';
 // import $ from 'jquery';
 // import 'bootstrap';
 

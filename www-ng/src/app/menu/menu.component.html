@@ -1,38 +1,62 @@
+
+
 <div id="accordion" >
   <div class="card">
-    <div class="card-header"  id="headingHome">
-      <h5 class="mb-0">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseHome">
-          <a routerLink="/" routerLinkActive="active"><b>Home</b></a> 
+    <div class="card-header p-0"  id="headingHome">
+     <h5 class="mb-0 ">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseHome"
+            routerLink="/" routerLinkActive="active" 
+            class="nav-link icon-home"> Home
         </a>
       </h5>
     </div>
   </div>
   <div class="card">
-    <div class="card-header"  id="headingOne">
+    <div class="card-header p-0"  id="headingOne">
       <h5 class="mb-0">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-          Fleet
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+           class="nav-link icon-bus" > Fleet
         </a>
       </h5>
     </div>
     <div id="collapseOne" class="collapse show">
-      <div class="card-block">
-        <a routerLink="/fleet" routerLinkActive="active">LBT</a> 
+      <div class="card-block p-0">
+        <div id="menuwrapper">
+            <ul>
+                <li>
+                    <a routerLink="/fleet" routerLinkActive="active">BYD</a> 
+                    <ul>
+                        <li><a href="#">B001</a></li>
+                        <li><a href="#">B001</a></li>
+                        <li><a href="#">B001</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a routerLink="/fleet" routerLinkActive="active">LBT</a> 
+                    <ul>
+                        <li><a href="#">AZ01</a></li>
+                        <li><a href="#">AZ02</a></li>
+                        <li><a href="#">P01</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
       </div>
     </div>
+
+
   </div>
   <div class="card">
-    <div class="card-header"  id="headingTwo">
+    <div class="card-header p-0"  id="headingTwo">
       <h5 class="mb-0">
-        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-          Vehicle
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
+            class="nav-link icon-warning" > Alert
         </a>
       </h5>
     </div>
     <div id="collapseTwo" class="collapse">
       <div class="card-block">
-        <a routerLink="/vehicle" routerLinkActive="active">Alert</a> 
+        <a routerLink="/vehicle" routerLinkActive="active">Today</a> 
       </div>
     </div>
   </div>
