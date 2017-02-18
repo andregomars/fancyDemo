@@ -12,10 +12,8 @@
     font-family: FontAwesome;
     font-size: 120px;
     color: #e6e8ed;
-    left: 15%;
-    top: 0;
-    text-align: center;
+    width: 100%;
+    /*text-align: center;*/
     position: absolute;
-    text-decoration: inherit;
     z-index: 0;
  }

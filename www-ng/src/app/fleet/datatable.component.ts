@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Ng2TableModule } from 'ng2-table/ng2-table';
+// import { Ng2TableModule } from 'ng2-table/ng2-table';
+import { DataTableModule } from 'primeng/primeng';
 
 @Component({
   selector: 'datatable',
