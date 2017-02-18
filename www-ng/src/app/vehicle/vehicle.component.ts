@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ProgressBarModule } from 'primeng/primeng';
 
 @Component({
   moduleId: module.id,
