@@ -2,11 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { Ng2TableModule } from 'ng2-table/ng2-table';
+import { DataTableModule, ProgressBarModule } from 'primeng/primeng';
 import './shared/rxjs-extensions';
 import './shared/vendor';
-// import $ from 'jquery';
-// import 'bootstrap';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -33,7 +31,8 @@ import { DataLocalService } from './shared/data-local.service';
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    Ng2TableModule
+    DataTableModule,
+    ProgressBarModule
   ],
   providers: [
     DataService,
