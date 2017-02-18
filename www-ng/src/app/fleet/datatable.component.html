@@ -1,10 +1,5 @@
-<!--<ng-table [config]="config"
-            (tableChanged)="onChangeTable(config)"
-            [rows]="rows" [columns]="columns">
-</ng-table>-->
-
 <p-dataTable [value]="data" class="table">
-    <p-column field="vid" header="VID"></p-column>
+    <p-column field="vid" header="VID" [sortable]="true"></p-column>
     <p-column field="soc" header="SOC">
         <template let-col let-data="rowData" pTemplate="body">
             <p-progressBar [value]="data[col.field]"></p-progressBar>
@@ -13,7 +8,7 @@
     <p-column field="status" header="Status"></p-column>
     <p-column field="range" header="Range"></p-column>
     <p-column field="mileage" header="Mileage"></p-column>
-    <p-column field="updated" header="Updated"></p-column>
+    <p-column field="updated" header="Updated" [sortable]="true"></p-column>
     <p-column header="Action">
         <template let-col let-data="rowData" pTemplate="body">
             <a href="#">Request</a>
