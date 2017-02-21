@@ -1,8 +1,19 @@
-<h1>Vehicle here</h1>
 <div class="container">
-    <div class="row no-gutters p-2">
-        <div class="col">
-            <p-progressBar [value]="30"></p-progressBar>
+    <div class="container">
+        <div class="row align-items-center no-gutters p-2 m-2"> 
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2">
+                Voltage: <progress-bar [value]="vehicle.voltage" maxValue="100" unit="W"></progress-bar>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+                Current: <progress-bar [value]="vehicle.current" maxValue="100" unit="W"></progress-bar>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+                Temperature: <progress-bar [value]="vehicle.temperature" maxValue="100" unit="W"></progress-bar>
+            </div>
+            <div class="col-sm-2"></div>
         </div>
     </div>
-</div>
+ </div>

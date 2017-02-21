@@ -13,6 +13,7 @@ import { VehicleComponent } from './vehicle/vehicle.component';
 import { DataTableComponent } from './fleet/datatable.component';
 import { DataCardsComponent } from './fleet/datacards.component';
 import { MenuComponent } from './menu/menu.component';
+import { ProgressBarComponent } from './shared/progressbar.component';
 
 import { DataService } from './shared/data.service';
 import { DataLocalService } from './shared/data-local.service';
@@ -24,7 +25,8 @@ import { DataLocalService } from './shared/data-local.service';
     VehicleComponent,
     DataTableComponent,
     DataCardsComponent,
-    MenuComponent
+    MenuComponent,
+    ProgressBarComponent
   ],
   imports: [
     BrowserModule,
