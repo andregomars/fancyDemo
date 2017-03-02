@@ -5,14 +5,18 @@
             <div *ngSwitchCase="'Charging'" 
               class="card  card-outline-success iconcard">
                 <div class="card-block">
-                    <h4 class="card-title text-success inner">{{row.vid}}</h4>
+                    <h4 class="card-title text-success inner">
+                        <a [routerLink]="['/vehicle', row.vid]">{{row.vid}}</a>
+                    </h4>
                     <p class="card-text text-success inner">{{row.soc}}</p>
                     <p class="text-success inner">{{row.status}}</p>
                 </div>
             </div>
             <div *ngSwitchDefault class="card iconcard">
                 <div class="card-block">
-                    <h4 class="card-title inner">{{row.vid}}</h4>
+                    <h4 class="card-title inner">
+                        <a [routerLink]="['/vehicle', row.vid]">{{row.vid}}</a>
+                    </h4>
                     <p class="card-text inner">{{row.soc}}</p>
                     <p class="inner">{{row.status}}</p>
                 </div>
