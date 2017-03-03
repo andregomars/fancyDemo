@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Params } from '@angular/router'
+import { ChartModule } from 'primeng/primeng';
 import { JustgageModule } from 'angular2-justgage';
 
 import { ProgressBarComponent } from '../shared/progressbar.component';
@@ -13,18 +14,21 @@ export class VehicleComponent implements OnInit {
  vehicle: any;
  optSoc: any;
  optSpeed: any;
+ lineChartData: any;
 
  constructor(
 		private route: ActivatedRoute,
     private dataService: DataLocalService
  ) {
-
+  this.lineChartData = this.getLineChartData();
  }
 
  ngOnInit(): void {
    var vehicles = this.getData();
    this.vehicle = this.getVehicle(vehicles);
    this.setGaugeOptions(this.vehicle);
+
+   
  }
 
  getVehicle(vehicles): any {
@@ -68,8 +72,12 @@ export class VehicleComponent implements OnInit {
     };
   }
 
-  getData(): void {
+  getData(): any {
     return this.dataService.getFleet();
+  }
+
+  getLineChartData(): any {
+    return this.dataService.getLineChart();
   }
 }
 
