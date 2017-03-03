@@ -8,10 +8,11 @@ import { Component, Input } from '@angular/core';
 })
 export class ProgressBarComponent {
     @Input() 
-    value: Number = 0;
+    value: number = 0;
     @Input()
-    maxValue: Number;
+    max: number = 100;
     @Input()
-    unit: String;
+    unit: string
+    
 }
 

@@ -13,7 +13,6 @@ export class DataTableComponent implements OnInit {
   msgs: Message[] = [];
 
   data: any[];
-  // value: number = 30;
 
   public ngOnInit():void {
     this.data = this.items;

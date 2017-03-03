@@ -1,5 +1,5 @@
 <div class="progress">
-    <div class="progress-bar w-100">
-        {{value}}{{unit}}
+    <div class="progress-bar" [style.width]="value/max*100+'%'">
+        {{value}} {{unit}}
     </div>
 </div>

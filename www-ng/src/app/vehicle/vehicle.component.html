@@ -1,19 +1,60 @@
 <div class="container">
     <div class="container">
         <div class="row align-items-center no-gutters p-2 m-2"> 
-            <div class="col-sm-2"></div>
+            <div class="col-sm-1"></div>
             <div class="col-sm-2">
-                Voltage: <progress-bar [value]="vehicle.voltage" maxValue="100" unit="W"></progress-bar>
+                Voltage: <progress-bar [value]="vehicle.voltage" max="220" unit="V"></progress-bar>
             </div>
             <div class="col-sm-1"></div>
             <div class="col-sm-2">
-                Current: <progress-bar [value]="vehicle.current" maxValue="100" unit="W"></progress-bar>
+                Current: <progress-bar [value]="vehicle.current" max="80" unit="A"></progress-bar>
             </div>
             <div class="col-sm-1"></div>
             <div class="col-sm-2">
-                Temperature: <progress-bar [value]="vehicle.temperature" maxValue="100" unit="W"></progress-bar>
+                Low Temp: <progress-bar [value]="vehicle.temperature" max="250" unit="F"></progress-bar>
             </div>
-            <div class="col-sm-2"></div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+                High Temp: <progress-bar [value]="vehicle.temperature+50" max="250" unit="F"></progress-bar>
+            </div>
+        </div>
+        <div class="row align-items-center no-gutters p-2 m-2"> 
+            <div class="col-sm-1"></div>
+            <div class="col-sm-3">
+                <justgage [options]="optSoc" [value]="optSoc.value" [max]="optSoc.max"></justgage>
+            </div>
+            <div class="col-sm-4">
+                <div class="container">
+                    <div class="row p-2">
+                        <div class="col-4 small">
+                            Mileage: 
+                        </div>
+                        <div class="col-8">
+                            <progress-bar [value]="vehicle.mileage" max="vehicle.mileage" unit="Miles" ></progress-bar>
+                        </div>
+                    </div>
+                    <div class="row p-2">
+                        <div class="col-4 small">
+                            Range: 
+                        </div>
+                        <div class="col-8">
+                            <progress-bar [value]="vehicle.range" max="200" unit="Miles"></progress-bar>
+                        </div>
+                    </div>
+                    <div class="row p-2">
+                        <div class="col-7 small">
+                            Remaining Energy: 
+                        </div>
+                        <div class="col-5">
+                            <progress-bar [value]="vehicle.soc" max="100" unit="%"></progress-bar>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <justgage [options]="optSpeed" [value]="optSpeed.value" [max]="optSpeed.max"></justgage>
+            </div>
+            <div class="col-sm-1"></div>
         </div>
     </div>
  </div>

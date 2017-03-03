@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { DataTableModule, ProgressBarModule, GrowlModule } from 'primeng/primeng';
+import { DataTableModule, ProgressBarModule } from 'primeng/primeng';
+import { JustgageModule } from 'angular2-justgage';
 import './shared/rxjs-extensions';
 import './shared/vendor';
 
@@ -35,7 +36,7 @@ import { DataLocalService } from './shared/data-local.service';
     AppRoutingModule,
     DataTableModule,
     ProgressBarModule,
-    GrowlModule
+    JustgageModule
   ],
   providers: [
     DataService,
