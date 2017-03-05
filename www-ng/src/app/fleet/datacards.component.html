@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row" >
-        <div class="col-md-2 col-xs-6 p-2 text-center" 
+        <div class="col-md-2 col-sm-6 col-12 p-2 text-center" 
           *ngFor="let row of items; let i = index" [ngSwitch]="row.status">
             <div *ngSwitchCase="'Charging'" 
               class="card  card-outline-success iconcard">

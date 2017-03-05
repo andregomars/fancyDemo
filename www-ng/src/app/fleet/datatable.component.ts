@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DataTableModule, ProgressBarModule, Message, GrowlModule } from 'primeng/primeng';
+import { DataTableModule, ProgressBarModule, Message } from 'primeng/primeng';
 
 @Component({
   selector: 'datatable',
