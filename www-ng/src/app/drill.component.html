@@ -1,0 +1,20 @@
+<div #title>
+    <h1>Demo Only</h1>
+</div>
+<div class="m-2">
+    <my-date-picker [options]="optionDatePicker"
+                (dateChanged)="onDateChanged($event)" 
+                placeholder="Select Date"></my-date-picker>
+</div>
+<div class="m-2">
+    <button type="button" class="btn-primary" (click)="exportPDF()">Export PDF</button>
+</div>
+<div class="m-2">
+    Name: <input #txtName type="text"/>
+</div>
+<div class="m-2" hidden>
+    <datacards [items]="data"></datacards>
+</div>
+<div #export class="m-2">
+    <p-chart type="bar" [data]="dataChart"></p-chart>
+</div>

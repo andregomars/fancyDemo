@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core'
 import { ActivatedRoute, Params } from '@angular/router'
 import { DataTableModule, ChartModule } from 'primeng/primeng';
 import { JustgageModule } from 'angular2-justgage';
+import { IMyOptions, IMyDateModel } from 'mydatepicker';
+let jsPDF = require("jspdf");
+let html2canvas = require("html2canvas");
 
 import { ProgressBarComponent } from '../shared/progressbar.component';
 import { DataLocalService } from '../shared/data-local.service';
@@ -22,12 +25,17 @@ export class VehicleComponent implements OnInit {
  dataLatestSnapshotList: any;
  dataVehicleStatus: any;
  
+ optionDatePicker: IMyOptions;
+
  dataSocRangeChart: any;
  optionSocRangeChart: any;
  dataEstActualDistanceChart: any;
  optionEstActualDistanceChart: any;
  dataChargingRunningStatusChart: any;
  optionChargingRunningStatusChart: any;
+
+ @ViewChild("divDualCharts")
+ divDualCharts: ElementRef;
 
  constructor(
 		private route: ActivatedRoute,
@@ -44,6 +52,8 @@ export class VehicleComponent implements OnInit {
    this.initLatestAlertAndSnapshotList();
    this.initVehicleStatusTable();
 
+   this.initDatePicker();
+
    //initilize dual comparision charts
    this.initSocRangeChart();
    this.initEstActualDistanceChart();
@@ -53,6 +63,17 @@ export class VehicleComponent implements OnInit {
    this.setLineChartOptions();
    
  }
+
+ initDatePicker(): void {
+    this.optionDatePicker = {
+            dateFormat: "mm/dd/yyyy",
+            width: "200px",
+            height: "23px",
+            editableDateField: false,
+            openSelectorOnInputClick: true,
+            selectionTxtFontSize: "12px"
+    }
+ } 
 
  initLatestAlertAndSnapshotList(): void {
    this.dataLatestAlertList = this.dataService.getLatestAlertsData();
@@ -236,6 +257,24 @@ export class VehicleComponent implements OnInit {
       }
     };
   }
+
+  onDateChanged(event: IMyDateModel) {
+      if (event.jsdate) 
+          console.log("date is: " + event.jsdate.toString());
+  }
+  
+  exportDualCharts(): void {
+        html2canvas(this.divDualCharts.nativeElement, {
+            onrendered: function(canvas) {
+                const contentDataURL = canvas.toDataURL("image/png");
+                let pdf = new jsPDF();
+                pdf.addImage(contentDataURL, "PNG", 10, 10);
+                pdf.save("Vehicle.DualCharts.pdf");
+            }
+        })
+    }
+
+    
 
 }
 
