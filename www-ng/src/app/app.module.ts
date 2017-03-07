@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { DataTableModule, ProgressBarModule, ChartModule } from 'primeng/primeng';
-import { JustgageModule } from 'angular2-justgage';
 import { MyDatePickerModule } from 'mydatepicker';
 import './shared/rxjs-extensions';
 import './shared/vendor';
@@ -20,6 +19,7 @@ import { ProgressBarComponent } from './shared/progressbar.component';
 
 import { DataService } from './shared/data.service';
 import { DataLocalService } from './shared/data-local.service';
+import { GaugeComponent } from './components/gauge/gauge.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,8 @@ import { DataLocalService } from './shared/data-local.service';
     DataTableComponent,
     DataCardsComponent,
     MenuComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    GaugeComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +41,6 @@ import { DataLocalService } from './shared/data-local.service';
     DataTableModule,
     ProgressBarModule,
     ChartModule,
-    JustgageModule,
     MyDatePickerModule
   ],
   providers: [

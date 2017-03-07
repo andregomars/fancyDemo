@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, AfterViewInit, Renderer, ViewChild } from '@angular/core';
 import { DataTableModule, ChartModule } from 'primeng/primeng';
-import {IMyOptions, IMyDateModel} from 'mydatepicker';
+import { IMyOptions, IMyDateModel } from 'mydatepicker';
+
 let jsPDF = require("jspdf")
 let html2canvas = require("html2canvas");
 
@@ -22,11 +23,22 @@ export class DrillComponent implements OnInit, AfterViewInit {
     data: any;
     dataChart: any;
     optionDatePicker: IMyOptions;
+    optionGauge: any;
 
     constructor(private renderer: Renderer) {
     }
 
     ngOnInit(): void {
+        this.optionGauge = {
+            id: "gauge",
+            value: 67,
+            min: 0,
+            max: 100,
+            width: 100,
+            height: 100,
+            title: "Visitors"
+        };
+
         this.optionDatePicker = {
             dateFormat: "mm/dd/yyyy",
             width: "250px",

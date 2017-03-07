@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core'
 import { ActivatedRoute, Params } from '@angular/router'
 import { DataTableModule, ChartModule } from 'primeng/primeng';
-import { JustgageModule } from 'angular2-justgage';
 import { IMyOptions, IMyDateModel } from 'mydatepicker';
 let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
@@ -16,8 +15,8 @@ import { YAxis } from '../models/yAxis.model';
 })
 export class VehicleComponent implements OnInit {
  vehicle: any;
- optSoc: any;
- optSpeed: any;
+ optionGaugeSOC: any;
+ optionGaugeSpeed: any;
  lineChartData: any;
  optLineChart: any;
 
@@ -118,7 +117,7 @@ export class VehicleComponent implements OnInit {
   }
 
   setGaugeOptions(vehicle: any): void {
-    this.optSoc = {
+    this.optionGaugeSOC = {
       id: "gauge-Soc",
       value: vehicle.soc,
       min: 0,
@@ -131,7 +130,7 @@ export class VehicleComponent implements OnInit {
       pointer: false,
       levelColors: ["#a9d70b", "#a9d70b", "#a9d70b"]
     };
-    this.optSpeed = {
+    this.optionGaugeSpeed = {
       id: "gauge-Speed",
       value: vehicle.speed,
       min: 0,
