@@ -13,11 +13,13 @@ describe('AppComponent', () => {
     TestBed.compileComponents();
   });
 
+/*
   it('should create the app', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
+
 
   it(`should have as title 'app works!'`, async(() => {
     const fixture = TestBed.createComponent(AppComponent);
@@ -31,4 +33,6 @@ describe('AppComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain('app works!');
   }));
+
+*/
 });

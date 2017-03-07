@@ -113,13 +113,13 @@
                 </div>
                 <div #divDualCharts class="row align-items-center p-2"> 
                     <div class="col">
-                        <p-chart type="line" [data]="dataSocRangeChart" [options]="optionSocRangeChart"></p-chart>
+                        <p-chart #chartSocRange type="line" [data]="dataSocRangeChart" [options]="optionSocRangeChart"></p-chart>
                     </div>
                     <div class="col">
-                        <p-chart type="line" [data]="dataEstActualDistanceChart" [options]="optionEstActualDistanceChart"></p-chart>
+                        <p-chart #chartEstActualDistance type="line" [data]="dataEstActualDistanceChart" [options]="optionEstActualDistanceChart"></p-chart>
                     </div>
                     <div class="col">
-                        <p-chart type="line" [data]="dataChargingRunningStatusChart" [options]="optionChargingRunningStatusChart"></p-chart>
+                        <p-chart #chartChargingRunningStatus type="line" [data]="dataChargingRunningStatusChart" [options]="optionChargingRunningStatusChart"></p-chart>
                     </div>
                 </div>
             </div>

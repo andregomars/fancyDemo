@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
+import { UtilityService } from './utility.service';
 
 @Injectable()
 export class DataLocalService {
+
+    private utility: UtilityService = new UtilityService();
 
 	getFleet(): any {
         return [{
@@ -277,19 +280,13 @@ export class DataLocalService {
             datasets: [
                 {
                     label: 'SOC',
-                    data: [100, 99, 90, 85, 80, 78, 
-                           70, 69, 65, 60, 55, 54,
-                           52, 49, 47, 42, 40, 38,
-                           34, 33, 30, 55, 80, 100],
+                    data: this.utility.getRandomNumberList(24, 0, 100),
                     yAxisID: 'ySOC',
                     fill: false,
                     borderColor: '#4bc0c0'
                 }, {
                     label: 'Range',
-                    data: [250, 250, 240, 230, 220, 210,
-                           200, 200, 190, 180, 175, 175,
-                           170, 165, 160, 155, 150, 147,
-                           140, 138, 135, 180, 220, 250],
+                    data: this.utility.getRandomNumberList(24, 0, 250),
                     yAxisID: 'yRange',
                     fill: false,
                     borderColor: '#565656'
@@ -307,19 +304,13 @@ export class DataLocalService {
             datasets: [
                 {
                     label: 'Estimate Distance',
-                    data: [52, 49, 47, 42, 40, 38,
-                           34, 33, 30, 55, 80, 100,
-                           100, 99, 90, 85, 80, 78, 
-                           70, 69, 65, 60, 55, 54],
+                    data: this.utility.getRandomNumberList(24, 0, 100),
                     yAxisID: 'yEstimateDistance',
                     fill: false,
                     borderColor: '#4bc0c0'
                 }, {
                     label: 'Actual Distance',
-                    data: [170, 165, 160, 155, 150, 147,
-                           140, 138, 135, 180, 220, 250,
-                           250, 250, 240, 230, 220, 210,
-                           200, 200, 190, 180, 175, 175 ],
+                    data: this.utility.getRandomNumberList(24, 0, 250),
                     yAxisID: 'yActualDistance',
                     fill: false,
                     borderColor: '#565656'
@@ -337,19 +328,13 @@ export class DataLocalService {
             datasets: [
                 {
                     label: 'Charging Status',
-                    data: [52, 49, 47, 42, 40, 38,
-                           100, 99, 90, 85, 80, 78, 
-                           34, 33, 30, 55, 80, 100,
-                           70, 69, 65, 60, 55, 54],
+                    data: this.utility.getRandomNumberList(24, 0, 100),
                     yAxisID: 'yChargingStatus',
                     fill: false,
                     borderColor: '#4bc0c0'
                 }, {
                     label: 'Running Status',
-                    data: [170, 165, 160, 155, 150, 147,
-                           250, 250, 240, 230, 220, 210,
-                           140, 138, 135, 180, 220, 250,
-                           200, 200, 190, 180, 175, 175 ],
+                    data: this.utility.getRandomNumberList(24, 0, 250),
                     yAxisID: 'yRunningStatus',
                     fill: false,
                     borderColor: '#565656'

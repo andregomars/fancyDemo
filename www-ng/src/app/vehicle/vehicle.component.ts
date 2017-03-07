@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core'
 import { ActivatedRoute, Params } from '@angular/router'
-import { DataTableModule, ChartModule } from 'primeng/primeng';
+import { DataTableModule, ChartModule, UIChart } from 'primeng/primeng';
 import { IMyOptions, IMyDateModel } from 'mydatepicker';
 let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
@@ -14,6 +14,7 @@ import { YAxis } from '../models/yAxis.model';
   templateUrl: 'vehicle.component.html'
 })
 export class VehicleComponent implements OnInit {
+ 
  vehicle: any;
  optionGaugeSOC: any;
  optionGaugeSpeed: any;
@@ -35,6 +36,13 @@ export class VehicleComponent implements OnInit {
 
  @ViewChild("divDualCharts")
  divDualCharts: ElementRef;
+
+ @ViewChild("chartSocRange")
+ chartSocRange: UIChart;
+ @ViewChild("chartEstActualDistance")
+ chartEstActualDistance: UIChart;
+ @ViewChild("chartChargingRunningStatus")
+ chartChargingRunningStatus: UIChart;
 
  constructor(
 		private route: ActivatedRoute,
@@ -258,8 +266,15 @@ export class VehicleComponent implements OnInit {
   }
 
   onDateChanged(event: IMyDateModel) {
-      if (event.jsdate) 
-          console.log("date is: " + event.jsdate.toString());
+      if (event.jsdate) {
+        console.log("date: " + event.jsdate.toString());
+        this.chartSocRange.data = this.dataService.getSocRangeChartData();
+        this.chartEstActualDistance.data = this.dataService.getEstActualDistanceData()
+        this.chartChargingRunningStatus.data = this.dataService.getChargingRunningStatusData()
+        this.chartSocRange.reinit();
+        this.chartEstActualDistance.reinit();
+        this.chartChargingRunningStatus.reinit();
+      }
   }
   
   exportDualCharts(): void {
