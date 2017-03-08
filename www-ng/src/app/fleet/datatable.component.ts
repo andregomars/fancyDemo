@@ -4,7 +4,8 @@ import { DataTableModule, ProgressBarModule, Message } from 'primeng/primeng';
 @Component({
   selector: 'datatable',
   moduleId: module.id,
-  templateUrl: 'datatable.component.html'
+  templateUrl: 'datatable.component.html',
+  styleUrls: [ 'datatable.component.css' ]
 })
 export class DataTableComponent implements OnInit {
   @Input()

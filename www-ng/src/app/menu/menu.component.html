@@ -1,5 +1,4 @@
 
-
 <div id="accordion" >
   <div class="card">
     <div class="card-header p-0"  id="headingHome">
@@ -14,12 +13,17 @@
   <div class="card">
     <div class="card-header p-0"  id="headingOne">
       <h5 class="mb-0">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFleet"
            class="nav-link icon-bus" > Fleet
         </a>
       </h5>
     </div>
-    <div id="collapseOne" class="collapse show">
+    <div id="collapseFleet" class="collapse show">
+      <div class="card-block p-0">
+        <p-megaMenu [model]="menuItems" orientation="vertical" class="w-100"></p-megaMenu>   
+      </div>
+    </div>
+    <!--<div id="collapseOne" class="collapse show">
       <div class="card-block p-0">
         <div id="menuwrapper">
             <ul>
@@ -42,8 +46,7 @@
             </ul>
         </div>
       </div>
-    </div>
-
+    </div>-->
 
   </div>
   <div class="card">

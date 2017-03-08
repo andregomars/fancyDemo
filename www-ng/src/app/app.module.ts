@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { DataTableModule, ProgressBarModule, ChartModule } from 'primeng/primeng';
+import { DataTableModule, ProgressBarModule, 
+        ChartModule, MegaMenuModule, TieredMenuModule } from 'primeng/primeng';
 import { MyDatePickerModule } from 'mydatepicker';
 import './shared/rxjs-extensions';
 import './shared/vendor';
@@ -41,7 +42,9 @@ import { GaugeComponent } from './components/gauge/gauge.component';
     DataTableModule,
     ProgressBarModule,
     ChartModule,
-    MyDatePickerModule
+    MyDatePickerModule,
+    TieredMenuModule,
+    MegaMenuModule
   ],
   providers: [
     DataService,
