@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core'
 import { ActivatedRoute, Params } from '@angular/router'
 import { DataTableModule, ChartModule, UIChart } from 'primeng/primeng';
 import { IMyOptions, IMyDateModel } from 'mydatepicker';
+import 'rxjs/add/operator/switchMap';
 let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
 
@@ -53,7 +54,7 @@ export class VehicleComponent implements OnInit {
 
  ngOnInit(): void {
    var vehicles = this.dataService.getFleet();
-   this.vehicle = this.getVehicle(vehicles);
+   this.getVehicle(vehicles);
    this.setGaugeOptions(this.vehicle);
 
    this.initLatestAlertAndSnapshotList();
@@ -114,14 +115,20 @@ export class VehicleComponent implements OnInit {
 
  getVehicle(vehicles): any {
     if (!vehicles || vehicles.length === 0) return;
-    var vid = this.route.snapshot.params["vid"]
-    var vFiltered = vehicles.filter( function(item) {
-      return item.vid === vid;
-    });
-    if (vFiltered.length > 0) 
-      return vFiltered[0];
-    else
-      return null;
+    var vid: string;
+    // var vid = this.route.snapshot.params["vid"];
+    this.route.params
+      .switchMap((params: Params) => vehicles.filter( function(item) {
+        return item.vid === params["vid"]}) )
+      .subscribe((filteredVehicles: any) => {
+        return this.vehicle = filteredVehicles});
+    // var vFiltered = vehicles.filter( function(item) {
+    //   return item.vid === vid;
+    // });
+    // if (vFiltered.length > 0) 
+    //   return vFiltered[0];
+    // else
+    //   return null;
   }
 
   setGaugeOptions(vehicle: any): void {

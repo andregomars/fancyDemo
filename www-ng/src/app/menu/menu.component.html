@@ -28,19 +28,17 @@
         <div id="menuwrapper">
             <ul>
                 <li>
-                    <a routerLink="/fleet" routerLinkActive="active">BYD</a> 
+                    <a routerLink="/fleet" routerLinkActive="active">LBT</a> 
                     <ul>
-                        <li><a href="#">B001</a></li>
-                        <li><a href="#">B002</a></li>
-                        <li><a href="#">B003</a></li>
+                        <li><a [routerLink]="['/vehicle','AZ01']">AZ01</a></li>
+                        <li><a [routerLink]="['/vehicle','AZ02']">AZ02</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a routerLink="/fleet" routerLinkActive="active">LBT</a> 
+                    <a routerLink="/fleet" routerLinkActive="active">BYD</a> 
                     <ul>
-                        <li><a href="#">AZ01</a></li>
-                        <li><a href="#">AZ02</a></li>
-                        <li><a href="#">P01</a></li>
+                        <li><a routerLink="vehicle/P01">P01</a></li>
+                        <li><a routerLink="vehicle/P02">P02</a></li>
                     </ul>
                 </li>
             </ul>
