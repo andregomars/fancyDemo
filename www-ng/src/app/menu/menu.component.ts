@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MenuModule, MenuItem } from 'primeng/primeng';
 
 @Component({
   selector: 'app-menu',
   moduleId: module.id,
   templateUrl: 'menu.component.html',
-  styleUrls: [ 'menu.component.css' ]
+  styleUrls: [ 'menu.component.css' ],
+  encapsulation: ViewEncapsulation.None
 })
 export class MenuComponent implements OnInit {
 

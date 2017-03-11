@@ -2,6 +2,10 @@
     font-size: 14px;
 }
 
+.ui-menu {
+    width: auto
+}
+
 .icon-home::before {
     content: '\f015';
     font-family: FontAwesome;
