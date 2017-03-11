@@ -10,7 +10,7 @@
 .iconcard:before {
     content: "\f207"; 
     font-family: FontAwesome;
-    font-size: 120px;
+    font-size: 100px;
     color: #e6e8ed;
     width: 100%;
     /*text-align: center;*/
