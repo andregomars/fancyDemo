@@ -6,7 +6,6 @@ import 'rxjs/add/operator/switchMap';
 let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
 
-import { ProgressBarComponent } from '../shared/progressbar.component';
 import { DataLocalService } from '../shared/data-local.service';
 import { YAxis } from '../models/yAxis.model';
 

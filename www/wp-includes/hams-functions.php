@@ -14,12 +14,19 @@ function load_scripts() {
     wp_register_style('fontawesome-css', 
     	'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', 
     	array(), '4.7.0', 'all');
+    wp_register_style('omega-theme-css', includes_url() . 'css/hams/omega.theme.css');
+    wp_register_style('primeng-css', includes_url() . 'css/hams/primeng.min.css');
     wp_register_style('hams-css', includes_url() . 'css/hams/styles.bundle.css');
 
     wp_register_script( 'urlSearchParam', includes_url() . 'js/hams/url-search-params.js', array('jquery'), false, true);
     wp_register_script( 'fleet', includes_url() . 'js/hams/fleet-bundle.js', array('jquery'), false, true);
     wp_register_script( 'vehicle', includes_url() . 'js/hams/vehicle-bundle.js', array('jquery'), false, true);
     wp_register_script( 'charts', includes_url() . 'js/hams/fundraising.js', array('jquery'), false, true);
+
+    wp_register_script( 'tether-js', 'https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js', null, false, true);
+    wp_register_script( 'twitter-bootstrap-js', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js', null, false, true);
+    wp_register_script( 'chartjs-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js', null, false, true);
+    // wp_register_script( 'raphael-js', 'https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js', null, false, true);
     wp_register_script( 'hams-main-js', includes_url() . 'js/hams/main.bundle.js', null, false, true);
     wp_register_script( 'hams-inline-js', includes_url() . 'js/hams/inline.bundle.js', null, false, true);
     wp_register_script( 'hams-polyfills-js', includes_url() . 'js/hams/polyfills.bundle.js', null, false, true);
@@ -39,7 +46,14 @@ function load_scripts() {
                 wp_enqueue_script('vehicle');
                 break;
             case 'hams':
+                wp_enqueue_style('omega-theme-css');
+                wp_enqueue_style('primeng-css');
             	wp_enqueue_style('hams-css');
+
+                wp_enqueue_script('tether-js');
+                wp_enqueue_script('twitter-bootstrap-js');
+                wp_enqueue_script('chartjs-js');
+                // wp_enqueue_script('raphael-js');
                 wp_enqueue_script('hams-inline-js');
                 wp_enqueue_script('hams-polyfills-js');
                 wp_enqueue_script('hams-main-js');
