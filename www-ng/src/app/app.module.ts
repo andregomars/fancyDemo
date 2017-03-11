@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { DataTableModule, ProgressBarModule, 
         ChartModule, MegaMenuModule, TieredMenuModule } from 'primeng/primeng';
 import { MyDatePickerModule } from 'mydatepicker';
+import { JustgageModule } from 'angular2-justgage';
 import './shared/rxjs-extensions';
 import './shared/vendor';
 
@@ -16,11 +17,10 @@ import { VehicleComponent } from './vehicle/vehicle.component';
 import { DataTableComponent } from './fleet/datatable.component';
 import { DataCardsComponent } from './fleet/datacards.component';
 import { MenuComponent } from './menu/menu.component';
-import { ProgressBarComponent } from './shared/progressbar.component';
+import { ProgressBarComponent } from './components/progressbar/progressbar.component';
 
 import { DataService } from './shared/data.service';
 import { DataLocalService } from './shared/data-local.service';
-import { GaugeComponent } from './components/gauge/gauge.component';
 
 @NgModule({
   declarations: [
@@ -31,8 +31,7 @@ import { GaugeComponent } from './components/gauge/gauge.component';
     DataTableComponent,
     DataCardsComponent,
     MenuComponent,
-    ProgressBarComponent,
-    GaugeComponent
+    ProgressBarComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +43,8 @@ import { GaugeComponent } from './components/gauge/gauge.component';
     ChartModule,
     MyDatePickerModule,
     TieredMenuModule,
-    MegaMenuModule
+    MegaMenuModule,
+    JustgageModule
   ],
   providers: [
     DataService,

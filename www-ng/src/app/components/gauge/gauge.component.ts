@@ -1,3 +1,4 @@
+/*
 import { Component, Input, OnInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
 import 'justgage';
 declare var JustGage: any;
@@ -38,3 +39,4 @@ export class GaugeComponent implements OnInit, OnChanges {
     this.guage = new JustGage(this.options);
   }
 }
+*/

@@ -120,8 +120,8 @@ export class VehicleComponent implements OnInit {
     this.route.params
       .switchMap((params: Params) => vehicles.filter( function(item) {
         return item.vid === params["vid"]}) )
-      .subscribe((filteredVehicles: any) => {
-        return this.vehicle = filteredVehicles});
+      .subscribe((filteredVehicle: any) => {
+        return this.vehicle = filteredVehicle});
     // var vFiltered = vehicles.filter( function(item) {
     //   return item.vid === vid;
     // });

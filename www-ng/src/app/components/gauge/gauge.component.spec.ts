@@ -1,3 +1,4 @@
+/*
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GaugeComponent } from './gauge.component';
@@ -18,9 +19,10 @@ describe('GaugeComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-/*
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-*/
+
 });
+*/
