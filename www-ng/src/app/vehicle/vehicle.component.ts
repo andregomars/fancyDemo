@@ -273,7 +273,6 @@ export class VehicleComponent implements OnInit {
 
   onDateChanged(event: IMyDateModel) {
       if (event.jsdate) {
-        console.log("date: " + event.jsdate.toString());
         this.chartSocRange.data = this.dataService.getSocRangeChartData();
         this.chartEstActualDistance.data = this.dataService.getEstActualDistanceData()
         this.chartChargingRunningStatus.data = this.dataService.getChargingRunningStatusData()

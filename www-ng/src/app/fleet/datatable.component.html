@@ -15,8 +15,8 @@
     <p-column field="updated" header="Updated" [sortable]="true"></p-column>
     <p-column header="Action">
         <template let-row="rowData" pTemplate="body">
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#requestModal">
-                Request
+            <button title="SMS Request" type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#requestModal">
+               <i class="fa fa-commenting-o fa-lg"></i>
             </button>
         </template>
     </p-column>

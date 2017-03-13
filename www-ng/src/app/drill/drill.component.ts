@@ -5,7 +5,7 @@ import { IMyOptions, IMyDateModel } from 'mydatepicker';
 let jsPDF = require("jspdf")
 let html2canvas = require("html2canvas");
 
-import { DataCardsComponent } from "./fleet/datacards.component";
+import { DataCardsComponent } from "../fleet/datacards.component";
 
 
 @Component({

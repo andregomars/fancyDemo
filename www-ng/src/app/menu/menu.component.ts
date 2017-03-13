@@ -10,10 +10,11 @@ import { MenuModule, MenuItem } from 'primeng/primeng';
 })
 export class MenuComponent implements OnInit {
 
-    private menuItems : MenuItem[];
+    private fleetList : MenuItem[];
+    private vehicleList : MenuItem[];
 
     ngOnInit() {
-      this.menuItems = [
+      this.fleetList = [
             {
                 label: 'LBT',
                 routerLink: ['/fleet'],
@@ -39,6 +40,16 @@ export class MenuComponent implements OnInit {
                       routerLink: ['/vehicle', 'P02'],
                     }
                 ]
+            }
+        ];
+
+        this.vehicleList = [
+            {
+                label: 'AZ01',
+                routerLink: ['/vehicledaily', 'AZ01'],
+            }, {
+                label: 'AZ02',
+                routerLink: ['/vehicledaily', 'AZ01'],
             }
         ];
     }

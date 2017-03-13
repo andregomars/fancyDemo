@@ -11,7 +11,7 @@ import './shared/vendor';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DrillComponent } from './drill.component';
+import { DrillComponent } from './drill/drill.component';
 import { FleetComponent } from './fleet/fleet.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
 import { DataTableComponent } from './fleet/datatable.component';
@@ -21,6 +21,7 @@ import { ProgressBarComponent } from './components/progressbar/progressbar.compo
 
 import { DataService } from './shared/data.service';
 import { DataLocalService } from './shared/data-local.service';
+import { AnalysisDailyComponent } from './analysis-daily/analysis-daily.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { DataLocalService } from './shared/data-local.service';
     DataTableComponent,
     DataCardsComponent,
     MenuComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    AnalysisDailyComponent
   ],
   imports: [
     BrowserModule,

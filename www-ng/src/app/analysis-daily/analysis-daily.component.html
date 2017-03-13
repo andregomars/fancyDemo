@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="row p-2">
+        <div class="col-9 text-center">
+          <h5><i class="fa fa-bus"></i> {{vehicle.fid}} / {{vehicle.vid}}</h5>
+        </div>
+        <div class="col-3">
+          <button type="button" class="btn btn-primary btn-sm text-right" 
+            (click)="exportCharts()">Export Charts</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center">
+      <my-date-picker [options]="optionMileageDatePicker" (dateChanged)="onMileageDateChanged($event)" 
+      placeholder="Select Date"></my-date-picker>
+    </div>
+  </div>
+  <div #charts class="row text-center p-2">
+    <div class="col">
+      <p-chart type="bar" [data]="dataMileageChart" [options]="optionMileageChart"></p-chart>
+    </div>
+  </div>
+</div>
