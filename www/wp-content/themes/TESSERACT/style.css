@@ -747,11 +747,11 @@ h6 {
     font-size: 14px;
 }
 
-span{
+/*span{
     display:inline-block;
     zoom: 1; *display: inline;
 }
-
+*/
 .entry-title {
     margin: 17px 0 20px 0;
 }
