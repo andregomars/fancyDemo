@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UtilityService } from './utility.service';
+import * as moment from 'moment';
 
 @Injectable()
 export class DataLocalService {
@@ -488,4 +489,19 @@ export class DataLocalService {
             "time": "2017-01-10 19:36:57"
         }]
     }
+
+    getLatest30DaysVehicleDailyMileage(): any {
+        let backwardDays = 30;
+        return {
+            labels: this.utility.getBackwardDateList(backwardDays, new Date()),
+            datasets: [
+                {
+                    label: 'Daily Mileage',
+                    data: this.utility.getRandomNumberList(backwardDays, 0, 100),
+                    fill: false,
+                    borderColor: '#4bc0c0'
+                }
+            ]
+        }
+    } 
 }

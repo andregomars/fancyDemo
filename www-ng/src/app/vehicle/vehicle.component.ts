@@ -112,7 +112,7 @@ export class VehicleComponent implements OnInit {
    this.optionChargingRunningStatusChart = this.getChartDualOptions(leftY, rightY);
  }
 
- getVehicle(vehicles): any {
+ getVehicle(vehicles): void {
     if (!vehicles || vehicles.length === 0) return;
     var vid: string;
     // var vid = this.route.snapshot.params["vid"];

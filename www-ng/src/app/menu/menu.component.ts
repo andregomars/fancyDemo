@@ -49,7 +49,7 @@ export class MenuComponent implements OnInit {
                 routerLink: ['/vehicledaily', 'AZ01'],
             }, {
                 label: 'AZ02',
-                routerLink: ['/vehicledaily', 'AZ01'],
+                routerLink: ['/vehicledaily', 'AZ02'],
             }
         ];
     }
