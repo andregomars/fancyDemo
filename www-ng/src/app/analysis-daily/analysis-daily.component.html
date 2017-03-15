@@ -14,13 +14,15 @@
   </div>
   <div class="row">
     <div class="col text-center">
-      <my-date-picker [options]="optionMileageDatePicker" (dateChanged)="onMileageDateChanged($event)" 
-      placeholder="Select Date"></my-date-picker>
+      <my-date-range-picker [options]="optionMileageDateRangePicker" 
+        (dateRangeChanged)="onMileageDateChanged($event)" 
+        placeholder="Select Date Range">
+      </my-date-range-picker>
     </div>
   </div>
   <div #charts class="row text-center p-2">
     <div class="col text-center">
-      <p-chart type="bar" [data]="dataMileageChart" [options]="optionMileageChart" width="960px" height="350px" ></p-chart>
+      <p-chart #chartMileage type="bar" [data]="dataMileageChart" [options]="optionMileageChart" width="960px" height="350px" ></p-chart>
     </div>
   </div>
 </div>

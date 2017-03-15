@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
+import { DailyNumber } from '../models/dailyNumber.model';
 
 @Injectable()
 export class UtilityService {
@@ -53,8 +54,12 @@ export class UtilityService {
   }
 
   getBackwardDateList(backwardDays: number, endDate: Date): Array<Date> {
-    let startDate = moment(endDate).clone().subtract(backwardDays-1, 'day').toDate();
+    let startDate = this.getStartDateBackward(backwardDays, endDate);
     return this.getDateList(startDate, endDate);
+  }
+
+  getStartDateBackward(backwardDays: number, endDate: Date): Date {
+    return moment(endDate).clone().subtract(backwardDays-1, 'day').toDate();
   }
   
   private getRandomInt(min, max): number {
@@ -64,12 +69,3 @@ export class UtilityService {
   }
 }
 
-class DailyNumber {
-    readonly date: Date;
-    readonly value: number;
-
-    constructor (date: Date, value: number) {
-        this.date = date;
-        this.value = value;
-    }
-}

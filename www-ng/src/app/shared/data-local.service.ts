@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UtilityService } from './utility.service';
-import * as moment from 'moment';
+import { DailyNumber } from '../models/dailyNumber.model';
 
 @Injectable()
 export class DataLocalService {
@@ -490,18 +490,48 @@ export class DataLocalService {
         }]
     }
 
-    getLatest30DaysVehicleDailyMileage(): any {
-        let backwardDays = 30;
+    getBackwardDaysVehicleDailyMileage(backwardDays: number): any {
         return {
             labels: this.utility.getBackwardDateList(backwardDays, new Date()),
             datasets: [
                 {
                     label: 'Daily Mileage',
                     data: this.utility.getRandomNumberList(backwardDays, 0, 100),
-                    fill: false,
+                    //fill: false,
                     borderColor: '#4bc0c0'
                 }
             ]
         }
-    } 
+    }
+
+    getVehicleDailyMileage(beginDate: Date, endDate: Date): any {
+        let dict: Array<DailyNumber> = 
+            this.utility.getDailyNumberList(beginDate, endDate, 0, 100);
+        let days: Array<Date> = [];
+        let numbers: Array<number> = [];
+        dict.forEach((item: DailyNumber) => { 
+            days.push(item.date); 
+            numbers.push(item.value);
+        });
+
+        console.dir(dict);
+        console.dir(days);
+        console.dir(numbers);
+
+        return {
+            labels: days,
+            datasets: [
+                {
+                    label: 'Daily Mileage',
+                    data: numbers
+                    //fill: false,
+                    //borderColor: '#4bc0c0'
+                }
+            ]
+        }
+    }
+
+    getDateOfACoupleWeeksAgo(endDate: Date): Date {
+        return this.utility.getStartDateBackward(14, endDate);
+    }
 }

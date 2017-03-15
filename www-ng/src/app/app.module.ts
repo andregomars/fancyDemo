@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { DataTableModule, ProgressBarModule, 
         ChartModule, MegaMenuModule, TieredMenuModule } from 'primeng/primeng';
 import { MyDatePickerModule } from 'mydatepicker';
+import { MyDateRangePickerModule } from 'mydaterangepicker';
 import { JustgageModule } from 'angular2-justgage';
 import './shared/rxjs-extensions';
 import './shared/vendor';
@@ -44,6 +45,7 @@ import { AnalysisDailyComponent } from './analysis-daily/analysis-daily.componen
     ProgressBarModule,
     ChartModule,
     MyDatePickerModule,
+    MyDateRangePickerModule,
     TieredMenuModule,
     MegaMenuModule,
     JustgageModule

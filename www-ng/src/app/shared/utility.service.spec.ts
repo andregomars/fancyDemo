@@ -12,7 +12,6 @@ describe('UtilityService', () => {
   it('should have a list of random numbers', inject([UtilityService], (service: UtilityService) => {
     let n = 24;
     let array = service.getRandomNumberList(n, 0, 100);
-    console.log(array);
 
     expect(array.length).toBe(n);
   }));
@@ -47,7 +46,6 @@ describe('UtilityService', () => {
     let n = 30;
     let array = service.getBackwardDateList(n, new Date());
 
-    console.log(array);
     expect(array.length).toBe(n);
   }))
 });
