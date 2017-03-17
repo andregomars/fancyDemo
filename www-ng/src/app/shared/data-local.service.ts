@@ -514,20 +514,9 @@ export class DataLocalService {
             numbers.push(item.value);
         });
 
-        console.dir(dict);
-        console.dir(days);
-        console.dir(numbers);
-
         return {
             labels: days,
-            datasets: [
-                {
-                    label: 'Daily Mileage',
-                    data: numbers
-                    //fill: false,
-                    //borderColor: '#4bc0c0'
-                }
-            ]
+            data: numbers            
         }
     }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { IMyOptions, IMyDateRangeModel } from 'mydaterangepicker';
+import * as moment from 'moment';
 import { UIChart } from 'primeng/primeng';
 
 import 'rxjs/add/operator/switchMap';
@@ -51,14 +52,12 @@ export class AnalysisDailyComponent implements OnInit {
 
     private onMileageDateChanged(event: IMyDateRangeModel): void {
         if (event.beginJsDate && event.endJsDate) {
-            console.log(event.beginJsDate);
-            console.log(event.endJsDate);
             this.beginDateOfDailyMileage = event.beginJsDate;
             this.endDateOfDailyMileage = event.endJsDate;
-            this.dataMileageChart =
-                // this.dataService.getVehicleDailyMileage(event.beginJsDate, event.endJsDate);
-                this.dataService.getBackwardDaysVehicleDailyMileage(14);
-            this.chartMileage.reinit();
+            let dataChanged = this.dataService.getVehicleDailyMileage(event.beginJsDate, event.endJsDate);
+            this.chartMileage.data.labels = dataChanged.labels;
+            this.chartMileage.data.datasets[0].data = dataChanged.data;
+            this.chartMileage.refresh();
         }
     }
 
@@ -79,14 +78,18 @@ export class AnalysisDailyComponent implements OnInit {
         this.dataMileageChart = this.dataService.getBackwardDaysVehicleDailyMileage(14);
         this.optionMileageChart = {
             responsive: false,
-            //maintainAspectRatio: false,
             scales: {
                 xAxes: [{
-                    type: 'time',
-                    time: {
-                        displayFormats: {
-                            'day': 'MM/DD'
+                    ticks: {
+                        callback: function(value, index, values) {
+                        return moment(value).format('MM/DD');
                         }
+                    }
+                    }],
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: 100
                     }
                 }]
             }
