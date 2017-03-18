@@ -49,7 +49,8 @@ export class AnalysisDailyComponent implements OnInit {
         this.loadVehicle();
         
         this.initMilageDateRangePicker();
-        this.initMileageChart();
+        this.initMileageChartOption();
+        this.initMileageChartData();
 
         this.initSocEnergyDateRangePicker();
         this.initSocEnergyChartOption();
@@ -64,10 +65,7 @@ export class AnalysisDailyComponent implements OnInit {
 
     private onMileageDateChanged(event: IMyDateRangeModel): void {
         if (event.beginJsDate && event.endJsDate) {
-            let dataChanged = this.dataService.getVehicleDailyMileage(event.beginJsDate, event.endJsDate);
-            this.chartMileage.data.labels = dataChanged.labels;
-            this.chartMileage.data.datasets[0].data = dataChanged.data;
-            this.chartMileage.refresh();
+            this.updateMileageChartData(event.beginJsDate, event.endJsDate);
         }
     }
 
@@ -95,8 +93,23 @@ export class AnalysisDailyComponent implements OnInit {
         };
     }
 
-    private initMileageChart(): void {
-        this.dataMileageChart = this.dataService.getBackwardDaysVehicleDailyMileage(14);
+    private initMileageChartData(): void {
+        let endDate = new Date();
+        let beginDate = this.dataService.getDateOfACoupleWeeksAgo(endDate);
+        let data = this.dataService.getVehicleDailySocEnergy(beginDate, endDate);
+        this.dataMileageChart = {
+            labels: this.dataService.getVehicleDailyMileage(beginDate, endDate).labels,
+            datasets: [
+                {
+                    label: 'Daily Mileage',
+                    data: this.dataService.getVehicleDailyMileage(beginDate, endDate).data,
+                    borderColor: '#4bc0c0'
+                }
+            ]
+        };
+    }
+
+    private initMileageChartOption(): void {
         this.optionMileageChart = {
             responsive: false,
             maintainAspectRatio: true,
@@ -120,6 +133,13 @@ export class AnalysisDailyComponent implements OnInit {
             }
         };
         this.resetChartDefaultOptions(this.optionMileageChart);
+    }
+
+    private updateMileageChartData(beginDate: Date, endDate: Date): void {
+        let data = this.dataService.getVehicleDailyMileage(beginDate, endDate);
+        this.chartMileage.data.labels = data.labels;
+        this.chartMileage.data.datasets[0].data = data.data;
+        this.chartMileage.refresh();
     }
 
     private initSocEnergyChartData(): void {
