@@ -520,6 +520,38 @@ export class DataLocalService {
         }
     }
 
+    getVehicleDailySocEnergy(beginDate: Date, endDate: Date): any {
+        let dictSoc: Array<DailyNumber> = 
+            this.utility.getDailyNumberList(beginDate, endDate, 0, 100);
+        let dictEnergy: Array<DailyNumber> = 
+            this.utility.getDailyNumberList(beginDate, endDate, 0, 2500);
+        let days: Array<Date> = [];
+
+        let numbersSocCharged: Array<number> = [];
+        let numbersSocUsed: Array<number> = [];
+        let numbersEnergyCharged: Array<number> = [];
+        let numbersEnergyUsed: Array<number> = [];
+
+        dictSoc.forEach((item: DailyNumber) => { 
+            days.push(item.date); 
+            numbersSocCharged.push(item.value);
+            numbersSocUsed.push(100 - item.value);
+        });
+        
+        dictEnergy.forEach((item: DailyNumber) => { 
+            numbersEnergyCharged.push(item.value);
+            numbersEnergyUsed.push(2500 - item.value);
+        });
+        
+        return {
+            labels: days,
+            dataSocCharged: numbersSocCharged,            
+            dataSocUsed: numbersSocUsed,            
+            dataEnergyCharged: numbersEnergyCharged,            
+            dataEnergyUsed: numbersEnergyUsed            
+        }
+    }
+
     getDateOfACoupleWeeksAgo(endDate: Date): Date {
         return this.utility.getStartDateBackward(14, endDate);
     }

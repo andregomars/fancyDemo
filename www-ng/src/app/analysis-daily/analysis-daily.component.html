@@ -6,23 +6,37 @@
           <h5><i class="fa fa-bus"></i> {{ vehicleID }}</h5>
         </div>
         <div class="col-3">
-          <button type="button" class="btn btn-primary btn-sm text-right" 
-            (click)="exportCharts()">Export Charts</button>
+          <button type="button" class="btn btn-primary btn-sm text-right" (click)="exportCharts()">Export Charts</button>
         </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col text-center">
-      <my-date-range-picker [options]="optionMileageDateRangePicker" 
-        (dateRangeChanged)="onMileageDateChanged($event)" 
-        placeholder="Select Date Range">
-      </my-date-range-picker>
-    </div>
-  </div>
   <div #charts class="row text-center p-2">
-    <div class="col text-center">
-      <p-chart #chartMileage type="bar" [data]="dataMileageChart" [options]="optionMileageChart" width="960px" height="350px" ></p-chart>
+    <div class="col">
+      <div class="row">
+        <div class="col-7 text-right text-primary">
+          <h3>Daily Mileage</h3>
+        </div>
+        <div class="col-5 text-left">
+          <my-date-range-picker [options]="optionMileageDateRangePicker" (dateRangeChanged)="onMileageDateChanged($event)" placeholder="Select Date Range">
+          </my-date-range-picker>
+        </div>
+      </div>
+      <div class="row p-2">
+        <p-chart #chartMileage type="bar" [data]="dataMileageChart" [options]="optionMileageChart" width="960px" height="300px"></p-chart>
+      </div>
+      <div class="row mt-4">
+        <div class="col-7 text-right text-primary">
+          <h3>Daily SOC &amp; Energy</h3>
+        </div>
+        <div class="col-5 text-left">
+          <my-date-range-picker [options]="optionSocEnergyDateRangePicker" (dateRangeChanged)="onSocEnergyDateChanged($event)" placeholder="Select Date Range">
+          </my-date-range-picker>
+        </div>
+      </div>
+      <div class="row p-2">
+        <p-chart #chartSocEnergy type="bar" [data]="dataSocEnergyChart" [options]="optionSocEnergyChart" width="960px" height="300px"></p-chart>
+      </div>
     </div>
   </div>
 </div>
