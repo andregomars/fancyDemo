@@ -16,6 +16,13 @@ describe('UtilityService', () => {
     expect(array.length).toBe(n);
   }));
 
+  it('should have a list of random float numbers', inject([UtilityService], (service: UtilityService) => {
+    let n = 24;
+    let array = service.getRandomFloatList(n, 0, 1);
+
+    expect(array.length).toBe(n);
+  }));
+
   it('should have a list of days and numbers', inject([UtilityService], (service: UtilityService) => {
     let n = 30;
     let today = moment().startOf('day');
@@ -48,4 +55,24 @@ describe('UtilityService', () => {
 
     expect(array.length).toBe(n);
   }))
+
+  it('should have a list of ratio', inject([UtilityService], (service: UtilityService) => {
+    let n = 3;
+    // let numerators = [{date: '03/01', value: 12}, 
+    //   {date: '03/02', value: 69},
+    //   {date: '03/03', value: 44}];
+    // let denominators = [{date: '03/01', value: 21}, 
+    //   {date: '03/02', value: 32},
+    //   {date: '03/03', value: 0}];
+    let endDate = new Date();
+    let begingDate = service.getStartDateBackward(n, endDate)
+    let numerators = service.getDailyNumberList(begingDate, endDate, 0, 100);
+    let denominators = service.getDailyNumberList(begingDate, endDate, 0, 100);
+    let array = service.getRatioList(numerators, denominators);
+      // Object.assign(row, { value: denominators[index].value } ));
+
+    array.forEach((row) => console.log(row));
+    expect(array.length).toBe(n);
+  }))
+
 });

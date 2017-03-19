@@ -552,6 +552,50 @@ export class DataLocalService {
         }
     }
 
+    getVehicleDailySocMileageEnergy(beginDate: Date, endDate: Date): any {
+        let dictSoc: Array<DailyNumber> = 
+            this.utility.getDailyNumberList(beginDate, endDate, 1, 100);
+        let dictMileage: Array<DailyNumber> = 
+            this.utility.getDailyNumberList(beginDate, endDate, 1, 100);
+        let dictEnergy: Array<DailyNumber> = 
+            this.utility.getDailyNumberList(beginDate, endDate, 0, 2500);
+        let days: Array<Date> = [];
+
+        let numbersSocMileage: Array<number> = []; 
+        let numbersMileageSoc: Array<number> = [];
+        let numbersMileageEnergy: Array<number> = [];
+        let numbersEnergyMileage: Array<number> = [];
+
+        let raitoListSocMileage = this.utility.getRatioList(dictSoc, dictMileage);
+        raitoListSocMileage.forEach((item: DailyNumber) => {
+            days.push(item.date);
+            numbersSocMileage.push(item.value)
+        });
+
+        let raitoListMileageSoc = this.utility.getRatioList(dictMileage, dictSoc);
+        raitoListMileageSoc.forEach((item: DailyNumber) => {
+            numbersMileageSoc.push(item.value)
+        });
+
+        let raitoListMileageEnergy = this.utility.getRatioList(dictMileage, dictEnergy);
+        raitoListMileageEnergy.forEach((item: DailyNumber) => {
+            numbersMileageEnergy.push(item.value)
+        });
+
+        let ratioListEnergyMileage = this.utility.getRatioList(dictEnergy, dictMileage);
+        ratioListEnergyMileage.forEach((item: DailyNumber) => {
+            numbersEnergyMileage.push(item.value)
+        });
+
+        return {
+            labels: days,
+            dataSocMileage: numbersSocMileage,            
+            dataMileageSoc: numbersMileageSoc,            
+            dataMileageEnergy: numbersMileageEnergy,            
+            dataEnergyMileage: numbersEnergyMileage            
+        }
+    }
+
     getDateOfACoupleWeeksAgo(endDate: Date): Date {
         return this.utility.getStartDateBackward(14, endDate);
     }

@@ -21,24 +21,30 @@ export class AnalysisDailyComponent implements OnInit {
 
     vehicleID: string;
 
-    //Daily Mileage Chart
+    //Daily Mileage Chart properties
     optionMileageDateRangePicker: IMyOptions;
     dataMileageChart: any;
     optionMileageChart: any;
     
-    //SOC & Energy Chart
+    //SOC & Energy Chart properties
     optionSocEnergyDateRangePicker: IMyOptions;
     dataSocEnergyChart: any;
     optionSocEnergyChart: any;
 
+    //SOC, Mileage & Energy Chart properties
+    optionSocMileageEnergyDateRangePicker: IMyOptions;
+    dataSocMileageEnergyChart: any;
+    optionSocMileageEnergyChart: any
 
+    //child views
     @ViewChild("charts")
     charts: ElementRef;
     @ViewChild("chartMileage")
     chartMileage: UIChart;
     @ViewChild("chartSocEnergy")
     chartSocEnergy: UIChart;
-
+    @ViewChild("chartSocMileageEnergy")
+    chartSocMileageEnergy: UIChart;
 
     constructor(
         private route: ActivatedRoute,
@@ -48,19 +54,25 @@ export class AnalysisDailyComponent implements OnInit {
     ngOnInit(): void {
         this.loadVehicle();
         
+        // Daily Mileage
         this.initMilageDateRangePicker();
         this.initMileageChartOption();
         this.initMileageChartData();
 
+        // Daily SOC & Energy
         this.initSocEnergyDateRangePicker();
         this.initSocEnergyChartOption();
         this.initSocEnergyChartData();
+
+        // Daily SOC, Mileage & Energy
+        this.initSocMileageEnergyDateRangePicker();
+        this.initSocMileageEnergyChartOption();
+        this.initSocMileageEnergyChartData();
     }
 
-    private loadVehicle(): void {
-        this.route.params
-            .switchMap((params: Params) => new Array(params["vid"]))
-            .subscribe((vid: string) => this.vehicleID = vid);
+    /*** Section - Daily Mileage ***/
+    private initMilageDateRangePicker(): void {
+        this.optionMileageDateRangePicker = this.getDefaultDateRangePickerOptions();
     }
 
     private onMileageDateChanged(event: IMyDateRangeModel): void {
@@ -69,28 +81,30 @@ export class AnalysisDailyComponent implements OnInit {
         }
     }
 
-    private onSocEnergyDateChanged(event: IMyDateRangeModel): void {
-        if (event.beginJsDate && event.endJsDate) {
-            this.updateSocEnergyChartData(event.beginJsDate, event.endJsDate);
-        }
-    }
-
-    private initMilageDateRangePicker(): void {
-        this.optionMileageDateRangePicker = this.getDefaultDateRangePickerOptions();
-    }
-
-    private initSocEnergyDateRangePicker(): void {
-        this.optionSocEnergyDateRangePicker = this.getDefaultDateRangePickerOptions();
-    }
-
-    private getDefaultDateRangePickerOptions(): any {
-        return {
-            dateFormat: "mm/dd/yyyy",
-            width: "200px",
-            height: "23px",
-            selectionTxtFontSize: "12px",
-            editableDateRangeField: false
+    private initMileageChartOption(): void {
+        this.optionMileageChart = {
+            responsive: false,
+            maintainAspectRatio: true,
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        callback: function(value, index, values) {
+                            return moment(value).format('MM/DD');
+                        }
+                    }
+                    }],
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: 100
+                    }
+                }]
+            }
         };
+        this.resetChartDefaultOptions(this.optionMileageChart);
     }
 
     private initMileageChartData(): void {
@@ -109,32 +123,6 @@ export class AnalysisDailyComponent implements OnInit {
         };
     }
 
-    private initMileageChartOption(): void {
-        this.optionMileageChart = {
-            responsive: false,
-            maintainAspectRatio: true,
-            legend: {
-                display: false
-            },
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        callback: function(value, index, values) {
-                        return moment(value).format('MM/DD');
-                        }
-                    }
-                    }],
-                yAxes: [{
-                    ticks: {
-                        min: 0,
-                        max: 100
-                    }
-                }]
-            }
-        };
-        this.resetChartDefaultOptions(this.optionMileageChart);
-    }
-
     private updateMileageChartData(beginDate: Date, endDate: Date): void {
         let data = this.dataService.getVehicleDailyMileage(beginDate, endDate);
         this.chartMileage.data.labels = data.labels;
@@ -142,49 +130,15 @@ export class AnalysisDailyComponent implements OnInit {
         this.chartMileage.refresh();
     }
 
-    private initSocEnergyChartData(): void {
-        let endDate = new Date();
-        let beginDate = this.dataService.getDateOfACoupleWeeksAgo(endDate);
-        let data = this.dataService.getVehicleDailySocEnergy(beginDate, endDate);
-        this.dataSocEnergyChart = {
-            labels: data.labels, 
-            datasets: [{
-                label: "SOC charged",
-                data: data.dataSocCharged,
-                yAxisID: 'ySocCharged',
-                fill: true,
-                borderColor: '#4bc0c0',
-                borderWidth: 1
-            }, {
-                label: "SOC used",
-                data: data.dataSocUsed,
-                yAxisID: 'ySocUsed',
-                borderColor: '#565656',
-                borderWidth: 1
-            }, {
-                label: "Energy charged",
-                data: data.dataEnergyCharged,
-                yAxisID: 'yEnergyCharged',
-                borderColor: '#4286f4',
-                borderWidth: 1
-            }, {
-                label: "Energy used",
-                data: data.dataEnergyUsed,
-                yAxisID: 'yEnergyUsed',
-                borderColor: '#f47d41',
-                borderWidth: 1
-            }]
+    /*** Section - Daily SOC & Energy ***/
+    private onSocEnergyDateChanged(event: IMyDateRangeModel): void {
+        if (event.beginJsDate && event.endJsDate) {
+            this.updateSocEnergyChartData(event.beginJsDate, event.endJsDate);
         }
     }
 
-    private updateSocEnergyChartData(beginDate: Date, endDate: Date): void {
-        let data = this.dataService.getVehicleDailySocEnergy(beginDate, endDate);
-        this.chartSocEnergy.data.labels = data.labels;
-        this.chartSocEnergy.data.datasets[0].data = data.dataSocCharged;
-        this.chartSocEnergy.data.datasets[1].data = data.dataSocUsed;
-        this.chartSocEnergy.data.datasets[2].data = data.dataEnergyCharged;
-        this.chartSocEnergy.data.datasets[3].data = data.dataEnergyUsed;
-        this.chartSocEnergy.refresh();
+    private initSocEnergyDateRangePicker(): void {
+        this.optionSocEnergyDateRangePicker = this.getDefaultDateRangePickerOptions();
     }
 
     private initSocEnergyChartOption(): void {
@@ -255,6 +209,190 @@ export class AnalysisDailyComponent implements OnInit {
         this.resetChartDefaultOptions(this.optionSocEnergyChart);
     }
 
+    private initSocEnergyChartData(): void {
+        let endDate = new Date();
+        let beginDate = this.dataService.getDateOfACoupleWeeksAgo(endDate);
+        let data = this.dataService.getVehicleDailySocEnergy(beginDate, endDate);
+        this.dataSocEnergyChart = {
+            labels: data.labels, 
+            datasets: [{
+                label: "SOC charged",
+                data: data.dataSocCharged,
+                yAxisID: 'ySocCharged',
+                fill: true,
+                borderColor: '#4bc0c0',
+                borderWidth: 1
+            }, {
+                label: "SOC used",
+                data: data.dataSocUsed,
+                yAxisID: 'ySocUsed',
+                borderColor: '#565656',
+                borderWidth: 1
+            }, {
+                label: "Energy charged",
+                data: data.dataEnergyCharged,
+                yAxisID: 'yEnergyCharged',
+                borderColor: '#4286f4',
+                borderWidth: 1
+            }, {
+                label: "Energy used",
+                data: data.dataEnergyUsed,
+                yAxisID: 'yEnergyUsed',
+                borderColor: '#f47d41',
+                borderWidth: 1
+            }]
+        }
+    }
+
+    private updateSocEnergyChartData(beginDate: Date, endDate: Date): void {
+        let data = this.dataService.getVehicleDailySocEnergy(beginDate, endDate);
+        this.chartSocEnergy.data.labels = data.labels;
+        this.chartSocEnergy.data.datasets[0].data = data.dataSocCharged;
+        this.chartSocEnergy.data.datasets[1].data = data.dataSocUsed;
+        this.chartSocEnergy.data.datasets[2].data = data.dataEnergyCharged;
+        this.chartSocEnergy.data.datasets[3].data = data.dataEnergyUsed;
+        this.chartSocEnergy.refresh();
+    }
+
+    /*** Section - Daily SOC, Mileage & Energy ***/
+    private onSocMileageEnergyDateChanged(event: IMyDateRangeModel): void {
+        if (event.beginJsDate && event.endJsDate) {
+            this.updateSocMileageEnergyChartData(event.beginJsDate, event.endJsDate);
+        }
+    }
+
+    private initSocMileageEnergyDateRangePicker(): void {
+        this.optionSocMileageEnergyDateRangePicker = this.getDefaultDateRangePickerOptions();
+    }
+
+    private initSocMileageEnergyChartOption(): void {
+        this.optionSocMileageEnergyChart = {
+            scales: {
+                yAxes: [{
+                    id: 'ySocMileage',
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'SOC/Mileage',
+                        fontColor: '#4bc0c0'
+                    },
+                    type: 'linear',
+                    position: 'left',
+                    ticks: {
+                        fontColor: '#4bc0c0',
+                        min: 0,
+                        max: 100
+                    }
+               }, {
+                    id: 'yMileageSoc',
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Mileage/SOC',
+                        fontColor: '#565656'
+                    },
+                    type: 'linear',
+                    position: 'right',
+                    ticks: {
+                        fontColor: '#565656',
+                        min: 0,
+                        max: 100
+                    }
+               }, {
+                    id: 'yMileageEnergy',
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Mileage/Energy',
+                        fontColor: '#4286f4'
+                    },
+                    type: 'linear',
+                    position: 'right',
+                    ticks: {
+                        fontColor: '#4286f4',
+                        min: 0,
+                        max: 1
+                    }
+               }, {
+                    id: 'yEnergyMileage',
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Energy/Mileage',
+                        fontColor: '#f47d41'
+                    },
+                    type: 'linear',
+                    position: 'right',
+                    ticks: {
+                        fontColor: '#f47d41',
+                        min: 0,
+                        max: 25
+                    }
+               }]
+            }
+        };
+        this.resetChartDefaultOptions(this.optionSocMileageEnergyChart);
+    }
+
+    private initSocMileageEnergyChartData(): void {
+        let endDate = new Date();
+        let beginDate = this.dataService.getDateOfACoupleWeeksAgo(endDate);
+        let data = this.dataService.getVehicleDailySocMileageEnergy(beginDate, endDate);
+        this.dataSocMileageEnergyChart = {
+            labels: data.labels, 
+            datasets: [{
+                label: "SOC/Mileage",
+                data: data.dataSocMileage,
+                yAxisID: 'ySocMileage',
+                fill: true,
+                borderColor: '#4bc0c0',
+                borderWidth: 1
+            }, {
+                label: "Mileage/SOC",
+                data: data.dataMileageSoc,
+                yAxisID: 'yMileageSoc',
+                borderColor: '#565656',
+                borderWidth: 1
+            }, {
+                label: "Mileage/Energy",
+                data: data.dataMileageEnerg,
+                yAxisID: 'yMileageEnergy',
+                borderColor: '#4286f4',
+                borderWidth: 1
+            }, {
+                label: "Energy/Mileage",
+                data: data.dataEnergyMileag,
+                yAxisID: 'yEnergyMileage',
+                borderColor: '#f47d41',
+                borderWidth: 1
+            }]
+        }
+    }
+
+    private updateSocMileageEnergyChartData(beginDate: Date, endDate: Date): void {
+        let data = this.dataService.getVehicleDailySocMileageEnergy(beginDate, endDate);
+        this.chartSocMileageEnergy.data.labels = data.labels;
+        this.chartSocMileageEnergy.data.datasets[0].data = data.dataSocMileage;
+        this.chartSocMileageEnergy.data.datasets[1].data = data.dataMileageSoc;
+        this.chartSocMileageEnergy.data.datasets[2].data = data.dataMileageEnergy;
+        this.chartSocMileageEnergy.data.datasets[3].data = data.dataEnergyMileage;
+        this.chartSocMileageEnergy.refresh();
+    }
+
+    /*** Common Section ***/
+    private loadVehicle(): void {
+        this.route.params
+            .switchMap((params: Params) => new Array(params["vid"]))
+            .subscribe((vid: string) => this.vehicleID = vid);
+    }
+
+    private getDefaultDateRangePickerOptions(): any {
+        return {
+            dateFormat: "mm/dd/yyyy",
+            width: "200px",
+            height: "23px",
+            selectionTxtFontSize: "12px",
+            editableDateRangeField: false,
+            alignSelectorRight: true
+        };
+    }
+
     private resetChartDefaultOptions(option: any): void {
         option.animation = { 
             duration: 0 
@@ -267,12 +405,11 @@ export class AnalysisDailyComponent implements OnInit {
         option.scales.xAxes = [{
             ticks: {
                 callback: function(value, index, values) {
-                return moment(value).format('MM/DD');
+                    return moment(value).format('MM/DD');
                 }
             }
         }];
     }
-
 
     private exportCharts(): void {
         html2canvas(this.charts.nativeElement, {
