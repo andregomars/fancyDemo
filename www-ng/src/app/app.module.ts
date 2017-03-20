@@ -23,6 +23,7 @@ import { ProgressBarComponent } from './components/progressbar/progressbar.compo
 import { DataService } from './shared/data.service';
 import { DataLocalService } from './shared/data-local.service';
 import { AnalysisDailyComponent } from './analysis-daily/analysis-daily.component';
+import { AnalysisAlertComponent } from './analysis-alert/analysis-alert.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AnalysisDailyComponent } from './analysis-daily/analysis-daily.componen
     DataCardsComponent,
     MenuComponent,
     ProgressBarComponent,
-    AnalysisDailyComponent
+    AnalysisDailyComponent,
+    AnalysisAlertComponent
   ],
   imports: [
     BrowserModule,

@@ -1,11 +1,9 @@
-<div id="accordion" >
+<div id="accordion">
   <div class="card">
     <div class="card-header p-0">
-     <h5 class="mb-0 ">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseHome"
-            routerLink="/" routerLinkActive="active" 
-            class="nav-link">
-            <i class="fa fa-home fa-fw"></i>&nbsp;Home
+      <h5 class="mb-0 ">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseHome" routerLink="/" routerLinkActive="active" class="nav-link">
+          <i class="fa fa-home fa-fw"></i>&nbsp;Home
         </a>
       </h5>
     </div>
@@ -13,30 +11,42 @@
   <div class="card">
     <div class="card-header p-0">
       <h5 class="mb-0">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFleet"
-           class="nav-link">
-           <i class="fa fa-bus fa-fw"></i>&nbsp;Fleet
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFleet" class="nav-link">
+          <i class="fa fa-bus fa-fw"></i>&nbsp;Fleet
         </a>
       </h5>
     </div>
     <div id="collapseFleet" class="collapse show">
       <div class="card-block p-0">
-        <p-tieredMenu [model]="fleetList"></p-tieredMenu>   
+        <p-tieredMenu [model]="fleetList"></p-tieredMenu>
       </div>
     </div>
   </div>
   <div class="card">
     <div class="card-header p-0">
       <h5 class="mb-0">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseDailyAnalysis"
-          class="nav-link">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseDailyAnalysis" class="nav-link">
           <i class="fa fa-line-chart fa-fw"></i>&nbsp;Daily Analysis
         </a>
       </h5>
     </div>
     <div id="collapseDailyAnalysis" class="collapse">
       <div class="card-block p-0">
-        <p-tieredMenu [model]="vehicleList"></p-tieredMenu>   
+        <p-tieredMenu [model]="vehicleList"></p-tieredMenu>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header p-0">
+      <h5 class="mb-0">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseAlertAnalysis" class="nav-link">
+          <i class="fa fa-line-chart fa-fw"></i>&nbsp;Alert Analysis
+        </a>
+      </h5>
+    </div>
+    <div id="collapseAlertAnalysis" class="collapse">
+      <div class="card-block p-0">
+        <p-tieredMenu [model]="alertList"></p-tieredMenu>
       </div>
     </div>
   </div>

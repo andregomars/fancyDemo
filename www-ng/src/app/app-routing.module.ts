@@ -5,12 +5,14 @@ import { DrillComponent } from './drill/drill.component';
 import { FleetComponent } from './fleet/fleet.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
 import { AnalysisDailyComponent } from './analysis-daily/analysis-daily.component';
+import { AnalysisAlertComponent } from './analysis-alert/analysis-alert.component';
 
 const routes: Routes = [
     { path: 'drill', component: DrillComponent },
     { path: 'fleet', component: FleetComponent },
     { path: 'vehicle/:vid', component: VehicleComponent },
     { path: 'vehicledaily/:vid', component: AnalysisDailyComponent },
+    { path: 'vehiclealert/:vid', component: AnalysisAlertComponent },
     { path: '', redirectTo: '/', pathMatch: 'full' }
 ];
 

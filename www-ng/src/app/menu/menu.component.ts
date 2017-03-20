@@ -12,6 +12,7 @@ export class MenuComponent implements OnInit {
 
     private fleetList : MenuItem[];
     private vehicleList : MenuItem[];
+    private alertList : MenuItem[];
 
     ngOnInit() {
       this.fleetList = [
@@ -50,6 +51,16 @@ export class MenuComponent implements OnInit {
             }, {
                 label: 'AZ02',
                 routerLink: ['/vehicledaily', 'AZ02'],
+            }
+        ];
+
+        this.alertList = [
+            {
+                label: 'AZ01',
+                routerLink: ['/vehiclealert', 'AZ01'],
+            }, {
+                label: 'AZ02',
+                routerLink: ['/vehiclealert', 'AZ02'],
             }
         ];
     }

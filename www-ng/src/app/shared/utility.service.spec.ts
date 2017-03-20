@@ -71,8 +71,20 @@ describe('UtilityService', () => {
     let array = service.getRatioList(numerators, denominators);
       // Object.assign(row, { value: denominators[index].value } ));
 
-    array.forEach((row) => console.log(row));
+    // array.forEach((row) => console.log(row));
     expect(array.length).toBe(n);
   }))
+
+  it('should have a list of random alert', inject([UtilityService], (service: UtilityService) => {
+    let eventCodes = ['Slow Charging', 'Low Temp', 'Low Voltage'];
+    let maxLength = 10, min = 0, max = 100;
+    let endDate = new Date()
+    let startDate = service.getStartDateBackward(14, endDate);
+    let array = service.getEventList(maxLength, eventCodes, min, max, startDate, endDate)
+    console.log(array);
+    console.log(array.length);
+    expect(true).toBeTruthy();
+  }))
+
 
 });

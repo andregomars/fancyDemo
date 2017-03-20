@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 import { DailyNumber } from '../models/dailyNumber.model';
 
 @Injectable()
@@ -74,7 +75,7 @@ export class UtilityService {
     return moment(endDate).clone().subtract(backwardDays-1, 'day').toDate();
   }
 
-  getRatioList(numerators: Array<DailyNumber>, denominators: Array<DailyNumber>) {
+  getRatioList(numerators: Array<DailyNumber>, denominators: Array<DailyNumber>): Array<any> {
     return numerators.map(
       (nRow, index) => 
         {
@@ -83,6 +84,30 @@ export class UtilityService {
           return { date: nRow.date, value: ratio };
         } 
       ); 
+  }
+
+  getEventList(maxLength: number, eventCodes: Array<string>, 
+      min: number, max: number, 
+      beginDate: Date, endDate: Date,): Array<any> {
+    let n = _.random(maxLength);
+    let types = new Array<string>(n);
+    let i = n;
+    while(i--) types[i] = _.sample(eventCodes);
+
+    let values = new Array<number>(n);
+    i = n;
+    while(i--) values[i] = _.random(min, max);
+
+    let dates = new Array<Date>(n);
+    i = n;
+    let days = this.getDateList(beginDate, endDate);
+    while(i--) dates[i] = _.sample(days);
+
+    let alertKeys = ["type", "value", "time"];
+    let alertValues = _.zip<string|number|Date>(types, values, dates);
+    let events = alertValues.map((vRow)=>_.zipObject(alertKeys, vRow));
+
+    return events;
   }
   
   private getRandomInt(min, max): number {

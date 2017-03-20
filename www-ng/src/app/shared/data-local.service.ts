@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UtilityService } from './utility.service';
 import { DailyNumber } from '../models/dailyNumber.model';
+import * as _ from 'lodash';
 
 @Injectable()
 export class DataLocalService {
@@ -280,17 +281,20 @@ export class DataLocalService {
                      '18:00', '19:00', '20:00', '21:00', '22:00', '23:00' ],
             datasets: [
                 {
+                    type: 'line',
                     label: 'SOC',
                     data: this.utility.getRandomNumberList(24, 0, 100),
                     yAxisID: 'ySOC',
                     fill: false,
                     borderColor: '#4bc0c0'
                 }, {
+                    type: 'bar',
                     label: 'Range',
                     data: this.utility.getRandomNumberList(24, 0, 250),
                     yAxisID: 'yRange',
-                    fill: false,
-                    borderColor: '#565656'
+                    // fill: false,
+                    borderColor: '#565656',
+                    borderWidth: 1
                 }
             ]
         }
@@ -304,17 +308,20 @@ export class DataLocalService {
                      '18:00', '19:00', '20:00', '21:00', '22:00', '23:00' ],
             datasets: [
                 {
+                    type: 'line',
                     label: 'Estimate Distance',
                     data: this.utility.getRandomNumberList(24, 0, 100),
                     yAxisID: 'yEstimateDistance',
                     fill: false,
                     borderColor: '#4bc0c0'
                 }, {
+                    type: 'bar',
                     label: 'Actual Distance',
                     data: this.utility.getRandomNumberList(24, 0, 250),
                     yAxisID: 'yActualDistance',
                     fill: false,
-                    borderColor: '#565656'
+                    borderColor: '#565656',
+                    borderWidth: 1
                 }
             ]
         }
@@ -328,17 +335,20 @@ export class DataLocalService {
                      '18:00', '19:00', '20:00', '21:00', '22:00', '23:00' ],
             datasets: [
                 {
+                    type: 'line',
                     label: 'Charging Status',
                     data: this.utility.getRandomNumberList(24, 0, 100),
                     yAxisID: 'yChargingStatus',
                     fill: false,
                     borderColor: '#4bc0c0'
                 }, {
+                    type: 'bar',
                     label: 'Running Status',
                     data: this.utility.getRandomNumberList(24, 0, 250),
                     yAxisID: 'yRunningStatus',
                     fill: false,
-                    borderColor: '#565656'
+                    borderColor: '#565656',
+                    borderWidth: 1
                 }
             ]
         }
@@ -593,6 +603,28 @@ export class DataLocalService {
             dataMileageSoc: numbersMileageSoc,            
             dataMileageEnergy: numbersMileageEnergy,            
             dataEnergyMileage: numbersEnergyMileage            
+        }
+    }
+
+    getVehicleAlertStats(beginDate: Date, endDate: Date): any {
+        let eventCodes = ['Slow Charging', 'Low Temp', 'Low Voltage'];
+        let maxLength = 10, min = 0, max = 100;
+        let events = this.utility.getEventList(10, eventCodes, min, max, beginDate, endDate);
+        let stats = _.countBy(events, 'type');
+        return {
+            labels: _.keys(stats),
+            data: _.values(stats)
+        }
+    }
+
+    getFleetAlertStats(beginDate: Date, endDate: Date): any {
+        let eventCodes = ['AZ01', 'AZ02'];
+        let maxLength = 20, min = 0, max = 100;
+        let events = this.utility.getEventList(10, eventCodes, min, max, beginDate, endDate);
+        let stats = _.countBy(events, 'type');
+        return {
+            labels: _.keys(stats),
+            data: _.values(stats)
         }
     }
 
