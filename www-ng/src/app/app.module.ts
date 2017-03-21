@@ -24,6 +24,7 @@ import { DataService } from './shared/data.service';
 import { DataLocalService } from './shared/data-local.service';
 import { AnalysisDailyComponent } from './analysis-daily/analysis-daily.component';
 import { AnalysisAlertComponent } from './analysis-alert/analysis-alert.component';
+import { MonthlyReportComponent } from './monthly-report/monthly-report.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AnalysisAlertComponent } from './analysis-alert/analysis-alert.componen
     MenuComponent,
     ProgressBarComponent,
     AnalysisDailyComponent,
-    AnalysisAlertComponent
+    AnalysisAlertComponent,
+    MonthlyReportComponent
   ],
   imports: [
     BrowserModule,

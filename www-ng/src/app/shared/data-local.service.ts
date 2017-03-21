@@ -1,12 +1,55 @@
 import { Injectable } from '@angular/core';
 import { UtilityService } from './utility.service';
 import { DailyNumber } from '../models/dailyNumber.model';
+import { Vehicle } from '../models/vehicle.model';
+import { Fleet } from '../models/fleet.model';
 import * as _ from 'lodash';
 
 @Injectable()
 export class DataLocalService {
 
     private utility: UtilityService = new UtilityService();
+
+    getAllFleetsWithVehicles(): Array<Fleet> {
+        let vehiclesAVTA = new Array<Vehicle>(); 
+        vehiclesAVTA.push(new Vehicle("4370"));
+        vehiclesAVTA.push(new Vehicle("4371"));
+
+        let vehiclesLACMTA = new Array<Vehicle>(); 
+        vehiclesLACMTA.push(new Vehicle("1001"));
+        vehiclesLACMTA.push(new Vehicle("1002"));
+        vehiclesLACMTA.push(new Vehicle("1003"));
+
+        let vehiclesLBT = new Array<Vehicle>(); 
+        vehiclesLBT.push(new Vehicle("1601"));
+        vehiclesLBT.push(new Vehicle("1602"));
+        vehiclesLBT.push(new Vehicle("1603"));
+        vehiclesLBT.push(new Vehicle("1604"));
+        vehiclesLBT.push(new Vehicle("1605"));
+        
+        let fleets = new Array<Fleet>();
+        fleets.push(new Fleet('AVTA', vehiclesAVTA));
+        fleets.push(new Fleet('LACMTA', vehiclesLACMTA));
+        fleets.push(new Fleet('LBT', vehiclesLBT));
+
+        return fleets;
+    }
+
+    getRandomMonthlyData() {
+        let socCharged = _.random(0, 3000);
+        let socUsed = _.random(1, socCharged);
+        let actualDistance = _.random(1, 7500);
+        let socMile = socUsed / actualDistance;
+        let mileSoc = actualDistance / socUsed;
+
+        return {
+            socCharged: socCharged,
+            socUsed: socUsed, 
+            actualDistance: actualDistance,
+            socMile: socMile,
+            mileSoc: mileSoc
+        }
+    }
 
 	getFleet(): any {
         return [{

@@ -6,6 +6,7 @@ import { FleetComponent } from './fleet/fleet.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
 import { AnalysisDailyComponent } from './analysis-daily/analysis-daily.component';
 import { AnalysisAlertComponent } from './analysis-alert/analysis-alert.component';
+import { MonthlyReportComponent } from './monthly-report/monthly-report.component';
 
 const routes: Routes = [
     { path: 'drill', component: DrillComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
     { path: 'vehicle/:vid', component: VehicleComponent },
     { path: 'vehicledaily/:vid', component: AnalysisDailyComponent },
     { path: 'vehiclealert/:vid', component: AnalysisAlertComponent },
+    { path: 'monthlyreport', component: MonthlyReportComponent },
     { path: '', redirectTo: '/', pathMatch: 'full' }
 ];
 
