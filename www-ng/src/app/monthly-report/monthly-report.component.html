@@ -1,3 +1,40 @@
-<p>
-  monthly-report works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col text-center text-primary">
+      <h3>Monthly Fleet Data</h3>
+    </div>
+  </div>
+  <div #charts class="row text-center p-2">
+    <div class="col">
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-primary btn-sm text-center" (click)="exportCharts()">Export Charts</button>
+        </div>
+      </div>
+      <div class="row p-2">
+        <p-dataTable [value]="dataFleetMonthly" class="table">
+          <p-column field="id" header="Bus No." [sortable]="true"></p-column>
+          <p-column field="socCharged" header="SOC Charged"></p-column>
+          <p-column field="socUsed" header="SOC Used"></p-column>
+          <p-column field="actualDistance" header="Actual Distance"></p-column>
+          <p-column field="socMile" header="SOC/Miles"></p-column>
+          <p-column field="mileSoc" header="Miles/SOC"></p-column>
+        </p-dataTable>
+      </div>
+      <!--<div class="row pt-5">
+        <div class="col text-right text-primary">
+          <h3>Fleet Alert Proportion</h3>
+        </div>
+        <div class="col text-left">
+          <my-date-range-picker [options]="optionFleetAlertDateRangePicker" 
+            (dateRangeChanged)="onFleetAlertDateChanged($event)" placeholder="Select Date Range">
+          </my-date-range-picker>
+        </div>
+      </div>
+      <div class="row p-2">
+        <p-chart #chartFleetAlert type="pie" [data]="dataFleetAlertChart" 
+          [options]="optionFleetAlertChart" width="960px" height="300px"></p-chart>
+      </div>-->
+    </div>
+  </div>
+</div>

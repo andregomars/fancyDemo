@@ -664,8 +664,8 @@ export class DataLocalService {
         let socCharged = _.random(100, 3000);
         let socUsed = _.random(10, socCharged);
         let actualDistance = _.random(500, 7500);
-        let socMile = socUsed / actualDistance;
-        let mileSoc = actualDistance / socUsed;
+        let socMile = (socUsed / actualDistance).toFixed(2);
+        let mileSoc = (actualDistance / socUsed).toFixed(2);
 
         return {
             socCharged: socCharged,
@@ -678,6 +678,23 @@ export class DataLocalService {
 
     getRandomMonthlyDataSetWithVehicles(vehicles: Array<Vehicle>): Array<any> {
        let array = vehicles.map<any>(v => Object.assign(v, this.getRandomMonthlyData()));
+
+       let socChargedSum = array.reduce((rowSum, row) => rowSum.socCharged + row.socCharged);  
+       let socUsedSum = array.reduce((rowSum, row) => rowSum.socUsed + row.socUsed);
+       let actualDistanceSum = 
+            array.reduce((rowSum, row) => rowSum.actualDistance + row.actualDistance);
+        let socMileAvg = (socUsedSum / actualDistanceSum).toFixed(2);
+        let mileSocAvg = (actualDistanceSum / socUsedSum).toFixed(2)
+        
+        //insert total line in first element of the array
+        array.unshift({
+            id: "All",
+            socCharged: socChargedSum,
+            socUsed: socUsedSum, 
+            actualDistance: actualDistanceSum,
+            socMile: socMileAvg,
+            mileSoc: mileSocAvg
+        });
 
        return array; 
     }
