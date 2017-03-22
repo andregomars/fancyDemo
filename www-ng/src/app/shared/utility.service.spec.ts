@@ -81,8 +81,8 @@ describe('UtilityService', () => {
     let endDate = new Date()
     let startDate = service.getStartDateBackward(14, endDate);
     let array = service.getEventList(maxLength, eventCodes, min, max, startDate, endDate)
-    console.log(array);
-    console.log(array.length);
+    // console.log(array);
+    // console.log(array.length);
     expect(true).toBeTruthy();
   }))
 
@@ -92,8 +92,8 @@ describe('UtilityService', () => {
     let endDate = new Date()
     let startDate = service.getStartDateBackward(14, endDate);
     let array = service.getEventList(maxLength, eventCodes, min, max, startDate, endDate)
-    console.log(array);
-    console.log(array.length);
+    // console.log(array);
+    // console.log(array.length);
     expect(true).toBeTruthy();
   }))
 });

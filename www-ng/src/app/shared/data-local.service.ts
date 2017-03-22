@@ -35,21 +35,6 @@ export class DataLocalService {
         return fleets;
     }
 
-    getRandomMonthlyData() {
-        let socCharged = _.random(0, 3000);
-        let socUsed = _.random(1, socCharged);
-        let actualDistance = _.random(1, 7500);
-        let socMile = socUsed / actualDistance;
-        let mileSoc = actualDistance / socUsed;
-
-        return {
-            socCharged: socCharged,
-            socUsed: socUsed, 
-            actualDistance: actualDistance,
-            socMile: socMile,
-            mileSoc: mileSoc
-        }
-    }
 
 	getFleet(): any {
         return [{
@@ -673,5 +658,27 @@ export class DataLocalService {
 
     getDateOfACoupleWeeksAgo(endDate: Date): Date {
         return this.utility.getStartDateBackward(14, endDate);
+    }
+
+    getRandomMonthlyData(): any {
+        let socCharged = _.random(100, 3000);
+        let socUsed = _.random(10, socCharged);
+        let actualDistance = _.random(500, 7500);
+        let socMile = socUsed / actualDistance;
+        let mileSoc = actualDistance / socUsed;
+
+        return {
+            socCharged: socCharged,
+            socUsed: socUsed, 
+            actualDistance: actualDistance,
+            socMile: socMile,
+            mileSoc: mileSoc
+        }
+    }
+
+    getRandomMonthlyDataSetWithVehicles(vehicles: Array<Vehicle>): Array<any> {
+       let array = vehicles.map<any>(v => Object.assign(v, this.getRandomMonthlyData()));
+
+       return array; 
     }
 }
