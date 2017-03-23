@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row">
+    <div class="col text-center text-primary">
+      <h3>Daily Report</h3>
+    </div>
+  </div>
+  <div class="row p-2">
+    <div class="col-1 text-right">
+      <div class="text-primary">Vehicle:</div>
+    </div>
+    <div class="col-11 text-left">
+      <div class="btn-group" data-toggle="buttons">
+        <label *ngFor="let vehicle of vehicles" class="btn btn-secondary" (click)="selectVehicle(vehicle)">
+          <input type="checkbox"  autocomplete="off">{{ vehicle }}
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row p-2">
+    <div class="col-1 text-right">
+      <div class="text-primary">Month:</div>
+    </div>
+    <div class="col-11 text-left">
+      <div class="btn-group" data-toggle="buttons">
+        <label *ngFor="let month of months" class="btn btn-secondary" (click)="selectMonth(month)">
+          <input type="radio"  autocomplete="off">{{ month.name }}
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row text-center p-2">
+    <div class="col">
+      <!--<div class="row">
+        <p-dataTable [value]="dataFleetMonthly" class="table">
+          <p-column field="id" header="Bus No." [sortable]="true"></p-column>
+          <p-column field="socCharged" header="SOC Charged"></p-column>
+          <p-column field="socUsed" header="SOC Used"></p-column>
+          <p-column field="actualDistance" header="Actual Distance"></p-column>
+          <p-column field="socMile" header="SOC/Miles"></p-column>
+          <p-column field="mileSoc" header="Miles/SOC"></p-column>
+        </p-dataTable>
+      </div>-->
+    </div>
+  </div>
+</div>

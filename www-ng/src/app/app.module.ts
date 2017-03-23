@@ -20,12 +20,14 @@ import { DataCardsComponent } from './fleet/datacards.component';
 import { MenuComponent } from './menu/menu.component';
 import { ProgressBarComponent } from './components/progressbar/progressbar.component';
 
+import { UtilityService } from './shared/utility.service';
 import { DataService } from './shared/data.service';
 import { DataLocalService } from './shared/data-local.service';
 import { AnalysisDailyComponent } from './analysis-daily/analysis-daily.component';
 import { AnalysisAlertComponent } from './analysis-alert/analysis-alert.component';
 import { MonthlyReportComponent } from './monthly-report/monthly-report.component';
 import { VehicleDailyLogComponent } from './vehicle-daily-log/vehicle-daily-log.component';
+import { DailyReportComponent } from './daily-report/daily-report.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { VehicleDailyLogComponent } from './vehicle-daily-log/vehicle-daily-log.
     AnalysisDailyComponent,
     AnalysisAlertComponent,
     MonthlyReportComponent,
-    VehicleDailyLogComponent
+    VehicleDailyLogComponent,
+    DailyReportComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +60,7 @@ import { VehicleDailyLogComponent } from './vehicle-daily-log/vehicle-daily-log.
     JustgageModule
   ],
   providers: [
+    UtilityService,
     DataService,
     DataLocalService
   ],

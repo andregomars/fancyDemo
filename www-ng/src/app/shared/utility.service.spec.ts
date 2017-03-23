@@ -96,4 +96,10 @@ describe('UtilityService', () => {
     // console.log(array.length);
     expect(true).toBeTruthy();
   }))
+
+  it('should have a list of backward month', inject([UtilityService], (service: UtilityService) => {
+    let array = service.getLatestMonths(12); 
+    console.log(array);
+    expect(true).toBeTruthy();
+  }))
 });

@@ -110,13 +110,27 @@ export class UtilityService {
     return events;
   }
   
-  private getRandomInt(min, max): number {
+
+  getLatestMonths(length: number): Array<string> {
+    let array = new Array(length);
+    while(length--) { 
+      let month = moment().startOf('month').subtract(length, 'month');
+      array[length] = { 
+        name: month.format("MMM"),
+        value: month.toDate()
+      }
+    }
+    return array;
+  }
+
+  //*** private helper methods ***
+  private getRandomInt(min: number, max: number): number {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
-  private getRandomFloat(min, max): number {
+  private getRandomFloat(min: number, max: number): number {
     return +(Math.random() * (max - min) + min).toFixed(2);
   }
 }
