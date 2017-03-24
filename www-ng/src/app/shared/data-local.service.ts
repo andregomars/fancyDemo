@@ -3,6 +3,7 @@ import { UtilityService } from './utility.service';
 import { DailyNumber } from '../models/dailyNumber.model';
 import { Vehicle } from '../models/vehicle.model';
 import { Fleet } from '../models/fleet.model';
+import * as moment from 'moment';
 import * as _ from 'lodash';
 
 @Injectable()
@@ -697,5 +698,27 @@ export class DataLocalService {
         });
 
        return array; 
+    }
+
+    getLogsInMonthOfDate(date: Date): Array<any> {
+        let days = this.utility.getDatesInMonth(date);
+        let array = days.map(d => { 
+            return {
+                date: moment(d).format('YYYY-MM-DD'),
+                fileName: moment(d).format('YYYYMMDD')
+            }
+        }); 
+
+        return array;
+    } 
+
+    getLogsInMonthOfDateByVehicles(vehicles: Array<Vehicle>, date: Date): Array<any> {
+        let logs = this.getLogsInMonthOfDate(date);
+        let array = logs.map(log =>  
+            vehicles.map(v => 
+                Object.assign({}, v, log)
+                )
+            ).reduce((a, b) => a.concat(b));    //use reduce to turn nested array flat, e.g. [[a,b],[c,d]] => [a,b,c,d]
+        return array;
     }
 }

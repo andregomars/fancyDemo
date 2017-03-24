@@ -116,10 +116,23 @@ export class UtilityService {
     while(length--) { 
       let month = moment().startOf('month').subtract(length, 'month');
       array[length] = { 
-        name: month.format("MMM"),
+        name: month.format('MMM'),
         value: month.toDate()
       }
     }
+    return array;
+  }
+
+  getDatesInMonth(date: Date): Array<Date> {
+    let beginDate = moment(date).startOf('month');
+    let lastDayOfMonth = moment(date).endOf('month').startOf('day');
+    let endDate = moment() < lastDayOfMonth ? moment().startOf('day') : lastDayOfMonth; 
+    let size = endDate.diff(beginDate, 'days');
+    let array = new Array(size);
+    do { 
+      array[size] = beginDate.clone().add(size, 'days').toDate();
+    } while(size--)
+
     return array;
   }
 

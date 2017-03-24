@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { UtilityService } from '../shared/utility.service';
 import { DataLocalService } from '../shared/data-local.service';
+import { Vehicle } from '../models/vehicle.model';
 
 @Component({
   selector: 'app-daily-report',
@@ -11,8 +12,10 @@ import { DataLocalService } from '../shared/data-local.service';
 export class DailyReportComponent implements OnInit {
 
   private months: any[];
-  private vehicles: string[];
-  private vehiclesSelected: string[] = [];
+  private vehicles: Vehicle[] = [];
+  private vehiclesSelected: Vehicle[] = [];
+  private monthSelected: Date;
+  private vehicleLogs: any[] = [];
   
   constructor(
     private utility: UtilityService,
@@ -30,23 +33,31 @@ export class DailyReportComponent implements OnInit {
 
   private initVehicleButtons(): void {
     // this.vehicles = this.dataService.getAllFleetsWithVehicles()[0].vehicles.map<string>(v => v.id);
-    this.vehicles = ["AZ01", "AZ02"];
+    // this.vehicles = [new Vehicle("AZ01"), new Vehicle("AZ02")];
+    this.vehicles.push(new Vehicle("AZ01"));
+    this.vehicles.push(new Vehicle("AZ02"));
   }
 
-  private selectVehicle(vehicle: any): void {
-    let vIndex = this.vehiclesSelected.findIndex(v => v === vehicle);
+  private loadVehicleLogs(): void {
+    if (this.vehiclesSelected.length === 0 || !this.monthSelected) 
+      this.vehicleLogs = [];
+    else
+      this.vehicleLogs = this.dataService.getLogsInMonthOfDateByVehicles(this.vehiclesSelected, this.monthSelected);
+  }
+
+  private selectVehicle(vehicle: Vehicle): void {
+    let vIndex = this.vehiclesSelected.findIndex(v => v.id === vehicle.id);
     if(vIndex < 0) {
       this.vehiclesSelected.push(vehicle);
     }
     else {
       this.vehiclesSelected.splice(vIndex, 1);
     }
-
-    console.log(this.vehiclesSelected);
+    this.loadVehicleLogs();
   }
 
   private selectMonth(month: any): void {
-    console.log(month);
+    this.monthSelected = month.value;
+    this.loadVehicleLogs();
   }
-
 }

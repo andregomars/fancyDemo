@@ -99,7 +99,18 @@ describe('UtilityService', () => {
 
   it('should have a list of backward month', inject([UtilityService], (service: UtilityService) => {
     let array = service.getLatestMonths(12); 
-    console.log(array);
+    // console.log(array);
     expect(true).toBeTruthy();
   }))
+
+  it('should have a list of date list in a single month', inject([UtilityService], (service: UtilityService) => {
+    // let array = service.getDatesInMonth(new Date('2017-01-23')); 
+    let array = service.getDatesInMonth(new Date()); 
+
+    // array.map(x=>console.log(x));
+    expect(true).toBeTruthy();
+  }))
+
+
+
 });

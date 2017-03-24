@@ -11,7 +11,7 @@
     <div class="col-11 text-left">
       <div class="btn-group" data-toggle="buttons">
         <label *ngFor="let vehicle of vehicles" class="btn btn-secondary" (click)="selectVehicle(vehicle)">
-          <input type="checkbox"  autocomplete="off">{{ vehicle }}
+          <input type="checkbox"  autocomplete="off">{{ vehicle.id  }}
         </label>
       </div>
     </div>
@@ -30,16 +30,41 @@
   </div>
   <div class="row text-center p-2">
     <div class="col">
-      <!--<div class="row">
-        <p-dataTable [value]="dataFleetMonthly" class="table">
-          <p-column field="id" header="Bus No." [sortable]="true"></p-column>
-          <p-column field="socCharged" header="SOC Charged"></p-column>
-          <p-column field="socUsed" header="SOC Used"></p-column>
-          <p-column field="actualDistance" header="Actual Distance"></p-column>
-          <p-column field="socMile" header="SOC/Miles"></p-column>
-          <p-column field="mileSoc" header="Miles/SOC"></p-column>
-        </p-dataTable>
-      </div>-->
+      <p-dataTable [value]="vehicleLogs" class="table">
+        <p-column field="id" header="Bus No." [sortable]="true"></p-column>
+        <p-column field="date" header="Date" [sortable]="true"></p-column>
+        <p-column header="File Name">
+          <template let-row="rowData" pTemplate="body">
+            {{row.fileName}}_{{row.id}}       
+          </template>
+        </p-column>
+        <p-column header="Download">
+          <template let-row="rowData" pTemplate="body">
+            <button type="submit" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#requestModal">
+               <i class="fa fa-cloud-download fa-lg">&nbsp;</i>
+            </button>
+          </template>
+        </p-column>
+      </p-dataTable>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="requestModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Info</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Download successfully.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
 </div>
