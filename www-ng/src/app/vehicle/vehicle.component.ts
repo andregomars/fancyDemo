@@ -117,17 +117,8 @@ export class VehicleComponent implements OnInit {
     var vid: string;
     // var vid = this.route.snapshot.params["vid"];
     this.route.params
-      .switchMap((params: Params) => vehicles.filter( function(item) {
-        return item.vid === params["vid"]}) )
-      .subscribe((filteredVehicle: any) => {
-        return this.vehicle = filteredVehicle});
-    // var vFiltered = vehicles.filter( function(item) {
-    //   return item.vid === vid;
-    // });
-    // if (vFiltered.length > 0) 
-    //   return vFiltered[0];
-    // else
-    //   return null;
+      .switchMap((params: Params) => vehicles.filter(item => item.vid === params["vid"]))
+      .subscribe((filteredVehicle: any) => this.vehicle = filteredVehicle);
   }
 
   setGaugeOptions(vehicle: any): void {
