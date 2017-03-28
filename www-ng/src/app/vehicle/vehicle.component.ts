@@ -114,9 +114,9 @@ export class VehicleComponent implements OnInit {
 
  getVehicle(vehicles): void {
     if (!vehicles || vehicles.length === 0) return;
-    var vid: string;
-    // var vid = this.route.snapshot.params["vid"];
+    // var vid: string;
     this.route.params
+      // .switchMap((params: Params) => vehicles.filter(item => item.vid === params["vid"]))
       .switchMap((params: Params) => vehicles.filter(item => item.vid === params["vid"]))
       .subscribe((filteredVehicle: any) => this.vehicle = filteredVehicle);
   }
