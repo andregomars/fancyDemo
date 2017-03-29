@@ -11,11 +11,11 @@ import { Vehicle } from '../models/vehicle.model';
 })
 export class DailyReportComponent implements OnInit {
 
-  private months: any[];
-  private vehicles: Vehicle[] = [];
+  months: any[];
+  vehicles: Vehicle[] = [];
   private vehiclesSelected: Vehicle[] = [];
-  private monthSelected: Date;
-  private vehicleLogs: any[] = [];
+  monthSelected: Date;
+  vehicleLogs: any[] = [];
   
   constructor(
     private utility: UtilityService,

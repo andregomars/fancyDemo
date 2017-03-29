@@ -34,16 +34,16 @@
         <p-column field="id" header="Bus No." [sortable]="true"></p-column>
         <p-column field="date" header="Date" [sortable]="true"></p-column>
         <p-column header="File Name">
-          <template let-row="rowData" pTemplate="body">
+          <ng-template let-row="rowData" pTemplate="body">
             {{row.fileName}}_{{row.id}}       
-          </template>
+          </ng-template>
         </p-column>
         <p-column header="Download">
-          <template let-row="rowData" pTemplate="body">
+          <ng-template let-row="rowData" pTemplate="body">
             <button type="submit" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#requestModal">
                <i class="fa fa-cloud-download fa-lg">&nbsp;</i>
             </button>
-          </template>
+          </ng-template>
         </p-column>
       </p-dataTable>
     </div>

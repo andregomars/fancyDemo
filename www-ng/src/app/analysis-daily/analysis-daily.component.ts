@@ -75,7 +75,7 @@ export class AnalysisDailyComponent implements OnInit {
         this.optionMileageDateRangePicker = this.getDefaultDateRangePickerOptions();
     }
 
-    private onMileageDateChanged(event: IMyDateRangeModel): void {
+    onMileageDateChanged(event: IMyDateRangeModel): void {
         if (event.beginJsDate && event.endJsDate) {
             this.updateMileageChartData(event.beginJsDate, event.endJsDate);
         }
@@ -131,7 +131,7 @@ export class AnalysisDailyComponent implements OnInit {
     }
 
     /*** Section - Daily SOC & Energy ***/
-    private onSocEnergyDateChanged(event: IMyDateRangeModel): void {
+    onSocEnergyDateChanged(event: IMyDateRangeModel): void {
         if (event.beginJsDate && event.endJsDate) {
             this.updateSocEnergyChartData(event.beginJsDate, event.endJsDate);
         }
@@ -255,7 +255,7 @@ export class AnalysisDailyComponent implements OnInit {
     }
 
     /*** Section - Daily SOC, Mileage & Energy ***/
-    private onSocMileageEnergyDateChanged(event: IMyDateRangeModel): void {
+    onSocMileageEnergyDateChanged(event: IMyDateRangeModel): void {
         if (event.beginJsDate && event.endJsDate) {
             this.updateSocMileageEnergyChartData(event.beginJsDate, event.endJsDate);
         }
@@ -411,7 +411,7 @@ export class AnalysisDailyComponent implements OnInit {
         }];
     }
 
-    private exportCharts(): void {
+    exportCharts(): void {
         html2canvas(this.charts.nativeElement, {
             onrendered: function (canvas) {
                 const contentDataURL = canvas.toDataURL("image/png");

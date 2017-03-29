@@ -60,7 +60,7 @@ export class AnalysisAlertComponent implements OnInit {
       this.getDefaultDateRangePickerOptions();
   }
 
-  private onVehicleAlertDateChanged(event: IMyDateRangeModel): void {
+  onVehicleAlertDateChanged(event: IMyDateRangeModel): void {
     if (event.beginJsDate && event.endJsDate) {
       this.updateVehicleAlertChartData(event.beginJsDate, event.endJsDate);
     }
@@ -106,7 +106,7 @@ export class AnalysisAlertComponent implements OnInit {
       this.getDefaultDateRangePickerOptions();
   }
 
-  private onFleetAlertDateChanged(event: IMyDateRangeModel): void {
+  onFleetAlertDateChanged(event: IMyDateRangeModel): void {
     if (event.beginJsDate && event.endJsDate) {
       this.updateFleetAlertChartData(event.beginJsDate, event.endJsDate);
     }
@@ -175,7 +175,7 @@ export class AnalysisAlertComponent implements OnInit {
     };
   }
 
-  private exportCharts(): void {
+  exportCharts(): void {
     html2canvas(this.charts.nativeElement, {
       onrendered: function (canvas) {
         const contentDataURL = canvas.toDataURL("image/png");

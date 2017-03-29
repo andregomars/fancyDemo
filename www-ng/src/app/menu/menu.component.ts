@@ -10,9 +10,9 @@ import { MenuModule, MenuItem } from 'primeng/primeng';
 })
 export class MenuComponent implements OnInit {
 
-    private fleetList : MenuItem[];
-    private vehicleList : MenuItem[];
-    private alertList : MenuItem[];
+    fleetList : MenuItem[];
+    vehicleList : MenuItem[];
+    alertList : MenuItem[];
 
     ngOnInit() {
       this.fleetList = [

@@ -74,7 +74,7 @@ export class MonthlyReportComponent implements OnInit {
     };
   }
 
-  private exportCharts(): void {
+  exportCharts(): void {
     html2canvas(this.charts.nativeElement, {
       onrendered: function (canvas) {
         const contentDataURL = canvas.toDataURL("image/png");

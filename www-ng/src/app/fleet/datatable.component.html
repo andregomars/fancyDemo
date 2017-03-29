@@ -1,24 +1,24 @@
 <p-dataTable [value]="data" class="table" >
     <p-column field="vid" header="VID" [sortable]="true">
-       <template let-col let-data="rowData" pTemplate="body">
+       <ng-template let-col let-data="rowData" pTemplate="body">
            <a [routerLink]="['/vehicle', data[col.field]]">{{data[col.field]}}</a>
-        </template>
+        </ng-template>
     </p-column>
     <p-column field="soc" header="SOC">
-        <template let-col let-data="rowData" pTemplate="body">
+        <ng-template let-col let-data="rowData" pTemplate="body">
             <p-progressBar [value]="data[col.field]"></p-progressBar>
-        </template>
+        </ng-template>
     </p-column>
     <p-column field="status" header="Status"></p-column>
     <p-column field="range" header="Range"></p-column>
     <p-column field="mileage" header="Mileage"></p-column>
     <p-column field="updated" header="Updated" [sortable]="true"></p-column>
     <p-column header="Action">
-        <template let-row="rowData" pTemplate="body">
+        <ng-template let-row="rowData" pTemplate="body">
             <button title="SMS Request" type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#requestModal">
                <i class="fa fa-commenting-o fa-lg"></i>
             </button>
-        </template>
+        </ng-template>
     </p-column>
 </p-dataTable>
 
