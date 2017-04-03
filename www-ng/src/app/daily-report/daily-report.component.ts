@@ -44,10 +44,6 @@ export class DailyReportComponent implements OnInit {
   }
 
   private initVehicleButtons(): void {
-    // this.vehicles = this.dataService.getAllFleetsWithVehicles()[0].vehicles.map<string>(v => v.id);
-    // this.vehicles = [new Vehicle("AZ01"), new Vehicle("AZ02")];
-    // this.vehicles.push(new Vehicle("AZ01"));
-    // this.vehicles.push(new Vehicle("AZ02"));
     let vehicles = this.dataService.getVehiclesIdentityByFleet(this.fleetID);
     this.vehicles = vehicles.map(v => new Vehicle(v.vid));
   }

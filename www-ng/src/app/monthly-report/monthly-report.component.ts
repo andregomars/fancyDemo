@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { IMyOptions, IMyDateRangeModel } from 'mydaterangepicker';
-import { DataTableModule } from 'primeng/primeng';
+import { DataTableModule, UIChart } from 'primeng/primeng';
 import * as Rx from 'rxjs/Rx';
 let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
@@ -19,10 +19,23 @@ export class MonthlyReportComponent implements OnInit {
 
   fleetID: string;
   dataFleetMonthly: Array<any>;
+  optionFleetMonthlyChart: any;
+  dataFleetMonthlyChart: any;
+  options: any[] = [
+    { key: 'socCharged', name: 'SOC Charged' },
+    { key: 'socUsed', name: 'SOC Used' },
+    { key: 'actualDistance', name: 'Actual Distance' },
+    { key: 'socMile', name: 'SOC/Miles' },
+    { key: 'mileSoc', name: 'Miles/SOC' }
+  ];
+  optionSelected: any = this.options[0];
 
   //child views
   @ViewChild("charts")
   charts: ElementRef;
+
+  @ViewChild("chartFleetMonthly")
+  chartFleetMonthly: UIChart;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,6 +45,9 @@ export class MonthlyReportComponent implements OnInit {
   ngOnInit() {
     this.loadFleet();
     this.loadFleetMonthlyData();
+
+    this.initMonthlyChartOption();
+    this.initMonthlyChartData();
   }
 
   private loadFleetMonthlyData() {
@@ -39,35 +55,64 @@ export class MonthlyReportComponent implements OnInit {
     this.dataFleetMonthly = this.dataService.getRandomMonthlyDataSetWithVehicles(vehicles);
   }
 
+
+  /*** Bar Chart ***/
+  selectOption(option: any): void {
+    this.optionSelected = option;
+    this.updateMonthlyChartData();
+  }
+
+  private initMonthlyChartOption(): void {
+    this.optionFleetMonthlyChart = {
+      responsive: false,
+      maintainAspectRatio: true,
+      legend: {
+        display: false
+      }
+    };
+    this.resetChartDefaultOptions(this.optionFleetMonthlyChart);
+  }
+
+  private initMonthlyChartData(): void {
+    this.dataFleetMonthlyChart = {
+      labels: this.dataFleetMonthly.map(v => v.id),
+      datasets: [
+        {
+          label: this.optionSelected.name,
+          data: this.dataFleetMonthly.map(v => v[this.optionSelected.key]),
+          borderColor: '#4bc0c0',
+          borderWidth: 1
+        }
+      ]
+    };
+    this.chartFleetMonthly.refresh();
+  }
+
+  private updateMonthlyChartData(): void {
+    this.chartFleetMonthly.data.datasets[0].label = this.optionSelected.name;
+    this.chartFleetMonthly.data.datasets[0].data =
+      this.dataFleetMonthly.map(v => v[this.optionSelected.key]);
+    this.chartFleetMonthly.refresh();
+  }
+
   /*** Common Section ***/
   private loadFleet(): void {
     this.route.params
-       .switchMap((params: Params) => Rx.Observable.create(ob=>ob.next(params["fid"])))
-       .subscribe((fid: string) => this.fleetID = fid);
-  }
-
-  private getDefaultDateRangePickerOptions(): any {
-    return {
-      dateFormat: "mm/dd/yyyy",
-      width: "200px",
-      height: "23px",
-      selectionTxtFontSize: "12px",
-      editableDateRangeField: false,
-      alignSelectorRight: true
-    };
+      .switchMap((params: Params) => Rx.Observable.create(ob => ob.next(params["fid"])))
+      .subscribe((fid: string) => this.fleetID = fid);
   }
 
   private resetChartDefaultOptions(option: any): void {
-    option.animation = { 
-        duration: 0 
+    option.animation = {
+      duration: 0
     };
-    option.hover = { 
-        animationDuration: 0 
+    option.hover = {
+      animationDuration: 0
     };
     option.responsive = false;
     option.maintainAspectRatio = true;
     option.legend = {
-       onClick: (e) => e.stopPropagation()
+      onClick: (e) => e.stopPropagation()
     };
   }
 

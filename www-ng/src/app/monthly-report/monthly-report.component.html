@@ -25,6 +25,18 @@
           <p-column field="mileSoc" header="Miles/SOC"></p-column>
         </p-dataTable>
       </div>
+      <div class="row p-2">
+        <div class="col-1 text-right">
+          <div class="text-primary">Options:</div>
+        </div>
+        <div class="col-11 text-left">
+          <div class="btn-group" data-toggle="buttons">
+            <label *ngFor="let opt of options" class="btn btn-secondary" (click)="selectOption(opt)">
+              <input type="radio"  autocomplete="off">{{ opt.name }}
+            </label>
+          </div>
+        </div>
+      </div>
       <!--<div class="row pt-5">
         <div class="col text-right text-primary">
           <h3>Fleet Alert Proportion</h3>
@@ -34,11 +46,11 @@
             (dateRangeChanged)="onFleetAlertDateChanged($event)" placeholder="Select Date Range">
           </my-date-range-picker>
         </div>
-      </div>
-      <div class="row p-2">
-        <p-chart #chartFleetAlert type="pie" [data]="dataFleetAlertChart" 
-          [options]="optionFleetAlertChart" width="960px" height="300px"></p-chart>
       </div>-->
+      <div class="row pt-4">
+        <p-chart #chartFleetMonthly type="horizontalBar" [data]="dataFleetMonthlyChart" 
+          [options]="optionFleetMonthlyChart" width="960px" height="300px"></p-chart>
+      </div>
     </div>
   </div>
 </div>

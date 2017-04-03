@@ -147,7 +147,8 @@ export class UtilityService {
       let current: number = _.random(-400, 400, false);
       let temperature: number = _.random(-40, 220, false);
       let speed: number = _.random(0, 65, false);
-      let updated: Date = moment().subtract(_.random(0,3600), 'seconds').toDate(); 
+      // let updated: Date = moment().subtract(_.random(0,3600), 'seconds').toDate(); 
+      let updated: string = moment().subtract(_.random(300,3600), 'seconds').format('MM/DD/YYYY hh:mm:ss'); 
 
       return new VehicleStatus(vehicle.vid, vehicle.fid,
         soc, status, range, mileage, voltage, current, temperature, speed, updated);
