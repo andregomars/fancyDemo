@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { IMyOptions, IMyDateRangeModel } from 'mydaterangepicker';
 import * as moment from 'moment';
 import { UIChart } from 'primeng/primeng';
-import 'rxjs/add/operator/switchMap';
+import * as Rx from 'rxjs/Rx';
 let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
 
@@ -16,6 +16,7 @@ import { DataLocalService } from '../shared/data-local.service';
 })
 export class AnalysisAlertComponent implements OnInit {
 
+  fleetID: string;
   vehicleID: string;
   //Vehicle Alert Proportion Chart properties
   optionVehicleAlertDateRangePicker: IMyOptions;
@@ -120,7 +121,7 @@ export class AnalysisAlertComponent implements OnInit {
   private initFleetAlertChartData(): void {
     let endDate = new Date();
     let beginDate = this.dataService.getDateOfACoupleWeeksAgo(endDate);
-    let data = this.dataService.getFleetAlertStats(beginDate, endDate);
+    let data = this.dataService.getFleetAlertStats(beginDate, endDate, this.fleetID);
     this.dataFleetAlertChart = {
       labels: data.labels,
       datasets: [
@@ -137,7 +138,7 @@ export class AnalysisAlertComponent implements OnInit {
   }
 
   private updateFleetAlertChartData(beginDate: Date, endDate: Date): void {
-    let data = this.dataService.getFleetAlertStats(beginDate, endDate);
+    let data = this.dataService.getFleetAlertStats(beginDate, endDate, this.fleetID);
     this.chartFleetAlert.data.labels = data.labels;
     this.chartFleetAlert.data.datasets[0].data = data.data;
     this.chartFleetAlert.refresh();
@@ -146,8 +147,11 @@ export class AnalysisAlertComponent implements OnInit {
   /*** Common Section ***/
   private loadVehicle(): void {
     this.route.params
-      .switchMap((params: Params) => new Array(params["vid"]))
-      .subscribe((vid: string) => this.vehicleID = vid);
+      .switchMap((params: Params) => Rx.Observable.create(ob => ob.next(params["vid"]))) 
+      .subscribe((vid: string) => {
+        this.vehicleID = vid;
+        this.fleetID = this.dataService.getVehicleIdentity(vid).fid;
+    });
   }
 
   private getDefaultDateRangePickerOptions(): any {

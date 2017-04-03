@@ -24,7 +24,7 @@
                 <div class="row align-items-center no-gutters mt-4"> 
                     <div class="col-sm-3">
                         <!--<app-gauge [options]="optionGaugeSOC" [value]="optionGaugeSOC.value" [max]="optionGaugeSOC.max"></app-gauge>-->
-                        <justgage [options]="optionGaugeSOC" [value]="optionGaugeSOC.value" [max]="optionGaugeSOC.max"></justgage>
+                        <justgage [options]="optionGaugeSOC" [value]="vehicle.soc" min="0" max="100"></justgage>
                     </div>
                     <div class="col-sm-6">
                         <div class="container">
@@ -56,7 +56,7 @@
                     </div>
                     <div class="col-sm-3">
                         <!--<app-gauge [options]="optionGaugeSpeed" [value]="optionGaugeSpeed.value" [max]="optionGaugeSpeed.max"></app-gauge>-->
-                        <justgage [options]="optionGaugeSpeed" [value]="optionGaugeSpeed.value" [max]="optionGaugeSpeed.max"></justgage>
+                        <justgage [options]="optionGaugeSpeed" [value]="vehicle.speed" min="0" max="65"></justgage>
                     </div>
                 </div>
 

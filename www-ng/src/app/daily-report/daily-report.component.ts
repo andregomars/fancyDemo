@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import * as Rx from 'rxjs/Rx';
 
 import { UtilityService } from '../shared/utility.service';
 import { DataLocalService } from '../shared/data-local.service';
 import { Vehicle } from '../models/vehicle.model';
+
 
 @Component({
   selector: 'app-daily-report',
@@ -11,20 +14,29 @@ import { Vehicle } from '../models/vehicle.model';
 })
 export class DailyReportComponent implements OnInit {
 
+  fleetID: string;
+  private vehiclesSelected: Vehicle[] = [];
   months: any[];
   vehicles: Vehicle[] = [];
-  private vehiclesSelected: Vehicle[] = [];
   monthSelected: Date;
   vehicleLogs: any[] = [];
   
   constructor(
     private utility: UtilityService,
+    private route: ActivatedRoute,
     private dataService: DataLocalService
   ) { }
 
   ngOnInit() {
+    this.loadFleet();
     this.initVehicleButtons();
     this.initMonthButtons();
+  }
+
+  private loadFleet(): void {
+    this.route.params
+       .switchMap((params: Params) => Rx.Observable.create(ob=>ob.next(params["fid"])))
+       .subscribe((fid: string) => this.fleetID = fid);
   }
 
   private initMonthButtons(): void {
@@ -34,8 +46,10 @@ export class DailyReportComponent implements OnInit {
   private initVehicleButtons(): void {
     // this.vehicles = this.dataService.getAllFleetsWithVehicles()[0].vehicles.map<string>(v => v.id);
     // this.vehicles = [new Vehicle("AZ01"), new Vehicle("AZ02")];
-    this.vehicles.push(new Vehicle("AZ01"));
-    this.vehicles.push(new Vehicle("AZ02"));
+    // this.vehicles.push(new Vehicle("AZ01"));
+    // this.vehicles.push(new Vehicle("AZ02"));
+    let vehicles = this.dataService.getVehiclesIdentityByFleet(this.fleetID);
+    this.vehicles = vehicles.map(v => new Vehicle(v.vid));
   }
 
   private loadVehicleLogs(): void {

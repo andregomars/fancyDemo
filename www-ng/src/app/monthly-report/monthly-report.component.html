@@ -7,9 +7,13 @@
   <div #charts class="row text-center p-2">
     <div class="col">
       <div class="row">
-        <div class="col">
+        <div class="col-2 text-left">
+          <h5>Fleet: {{ fleetID }}</h5>
+        </div>
+        <div class="col-8">
           <button type="button" class="btn btn-primary btn-sm text-center" (click)="exportCharts()">Export Charts</button>
         </div>
+        <div class="col-2"></div>
       </div>
       <div class="row p-2">
         <p-dataTable [value]="dataFleetMonthly" class="table">

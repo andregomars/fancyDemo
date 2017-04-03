@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { DailyNumber } from '../models/dailyNumber.model';
+import { VehicleStatus } from '../models/vehicle-status';
+import { VehicleIdentity } from '../models/vehicle-identity'
 
 @Injectable()
 export class UtilityService {
@@ -89,7 +91,7 @@ export class UtilityService {
   getEventList(maxLength: number, eventCodes: Array<string>, 
       min: number, max: number, 
       beginDate: Date, endDate: Date,): Array<any> {
-    let n = _.random(maxLength);
+    let n = _.random(1, maxLength);
     let types = new Array<string>(n);
     let i = n;
     while(i--) types[i] = _.sample(eventCodes);
@@ -135,6 +137,21 @@ export class UtilityService {
 
     return array;
   }
+
+  genRandomVehicleStatus(vehicle: VehicleIdentity): VehicleStatus {
+      let soc: number = _.random(0, 100, false);
+      let status: string = _.sample(['Charging', 'N/A']);
+      let range: number = +_.random(0, 250, true).toFixed(1);
+      let mileage: number = +_.random(0, 250, true).toFixed(1);
+      let voltage: number = _.random(0, 800, false);
+      let current: number = _.random(-400, 400, false);
+      let temperature: number = _.random(-40, 220, false);
+      let speed: number = _.random(0, 65, false);
+      let updated: Date = moment().subtract(_.random(0,3600), 'seconds').toDate(); 
+
+      return new VehicleStatus(vehicle.vid, vehicle.fid,
+        soc, status, range, mileage, voltage, current, temperature, speed, updated);
+    }
 
   //*** private helper methods ***
   private getRandomInt(min: number, max: number): number {

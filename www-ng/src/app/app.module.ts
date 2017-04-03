@@ -23,11 +23,13 @@ import { ProgressBarComponent } from './components/progressbar/progressbar.compo
 import { UtilityService } from './shared/utility.service';
 import { DataService } from './shared/data.service';
 import { DataLocalService } from './shared/data-local.service';
+import { FleetTrackerService } from './shared/fleet-tracker.service';
 import { AnalysisDailyComponent } from './analysis-daily/analysis-daily.component';
 import { AnalysisAlertComponent } from './analysis-alert/analysis-alert.component';
 import { MonthlyReportComponent } from './monthly-report/monthly-report.component';
 import { VehicleDailyLogComponent } from './vehicle-daily-log/vehicle-daily-log.component';
 import { DailyReportComponent } from './daily-report/daily-report.component';
+import { FleetSelectionComponent } from './fleet-selection/fleet-selection.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { DailyReportComponent } from './daily-report/daily-report.component';
     AnalysisAlertComponent,
     MonthlyReportComponent,
     VehicleDailyLogComponent,
-    DailyReportComponent
+    DailyReportComponent,
+    FleetSelectionComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,8 @@ import { DailyReportComponent } from './daily-report/daily-report.component';
   providers: [
     UtilityService,
     DataService,
-    DataLocalService
+    DataLocalService,
+    FleetTrackerService
   ],
   bootstrap: [AppComponent]
 })

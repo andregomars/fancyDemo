@@ -1,19 +1,21 @@
 <div class="container">
-<div class="row m-3">
-    <div class="col text-right">
-    <div class="btn-group">
-        <button class="btn btn-link" >
-            <i class="fa fa-list fa-2x" [hidden]="!isShown('cards')" (click)="toggleView('table')"></i>
-            <i class="fa fa-th-large fa-2x" [hidden]="!isShown('table')" (click)="toggleView('cards')"></i>
-        </button>
+    <div class="row m-3">
+        <div class="col-10 text-center">
+            <h5>{{fid}}</h5>
+        </div>
+        <div class="col-2 text-right">
+            <div class="btn-group">
+                <button class="btn btn-link">
+                    <i class="fa fa-list fa-2x" [hidden]="!isShown('cards')" (click)="toggleView('table')"></i>
+                    <i class="fa fa-th-large fa-2x" [hidden]="!isShown('table')" (click)="toggleView('cards')"></i>
+                </button>
+            </div>
+        </div>
     </div>
+    <div class="row m-3">
+        <div class="col" [ngSwitch]="viewComponent">
+            <datatable *ngSwitchCase="'table'" [items]="data"></datatable>
+            <datacards *ngSwitchCase="'cards'" [items]="data"></datacards>
+        </div>
     </div>
 </div>
-<div class="row m-3">
-    <div class="col" [ngSwitch]="viewComponent">
-        <datatable *ngSwitchCase="'table'" [items]="data"></datatable>
-        <datacards *ngSwitchCase="'cards'" [items]="data"></datacards>
-    </div>
-</div>
-</div>
-

@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-header p-0">
       <h5 class="mb-0 ">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseHome" routerLink="/" routerLinkActive="active" class="nav-link">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseHome" routerLink="/fleet" routerLinkActive="active" class="nav-link">
           <i class="fa fa-home fa-fw"></i>&nbsp;Home
         </a>
       </h5>
@@ -16,9 +16,9 @@
         </a>
       </h5>
     </div>
-    <div id="collapseFleet" class="collapse show">
+    <div id="collapseFleet" class="collapse">
       <div class="card-block p-0">
-        <p-tieredMenu [model]="fleetList"></p-tieredMenu>
+        <p-tieredMenu [model]="fleetItems"></p-tieredMenu>
       </div>
     </div>
   </div>
@@ -32,7 +32,7 @@
     </div>
     <div id="collapseDailyAnalysis" class="collapse">
       <div class="card-block p-0">
-        <p-tieredMenu [model]="vehicleList"></p-tieredMenu>
+        <p-tieredMenu [model]="vehicleItems"></p-tieredMenu>
       </div>
     </div>
   </div>
@@ -46,7 +46,7 @@
     </div>
     <div id="collapseAlertAnalysis" class="collapse">
       <div class="card-block p-0">
-        <p-tieredMenu [model]="alertList"></p-tieredMenu>
+        <p-tieredMenu [model]="alertItems"></p-tieredMenu>
       </div>
     </div>
   </div>
@@ -54,7 +54,7 @@
     <div class="card-header p-0">
       <h5 class="mb-0 ">
         <a data-toggle="collapse" data-parent="#accordion" 
-          routerLink="/monthlyreport" routerLinkActive="active" class="nav-link">
+          [routerLink]="monthlyReportItem" routerLinkActive="active" class="nav-link">
           <i class="fa fa-bar-chart fa-fw"></i>&nbsp;Monthly Report
         </a>
       </h5>
@@ -64,7 +64,7 @@
     <div class="card-header p-0">
       <h5 class="mb-0 ">
         <a data-toggle="collapse" data-parent="#accordion" 
-          routerLink="/dailyreport" routerLinkActive="active" class="nav-link">
+          [routerLink]="dailyReportItem" routerLinkActive="active" class="nav-link">
           <i class="fa fa-bar-chart fa-fw"></i>&nbsp;Daily Report
         </a>
       </h5>

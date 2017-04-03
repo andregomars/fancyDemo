@@ -3,6 +3,9 @@ import { UtilityService } from './utility.service';
 import { DailyNumber } from '../models/dailyNumber.model';
 import { Vehicle } from '../models/vehicle.model';
 import { Fleet } from '../models/fleet.model';
+import { VehicleStatus } from '../models/vehicle-status';
+import { VehicleIdentity } from '../models/vehicle-identity';
+
 import * as moment from 'moment';
 import * as _ from 'lodash';
 
@@ -10,6 +13,13 @@ import * as _ from 'lodash';
 export class DataLocalService {
 
     private utility: UtilityService = new UtilityService();
+    private allVehicles: Array<VehicleIdentity>;
+    private allVehiclesStatus: Array<VehicleStatus>;
+
+    consructor() {
+      this.getAllVehiclesData();
+      this.getAllVehicleStatusData();
+    }
 
     getAllFleetsWithVehicles(): Array<Fleet> {
         let vehiclesAVTA = new Array<Vehicle>(); 
@@ -36,238 +46,97 @@ export class DataLocalService {
         return fleets;
     }
 
+    getAllVehiclesData(): Array<VehicleIdentity> {
+      if (this.allVehicles) return this.allVehicles;
+      
+      this.allVehicles = [{
+                "fid": "AVTA",
+                "vid": "4370"
+            }, {
+                "fid": "AVTA",
+                "vid": "4371"
+            }, {
+                "fid": "BYDUPS",
+                "vid": "UPS"
+            }, {
+                "fid": "LACMTA",
+                "vid": "1001"
+            }, {
+                "fid": "LACMTA",
+                "vid": "1002"
+            }, {
+                "fid": "LACMTA",
+                "vid": "1003"
+            }, {
+                "fid": "LACMTA",
+                "vid": "1004"
+            }, {
+                "fid": "LACMTA",
+                "vid": "1005"
+            }, {
+                "fid": "LBT",
+                "vid": "1601"
+            }, {
+                "fid": "LBT",
+                "vid": "1602"
+            }, {
+                "fid": "LBT",
+                "vid": "1603"
+            }, {
+                "fid": "LBT",
+                "vid": "1604"
+            }, {
+                "fid": "LBT",
+                "vid": "1605"
+            }, {
+                "fid": "LBT",
+                "vid": "1606"
+            }, {
+                "fid": "LBT",
+                "vid": "1607"
+            }, {
+                "fid": "LBT",
+                "vid": "1608"
+            }, {
+                "fid": "LBT",
+                "vid": "1609"
+            }, {
+                "fid": "LBT",
+                "vid": "1610"
+            }];
 
-	getFleet(): any {
-        return [{
-            "vid": "AZ01",
-            "fid": "LBT",
-            "soc": 80,
-            "status": "Charging",
-            "range": 252,
-            "mileage": 8788.1,
-            "voltage": 50,
-            "current": 20,
-            "temperature": 150,
-            "speed": 75,
-            "updated": "02/10/2017 10:23:41"
-        }, {
-            "vid": "AZ02",
-            "fid": "LBT",
-            "soc": 20,
-            "status": "N/A",
-            "range": 40,
-            "mileage": 16750.8,
-            "voltage": 110,
-            "current": 15,
-            "temperature": 225,
-            "speed": 45,
-            "updated": "02/10/2017 11:13:10"
-        }, {
-            "vid": "NJ",
-            "fid": "LBT",
-            "soc": 100,
-            "status": "Charging",
-            "range": 300,
-            "mileage": 645.2,
-            "voltage": 220,
-            "current": 60,
-            "temperature": 110,
-            "speed": 0,
-            "updated": "02/10/2017 10:40:52"
-        }, {
-            "vid": "P01",
-            "fid": "LBT",
-            "soc": 50,
-            "status": "N/A",
-            "range": 150,
-            "mileage": 4000.5,
-            "voltage": 110,
-            "current": 90,
-            "temperature": 80,
-            "speed": 35,
-            "updated": "02/10/2017 12:02:33"
-        }, {
-            "vid": "P02",
-            "fid": "LBT",
-            "soc": 38,
-            "status": "N/A",
-            "range": 110,
-            "mileage": 15500.2,
-            "voltage": 220,
-            "current": 90,
-            "temperature": 80,
-            "speed": 45,
-            "updated": "02/10/2017 12:02:33"
-        }, {
-            "vid": "P03",
-            "fid": "LBT",
-            "soc": 70,
-            "status": "N/A",
-            "range": 189,
-            "mileage": 37009.1,
-            "voltage": 110,
-            "current": 90,
-            "temperature": 80,
-            "speed": 39,
-            "updated": "02/10/2017 12:02:33"
-        }, {
-            "vid": "Z001",
-            "fid": "LBT",
-            "soc": 10,
-            "status": "Charging",
-            "range": 30,
-            "mileage": 10023.9,
-            "voltage": 220,
-            "current": 20,
-            "temperature": 75,
-            "speed": 40,
-            "updated": "02/10/2017 12:02:33"
-        }, {
-            "vid": "Z002",
-            "fid": "LBT",
-            "soc": 47,
-            "status": "N/A",
-            "range": 140,
-            "mileage": 2300.9,
-            "voltage": 220,
-            "current": 20,
-            "temperature": 75,
-            "speed": 40,
-            "updated": "02/10/2017 12:02:33"
-        }, {
-            "vid": "Z003",
-            "fid": "LBT",
-            "soc": 47,
-            "status": "N/A",
-            "range": 140,
-            "mileage": 2300.9,
-            "voltage": 220,
-            "current": 20,
-            "temperature": 75,
-            "speed": 40,
-            "updated": "02/10/2017 12:02:33"
-        }, {
-            "vid": "Z004",
-            "fid": "LBT",
-            "soc": 47,
-            "status": "N/A",
-            "range": 140,
-            "mileage": 2300.9,
-            "voltage": 220,
-            "current": 20,
-            "temperature": 75,
-            "speed": 40,
-            "updated": "02/10/2017 12:02:33"
-        }, {
-            "vid": "Z005",
-            "fid": "LBT",
-            "soc": 47,
-            "status": "N/A",
-            "range": 140,
-            "mileage": 2300.9,
-            "voltage": 220,
-            "current": 20,
-            "temperature": 75,
-            "speed": 40,
-            "updated": "02/10/2017 12:02:33"
-        }, {
-            "vid": "Z006",
-            "fid": "LBT",
-            "soc": 47,
-            "status": "N/A",
-            "range": 140,
-            "mileage": 2300.9,
-            "voltage": 220,
-            "current": 20,
-            "temperature": 75,
-            "speed": 40,
-            "updated": "02/10/2017 12:02:33"
-        }, {
-            "vid": "Z007",
-            "fid": "LBT",
-            "soc": 35,
-            "status": "N/A",
-            "range": 105,
-            "mileage": 11054.9,
-            "voltage": 220,
-            "current": 20,
-            "temperature": 75,
-            "speed": 40,
-            "updated": "02/10/2017 12:02:33"
-        }, {
-            "vid": "Z008",
-            "fid": "LBT",
-            "soc": 35,
-            "status": "N/A",
-            "range": 105,
-            "mileage": 11054.9,
-            "voltage": 220,
-            "current": 20,
-            "temperature": 75,
-            "speed": 40,
-            "updated": "02/10/2017 12:02:33"
-        }, {
-            "vid": "Z009",
-            "fid": "LBT",
-            "soc": 35,
-            "status": "N/A",
-            "range": 105,
-            "mileage": 11054.9,
-            "voltage": 220,
-            "current": 20,
-            "temperature": 75,
-            "speed": 40,
-            "updated": "02/10/2017 12:02:33"
-        }, {
-            "vid": "Z010",
-            "fid": "LBT",
-            "soc": 35,
-            "status": "N/A",
-            "range": 105,
-            "mileage": 11054.9,
-            "voltage": 220,
-            "current": 20,
-            "temperature": 75,
-            "speed": 40,
-            "updated": "02/10/2017 12:02:33"
-        }, {
-            "vid": "Z011",
-            "fid": "LBT",
-            "soc": 35,
-            "status": "N/A",
-            "range": 105,
-            "mileage": 11054.9,
-            "voltage": 220,
-            "current": 20,
-            "temperature": 75,
-            "speed": 40,
-            "updated": "02/10/2017 12:02:33"
-        }, {
-            "vid": "Z012",
-            "fid": "LBT",
-            "soc": 35,
-            "status": "N/A",
-            "range": 105,
-            "mileage": 11054.9,
-            "voltage": 220,
-            "current": 20,
-            "temperature": 75,
-            "speed": 40,
-            "updated": "02/10/2017 12:02:33"
-        }, {
-            "vid": "Z013",
-            "fid": "LBT",
-            "soc": 35,
-            "status": "N/A",
-            "range": 105,
-            "mileage": 11054.9,
-            "voltage": 220,
-            "current": 20,
-            "temperature": 75,
-            "speed": 40,
-            "updated": "02/10/2017 12:02:33"
-        }]
+      return this.allVehicles;
     }
+
+    getAllVehicleStatusData(): Array<VehicleStatus> {
+      if (this.allVehiclesStatus) return this.allVehiclesStatus;
+
+      this.allVehicles = this.getAllVehiclesData();
+      this.allVehiclesStatus = this.allVehicles.map(v => this.utility.genRandomVehicleStatus(v));
+      return this.allVehiclesStatus;
+    }
+
+    getVehicleStatus(vid: string): VehicleStatus {
+      if (!this.allVehiclesStatus) this.getAllVehicleStatusData();
+      return this.allVehiclesStatus.find(s => s.vid === vid);
+    }
+
+    getVehicleIdentity(vid: string): VehicleIdentity {
+      if (!this.allVehicles) this.getAllVehiclesData();
+      return this.allVehicles.find(v => v.vid === vid);
+    }
+    
+    getVehiclesIdentityByFleet(fid: string): Array<VehicleIdentity> {
+      if (!this.allVehicles) this.getAllVehiclesData();
+      return this.allVehicles.filter(v => v.fid === fid);
+    }
+
+    getVehiclesStatusByFleet(fid: string): Array<VehicleStatus> {
+      if (!this.allVehiclesStatus) this.getAllVehicleStatusData();
+      return this.allVehiclesStatus.filter(s => s.fid === fid);
+    }
+
+
 
     getLineChart(): any {
         return {
@@ -637,7 +506,7 @@ export class DataLocalService {
 
     getVehicleAlertStats(beginDate: Date, endDate: Date): any {
         let eventCodes = ['Slow Charging', 'Low Temp', 'Low Voltage'];
-        let maxLength = 10, min = 0, max = 100;
+        let maxLength = 10, min = 1, max = 100;
         let events = this.utility.getEventList(10, eventCodes, min, max, beginDate, endDate);
         let stats = _.countBy(events, 'type');
         return {
@@ -646,9 +515,10 @@ export class DataLocalService {
         }
     }
 
-    getFleetAlertStats(beginDate: Date, endDate: Date): any {
-        let eventCodes = ['AZ01', 'AZ02'];
-        let maxLength = 20, min = 0, max = 100;
+    getFleetAlertStats(beginDate: Date, endDate: Date, fleetID: string): any {
+        // let eventCodes = ['AZ01', 'AZ02'];
+        let eventCodes = this.getVehiclesIdentityByFleet(fleetID).map(v => v.vid);
+        let maxLength = 20, min = 1, max = 100;
         let events = this.utility.getEventList(10, eventCodes, min, max, beginDate, endDate);
         let stats = _.countBy(events, 'type');
         return {
@@ -678,12 +548,11 @@ export class DataLocalService {
     }
 
     getRandomMonthlyDataSetWithVehicles(vehicles: Array<Vehicle>): Array<any> {
-       let array = vehicles.map<any>(v => Object.assign(v, this.getRandomMonthlyData()));
-
-       let socChargedSum = array.reduce((rowSum, row) => rowSum.socCharged + row.socCharged);  
-       let socUsedSum = array.reduce((rowSum, row) => rowSum.socUsed + row.socUsed);
+       let array = vehicles.map(v => Object.assign({}, v, this.getRandomMonthlyData()));
+       let socChargedSum = array.map(el => el.socCharged).reduce((sum, value) => sum + value); 
+       let socUsedSum = array.map(el => el.socUsed).reduce((sum, value) => sum + value); 
        let actualDistanceSum = 
-            array.reduce((rowSum, row) => rowSum.actualDistance + row.actualDistance);
+            array.map(el => el.actualDistance).reduce((sum, value) => sum + value); 
         let socMileAvg = (socUsedSum / actualDistanceSum).toFixed(2);
         let mileSocAvg = (actualDistanceSum / socUsedSum).toFixed(2)
         
@@ -722,3 +591,237 @@ export class DataLocalService {
         return array;
     }
 }
+
+/*
+	getFleet(): any {
+        return [{
+            "vid": "AZ01",
+            "fid": "LBT",
+            "soc": 80,
+            "status": "Charging",
+            "range": 252,
+            "mileage": 8788.1,
+            "voltage": 50,
+            "current": 20,
+            "temperature": 150,
+            "speed": 75,
+            "updated": "02/10/2017 10:23:41"
+        }, {
+            "vid": "AZ02",
+            "fid": "LBT",
+            "soc": 20,
+            "status": "N/A",
+            "range": 40,
+            "mileage": 16750.8,
+            "voltage": 110,
+            "current": 15,
+            "temperature": 225,
+            "speed": 45,
+            "updated": "02/10/2017 11:13:10"
+        }, {
+            "vid": "NJ",
+            "fid": "LBT",
+            "soc": 100,
+            "status": "Charging",
+            "range": 300,
+            "mileage": 645.2,
+            "voltage": 220,
+            "current": 60,
+            "temperature": 110,
+            "speed": 0,
+            "updated": "02/10/2017 10:40:52"
+        }, {
+            "vid": "P01",
+            "fid": "LBT",
+            "soc": 50,
+            "status": "N/A",
+            "range": 150,
+            "mileage": 4000.5,
+            "voltage": 110,
+            "current": 90,
+            "temperature": 80,
+            "speed": 35,
+            "updated": "02/10/2017 12:02:33"
+        }, {
+            "vid": "P02",
+            "fid": "LBT",
+            "soc": 38,
+            "status": "N/A",
+            "range": 110,
+            "mileage": 15500.2,
+            "voltage": 220,
+            "current": 90,
+            "temperature": 80,
+            "speed": 45,
+            "updated": "02/10/2017 12:02:33"
+        }, {
+            "vid": "P03",
+            "fid": "LBT",
+            "soc": 70,
+            "status": "N/A",
+            "range": 189,
+            "mileage": 37009.1,
+            "voltage": 110,
+            "current": 90,
+            "temperature": 80,
+            "speed": 39,
+            "updated": "02/10/2017 12:02:33"
+        }, {
+            "vid": "Z001",
+            "fid": "LBT",
+            "soc": 10,
+            "status": "Charging",
+            "range": 30,
+            "mileage": 10023.9,
+            "voltage": 220,
+            "current": 20,
+            "temperature": 75,
+            "speed": 40,
+            "updated": "02/10/2017 12:02:33"
+        }, {
+            "vid": "Z002",
+            "fid": "LBT",
+            "soc": 47,
+            "status": "N/A",
+            "range": 140,
+            "mileage": 2300.9,
+            "voltage": 220,
+            "current": 20,
+            "temperature": 75,
+            "speed": 40,
+            "updated": "02/10/2017 12:02:33"
+        }, {
+            "vid": "Z003",
+            "fid": "LBT",
+            "soc": 47,
+            "status": "N/A",
+            "range": 140,
+            "mileage": 2300.9,
+            "voltage": 220,
+            "current": 20,
+            "temperature": 75,
+            "speed": 40,
+            "updated": "02/10/2017 12:02:33"
+        }, {
+            "vid": "Z004",
+            "fid": "LBT",
+            "soc": 47,
+            "status": "N/A",
+            "range": 140,
+            "mileage": 2300.9,
+            "voltage": 220,
+            "current": 20,
+            "temperature": 75,
+            "speed": 40,
+            "updated": "02/10/2017 12:02:33"
+        }, {
+            "vid": "Z005",
+            "fid": "LBT",
+            "soc": 47,
+            "status": "N/A",
+            "range": 140,
+            "mileage": 2300.9,
+            "voltage": 220,
+            "current": 20,
+            "temperature": 75,
+            "speed": 40,
+            "updated": "02/10/2017 12:02:33"
+        }, {
+            "vid": "Z006",
+            "fid": "LBT",
+            "soc": 47,
+            "status": "N/A",
+            "range": 140,
+            "mileage": 2300.9,
+            "voltage": 220,
+            "current": 20,
+            "temperature": 75,
+            "speed": 40,
+            "updated": "02/10/2017 12:02:33"
+        }, {
+            "vid": "Z007",
+            "fid": "LBT",
+            "soc": 35,
+            "status": "N/A",
+            "range": 105,
+            "mileage": 11054.9,
+            "voltage": 220,
+            "current": 20,
+            "temperature": 75,
+            "speed": 40,
+            "updated": "02/10/2017 12:02:33"
+        }, {
+            "vid": "Z008",
+            "fid": "LBT",
+            "soc": 35,
+            "status": "N/A",
+            "range": 105,
+            "mileage": 11054.9,
+            "voltage": 220,
+            "current": 20,
+            "temperature": 75,
+            "speed": 40,
+            "updated": "02/10/2017 12:02:33"
+        }, {
+            "vid": "Z009",
+            "fid": "LBT",
+            "soc": 35,
+            "status": "N/A",
+            "range": 105,
+            "mileage": 11054.9,
+            "voltage": 220,
+            "current": 20,
+            "temperature": 75,
+            "speed": 40,
+            "updated": "02/10/2017 12:02:33"
+        }, {
+            "vid": "Z010",
+            "fid": "LBT",
+            "soc": 35,
+            "status": "N/A",
+            "range": 105,
+            "mileage": 11054.9,
+            "voltage": 220,
+            "current": 20,
+            "temperature": 75,
+            "speed": 40,
+            "updated": "02/10/2017 12:02:33"
+        }, {
+            "vid": "Z011",
+            "fid": "LBT",
+            "soc": 35,
+            "status": "N/A",
+            "range": 105,
+            "mileage": 11054.9,
+            "voltage": 220,
+            "current": 20,
+            "temperature": 75,
+            "speed": 40,
+            "updated": "02/10/2017 12:02:33"
+        }, {
+            "vid": "Z012",
+            "fid": "LBT",
+            "soc": 35,
+            "status": "N/A",
+            "range": 105,
+            "mileage": 11054.9,
+            "voltage": 220,
+            "current": 20,
+            "temperature": 75,
+            "speed": 40,
+            "updated": "02/10/2017 12:02:33"
+        }, {
+            "vid": "Z013",
+            "fid": "LBT",
+            "soc": 35,
+            "status": "N/A",
+            "range": 105,
+            "mileage": 11054.9,
+            "voltage": 220,
+            "current": 20,
+            "temperature": 75,
+            "speed": 40,
+            "updated": "02/10/2017 12:02:33"
+        }]
+    }
+*/

@@ -2,12 +2,16 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core'
 import { ActivatedRoute, Params } from '@angular/router'
 import { DataTableModule, ChartModule, UIChart } from 'primeng/primeng';
 import { IMyOptions, IMyDateModel } from 'mydatepicker';
-import 'rxjs/add/operator/switchMap';
+// import 'rxjs/add/operator/switchMap';
+import * as Rx from 'rxjs/Rx';
 let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
 
 import { DataLocalService } from '../shared/data-local.service';
+import { VehicleIdentity } from '../models/vehicle-identity';
 import { YAxis } from '../models/yAxis.model';
+import { FleetTrackerService } from '../shared/fleet-tracker.service';
+import { VehicleStatus } from '../models/vehicle-status'
 
 @Component({
   moduleId: module.id,
@@ -46,14 +50,14 @@ export class VehicleComponent implements OnInit {
 
  constructor(
 		private route: ActivatedRoute,
-    private dataService: DataLocalService
+    private dataService: DataLocalService,
+    private fleetTracker: FleetTrackerService
  ) {
   
  }
 
  ngOnInit(): void {
-   var vehicles = this.dataService.getFleet();
-   this.getVehicle(vehicles);
+   this.getVehicleStatus();
    this.setGaugeOptions(this.vehicle);
 
    this.initLatestAlertAndSnapshotList();
@@ -112,21 +116,21 @@ export class VehicleComponent implements OnInit {
    this.optionChargingRunningStatusChart = this.getChartDualOptions(leftY, rightY);
  }
 
- getVehicle(vehicles): void {
-    if (!vehicles || vehicles.length === 0) return;
-    // var vid: string;
+ getVehicleStatus(): void {
     this.route.params
-      // .switchMap((params: Params) => vehicles.filter(item => item.vid === params["vid"]))
-      .switchMap((params: Params) => vehicles.filter(item => item.vid === params["vid"]))
-      .subscribe((filteredVehicle: any) => this.vehicle = filteredVehicle);
-  }
+      .switchMap((params: Params) => Rx.Observable.create(ob => 
+        { ob.next(this.dataService.getVehicleStatus(params["vid"])) }
+      ))
+      .subscribe((vehicle: VehicleStatus) => { 
+        this.vehicle = vehicle;
+        this.fleetTracker.setFleetIDByVehicle(vehicle.vid);
+      });
+ }
 
   setGaugeOptions(vehicle: any): void {
     this.optionGaugeSOC = {
       id: "gauge-Soc",
       value: vehicle.soc,
-      min: 0,
-      max: 100,
       title: "SOC",
       symbol: "",
       decimals: 0,
@@ -138,8 +142,6 @@ export class VehicleComponent implements OnInit {
     this.optionGaugeSpeed = {
       id: "gauge-Speed",
       value: vehicle.speed,
-      min: 0,
-      max: 140,
       title: "MPH",
       symbol: "",
       decimals: 0,

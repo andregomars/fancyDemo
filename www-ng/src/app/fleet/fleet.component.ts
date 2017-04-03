@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import * as Rx from 'rxjs/Rx';
+
 import { DataService } from '../shared/data.service';
 import { DataLocalService } from '../shared/data-local.service';
+import { FleetTrackerService } from '../shared/fleet-tracker.service';
+import { VehicleStatus } from '../models/vehicle-status';
 
 @Component({
   moduleId: module.id,
@@ -9,15 +14,31 @@ import { DataLocalService } from '../shared/data-local.service';
 export class FleetComponent implements OnInit {
 	viewComponent:string = "table";
   data: any;
+  fid: string;
 
   constructor (
-    // private dataService: DataService
+    private route: ActivatedRoute,
+    private fleetTracker: FleetTrackerService,
     private dataService: DataLocalService
   ) {}
   
   ngOnInit() {
-    this.getData();
+    this.getFleet();
   }
+
+ getFleet(): void {
+    this.route.params
+      .switchMap((params: Params) => Rx.Observable.create(ob => 
+        { 
+          this.fid = params["fid"];
+          ob.next(this.dataService.getVehiclesStatusByFleet(this.fid));
+        }
+      ))
+      .subscribe((vehcilesStatus: Array<VehicleStatus>) => { 
+        this.data = vehcilesStatus;
+        this.fleetTracker.setFleetIDByFleet(this.fid);
+      });
+ }
 
   toggleView(view: string) {
     this.viewComponent = view;
@@ -25,11 +46,6 @@ export class FleetComponent implements OnInit {
 
   isShown(view: string) {
     return this.viewComponent === view;
-  }
-
-  getData(): void {
-    // this.dataService.getFleet().then(data => this.data = data);
-    this.data = this.dataService.getFleet();
   }
 }
 

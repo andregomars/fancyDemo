@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { IMyOptions, IMyDateRangeModel } from 'mydaterangepicker';
 import { DataTableModule } from 'primeng/primeng';
-import 'rxjs/add/operator/switchMap';
+import * as Rx from 'rxjs/Rx';
 let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
 
@@ -17,8 +17,7 @@ import { Fleet } from '../models/fleet.model';
 })
 export class MonthlyReportComponent implements OnInit {
 
-  vehicleID: string;
-
+  fleetID: string;
   dataFleetMonthly: Array<any>;
 
   //child views
@@ -31,22 +30,20 @@ export class MonthlyReportComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.loadVehicle();
+    this.loadFleet();
     this.loadFleetMonthlyData();
   }
 
   private loadFleetMonthlyData() {
-    let vehicles = new Array<Vehicle>(); 
-    vehicles.push(new Vehicle("AZ01"));
-    vehicles.push(new Vehicle("AZ02"));
+    let vehicles = this.dataService.getVehiclesIdentityByFleet(this.fleetID).map(v => new Vehicle(v.vid));
     this.dataFleetMonthly = this.dataService.getRandomMonthlyDataSetWithVehicles(vehicles);
   }
 
   /*** Common Section ***/
-  private loadVehicle(): void {
+  private loadFleet(): void {
     this.route.params
-      .switchMap((params: Params) => new Array(params["vid"]))
-      .subscribe((vid: string) => this.vehicleID = vid);
+       .switchMap((params: Params) => Rx.Observable.create(ob=>ob.next(params["fid"])))
+       .subscribe((fid: string) => this.fleetID = fid);
   }
 
   private getDefaultDateRangePickerOptions(): any {

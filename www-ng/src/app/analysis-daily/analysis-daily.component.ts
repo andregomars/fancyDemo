@@ -3,8 +3,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { IMyOptions, IMyDateRangeModel } from 'mydaterangepicker';
 import * as moment from 'moment';
 import { UIChart } from 'primeng/primeng';
-
-import 'rxjs/add/operator/switchMap';
+// import 'rxjs/add/operator/switchMap';
+import * as Rx from 'rxjs/Rx';
 
 let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
@@ -19,6 +19,7 @@ import { DataLocalService } from '../shared/data-local.service';
 })
 export class AnalysisDailyComponent implements OnInit {
 
+    fleetID: string;
     vehicleID: string;
 
     //Daily Mileage Chart properties
@@ -48,12 +49,15 @@ export class AnalysisDailyComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private dataService: DataLocalService
+        private dataService: DataLocalService,
     ) { }
 
     ngOnInit(): void {
+        this.initData();
         this.loadVehicle();
-        
+    }
+
+    private initData(): void {
         // Daily Mileage
         this.initMilageDateRangePicker();
         this.initMileageChartOption();
@@ -68,6 +72,12 @@ export class AnalysisDailyComponent implements OnInit {
         this.initSocMileageEnergyDateRangePicker();
         this.initSocMileageEnergyChartOption();
         this.initSocMileageEnergyChartData();
+    }
+
+    private reloadData(): void {
+        let endDate = new Date();
+        let beginDate = this.dataService.getDateOfACoupleWeeksAgo(endDate);
+        this.updateMileageChartData(beginDate, endDate);
     }
 
     /*** Section - Daily Mileage ***/
@@ -125,8 +135,17 @@ export class AnalysisDailyComponent implements OnInit {
 
     private updateMileageChartData(beginDate: Date, endDate: Date): void {
         let data = this.dataService.getVehicleDailyMileage(beginDate, endDate);
+        let chartData = {
+            labels: data.labels,
+            datasets: [{
+                label: 'Daily Mileage',
+                data: data.data,
+                boarderColor: '#4bc0c0'
+            }]
+        };
         this.chartMileage.data.labels = data.labels;
         this.chartMileage.data.datasets[0].data = data.data;
+        // this.chartMileage.data = chartData;
         this.chartMileage.refresh();
     }
 
@@ -378,8 +397,12 @@ export class AnalysisDailyComponent implements OnInit {
     /*** Common Section ***/
     private loadVehicle(): void {
         this.route.params
-            .switchMap((params: Params) => new Array(params["vid"]))
-            .subscribe((vid: string) => this.vehicleID = vid);
+            .switchMap((params: Params) => Rx.Observable.create(ob=>ob.next(params["vid"])))
+            .subscribe((vid: string) => { 
+                this.vehicleID = vid;
+                this.fleetID = this.dataService.getVehicleIdentity(vid).fid;
+                // this.reloadData();
+            });
     }
 
     private getDefaultDateRangePickerOptions(): any {
