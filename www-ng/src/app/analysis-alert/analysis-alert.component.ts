@@ -86,8 +86,13 @@ export class AnalysisAlertComponent implements OnInit {
           data: data.data,
           backgroundColor: [
             "#FF6384",
+            "#4BC0C0",
+            "#FFCE56",
+            "#E7E9ED",
             "#36A2EB",
-            "#FFCE56"
+            "#42F4D4",
+            "#89F441",
+            "#F4F441"
           ],
         }
       ]
@@ -129,8 +134,13 @@ export class AnalysisAlertComponent implements OnInit {
           data: data.data,
           backgroundColor: [
             "#FF6384",
+            "#4BC0C0",
+            "#FFCE56",
+            "#E7E9ED",
             "#36A2EB",
-            "#FFCE56"
+            "#42F4D4",
+            "#89F441",
+            "#F4F441"
           ],
         }
       ]

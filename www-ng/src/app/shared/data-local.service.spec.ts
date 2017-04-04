@@ -14,7 +14,7 @@ describe('DataLocalService', () => {
     let vehicles: Array<Vehicle> = service.getAllFleetsWithVehicles()[0].vehicles;
     let array = service.getRandomMonthlyDataSetWithVehicles(vehicles);
 
-    array.map(x=>console.log(x));
+    // array.map(x=>console.log(x));
     expect(true).toBeTruthy();
   }));
 

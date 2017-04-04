@@ -505,7 +505,8 @@ export class DataLocalService {
     }
 
     getVehicleAlertStats(beginDate: Date, endDate: Date): any {
-        let eventCodes = ['Slow Charging', 'Low Temp', 'Low Voltage'];
+        let eventCodes = ['Charging Stopped','Slow Charging', 'Battery Overheat', 'Charging System Malfunction'
+            ,'Power Battery Malfunction', 'Battery Leaking', 'Electrical Motor Malfunction', 'ABS Malfunction'];
         let maxLength = 10, min = 1, max = 100;
         let events = this.utility.getEventList(10, eventCodes, min, max, beginDate, endDate);
         let stats = _.countBy(events, 'type');
@@ -564,6 +565,57 @@ export class DataLocalService {
             actualDistance: actualDistanceSum,
             socMile: socMileAvg,
             mileSoc: mileSocAvg
+        });
+
+       return array; 
+    }
+
+
+    getRandomMonthlyAlertData(): any {
+        let chargingStoped = _.random(0, 5);
+        let slowCharging = _.random(0, 10);
+        let batteryOverhead = _.random(0, 2);
+        let malfuncCharging = _.random(0, 1);
+        let malfuncPowerBattery = _.random(0, 1);
+        let batteryLeaking = _.random(0, 0);
+        let malfuncElectricalMotor = _.random(0, 0);
+        let malfuncABS = _.random(0, 2);
+
+        return {
+            chargingStoped: chargingStoped,
+            slowCharging: slowCharging, 
+            batteryOverhead: batteryOverhead,
+            malfuncCharging: malfuncCharging,
+            malfuncPowerBattery: malfuncCharging,
+            batteryLeaking: malfuncCharging,
+            malfuncElectricalMotor: malfuncCharging,
+            malfuncABS: malfuncCharging
+        }
+    }
+
+     getRandomMonthlyAlertSummaryByFleet(fleetID: string): Array<any> {
+       let vehicles = this.getVehiclesIdentityByFleet(fleetID).map(v => new Vehicle(v.vid));
+       let array = vehicles.map(v => Object.assign({}, v, this.getRandomMonthlyAlertData()));
+       let chargingStoped = array.map(el => el.chargingStoped).reduce((sum, value) => sum + value); 
+       let slowCharging = array.map(el => el.slowCharging).reduce((sum, value) => sum + value); 
+       let batteryOverhead = array.map(el => el.batteryOverhead).reduce((sum, value) => sum + value); 
+       let malfuncCharging = array.map(el => el.malfuncCharging).reduce((sum, value) => sum + value); 
+       let malfuncPowerBattery = array.map(el => el.malfuncPowerBattery).reduce((sum, value) => sum + value); 
+       let batteryLeaking = array.map(el => el.batteryLeaking).reduce((sum, value) => sum + value); 
+       let malfuncElectricalMotor = array.map(el => el.malfuncElectricalMotor).reduce((sum, value) => sum + value); 
+       let malfuncABS = array.map(el => el.malfuncABS).reduce((sum, value) => sum + value); 
+        
+        //insert total line in first element of the array
+        array.unshift({
+            id: "All",
+            chargingStoped: chargingStoped,
+            slowCharging: slowCharging, 
+            batteryOverhead: batteryOverhead,
+            malfuncCharging: malfuncCharging,
+            malfuncPowerBattery: malfuncCharging,
+            batteryLeaking: malfuncCharging,
+            malfuncElectricalMotor: malfuncCharging,
+            malfuncABS: malfuncCharging
         });
 
        return array; 

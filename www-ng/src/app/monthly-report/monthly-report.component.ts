@@ -19,6 +19,7 @@ export class MonthlyReportComponent implements OnInit {
 
   fleetID: string;
   dataFleetMonthly: Array<any>;
+  dataFleetMonthlyAlert: Array<any>;
   optionFleetMonthlyChart: any;
   dataFleetMonthlyChart: any;
   options: any[] = [
@@ -44,17 +45,24 @@ export class MonthlyReportComponent implements OnInit {
 
   ngOnInit() {
     this.loadFleet();
-    this.loadFleetMonthlyData();
+    this.initFleetMonthlyData();
 
     this.initMonthlyChartOption();
     this.initMonthlyChartData();
+
+    this.initFleetMonthlyAlertData();
   }
 
-  private loadFleetMonthlyData() {
+  /*** Fleet Status Grid ***/
+  private initFleetMonthlyData() {
     let vehicles = this.dataService.getVehiclesIdentityByFleet(this.fleetID).map(v => new Vehicle(v.vid));
     this.dataFleetMonthly = this.dataService.getRandomMonthlyDataSetWithVehicles(vehicles);
   }
 
+  /*** Fleet Alert Grid ***/
+  private initFleetMonthlyAlertData() {
+    this.dataFleetMonthlyAlert = this.dataService.getRandomMonthlyAlertSummaryByFleet(this.fleetID);
+  }
 
   /*** Bar Chart ***/
   selectOption(option: any): void {

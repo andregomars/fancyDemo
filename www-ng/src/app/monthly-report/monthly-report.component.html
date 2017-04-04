@@ -8,12 +8,17 @@
     <div class="col">
       <div class="row">
         <div class="col-2 text-left">
-          <h5>Fleet: {{ fleetID }}</h5>
+          <h5>{{ fleetID }}</h5>
         </div>
         <div class="col-8">
           <button type="button" class="btn btn-primary btn-sm text-center" (click)="exportCharts()">Export Charts</button>
         </div>
         <div class="col-2"></div>
+      </div>
+      <div class="row pt-4">
+        <div class="col text-center">
+          <h5>Monthly Total Data</h5>
+        </div>
       </div>
       <div class="row p-2">
         <p-dataTable [value]="dataFleetMonthly" class="table">
@@ -26,10 +31,10 @@
         </p-dataTable>
       </div>
       <div class="row p-2">
-        <div class="col-1 text-right">
-          <div class="text-primary">Options:</div>
+        <div class="col-2 text-right">
+          <label>Options:</label>
         </div>
-        <div class="col-11 text-left">
+        <div class="col-10 text-left">
           <div class="btn-group" data-toggle="buttons">
             <label *ngFor="let opt of options" class="btn btn-secondary" (click)="selectOption(opt)">
               <input type="radio"  autocomplete="off">{{ opt.name }}
@@ -37,19 +42,27 @@
           </div>
         </div>
       </div>
-      <!--<div class="row pt-5">
-        <div class="col text-right text-primary">
-          <h3>Fleet Alert Proportion</h3>
-        </div>
-        <div class="col text-left">
-          <my-date-range-picker [options]="optionFleetAlertDateRangePicker" 
-            (dateRangeChanged)="onFleetAlertDateChanged($event)" placeholder="Select Date Range">
-          </my-date-range-picker>
-        </div>
-      </div>-->
       <div class="row pt-4">
         <p-chart #chartFleetMonthly type="horizontalBar" [data]="dataFleetMonthlyChart" 
           [options]="optionFleetMonthlyChart" width="960px" height="300px"></p-chart>
+      </div>
+      <div class="row pt-4">
+        <div class="col text-center">
+          <h5>Monthly Alert Data</h5>
+        </div>
+      </div>
+      <div class="row p-2">
+        <p-dataTable [value]="dataFleetMonthlyAlert" class="table">
+          <p-column field="id" header="Bus No." [sortable]="true"></p-column>
+          <p-column field="chargingStoped" header="Charging Stoped"></p-column>
+          <p-column field="slowCharging" header="Slow Charging"></p-column>
+          <p-column field="batteryOverhead" header="Battery Overhead"></p-column>
+          <p-column field="malfuncCharging" header="Charging System Malfunction"></p-column>
+          <p-column field="malfuncPowerBattery" header="Power Battery Malfunction"></p-column>
+          <p-column field="batteryLeaking" header="Battery Leaking"></p-column>
+          <p-column field="malfuncElectricalMotor" header="Electrical Motor Malfunction"></p-column>
+          <p-column field="malfuncABS" header="ABS Malfunction"></p-column>
+        </p-dataTable>
       </div>
     </div>
   </div>
