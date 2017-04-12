@@ -1,117 +1,73 @@
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
+import * as _ from 'lodash';
+// import * as Rx from 'rxjs/RX';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 import { UtilityService } from './utility.service';
 import { DailyNumber } from '../models/dailyNumber.model';
 import { Vehicle } from '../models/vehicle.model';
 import { Fleet } from '../models/fleet.model';
 import { VehicleStatus } from '../models/vehicle-status';
 import { VehicleIdentity } from '../models/vehicle-identity';
-
-import * as moment from 'moment';
-import * as _ from 'lodash';
+import { DataRemoteService } from './data-remote.service';
 
 @Injectable()
 export class DataLocalService {
 
-    private utility: UtilityService = new UtilityService();
+    // private utility: UtilityService = new UtilityService();
     private allVehicles: Array<VehicleIdentity>;
     private allVehiclesStatus: Array<VehicleStatus>;
 
-    consructor() {
-      this.getAllVehiclesData();
-      this.getAllVehicleStatusData();
+    constructor(
+        private utility: UtilityService,
+        private dataRemoteService: DataRemoteService
+    ) {
+    //   this.getAllVehiclesData();
+    //   this.getAllVehicleStatusData();
     }
 
-    getAllFleetsWithVehicles(): Array<Fleet> {
-        let vehiclesAVTA = new Array<Vehicle>(); 
-        vehiclesAVTA.push(new Vehicle("4370"));
-        vehiclesAVTA.push(new Vehicle("4371"));
+   getAllFleetID$(): Observable<Array<string>> {
+      return this.dataRemoteService.getFleetIdentities$();
+   }
 
-        let vehiclesLACMTA = new Array<Vehicle>(); 
-        vehiclesLACMTA.push(new Vehicle("1001"));
-        vehiclesLACMTA.push(new Vehicle("1002"));
-        vehiclesLACMTA.push(new Vehicle("1003"));
+   getAllVehiclesData$(): Observable<Array<VehicleIdentity>> {
+     return this.dataRemoteService.getVehicleIdentities$();
+   }
 
-        let vehiclesLBT = new Array<Vehicle>(); 
-        vehiclesLBT.push(new Vehicle("1601"));
-        vehiclesLBT.push(new Vehicle("1602"));
-        vehiclesLBT.push(new Vehicle("1603"));
-        vehiclesLBT.push(new Vehicle("1604"));
-        vehiclesLBT.push(new Vehicle("1605"));
-        
-        let fleets = new Array<Fleet>();
-        fleets.push(new Fleet('AVTA', vehiclesAVTA));
-        fleets.push(new Fleet('LACMTA', vehiclesLACMTA));
-        fleets.push(new Fleet('LBT', vehiclesLBT));
+   getVehiclesStatusByFleet$(fid: string): Observable<Array<VehicleStatus>> {
+      var data$ = Observable.of(this.getAllVehicleStatusData());
+      return data$.map(el => el.filter(status => status.fid === fid));
+   }
 
-        return fleets;
-    }
+    getAllFleetID(): Array<string> {
+      var data = this.dataRemoteService.getFleetIdentities();
+      return data;
+   }
 
     getAllVehiclesData(): Array<VehicleIdentity> {
-      if (this.allVehicles) return this.allVehicles;
-      
-      this.allVehicles = [{
-                "fid": "AVTA",
-                "vid": "4370"
-            }, {
-                "fid": "AVTA",
-                "vid": "4371"
-            }, {
-                "fid": "BYDUPS",
-                "vid": "UPS"
-            }, {
-                "fid": "LACMTA",
-                "vid": "1001"
-            }, {
-                "fid": "LACMTA",
-                "vid": "1002"
-            }, {
-                "fid": "LACMTA",
-                "vid": "1003"
-            }, {
-                "fid": "LACMTA",
-                "vid": "1004"
-            }, {
-                "fid": "LACMTA",
-                "vid": "1005"
-            }, {
-                "fid": "LBT",
-                "vid": "1601"
-            }, {
-                "fid": "LBT",
-                "vid": "1602"
-            }, {
-                "fid": "LBT",
-                "vid": "1603"
-            }, {
-                "fid": "LBT",
-                "vid": "1604"
-            }, {
-                "fid": "LBT",
-                "vid": "1605"
-            }, {
-                "fid": "LBT",
-                "vid": "1606"
-            }, {
-                "fid": "LBT",
-                "vid": "1607"
-            }, {
-                "fid": "LBT",
-                "vid": "1608"
-            }, {
-                "fid": "LBT",
-                "vid": "1609"
-            }, {
-                "fid": "LBT",
-                "vid": "1610"
-            }];
+      return this.dataRemoteService.getVehicleIdentities();
+    //   if (this.allVehicles) return this.allVehicles;
 
-      return this.allVehicles;
+    //   console.log("start get all");
+    // //   let vehicles$ = this.dataRemoteService.getVehicleIdentities();
+    // //   vehicles$
+    // //     .subscribe(vehicles => this.allVehicles = vehicles);
+
+	// 		// this.allVehicles = this.dataRemoteService.getVehicleIdentities();
+    //   console.log(this.allVehicles);
+
+    //   return this.allVehicles;
     }
 
     getAllVehicleStatusData(): Array<VehicleStatus> {
       if (this.allVehiclesStatus) return this.allVehiclesStatus;
 
       this.allVehicles = this.getAllVehiclesData();
+      // let vehicles : Array<VehicleIdentity>;
+      // this.getAllVehiclesData().subscribe(vs => vehicles = vs);
+      // this.allVehiclesStatus = vehicles.map(v => this.utility.genRandomVehicleStatus(v));
       this.allVehiclesStatus = this.allVehicles.map(v => this.utility.genRandomVehicleStatus(v));
       return this.allVehiclesStatus;
     }
@@ -123,11 +79,19 @@ export class DataLocalService {
 
     getVehicleIdentity(vid: string): VehicleIdentity {
       if (!this.allVehicles) this.getAllVehiclesData();
+
+      // let vehicles : Array<VehicleIdentity>;
+      // this.getAllVehiclesData().subscribe(vs => vehicles = vs)
+      // return vehicles.find(v => v.vid === vid);
       return this.allVehicles.find(v => v.vid === vid);
     }
-    
+
     getVehiclesIdentityByFleet(fid: string): Array<VehicleIdentity> {
       if (!this.allVehicles) this.getAllVehiclesData();
+
+      // let vehicles : Array<VehicleIdentity>;
+      // this.getAllVehiclesData().subscribe(vs => vehicles = vs)
+      // return vehicles.filter(v => v.fid === fid);
       return this.allVehicles.filter(v => v.fid === fid);
     }
 
@@ -173,9 +137,9 @@ export class DataLocalService {
 
     getSocRangeChartData(): any {
         return {
-            labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', 
-                     '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', 
-                     '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', 
+            labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
+                     '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
+                     '12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
                      '18:00', '19:00', '20:00', '21:00', '22:00', '23:00' ],
             datasets: [
                 {
@@ -200,9 +164,9 @@ export class DataLocalService {
 
     getEstActualDistanceData(): any {
         return {
-            labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', 
-                     '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', 
-                     '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', 
+            labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
+                     '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
+                     '12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
                      '18:00', '19:00', '20:00', '21:00', '22:00', '23:00' ],
             datasets: [
                 {
@@ -227,9 +191,9 @@ export class DataLocalService {
 
     getChargingRunningStatusData(): any {
         return {
-            labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', 
-                     '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', 
-                     '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', 
+            labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
+                     '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
+                     '12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
                      '18:00', '19:00', '20:00', '21:00', '22:00', '23:00' ],
             datasets: [
                 {
@@ -413,25 +377,25 @@ export class DataLocalService {
     }
 
     getVehicleDailyMileage(beginDate: Date, endDate: Date): any {
-        let dict: Array<DailyNumber> = 
+        let dict: Array<DailyNumber> =
             this.utility.getDailyNumberList(beginDate, endDate, 0, 100);
         let days: Array<Date> = [];
         let numbers: Array<number> = [];
-        dict.forEach((item: DailyNumber) => { 
-            days.push(item.date); 
+        dict.forEach((item: DailyNumber) => {
+            days.push(item.date);
             numbers.push(item.value);
         });
 
         return {
             labels: days,
-            data: numbers            
+            data: numbers
         }
     }
 
     getVehicleDailySocEnergy(beginDate: Date, endDate: Date): any {
-        let dictSoc: Array<DailyNumber> = 
+        let dictSoc: Array<DailyNumber> =
             this.utility.getDailyNumberList(beginDate, endDate, 0, 100);
-        let dictEnergy: Array<DailyNumber> = 
+        let dictEnergy: Array<DailyNumber> =
             this.utility.getDailyNumberList(beginDate, endDate, 0, 2500);
         let days: Array<Date> = [];
 
@@ -440,36 +404,36 @@ export class DataLocalService {
         let numbersEnergyCharged: Array<number> = [];
         let numbersEnergyUsed: Array<number> = [];
 
-        dictSoc.forEach((item: DailyNumber) => { 
-            days.push(item.date); 
+        dictSoc.forEach((item: DailyNumber) => {
+            days.push(item.date);
             numbersSocCharged.push(item.value);
             numbersSocUsed.push(100 - item.value);
         });
-        
-        dictEnergy.forEach((item: DailyNumber) => { 
+
+        dictEnergy.forEach((item: DailyNumber) => {
             numbersEnergyCharged.push(item.value);
             numbersEnergyUsed.push(2500 - item.value);
         });
-        
+
         return {
             labels: days,
-            dataSocCharged: numbersSocCharged,            
-            dataSocUsed: numbersSocUsed,            
-            dataEnergyCharged: numbersEnergyCharged,            
-            dataEnergyUsed: numbersEnergyUsed            
+            dataSocCharged: numbersSocCharged,
+            dataSocUsed: numbersSocUsed,
+            dataEnergyCharged: numbersEnergyCharged,
+            dataEnergyUsed: numbersEnergyUsed
         }
     }
 
     getVehicleDailySocMileageEnergy(beginDate: Date, endDate: Date): any {
-        let dictSoc: Array<DailyNumber> = 
+        let dictSoc: Array<DailyNumber> =
             this.utility.getDailyNumberList(beginDate, endDate, 1, 100);
-        let dictMileage: Array<DailyNumber> = 
+        let dictMileage: Array<DailyNumber> =
             this.utility.getDailyNumberList(beginDate, endDate, 1, 100);
-        let dictEnergy: Array<DailyNumber> = 
+        let dictEnergy: Array<DailyNumber> =
             this.utility.getDailyNumberList(beginDate, endDate, 0, 2500);
         let days: Array<Date> = [];
 
-        let numbersSocMileage: Array<number> = []; 
+        let numbersSocMileage: Array<number> = [];
         let numbersMileageSoc: Array<number> = [];
         let numbersMileageEnergy: Array<number> = [];
         let numbersEnergyMileage: Array<number> = [];
@@ -497,10 +461,10 @@ export class DataLocalService {
 
         return {
             labels: days,
-            dataSocMileage: numbersSocMileage,            
-            dataMileageSoc: numbersMileageSoc,            
-            dataMileageEnergy: numbersMileageEnergy,            
-            dataEnergyMileage: numbersEnergyMileage            
+            dataSocMileage: numbersSocMileage,
+            dataMileageSoc: numbersMileageSoc,
+            dataMileageEnergy: numbersMileageEnergy,
+            dataEnergyMileage: numbersEnergyMileage
         }
     }
 
@@ -541,7 +505,7 @@ export class DataLocalService {
 
         return {
             socCharged: socCharged,
-            socUsed: socUsed, 
+            socUsed: socUsed,
             actualDistance: actualDistance,
             socMile: socMile,
             mileSoc: mileSoc
@@ -550,24 +514,24 @@ export class DataLocalService {
 
     getRandomMonthlyDataSetWithVehicles(vehicles: Array<Vehicle>): Array<any> {
        let array = vehicles.map(v => Object.assign({}, v, this.getRandomMonthlyData()));
-       let socChargedSum = array.map(el => el.socCharged).reduce((sum, value) => sum + value); 
-       let socUsedSum = array.map(el => el.socUsed).reduce((sum, value) => sum + value); 
-       let actualDistanceSum = 
-            array.map(el => el.actualDistance).reduce((sum, value) => sum + value); 
+       let socChargedSum = array.map(el => el.socCharged).reduce((sum, value) => sum + value);
+       let socUsedSum = array.map(el => el.socUsed).reduce((sum, value) => sum + value);
+       let actualDistanceSum =
+            array.map(el => el.actualDistance).reduce((sum, value) => sum + value);
         let socMileAvg = (socUsedSum / actualDistanceSum).toFixed(2);
         let mileSocAvg = (actualDistanceSum / socUsedSum).toFixed(2)
-        
+
         //insert total line in first element of the array
         array.unshift({
             id: "All",
             socCharged: socChargedSum,
-            socUsed: socUsedSum, 
+            socUsed: socUsedSum,
             actualDistance: actualDistanceSum,
             socMile: socMileAvg,
             mileSoc: mileSocAvg
         });
 
-       return array; 
+       return array;
     }
 
 
@@ -583,7 +547,7 @@ export class DataLocalService {
 
         return {
             chargingStoped: chargingStoped,
-            slowCharging: slowCharging, 
+            slowCharging: slowCharging,
             batteryOverhead: batteryOverhead,
             malfuncCharging: malfuncCharging,
             malfuncPowerBattery: malfuncCharging,
@@ -596,20 +560,20 @@ export class DataLocalService {
      getRandomMonthlyAlertSummaryByFleet(fleetID: string): Array<any> {
        let vehicles = this.getVehiclesIdentityByFleet(fleetID).map(v => new Vehicle(v.vid));
        let array = vehicles.map(v => Object.assign({}, v, this.getRandomMonthlyAlertData()));
-       let chargingStoped = array.map(el => el.chargingStoped).reduce((sum, value) => sum + value); 
-       let slowCharging = array.map(el => el.slowCharging).reduce((sum, value) => sum + value); 
-       let batteryOverhead = array.map(el => el.batteryOverhead).reduce((sum, value) => sum + value); 
-       let malfuncCharging = array.map(el => el.malfuncCharging).reduce((sum, value) => sum + value); 
-       let malfuncPowerBattery = array.map(el => el.malfuncPowerBattery).reduce((sum, value) => sum + value); 
-       let batteryLeaking = array.map(el => el.batteryLeaking).reduce((sum, value) => sum + value); 
-       let malfuncElectricalMotor = array.map(el => el.malfuncElectricalMotor).reduce((sum, value) => sum + value); 
-       let malfuncABS = array.map(el => el.malfuncABS).reduce((sum, value) => sum + value); 
-        
+       let chargingStoped = array.map(el => el.chargingStoped).reduce((sum, value) => sum + value);
+       let slowCharging = array.map(el => el.slowCharging).reduce((sum, value) => sum + value);
+       let batteryOverhead = array.map(el => el.batteryOverhead).reduce((sum, value) => sum + value);
+       let malfuncCharging = array.map(el => el.malfuncCharging).reduce((sum, value) => sum + value);
+       let malfuncPowerBattery = array.map(el => el.malfuncPowerBattery).reduce((sum, value) => sum + value);
+       let batteryLeaking = array.map(el => el.batteryLeaking).reduce((sum, value) => sum + value);
+       let malfuncElectricalMotor = array.map(el => el.malfuncElectricalMotor).reduce((sum, value) => sum + value);
+       let malfuncABS = array.map(el => el.malfuncABS).reduce((sum, value) => sum + value);
+
         //insert total line in first element of the array
         array.unshift({
             id: "All",
             chargingStoped: chargingStoped,
-            slowCharging: slowCharging, 
+            slowCharging: slowCharging,
             batteryOverhead: batteryOverhead,
             malfuncCharging: malfuncCharging,
             malfuncPowerBattery: malfuncCharging,
@@ -618,25 +582,25 @@ export class DataLocalService {
             malfuncABS: malfuncCharging
         });
 
-       return array; 
+       return array;
     }
 
     getLogsInMonthOfDate(date: Date): Array<any> {
         let days = this.utility.getDatesInMonth(date);
-        let array = days.map(d => { 
+        let array = days.map(d => {
             return {
                 date: moment(d).format('YYYY-MM-DD'),
                 fileName: moment(d).format('YYYYMMDD')
             }
-        }); 
+        });
 
         return array;
-    } 
+    }
 
     getLogsInMonthOfDateByVehicles(vehicles: Array<Vehicle>, date: Date): Array<any> {
         let logs = this.getLogsInMonthOfDate(date);
-        let array = logs.map(log =>  
-            vehicles.map(v => 
+        let array = logs.map(log =>
+            vehicles.map(v =>
                 Object.assign({}, v, log)
                 )
             ).reduce((a, b) => a.concat(b));    //use reduce to turn nested array flat, e.g. [[a,b],[c,d]] => [a,b,c,d]
@@ -876,4 +840,85 @@ export class DataLocalService {
             "updated": "02/10/2017 12:02:33"
         }]
     }
+
+    getAllFleetsWithVehicles(): Array<Fleet> {
+        let vehiclesAVTA = new Array<Vehicle>();
+        vehiclesAVTA.push(new Vehicle("4370"));
+        vehiclesAVTA.push(new Vehicle("4371"));
+
+        let vehiclesLACMTA = new Array<Vehicle>();
+        vehiclesLACMTA.push(new Vehicle("1001"));
+        vehiclesLACMTA.push(new Vehicle("1002"));
+        vehiclesLACMTA.push(new Vehicle("1003"));
+
+        let vehiclesLBT = new Array<Vehicle>();
+        vehiclesLBT.push(new Vehicle("1601"));
+        vehiclesLBT.push(new Vehicle("1602"));
+        vehiclesLBT.push(new Vehicle("1603"));
+        vehiclesLBT.push(new Vehicle("1604"));
+        vehiclesLBT.push(new Vehicle("1605"));
+
+        let fleets = new Array<Fleet>();
+        fleets.push(new Fleet('AVTA', vehiclesAVTA));
+        fleets.push(new Fleet('LACMTA', vehiclesLACMTA));
+        fleets.push(new Fleet('LBT', vehiclesLBT));
+
+        return fleets;
+    }
+
+     this.allVehicles = [{
+                "fid": "AVTA",
+                "vid": "4370"
+            }, {
+                "fid": "AVTA",
+                "vid": "4371"
+            }, {
+                "fid": "BYDUPS",
+                "vid": "UPS"
+            }, {
+                "fid": "LACMTA",
+                "vid": "1001"
+            }, {
+                "fid": "LACMTA",
+                "vid": "1002"
+            }, {
+                "fid": "LACMTA",
+                "vid": "1003"
+            }, {
+                "fid": "LACMTA",
+                "vid": "1004"
+            }, {
+                "fid": "LACMTA",
+                "vid": "1005"
+            }, {
+                "fid": "LBT",
+                "vid": "1601"
+            }, {
+                "fid": "LBT",
+                "vid": "1602"
+            }, {
+                "fid": "LBT",
+                "vid": "1603"
+            }, {
+                "fid": "LBT",
+                "vid": "1604"
+            }, {
+                "fid": "LBT",
+                "vid": "1605"
+            }, {
+                "fid": "LBT",
+                "vid": "1606"
+            }, {
+                "fid": "LBT",
+                "vid": "1607"
+            }, {
+                "fid": "LBT",
+                "vid": "1608"
+            }, {
+                "fid": "LBT",
+                "vid": "1609"
+            }, {
+                "fid": "LBT",
+                "vid": "1610"
+            }];
 */

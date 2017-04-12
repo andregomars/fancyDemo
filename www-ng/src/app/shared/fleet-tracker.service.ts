@@ -14,15 +14,19 @@ export class FleetTrackerService {
   constructor(
     private dataService: DataLocalService
   ) { 
-    this.vehicles = this.dataService.getAllVehiclesData();
+    // this.vehicles = this.dataService.getAllVehiclesData();
   }
 
   setFleetIDByVehicle(vid: string): void {
+    if (!this.vehicles) this.vehicles = this.dataService.getAllVehiclesData();
+
     this.fid = this.vehicles.find(v => v.vid === vid).fid;
     this.subject.next(this.fid);
   }
 
   setFleetIDByFleet(fid: string): void {
+    if (!this.vehicles) this.vehicles = this.dataService.getAllVehiclesData();
+    
     this.fid = fid;
     this.subject.next(fid);
   }

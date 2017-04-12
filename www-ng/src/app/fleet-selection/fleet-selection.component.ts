@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataLocalService } from '../shared/data-local.service';
 import { VehicleIdentity } from '../models/vehicle-identity';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-fleet-selection',
@@ -10,14 +12,20 @@ import { VehicleIdentity } from '../models/vehicle-identity';
 export class FleetSelectionComponent implements OnInit {
 
   fleets: string[];
+  fleets$: Observable<Array<string>>;
 
   constructor(
     private dataService: DataLocalService
   ) { }
 
   ngOnInit() {
-    this.fleets = 
-      this.dataService.getAllVehiclesData().map(
-        el => el.fid).filter((el, i, arr) => arr.indexOf(el) === i);
+    this.fleets$ = this.dataService.getAllFleetID$();
+    // this.dataService.getAllFleetID$().subscribe(data => this.fleets = data);
+    // this.fleets = 
+    //   this.dataService.getAllFleetID();
+    // let data = this.dataService.getAll();
+
+    // this.fleets = 
+      // data.map(el => el.fid).filter((el, i, arr) => arr.indexOf(el) === i);
   }
 }

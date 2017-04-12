@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import * as Rx from 'rxjs/Rx';
 
-import { DataService } from '../shared/data.service';
 import { DataLocalService } from '../shared/data-local.service';
 import { FleetTrackerService } from '../shared/fleet-tracker.service';
 import { VehicleStatus } from '../models/vehicle-status';
@@ -28,17 +27,33 @@ export class FleetComponent implements OnInit {
 
  getFleet(): void {
     this.route.params
-      .switchMap((params: Params) => Rx.Observable.create(ob => 
-        { 
+      .switchMap((params: Params) => { 
           this.fid = params["fid"];
-          ob.next(this.dataService.getVehiclesStatusByFleet(this.fid));
+          console.log(this.fid);
+          return this.dataService.getVehiclesStatusByFleet$(this.fid);
         }
-      ))
+      )
       .subscribe((vehcilesStatus: Array<VehicleStatus>) => { 
         this.data = vehcilesStatus;
+        console.log(this.data);
+        console.log('data set in fleet comp');
         this.fleetTracker.setFleetIDByFleet(this.fid);
       });
  }
+
+//  getFleet(): void {
+//     this.route.params
+//       .switchMap((params: Params) => Rx.Observable.create(ob => 
+//         { 
+//           this.fid = params["fid"];
+//           ob.next(this.dataService.getVehiclesStatusByFleet(this.fid));
+//         }
+//       ))
+//       .subscribe((vehcilesStatus: Array<VehicleStatus>) => { 
+//         this.data = vehcilesStatus;
+//         this.fleetTracker.setFleetIDByFleet(this.fid);
+//       });
+//  }
 
   toggleView(view: string) {
     this.viewComponent = view;

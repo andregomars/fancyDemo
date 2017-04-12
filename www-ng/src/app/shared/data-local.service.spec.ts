@@ -11,8 +11,8 @@ describe('DataLocalService', () => {
   });
 
   it('should have a list of random monthly dataset', inject([DataLocalService], (service: DataLocalService) => {
-    let vehicles: Array<Vehicle> = service.getAllFleetsWithVehicles()[0].vehicles;
-    let array = service.getRandomMonthlyDataSetWithVehicles(vehicles);
+    // let vehicles: Array<Vehicle> = service.getAllFleetsWithVehicles()[0].vehicles;
+    // let array = service.getRandomMonthlyDataSetWithVehicles(vehicles);
 
     // array.map(x=>console.log(x));
     expect(true).toBeTruthy();
@@ -28,8 +28,8 @@ describe('DataLocalService', () => {
 
   it('should have a list of log with vehicles', inject([DataLocalService], (service: DataLocalService) => {
     // let array = service.getLogsInMonthOfDate(new Date());
-    let vehicles: Array<Vehicle> = service.getAllFleetsWithVehicles()[0].vehicles;
-    let array = service.getLogsInMonthOfDateByVehicles(vehicles, new Date('2017-01-23'));
+    // let vehicles: Array<Vehicle> = service.getAllFleetsWithVehicles()[0].vehicles;
+    // let array = service.getLogsInMonthOfDateByVehicles(vehicles, new Date('2017-01-23'));
 
     // array.map(x=>console.log(x));
     expect(true).toBeTruthy();

@@ -25,22 +25,27 @@ export class MenuComponent implements OnInit {
     ){}
     
     ngOnInit() {
-      this.fleetTracker.getFleetID().subscribe(fid => 
-        {
-          this.loadDailyAnalysisItems(fid);
-          this.loadAlertAnalysisItems(fid);
-          this.loadMonthlyReportItem(fid);
-          this.loadDailyReportItem(fid);
-        });
+      // this.fleetTracker.getFleetID().subscribe(fid => 
+      //   {
+      //     this.loadDailyAnalysisItems(fid);
+      //     this.loadAlertAnalysisItems(fid);
+      //     this.loadMonthlyReportItem(fid);
+      //     this.loadDailyReportItem(fid);
+      //   });
       
-      this.loadFleetItems();
+      // this.loadFleetItems();
+      this.dataService.getAllVehiclesData$().subscribe(data =>
+        this.loadFleetItems(data)
+      );
     }
 
-    private loadFleetItems(): void {
-      var data = this.dataService.getAllVehiclesData();
-      //deduplicate fleet IDs
-      var uniqueFleetIDs = data.map(el => el.fid).filter((el, i, arr) => arr.indexOf(el) === i);
-      var fLinks = uniqueFleetIDs.map(fid => { 
+    private loadFleetItems(data: any): void {
+      if (!data) return;
+      var fleetIDs = 
+        data.map(v => v.fid).filter((el, i, arr) => arr.indexOf(el) === i); 
+
+      if (!fleetIDs) return;
+      var fLinks = fleetIDs.map(fid => { 
         var vLinks = data.filter( el => el.fid === fid ).map(v => {
           return { label: v.vid, routerLink: ['/vehicle', v.vid]}
         });
@@ -53,6 +58,25 @@ export class MenuComponent implements OnInit {
 
       this.fleetItems = fLinks;
     }
+
+    // private loadFleetItems(): void {
+    //   var data = this.dataService.getAllVehiclesData();
+    //   var fleetIDs = this.dataService.getAllFleetID();
+    //   if (!fleetIDs || !data) return;
+
+    //   console.log('here');
+    //   var fLinks = fleetIDs.map(fid => { 
+    //     var vLinks = data.filter( el => el.fid === fid ).map(v => {
+    //       return { label: v.vid, routerLink: ['/vehicle', v.vid]}
+    //     });
+    //     return {
+    //       label: fid,
+    //       routerLink: ['/fleet', fid],
+    //       items: vLinks 
+    //     };
+    //   });
+    //   this.fleetItems = fLinks;
+    // }
 
     private loadDailyAnalysisItems(fid: string): void {
       var data = this.dataService.getVehiclesIdentityByFleet(fid);
@@ -89,7 +113,7 @@ export class MenuComponent implements OnInit {
   this.fleetItem: [
         {
             label: 'LBT',
-            routerLink: ['/fleet'],
+            routerLink: ['/fleet', 'LBT'],
             items: [
                 { 
                   label: 'AZ01',
@@ -102,7 +126,7 @@ export class MenuComponent implements OnInit {
         },
         {
             label: 'BYD',
-            routerLink: ['/fleet'],
+            routerLink: ['/fleet', 'BYD'],
             items: [
                 { 
                   label: 'P01',

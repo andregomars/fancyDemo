@@ -21,7 +21,7 @@ import { MenuComponent } from './menu/menu.component';
 import { ProgressBarComponent } from './components/progressbar/progressbar.component';
 
 import { UtilityService } from './shared/utility.service';
-import { DataService } from './shared/data.service';
+import { DataRemoteService } from './shared/data-remote.service';
 import { DataLocalService } from './shared/data-local.service';
 import { FleetTrackerService } from './shared/fleet-tracker.service';
 import { AnalysisDailyComponent } from './analysis-daily/analysis-daily.component';
@@ -64,7 +64,7 @@ import { FleetSelectionComponent } from './fleet-selection/fleet-selection.compo
   ],
   providers: [
     UtilityService,
-    DataService,
+    DataRemoteService,
     DataLocalService,
     FleetTrackerService
   ],
