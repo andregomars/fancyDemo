@@ -34,17 +34,17 @@ export class DataRemoteService {
   }
 
   getVehicleIdentities(): Array<VehicleIdentity> {
-    if (this.vehicleIdentities) return this.vehicleIdentities;
+    //if (!this.vehicleIdentities) return this.vehicleIdentities;
 
-    // this.http.get(URL_VehicleIdentities).toPromise()
-    // 	.then(res => this.vehicleIdentities = res.json() as Array<VehicleIdentity>)
-    // 	.catch(this.handleError);
-    this.vehicleIdentities = new Array<VehicleIdentity>();
+    var vehicleIdentities = new Array<VehicleIdentity>();
     this.http.get(URL_VehicleIdentities)
-      .flatMap(data => data.json() as Array<VehicleIdentity>)
-      .subscribe(data => this.vehicleIdentities.push(data));
-
-    return this.vehicleIdentities;
+      // .flatMap(data => data.json() as Array<VehicleIdentity>)
+      // .subscribe(data => this.vehicleIdentities.push(data));
+			// .map(data => data.json())
+			// .subscribe(data => { vehicleIdentities = data; console.log('tell me why')});
+			.toPromise()
+			.then(res => vehicleIdentities = res.json());
+    return vehicleIdentities;
   }
 
   getFleetIdentities(): Array<string> {

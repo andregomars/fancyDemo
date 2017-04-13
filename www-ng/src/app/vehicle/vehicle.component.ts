@@ -118,14 +118,24 @@ export class VehicleComponent implements OnInit {
 
  getVehicleStatus(): void {
     this.route.params
-      .switchMap((params: Params) => Rx.Observable.create(ob => 
-        { ob.next(this.dataService.getVehicleStatus(params["vid"])) }
-      ))
+      .switchMap((params: Params) => 
+        this.dataService.getVehicleStatus$(params["vid"]))
       .subscribe((vehicle: VehicleStatus) => { 
         this.vehicle = vehicle;
-        this.fleetTracker.setFleetIDByVehicle(vehicle.vid);
+        // this.fleetTracker.setFleetIDByVehicle(vehicle.vid);
       });
  }
+
+//  getVehicleStatus(): void {
+//     this.route.params
+//       .switchMap((params: Params) => Rx.Observable.create(ob => 
+//         { ob.next(this.dataService.getVehicleStatus(params["vid"])) }
+//       ))
+//       .subscribe((vehicle: VehicleStatus) => { 
+//         this.vehicle = vehicle;
+//         this.fleetTracker.setFleetIDByVehicle(vehicle.vid);
+//       });
+//  }
 
   setGaugeOptions(vehicle: any): void {
     this.optionGaugeSOC = {

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-// import * as Rx from 'rxjs/RX';
+import * as Rx from 'rxjs/RX';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 
 import { UtilityService } from './utility.service';
 import { DailyNumber } from '../models/dailyNumber.model';
@@ -37,9 +36,28 @@ export class DataLocalService {
    }
 
    getVehiclesStatusByFleet$(fid: string): Observable<Array<VehicleStatus>> {
-      var data$ = Observable.of(this.getAllVehicleStatusData());
+      var data$ = this.getAllVehicleStatusData$();
       return data$.map(el => el.filter(status => status.fid === fid));
    }
+
+   getAllVehicleStatusData$(): Observable<Array<VehicleStatus>> {
+      var allVehicles$ = this.getAllVehiclesData$();
+      var allVehiclesStatus = 
+        allVehicles$.map(vList => vList.map(v => this.utility.genRandomVehicleStatus(v)));
+      return allVehiclesStatus;
+    }
+
+    getVehicleStatus$(vid: string): Observable<VehicleStatus> {
+      // var v = new VehicleIdentity(vid, 'f');
+      // return Rx.Observable.of(
+      //   this.utility.genRandomVehicleStatus(v)
+      // );
+      return this.getAllVehiclesData$()
+        .map(vehicles => vehicles.find(v => v.vid === vid))
+        .last()
+        .map(vehicle => this.utility.genRandomVehicleStatus(vehicle)) ;
+          // var vehicle = vehicles.filter(v => v.vid === vid)[0]; 
+    }
 
     getAllFleetID(): Array<string> {
       var data = this.dataRemoteService.getFleetIdentities();
@@ -48,33 +66,23 @@ export class DataLocalService {
 
     getAllVehiclesData(): Array<VehicleIdentity> {
       return this.dataRemoteService.getVehicleIdentities();
-    //   if (this.allVehicles) return this.allVehicles;
-
-    //   console.log("start get all");
-    // //   let vehicles$ = this.dataRemoteService.getVehicleIdentities();
-    // //   vehicles$
-    // //     .subscribe(vehicles => this.allVehicles = vehicles);
-
-	// 		// this.allVehicles = this.dataRemoteService.getVehicleIdentities();
-    //   console.log(this.allVehicles);
-
-    //   return this.allVehicles;
     }
 
     getAllVehicleStatusData(): Array<VehicleStatus> {
-      if (this.allVehiclesStatus) return this.allVehiclesStatus;
+    //   if (!this.allVehiclesStatus) return this.allVehiclesStatus;
 
-      this.allVehicles = this.getAllVehiclesData();
+      var allVehicles = this.getAllVehiclesData();
       // let vehicles : Array<VehicleIdentity>;
       // this.getAllVehiclesData().subscribe(vs => vehicles = vs);
       // this.allVehiclesStatus = vehicles.map(v => this.utility.genRandomVehicleStatus(v));
-      this.allVehiclesStatus = this.allVehicles.map(v => this.utility.genRandomVehicleStatus(v));
+      this.allVehiclesStatus = allVehicles.map(v => this.utility.genRandomVehicleStatus(v));
       return this.allVehiclesStatus;
     }
 
     getVehicleStatus(vid: string): VehicleStatus {
-      if (!this.allVehiclesStatus) this.getAllVehicleStatusData();
-      return this.allVehiclesStatus.find(s => s.vid === vid);
+      //if (!this.allVehiclesStatus) this.getAllVehicleStatusData();
+      var statusArray = this.getAllVehicleStatusData();
+      return statusArray.find(s => s.vid === vid);
     }
 
     getVehicleIdentity(vid: string): VehicleIdentity {
@@ -96,8 +104,9 @@ export class DataLocalService {
     }
 
     getVehiclesStatusByFleet(fid: string): Array<VehicleStatus> {
-      if (!this.allVehiclesStatus) this.getAllVehicleStatusData();
-      return this.allVehiclesStatus.filter(s => s.fid === fid);
+    //   if (!this.allVehiclesStatus) this.getAllVehicleStatusData();
+      var allVehiclesStatus = this.getAllVehicleStatusData();
+      return allVehiclesStatus.filter(s => s.fid === fid);
     }
 
 
@@ -866,7 +875,8 @@ export class DataLocalService {
         return fleets;
     }
 
-     this.allVehicles = [{
+    getAllVehiclesData(): Array<VehicleIdentity> {
+      this.allVehicles = [{
                 "fid": "AVTA",
                 "vid": "4370"
             }, {
@@ -921,4 +931,6 @@ export class DataLocalService {
                 "fid": "LBT",
                 "vid": "1610"
             }];
+        return this.allVehicles;
+    } 
 */

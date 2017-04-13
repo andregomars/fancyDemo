@@ -27,16 +27,14 @@ export class FleetComponent implements OnInit {
 
  getFleet(): void {
     this.route.params
-      .switchMap((params: Params) => { 
+      .switchMap((params: Params) =>  
+        { 
           this.fid = params["fid"];
-          console.log(this.fid);
           return this.dataService.getVehiclesStatusByFleet$(this.fid);
         }
       )
       .subscribe((vehcilesStatus: Array<VehicleStatus>) => { 
         this.data = vehcilesStatus;
-        console.log(this.data);
-        console.log('data set in fleet comp');
         this.fleetTracker.setFleetIDByFleet(this.fid);
       });
  }
