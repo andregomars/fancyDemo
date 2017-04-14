@@ -19,7 +19,9 @@ import { VehicleStatus } from '../models/vehicle-status'
 })
 export class VehicleComponent implements OnInit {
  
- vehicle: any;
+ vehicle: VehicleStatus = 
+  new VehicleStatus('', '', 0, '', 0, 0, 
+      0, 0, 0, 0, new Date());
  optionGaugeSOC: any;
  optionGaugeSpeed: any;
  lineChartData: any;
@@ -58,8 +60,8 @@ export class VehicleComponent implements OnInit {
 
  ngOnInit(): void {
    this.getVehicleStatus();
-   this.setGaugeOptions(this.vehicle);
-
+  
+   this.setGaugeOptions();
    this.initLatestAlertAndSnapshotList();
    this.initVehicleStatusTable();
 
@@ -72,7 +74,6 @@ export class VehicleComponent implements OnInit {
 
    this.lineChartData = this.dataService.getLineChart();
    this.setLineChartOptions();
-   
  }
 
  initDatePicker(): void {
@@ -122,7 +123,7 @@ export class VehicleComponent implements OnInit {
         this.dataService.getVehicleStatus$(params["vid"]))
       .subscribe((vehicle: VehicleStatus) => { 
         this.vehicle = vehicle;
-        // this.fleetTracker.setFleetIDByVehicle(vehicle.vid);
+        this.fleetTracker.setFleetIDByVehicle(vehicle.vid);
       });
  }
 
@@ -137,10 +138,10 @@ export class VehicleComponent implements OnInit {
 //       });
 //  }
 
-  setGaugeOptions(vehicle: any): void {
+  setGaugeOptions(): void {
     this.optionGaugeSOC = {
       id: "gauge-Soc",
-      value: vehicle.soc,
+      value: 0, 
       title: "SOC",
       symbol: "",
       decimals: 0,
@@ -151,7 +152,7 @@ export class VehicleComponent implements OnInit {
     };
     this.optionGaugeSpeed = {
       id: "gauge-Speed",
-      value: vehicle.speed,
+      value: 0, 
       title: "MPH",
       symbol: "",
       decimals: 0,

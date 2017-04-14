@@ -18,6 +18,7 @@ export class MenuComponent implements OnInit {
     alertItems : MenuItem[];
     monthlyReportItem: any[];
     dailyReportItem: any[];
+    vehicles: VehicleIdentity[];
 
     constructor(
       private fleetTracker: FleetTrackerService,
@@ -25,15 +26,21 @@ export class MenuComponent implements OnInit {
     ){}
     
     ngOnInit() {
-      // this.fleetTracker.getFleetID().subscribe(fid => 
-      //   {
-      //     this.loadDailyAnalysisItems(fid);
-      //     this.loadAlertAnalysisItems(fid);
-      //     this.loadMonthlyReportItem(fid);
-      //     this.loadDailyReportItem(fid);
-      //   });
+      this.fleetTracker.getFleetID().subscribe(fid => 
+        {
+          this.dataService.getAllVehiclesData$()
+            .map(el => el.filter( v => v.fid === fid))
+            .subscribe(vehicles => 
+             { 
+                this.vehicles = vehicles;
+                this.loadDailyAnalysisItems();
+                this.loadAlertAnalysisItems();
+             });
+
+          this.loadMonthlyReportItem(fid);
+          this.loadDailyReportItem(fid);
+        });
       
-      // this.loadFleetItems();
       this.dataService.getAllVehiclesData$().subscribe(data =>
         this.loadFleetItems(data)
       );
@@ -78,9 +85,8 @@ export class MenuComponent implements OnInit {
     //   this.fleetItems = fLinks;
     // }
 
-    private loadDailyAnalysisItems(fid: string): void {
-      var data = this.dataService.getVehiclesIdentityByFleet(fid);
-      var vLinks = data.map(v => {
+    private loadDailyAnalysisItems(): void {
+      var vLinks = this.vehicles.map(v => {
         return {
           label: v.vid,
           routerLink: ['/vehicledaily', v.vid]
@@ -89,9 +95,8 @@ export class MenuComponent implements OnInit {
       this.vehicleItems = vLinks;
     }
 
-    private loadAlertAnalysisItems(fid: string): void {
-      var data = this.dataService.getVehiclesIdentityByFleet(fid);
-      var vLinks = data.map(v => {
+    private loadAlertAnalysisItems(): void {
+      var vLinks = this.vehicles.map(v => {
         return {
           label: v.vid,
           routerLink: ['/vehiclealert', v.vid]

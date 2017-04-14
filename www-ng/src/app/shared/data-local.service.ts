@@ -54,7 +54,6 @@ export class DataLocalService {
       // );
       return this.getAllVehiclesData$()
         .map(vehicles => vehicles.find(v => v.vid === vid))
-        .last()
         .map(vehicle => this.utility.genRandomVehicleStatus(vehicle)) ;
           // var vehicle = vehicles.filter(v => v.vid === vid)[0]; 
     }
