@@ -42,7 +42,7 @@ export class AnalysisAlertComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadVehicle();
+    
 
     // Vehicle Alert
     this.initVehicleAlertDateRangePicker();
@@ -52,7 +52,9 @@ export class AnalysisAlertComponent implements OnInit {
     // Fleet Alert
     this.initFleetAlertDateRangePicker();
     this.initFleetAlertChartOption();
-    this.initFleetAlertChartData()
+    this.initFleetAlertChartData();
+
+    this.loadVehicle();
   }
 
   /*** Section - Fleet Alert ***/
@@ -157,12 +159,24 @@ export class AnalysisAlertComponent implements OnInit {
   /*** Common Section ***/
   private loadVehicle(): void {
     this.route.params
-      .switchMap((params: Params) => Rx.Observable.create(ob => ob.next(params["vid"]))) 
+      .switchMap((params: Params) => Rx.Observable.of(params["vid"])) 
       .subscribe((vid: string) => {
         this.vehicleID = vid;
-        this.fleetID = this.dataService.getVehicleIdentity(vid).fid;
+        this.dataService.getAllVehiclesData$()
+          .map(el => el.find(v => v.vid === vid))
+          .map(v => v.fid)
+          .subscribe(fid => this.fleetID = fid);
     });
   }
+
+  // private loadVehicle(): void {
+  //   this.route.params
+  //     .switchMap((params: Params) => Rx.Observable.create(ob => ob.next(params["vid"]))) 
+  //     .subscribe((vid: string) => {
+  //       this.vehicleID = vid;
+  //       this.fleetID = this.dataService.getVehicleIdentity(vid).fid;
+  //   });
+  // }
 
   private getDefaultDateRangePickerOptions(): any {
     return {

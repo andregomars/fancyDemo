@@ -3,7 +3,6 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { IMyOptions, IMyDateRangeModel } from 'mydaterangepicker';
 import * as moment from 'moment';
 import { UIChart } from 'primeng/primeng';
-// import 'rxjs/add/operator/switchMap';
 import * as Rx from 'rxjs/Rx';
 
 let jsPDF = require("jspdf");
@@ -397,13 +396,24 @@ export class AnalysisDailyComponent implements OnInit {
     /*** Common Section ***/
     private loadVehicle(): void {
         this.route.params
-            .switchMap((params: Params) => Rx.Observable.create(ob=>ob.next(params["vid"])))
+            .switchMap((params: Params) => Rx.Observable.of(params["vid"]))
             .subscribe((vid: string) => { 
                 this.vehicleID = vid;
-                this.fleetID = this.dataService.getVehicleIdentity(vid).fid;
-                // this.reloadData();
+                this.dataService.getAllVehiclesData$()
+                    .map(el => el.find(v => v.vid === vid))
+                    .map(v => v.fid)
+                    .subscribe(fid => this.fleetID = fid);
             });
     }
+    // private loadVehicle(): void {
+    //     this.route.params
+    //         .switchMap((params: Params) => Rx.Observable.create(ob=>ob.next(params["vid"])))
+    //         .subscribe((vid: string) => { 
+    //             this.vehicleID = vid;
+    //             this.fleetID = this.dataService.getVehicleIdentity(vid).fid;
+    //             // this.reloadData();
+    //         });
+    // }
 
     private getDefaultDateRangePickerOptions(): any {
         return {

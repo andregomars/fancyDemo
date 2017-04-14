@@ -15,7 +15,6 @@ import { DataRemoteService } from './data-remote.service';
 @Injectable()
 export class DataLocalService {
 
-    // private utility: UtilityService = new UtilityService();
     private allVehicles: Array<VehicleIdentity>;
     private allVehiclesStatus: Array<VehicleStatus>;
 
@@ -23,8 +22,6 @@ export class DataLocalService {
         private utility: UtilityService,
         private dataRemoteService: DataRemoteService
     ) {
-    //   this.getAllVehiclesData();
-    //   this.getAllVehicleStatusData();
     }
 
    getAllFleetID$(): Observable<Array<string>> {
@@ -48,14 +45,9 @@ export class DataLocalService {
     }
 
     getVehicleStatus$(vid: string): Observable<VehicleStatus> {
-      // var v = new VehicleIdentity(vid, 'f');
-      // return Rx.Observable.of(
-      //   this.utility.genRandomVehicleStatus(v)
-      // );
       return this.getAllVehiclesData$()
         .map(vehicles => vehicles.find(v => v.vid === vid))
         .map(vehicle => this.utility.genRandomVehicleStatus(vehicle)) ;
-          // var vehicle = vehicles.filter(v => v.vid === vid)[0]; 
     }
 
     getAllFleetID(): Array<string> {
@@ -64,7 +56,12 @@ export class DataLocalService {
    }
 
     getAllVehiclesData(): Array<VehicleIdentity> {
-      return this.dataRemoteService.getVehicleIdentities();
+        if (this.allVehicles) return this.allVehicles;
+
+        this.dataRemoteService.getVehicleIdentities$()
+            .subscribe(data => this.allVehicles = data);
+        
+        return this.allVehicles;
     }
 
     getAllVehicleStatusData(): Array<VehicleStatus> {
