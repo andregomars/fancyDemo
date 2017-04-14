@@ -6,6 +6,11 @@
     width: auto
 }
 
+.submenu {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
 /* ------------------------ */
 
 /* We remove the margin, padding, and list style of UL and LI components */
