@@ -2,6 +2,32 @@
     <div class="row" >
         <div class="col-md-2 col-sm-6 col-12 p-2 text-center" 
           *ngFor="let row of items; let i = index" [ngSwitch]="row.status">
+            <div *ngSwitchCase="'Charging'" class="card bg-bus-green">
+                <div class="card-block">
+                    <h4 class="card-title text-success">
+                        <a [routerLink]="['/vehicle', row.vid]" class="text-success">{{row.vid}}</a>
+                    </h4>
+                    <p class="card-text text-success">{{row.soc}}%</p>
+                    <p>&nbsp;</p>
+                </div>
+            </div>
+            <div *ngSwitchDefault class="card bg-bus-grey">
+                <div class="card-block">
+                    <h4 class="card-title">
+                        <a [routerLink]="['/vehicle', row.vid]" class="text-secondary">{{row.vid}}</a>
+                    </h4>
+                    <p class="card-text">{{row.soc}}%</p>
+                    <p>&nbsp;</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="container">
+    <div class="row" >
+        <div class="col-md-2 col-sm-6 col-12 p-2 text-center" 
+          *ngFor="let row of items; let i = index" [ngSwitch]="row.status">
             <div *ngSwitchCase="'Charging'" 
               class="card  card-outline-success iconcard">
                 <div class="card-block">
@@ -23,6 +49,6 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 
