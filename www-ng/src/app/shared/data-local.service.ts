@@ -155,11 +155,11 @@ export class DataLocalService {
                     fill: false,
                     borderColor: '#4bc0c0'
                 }, {
-                    type: 'bar',
-                    label: 'Range',
+                    type: 'line',
+                    label: 'kWh',
                     data: this.utility.getRandomNumberList(24, 0, 250),
                     yAxisID: 'yRange',
-                    // fill: false,
+                    fill: false,
                     borderColor: '#565656',
                     borderWidth: 1
                 }
@@ -176,13 +176,13 @@ export class DataLocalService {
             datasets: [
                 {
                     type: 'line',
-                    label: 'Estimate Distance',
+                    label: 'Range',
                     data: this.utility.getRandomNumberList(24, 0, 100),
                     yAxisID: 'yEstimateDistance',
                     fill: false,
                     borderColor: '#4bc0c0'
                 }, {
-                    type: 'bar',
+                    type: 'line',
                     label: 'Actual Distance',
                     data: this.utility.getRandomNumberList(24, 0, 250),
                     yAxisID: 'yActualDistance',
@@ -209,8 +209,8 @@ export class DataLocalService {
                     fill: false,
                     borderColor: '#4bc0c0'
                 }, {
-                    type: 'bar',
-                    label: 'Running Status',
+                    type: 'line',
+                    label: 'High Voltage Status',
                     data: this.utility.getRandomNumberList(24, 0, 250),
                     yAxisID: 'yRunningStatus',
                     fill: false,
