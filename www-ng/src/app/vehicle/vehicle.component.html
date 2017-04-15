@@ -1,134 +1,147 @@
 <div class="container">
     <div class="row">
         <div class="col-md-7 col-xs-12">
-            <div class="container">
-                <div class="row p-2"> 
-                    <div class="col text-center">
-                        <h5><i class="fa fa-bus"></i>  {{vehicle.fid}} / {{vehicle.vid}}</h5>
-                    </div>
+            <div class="row p-2">
+                <div class="col text-center">
+                    <h5><i class="fa fa-bus"></i> {{vehicle.fid}} / {{vehicle.vid}}</h5>
                 </div>
-                <div class="row p-2"> 
-                    <div class="col-sm-3">
-                        Voltage: <app-progressbar [value]="vehicle.voltage" max="220" unit="V"></app-progressbar>
-                    </div>
-                    <div class="col-sm-3">
-                        Current: <app-progressbar [value]="vehicle.current" max="80" unit="A"></app-progressbar>
-                    </div>
-                    <div class="col-sm-3">
-                        Low Temp: <app-progressbar [value]="vehicle.temperature" max="250" unit="F"></app-progressbar>
-                    </div>
-                    <div class="col-sm-3">
-                        High Temp: <app-progressbar [value]="vehicle.temperature+50" max="250" unit="F"></app-progressbar>
-                    </div>
-                </div>
-                <div class="row align-items-center no-gutters mt-4"> 
-                    <div class="col-sm-3">
+            </div>
+
+            <div class="row">
+                <div class="col-5">
+                    <div class="row">
                         <!--<app-gauge [options]="optionGaugeSOC" [value]="optionGaugeSOC.value" [max]="optionGaugeSOC.max"></app-gauge>-->
-                        <justgage [options]="optionGaugeSOC" [value]="vehicle.soc" min="0" max="100"></justgage>
+                        <justgage [options]="optionGaugeSOC" [value]="vehicle.soc" min="0" max="100" class="app-justgage"></justgage>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="container">
-                            <div class="row p-2">
-                                <div class="col-4 small">
-                                    Mileage: 
-                                </div>
-                                <div class="col-8">
-                                    <app-progressbar [value]="vehicle.mileage" [max]="vehicle.mileage" unit="miles" ></app-progressbar>
-                                </div>
-                            </div>
-                            <div class="row p-2">
-                                <div class="col-4 small">
-                                    Range: 
-                                </div>
-                                <div class="col-8">
-                                    <app-progressbar [value]="vehicle.range" [max]="vehicle.range" unit="miles"></app-progressbar>
+                    <div class="row">
+                        <!--<app-gauge [options]="optionGaugeSpeed" [value]="optionGaugeSpeed.value" [max]="optionGaugeSpeed.max"></app-gauge>-->
+                        <justgage [options]="optionGaugeSpeed" [value]="vehicle.speed" min="0" max="65" class="app-justgage"></justgage>
+                    </div>
+                </div>
+                <div class="col-7">
+                    <div class="row mb-4 align-top app-processbar">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">Voltage(V):
+                                    <app-progressbar [value]="vehicle.voltage" max="800"></app-progressbar>
                                 </div>
                             </div>
-                            <div class="row p-2">
-                                <div class="col-7 small">
-                                    Remaining Energy:
-                                </div>
-                                <div class="col-5">
-                                    <app-progressbar [value]="vehicle.soc" max="100" unit="%"></app-progressbar>
+                            <div class="row">
+                                <div class="col">Current(A):
+                                    <app-progressbar [value]="vehicle.current" min="-400" max="400"></app-progressbar>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3">
-                        <!--<app-gauge [options]="optionGaugeSpeed" [value]="optionGaugeSpeed.value" [max]="optionGaugeSpeed.max"></app-gauge>-->
-                        <justgage [options]="optionGaugeSpeed" [value]="vehicle.speed" min="0" max="65"></justgage>
+                    <div class="row mt-4 align-bottom app-processbar">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">Low Temp(F):
+                                    <app-progressbar [value]="vehicle.temperature" min="-40" max="220"></app-progressbar>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">High Temp(F):
+                                    <app-progressbar [value]="vehicle.temperature+50" min="-40" max="220"></app-progressbar>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
-        </div>
-        <div class="col-md-5 col-xs-12">
-
-            <ul class="nav nav-tabs small">
-                <li class="nav-item">
-                    <a class="nav-link active " data-toggle="tab" href="#tab-alert">Latest Alert</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " data-toggle="tab" href="#tab-snapshot">Latest Snapshot</a>
-                </li>
-            </ul>
-
-            <div class="tab-content small">
-                <div class="tab-pane active" id="tab-alert" >
-                    <ul class="fa-ul">
-                        <li *ngFor="let row of dataLatestAlertList">
-                            <i class="fa-li fa fa-exclamation-triangle"></i>{{row.time}} - {{row.type}}
-                        </li>
-                    </ul>
-                </div>
-                <div class="tab-pane" id="tab-snapshot" >
-                    <ul class="fa-ul">
-                        <li *ngFor="let row of dataLatestSnapshotList">
-                            <i class="fa-li fa fa-camera"></i>{{row.time}}
-                        </li>
-                    </ul>
+            <div class="row">
+                <div class="col">
+                    <div class="row p-2">
+                        <div class="col-4 small">
+                            Mileage(Miles):
+                        </div>
+                        <div class="col-8">
+                            <app-progressbar [value]="vehicle.mileage" [max]="vehicle.mileage"></app-progressbar>
+                        </div>
+                    </div>
+                    <div class="row p-2">
+                        <div class="col-4 small">
+                            Range(Miles):
+                        </div>
+                        <div class="col-8">
+                            <app-progressbar [value]="vehicle.range" [max]="vehicle.range"></app-progressbar>
+                        </div>
+                    </div>
+                    <div class="row p-2">
+                        <div class="col-4 small">
+                            Remaining Energy(kWh):
+                        </div>
+                        <div class="col-8">
+                            <app-progressbar [value]="vehicle.soc" max="100"></app-progressbar>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-
     <div class="row">
         <div class="col-md-5 col-xs-12">
-            <p-dataTable [value]="dataVehicleStatus" class="table small">
-                <p-column field="TypeCode" header="TypeCode"></p-column>
-                <p-column field="Name" header="Name"></p-column>
-                <p-column field="Value" header="Value"></p-column>
-            </p-dataTable>
-        </div>
-        <div class="col-md-7 col-xs-12">
-            <div class="container">
-                <div class="row ">
-                    <div class="col-8 text-right">
-                        <my-date-picker [options]="optionDatePicker"
-                            (dateChanged)="onDateChanged($event)" 
-                            placeholder="Select Date"></my-date-picker>
-                    </div>
-                    <div class="col-4">
-                        <button type="button" class="btn btn-secondary btn-sm" (click)="exportDualCharts()">Export Charts</button>
+            <div class="row">
+                <div class="col">
+                    <ul class="nav nav-tabs small">
+                        <li class="nav-item">
+                            <a class="nav-link active " data-toggle="tab" href="#tab-alert">Latest Alert</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " data-toggle="tab" href="#tab-snapshot">Latest Snapshot</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content small">
+                        <div class="tab-pane active" id="tab-alert">
+                            <ul class="fa-ul">
+                                <li *ngFor="let row of dataLatestAlertList">
+                                    <i class="fa-li fa fa-exclamation-triangle"></i>{{row.time}} - {{row.type}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane" id="tab-snapshot">
+                            <ul class="fa-ul">
+                                <li *ngFor="let row of dataLatestSnapshotList">
+                                    <i class="fa-li fa fa-camera"></i>{{row.time}}
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div #divDualCharts class="row align-items-center p-2"> 
-                    <div class="col">
-                        <p-chart #chartSocRange type="bar" [data]="dataSocRangeChart" [options]="optionSocRangeChart"></p-chart>
-                    </div>
-                    <div class="col">
-                        <p-chart #chartEstActualDistance type="bar" [data]="dataEstActualDistanceChart" [options]="optionEstActualDistanceChart"></p-chart>
-                    </div>
-                    <div class="col">
-                        <p-chart #chartChargingRunningStatus type="bar" [data]="dataChargingRunningStatusChart" [options]="optionChargingRunningStatusChart"></p-chart>
-                    </div>
+            </div>
+            <div class="row">
+                <p-dataTable [value]="dataVehicleStatus" class="table small">
+                    <p-column field="TypeCode" header="TypeCode"></p-column>
+                    <p-column field="Name" header="Name"></p-column>
+                    <p-column field="Value" header="Value"></p-column>
+                </p-dataTable>
+            </div>
+        </div>
+        <div class="col-md-7 col-xs-12">
+            <div class="row ">
+                <div class="col-8 text-right">
+                    <my-date-picker [options]="optionDatePicker" (dateChanged)="onDateChanged($event)" placeholder="Select Date"></my-date-picker>
+                </div>
+                <div class="col-4">
+                    <button type="button" class="btn btn-secondary btn-sm" (click)="exportDualCharts()">Export Charts</button>
+                </div>
+            </div>
+            <div #divDualCharts class="row align-items-center p-2">
+                <div class="col">
+                    <p-chart #chartSocRange type="bar" [data]="dataSocRangeChart" [options]="optionSocRangeChart"></p-chart>
+                </div>
+                <div class="col">
+                    <p-chart #chartEstActualDistance type="bar" [data]="dataEstActualDistanceChart" [options]="optionEstActualDistanceChart"></p-chart>
+                </div>
+                <div class="col">
+                    <p-chart #chartChargingRunningStatus type="bar" [data]="dataChargingRunningStatusChart" [options]="optionChargingRunningStatusChart"></p-chart>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row align-items-center no-gutters p-2 m-2"> 
+    <div class="row align-items-center no-gutters p-2 m-2">
         <div class="col">
             <p-chart type="line" [data]="lineChartData" [options]="optLineChart"></p-chart>
         </div>

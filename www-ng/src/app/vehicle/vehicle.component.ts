@@ -15,7 +15,8 @@ import { VehicleStatus } from '../models/vehicle-status'
 
 @Component({
   moduleId: module.id,
-  templateUrl: 'vehicle.component.html'
+  templateUrl: 'vehicle.component.html',
+  styleUrls: [ 'vehicle.component.css' ]
 })
 export class VehicleComponent implements OnInit {
  
@@ -142,7 +143,7 @@ export class VehicleComponent implements OnInit {
     this.optionGaugeSOC = {
       id: "gauge-Soc",
       value: 0, 
-      title: "SOC",
+      title: "SOC(%)",
       symbol: "",
       decimals: 0,
       startAnimationTime: 0,
@@ -153,7 +154,7 @@ export class VehicleComponent implements OnInit {
     this.optionGaugeSpeed = {
       id: "gauge-Speed",
       value: 0, 
-      title: "MPH",
+      title: "Speed(mph)",
       symbol: "",
       decimals: 0,
       startAnimationTime: 0,

@@ -4,19 +4,21 @@
            <a [routerLink]="['/vehicle', data[col.field]]">{{data[col.field]}}</a>
         </ng-template>
     </p-column>
-    <p-column field="soc" header="SOC">
+    <p-column field="soc" header="SOC" [sortable]="true">
         <ng-template let-col let-data="rowData" pTemplate="body">
             <p-progressBar [value]="data[col.field]"></p-progressBar>
         </ng-template>
     </p-column>
-    <p-column field="status" header="Status"></p-column>
-    <p-column field="range" header="Range"></p-column>
-    <p-column field="mileage" header="Mileage"></p-column>
-    <p-column field="updated" header="Updated" [sortable]="true"></p-column>
+    <p-column field="status" header="Status" [sortable]="true"></p-column>
+    <p-column field="range" header="Range" [sortable]="true"></p-column>
+    <p-column field="mileage" header="Mileage" [sortable]="true"></p-column>
+    <p-column field="updated" header="Updated"></p-column>
     <p-column header="Action">
         <ng-template let-row="rowData" pTemplate="body">
-            <button title="SMS Request" type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#requestModal">
-               <i class="fa fa-commenting-o fa-lg"></i>
+            <button title="SMS Request" type="button" 
+              class="btn btn-primary btn-sm" 
+                data-toggle="modal" data-target="#requestModal">
+                Request
             </button>
         </ng-template>
     </p-column>
