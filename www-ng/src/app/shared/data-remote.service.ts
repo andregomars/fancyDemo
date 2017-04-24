@@ -8,7 +8,8 @@ import 'rxjs/add/operator/switchMap';
 
 import { VehicleIdentity } from '../models/vehicle-identity';
 
-const URL_VehicleIdentities = "http://www.mocky.io/v2/58e926392a000014022dbbb4";
+// const URL_VehicleIdentities = "http://www.mocky.io/v2/58e926392a000014022dbbb4";
+const URL_VehicleIdentities = "http://localhost:5000/api/VehicleIdentity";
 
 @Injectable()
 export class DataRemoteService {
