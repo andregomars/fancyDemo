@@ -7,7 +7,7 @@ import { VehicleIdentity } from '../models/vehicle-identity';
 @Injectable()
 export class FleetTrackerService {
 
-  private fid: string;
+  private fname: string;
   private subject: Subject<string> = new Subject<string>();
   private vehicles: Array<any>;  
 
@@ -17,18 +17,18 @@ export class FleetTrackerService {
     // this.vehicles = this.dataService.getAllVehiclesData();
   }
 
-  setFleetIDByVehicle(vid: string): void {
+  setFleetIDByVehicle(vname: string): void {
     if (!this.vehicles) this.vehicles = this.dataService.getAllVehiclesData();
 
-    this.fid = this.vehicles.find(v => v.vid === vid).fid;
-    this.subject.next(this.fid);
+    this.fname = this.vehicles.find(v => v.vname === vname).fname;
+    this.subject.next(this.fname);
   }
 
-  setFleetIDByFleet(fid: string): void {
+  setFleetIDByFleet(fname: string): void {
     if (!this.vehicles) this.vehicles = this.dataService.getAllVehiclesData();
     
-    this.fid = fid;
-    this.subject.next(fid);
+    this.fname = fname;
+    this.subject.next(fname);
   }
 
   getFleetID(): Observable<string> {

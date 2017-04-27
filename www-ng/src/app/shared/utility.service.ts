@@ -150,7 +150,7 @@ export class UtilityService {
       // let updated: Date = moment().subtract(_.random(0,3600), 'seconds').toDate(); 
       let updated: string = moment().subtract(_.random(300,3600), 'seconds').format('MM/DD/YYYY hh:mm:ss'); 
 
-      return new VehicleStatus(vehicle.vid, vehicle.fid,
+      return new VehicleStatus(vehicle.vid, vehicle.vname, vehicle.fid, vehicle.fname, 
         soc, status, range, mileage, voltage, current, temperature, speed, updated);
     }
 

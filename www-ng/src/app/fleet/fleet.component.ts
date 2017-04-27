@@ -13,7 +13,7 @@ import { VehicleStatus } from '../models/vehicle-status';
 export class FleetComponent implements OnInit {
 	viewComponent:string = "table";
   data: any;
-  fid: string;
+  fname: string;
 
   constructor (
     private route: ActivatedRoute,
@@ -29,13 +29,13 @@ export class FleetComponent implements OnInit {
     this.route.params
       .switchMap((params: Params) =>  
         { 
-          this.fid = params["fid"];
-          return this.dataService.getVehiclesStatusByFleet$(this.fid);
+          this.fname = params["fname"];
+          return this.dataService.getVehiclesStatusByFleet$(this.fname);
         }
       )
       .subscribe((vehcilesStatus: Array<VehicleStatus>) => { 
         this.data = vehcilesStatus;
-        this.fleetTracker.setFleetIDByFleet(this.fid);
+        this.fleetTracker.setFleetIDByFleet(this.fname);
       });
  }
 

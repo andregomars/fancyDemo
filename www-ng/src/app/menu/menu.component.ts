@@ -26,10 +26,10 @@ export class MenuComponent implements OnInit {
     ){}
     
     ngOnInit() {
-      this.fleetTracker.getFleetID().subscribe(fid => 
+      this.fleetTracker.getFleetID().subscribe(fname => 
         {
           this.dataService.getAllVehiclesData$()
-            .map(el => el.filter( v => v.fid === fid))
+            .map(el => el.filter( v => v.fname === fname))
             .subscribe(vehicles => 
              { 
                 this.vehicles = vehicles;
@@ -37,8 +37,8 @@ export class MenuComponent implements OnInit {
                 this.loadAlertAnalysisItems();
              });
 
-          this.loadMonthlyReportItem(fid);
-          this.loadDailyReportItem(fid);
+          this.loadMonthlyReportItem(fname);
+          this.loadDailyReportItem(fname);
         });
       
       this.dataService.getAllVehiclesData$().subscribe(data =>
@@ -49,16 +49,16 @@ export class MenuComponent implements OnInit {
     private loadFleetItems(data: any): void {
       if (!data) return;
       var fleetIDs = 
-        data.map(v => v.fid).filter((el, i, arr) => arr.indexOf(el) === i); 
+        data.map(v => v.fname).filter((el, i, arr) => arr.indexOf(el) === i); 
 
       if (!fleetIDs) return;
-      var fLinks = fleetIDs.map(fid => { 
-        var vLinks = data.filter( el => el.fid === fid ).map(v => {
-          return { label: v.vid, routerLink: ['/vehicle', v.vid]}
+      var fLinks = fleetIDs.map(fname => { 
+        var vLinks = data.filter( el => el.fname === fname ).map(v => {
+          return { label: v.vname, routerLink: ['/vehicle', v.vname]}
         });
         return {
-          label: fid,
-          routerLink: ['/fleet', fid],
+          label: fname,
+          routerLink: ['/fleet', fname],
           items: vLinks 
         };
       });
@@ -88,8 +88,8 @@ export class MenuComponent implements OnInit {
     private loadDailyAnalysisItems(): void {
       var vLinks = this.vehicles.map(v => {
         return {
-          label: v.vid,
-          routerLink: ['/vehicledaily', v.vid]
+          label: v.vname,
+          routerLink: ['/vehicledaily', v.vname]
         };
       });
       this.vehicleItems = vLinks;
@@ -98,19 +98,19 @@ export class MenuComponent implements OnInit {
     private loadAlertAnalysisItems(): void {
       var vLinks = this.vehicles.map(v => {
         return {
-          label: v.vid,
-          routerLink: ['/vehiclealert', v.vid]
+          label: v.vname,
+          routerLink: ['/vehiclealert', v.vname]
         };
       });
       this.alertItems = vLinks;
     }
 
-    private loadMonthlyReportItem(fid: string): void {
-      this.monthlyReportItem = ['/monthlyreport', fid];
+    private loadMonthlyReportItem(fname: string): void {
+      this.monthlyReportItem = ['/monthlyreport', fname];
     }
 
-    private loadDailyReportItem(fid: string): void {
-      this.dailyReportItem = ['/dailyreport', fid];
+    private loadDailyReportItem(fname: string): void {
+      this.dailyReportItem = ['/dailyreport', fname];
     }
 }
 

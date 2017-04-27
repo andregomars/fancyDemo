@@ -55,7 +55,7 @@ export class MonthlyReportComponent implements OnInit {
 
   /*** Fleet Status Grid ***/
   private initFleetMonthlyData() {
-    let vehicles = this.dataService.getVehiclesIdentityByFleet(this.fleetID).map(v => new Vehicle(v.vid));
+    let vehicles = this.dataService.getVehiclesIdentityByFleet(this.fleetID).map(v => new Vehicle(v.vname));
     this.dataFleetMonthly = this.dataService.getRandomMonthlyDataSetWithVehicles(vehicles);
   }
 
@@ -106,8 +106,8 @@ export class MonthlyReportComponent implements OnInit {
   /*** Common Section ***/
   private loadFleet(): void {
     this.route.params
-      .switchMap((params: Params) => Rx.Observable.create(ob => ob.next(params["fid"])))
-      .subscribe((fid: string) => this.fleetID = fid);
+      .switchMap((params: Params) => Rx.Observable.create(ob => ob.next(params["fname"])))
+      .subscribe((fname: string) => this.fleetID = fname);
   }
 
   private resetChartDefaultOptions(option: any): void {

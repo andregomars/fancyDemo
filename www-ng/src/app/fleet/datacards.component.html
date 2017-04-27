@@ -5,7 +5,7 @@
             <div *ngSwitchCase="'Charging'" class="card bg-bus-green">
                 <div class="card-block">
                     <h4 class="card-title text-success">
-                        <a [routerLink]="['/vehicle', row.vid]" class="text-success">{{row.vid}}</a>
+                        <a [routerLink]="['/vehicle', row.vname]" class="text-success">{{row.vname}}</a>
                     </h4>
                     <p class="card-text text-success">{{row.soc}}%</p>
                     <p>&nbsp;</p>
@@ -14,7 +14,7 @@
             <div *ngSwitchDefault class="card bg-bus-blue">
                 <div class="card-block">
                     <h4 class="card-title">
-                        <a [routerLink]="['/vehicle', row.vid]">{{row.vid}}</a>
+                        <a [routerLink]="['/vehicle', row.vname]">{{row.vname}}</a>
                     </h4>
                     <p class="card-text">{{row.soc}}%</p>
                     <p>&nbsp;</p>

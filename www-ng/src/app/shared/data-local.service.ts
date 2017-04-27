@@ -32,9 +32,9 @@ export class DataLocalService {
      return this.dataRemoteService.getVehicleIdentities$();
    }
 
-   getVehiclesStatusByFleet$(fid: string): Observable<Array<VehicleStatus>> {
+   getVehiclesStatusByFleet$(fname: string): Observable<Array<VehicleStatus>> {
       var data$ = this.getAllVehicleStatusData$();
-      return data$.map(el => el.filter(status => status.fid === fid));
+      return data$.map(el => el.filter(status => status.fname === fname));
    }
 
    getAllVehicleStatusData$(): Observable<Array<VehicleStatus>> {
@@ -44,9 +44,9 @@ export class DataLocalService {
       return allVehiclesStatus;
     }
 
-    getVehicleStatus$(vid: string): Observable<VehicleStatus> {
+    getVehicleStatus$(vname: string): Observable<VehicleStatus> {
       return this.getAllVehiclesData$()
-        .map(vehicles => vehicles.find(v => v.vid === vid))
+        .map(vehicles => vehicles.find(v => v.vname === vname))
         .map(vehicle => this.utility.genRandomVehicleStatus(vehicle)) ;
     }
 
@@ -75,34 +75,34 @@ export class DataLocalService {
       return this.allVehiclesStatus;
     }
 
-    getVehicleStatus(vid: string): VehicleStatus {
+    getVehicleStatus(vname: string): VehicleStatus {
       //if (!this.allVehiclesStatus) this.getAllVehicleStatusData();
       var statusArray = this.getAllVehicleStatusData();
-      return statusArray.find(s => s.vid === vid);
+      return statusArray.find(s => s.vname === vname);
     }
 
-    getVehicleIdentity(vid: string): VehicleIdentity {
+    getVehicleIdentity(vname: string): VehicleIdentity {
       if (!this.allVehicles) this.getAllVehiclesData();
 
       // let vehicles : Array<VehicleIdentity>;
       // this.getAllVehiclesData().subscribe(vs => vehicles = vs)
       // return vehicles.find(v => v.vid === vid);
-      return this.allVehicles.find(v => v.vid === vid);
+      return this.allVehicles.find(v => v.vname === vname);
     }
 
-    getVehiclesIdentityByFleet(fid: string): Array<VehicleIdentity> {
+    getVehiclesIdentityByFleet(fname: string): Array<VehicleIdentity> {
       if (!this.allVehicles) this.getAllVehiclesData();
 
       // let vehicles : Array<VehicleIdentity>;
       // this.getAllVehiclesData().subscribe(vs => vehicles = vs)
       // return vehicles.filter(v => v.fid === fid);
-      return this.allVehicles.filter(v => v.fid === fid);
+      return this.allVehicles.filter(v => v.fname === fname);
     }
 
-    getVehiclesStatusByFleet(fid: string): Array<VehicleStatus> {
+    getVehiclesStatusByFleet(fname: string): Array<VehicleStatus> {
     //   if (!this.allVehiclesStatus) this.getAllVehicleStatusData();
       var allVehiclesStatus = this.getAllVehicleStatusData();
-      return allVehiclesStatus.filter(s => s.fid === fid);
+      return allVehiclesStatus.filter(s => s.fname === fname);
     }
 
 
@@ -487,7 +487,7 @@ export class DataLocalService {
 
     getFleetAlertStats(beginDate: Date, endDate: Date, fleetID: string): any {
         // let eventCodes = ['AZ01', 'AZ02'];
-        let eventCodes = this.getVehiclesIdentityByFleet(fleetID).map(v => v.vid);
+        let eventCodes = this.getVehiclesIdentityByFleet(fleetID).map(v => v.vname);
         let maxLength = 20, min = 1, max = 100;
         let events = this.utility.getEventList(10, eventCodes, min, max, beginDate, endDate);
         let stats = _.countBy(events, 'type');
@@ -563,7 +563,7 @@ export class DataLocalService {
     }
 
      getRandomMonthlyAlertSummaryByFleet(fleetID: string): Array<any> {
-       let vehicles = this.getVehiclesIdentityByFleet(fleetID).map(v => new Vehicle(v.vid));
+       let vehicles = this.getVehiclesIdentityByFleet(fleetID).map(v => new Vehicle(v.vname));
        let array = vehicles.map(v => Object.assign({}, v, this.getRandomMonthlyAlertData()));
        let chargingStoped = array.map(el => el.chargingStoped).reduce((sum, value) => sum + value);
        let slowCharging = array.map(el => el.slowCharging).reduce((sum, value) => sum + value);

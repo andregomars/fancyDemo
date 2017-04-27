@@ -35,8 +35,8 @@ export class DailyReportComponent implements OnInit {
 
   private loadFleet(): void {
     this.route.params
-       .switchMap((params: Params) => Rx.Observable.create(ob=>ob.next(params["fid"])))
-       .subscribe((fid: string) => this.fleetID = fid);
+       .switchMap((params: Params) => Rx.Observable.create(ob=>ob.next(params["fname"])))
+       .subscribe((fname: string) => this.fleetID = fname);
   }
 
   private initMonthButtons(): void {
@@ -45,7 +45,7 @@ export class DailyReportComponent implements OnInit {
 
   private initVehicleButtons(): void {
     let vehicles = this.dataService.getVehiclesIdentityByFleet(this.fleetID);
-    this.vehicles = vehicles.map(v => new Vehicle(v.vid));
+    this.vehicles = vehicles.map(v => new Vehicle(v.vname));
   }
 
   private loadVehicleLogs(): void {

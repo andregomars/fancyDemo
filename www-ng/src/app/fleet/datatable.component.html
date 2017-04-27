@@ -1,5 +1,5 @@
 <p-dataTable [value]="data" class="table" >
-    <p-column field="vid" header="VID" [sortable]="true">
+    <p-column field="vname" header="Bus No." [sortable]="true">
        <ng-template let-col let-data="rowData" pTemplate="body">
            <a [routerLink]="['/vehicle', data[col.field]]">{{data[col.field]}}</a>
         </ng-template>

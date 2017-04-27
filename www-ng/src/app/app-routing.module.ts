@@ -13,12 +13,12 @@ import { DailyReportComponent } from './daily-report/daily-report.component';
 const routes: Routes = [
     { path: 'drill', component: DrillComponent },
     { path: 'fleet', component: FleetSelectionComponent },
-    { path: 'fleet/:fid', component: FleetComponent },
-    { path: 'vehicle/:vid', component: VehicleComponent },
-    { path: 'vehicledaily/:vid', component: AnalysisDailyComponent },
-    { path: 'vehiclealert/:vid', component: AnalysisAlertComponent },
-    { path: 'monthlyreport/:fid', component: MonthlyReportComponent },
-    { path: 'dailyreport/:fid', component: DailyReportComponent },
+    { path: 'fleet/:fname', component: FleetComponent },
+    { path: 'vehicle/:vname', component: VehicleComponent },
+    { path: 'vehicledaily/:vname', component: AnalysisDailyComponent },
+    { path: 'vehiclealert/:vname', component: AnalysisAlertComponent },
+    { path: 'monthlyreport/:fname', component: MonthlyReportComponent },
+    { path: 'dailyreport/:fname', component: DailyReportComponent },
     { path: '', redirectTo: '/fleet', pathMatch: 'full' }
 ];
 

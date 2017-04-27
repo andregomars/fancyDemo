@@ -28,7 +28,7 @@ export class DataRemoteService {
   getFleetIdentities$(): Observable<Array<string>> {
     return this.http.get(URL_VehicleIdentities)
       .map(res => res.json()
-        .map(v => v.fid)
+        .map(v => v.fname)
         .filter((el, i, arr) => arr.indexOf(el) === i)
       )
       .catch(this.handleError);
@@ -51,7 +51,7 @@ export class DataRemoteService {
   getFleetIdentities(): Array<string> {
     var data: Array<VehicleIdentity> = this.getVehicleIdentities();
     if (!data) return null;
-    return data.map(el => el.fid).filter((el, i, arr) => arr.indexOf(el) === i);
+    return data.map(el => el.fname).filter((el, i, arr) => arr.indexOf(el) === i);
   }
 
   //helper methods

@@ -1,10 +1,15 @@
 export class VehicleIdentity {
-    vid: string;
-    fid: string;
+    vid: number;
+    vname: string;
+    fid: number;
+    fname: string;
 
-    constructor(vid:string, fid:string) {
+
+    constructor(vid: number, vname:string, fid: number, fname:string) {
         this.vid = vid;
+        this.vname = vname;
         this.fid = fid;
+        this.fname = fname;
     }
 
 }

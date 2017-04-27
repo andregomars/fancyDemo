@@ -1,6 +1,8 @@
 export class VehicleStatus {
-    vid: string;
-    fid: string;
+    vid: number;
+    vname: string;
+    fid: number;
+    fname: string;
     soc: number;
     status: string;
     range: number;
@@ -11,10 +13,12 @@ export class VehicleStatus {
     speed: number;
     updated: Date;
 
-    constructor(vid, fid, soc, status, range, mileage, 
+    constructor(vid, vname, fid, fname, soc, status, range, mileage, 
       voltage, current, temperature, speed, updated) {
       this.vid = vid;
+      this.vname = vname;
       this.fid = fid;
+      this.fname = fname;
       this.soc = soc;
       this.status = status;
       this.range = range;

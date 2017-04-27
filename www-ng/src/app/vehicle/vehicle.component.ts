@@ -21,7 +21,7 @@ import { VehicleStatus } from '../models/vehicle-status'
 export class VehicleComponent implements OnInit {
  
  vehicle: VehicleStatus = 
-  new VehicleStatus('', '', 0, '', 0, 0, 
+  new VehicleStatus(0, '', 0, '', 0, '', 0, 0, 
       0, 0, 0, 0, new Date());
  optionGaugeSOC: any;
  optionGaugeSpeed: any;
@@ -121,10 +121,10 @@ export class VehicleComponent implements OnInit {
  getVehicleStatus(): void {
     this.route.params
       .switchMap((params: Params) => 
-        this.dataService.getVehicleStatus$(params["vid"]))
+        this.dataService.getVehicleStatus$(params["vname"]))
       .subscribe((vehicle: VehicleStatus) => { 
         this.vehicle = vehicle;
-        this.fleetTracker.setFleetIDByVehicle(vehicle.vid);
+        this.fleetTracker.setFleetIDByVehicle(vehicle.vname);
       });
  }
 

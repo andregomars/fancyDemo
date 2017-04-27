@@ -159,13 +159,13 @@ export class AnalysisAlertComponent implements OnInit {
   /*** Common Section ***/
   private loadVehicle(): void {
     this.route.params
-      .switchMap((params: Params) => Rx.Observable.of(params["vid"])) 
-      .subscribe((vid: string) => {
-        this.vehicleID = vid;
+      .switchMap((params: Params) => Rx.Observable.of(params["vname"])) 
+      .subscribe((vname: string) => {
+        this.vehicleID = vname;
         this.dataService.getAllVehiclesData$()
-          .map(el => el.find(v => v.vid === vid))
-          .map(v => v.fid)
-          .subscribe(fid => this.fleetID = fid);
+          .map(el => el.find(v => v.vname === vname))
+          .map(v => v.fname)
+          .subscribe(fname => this.fleetID = fname);
     });
   }
 
