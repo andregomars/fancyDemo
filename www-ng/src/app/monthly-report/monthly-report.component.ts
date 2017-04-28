@@ -6,7 +6,7 @@ import * as Rx from 'rxjs/Rx';
 let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
 
-import { DataLocalService } from '../shared/data-local.service';
+import { DataService } from '../shared/data.service';
 import { Vehicle } from '../models/vehicle.model';
 import { Fleet } from '../models/fleet.model';
 
@@ -40,7 +40,7 @@ export class MonthlyReportComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private dataService: DataLocalService
+    private dataService: DataService
   ) { }
 
   ngOnInit() {

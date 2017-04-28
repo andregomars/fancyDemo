@@ -7,7 +7,7 @@ import * as Rx from 'rxjs/Rx';
 let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
 
-import { DataLocalService } from '../shared/data-local.service';
+import { DataService } from '../shared/data.service';
 
 @Component({
   selector: 'app-analysis-alert',
@@ -38,7 +38,7 @@ export class AnalysisAlertComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private dataService: DataLocalService
+    private dataService: DataService
   ) { }
 
   ngOnInit() {

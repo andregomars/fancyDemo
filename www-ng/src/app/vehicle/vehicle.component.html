@@ -37,12 +37,12 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col">Low Temp(F):
-                                    <app-progressbar [value]="vehicle.temperature" min="-40" max="220"></app-progressbar>
+                                    <app-progressbar [value]="vehicle.temperaturelow" min="-40" max="220"></app-progressbar>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">High Temp(F):
-                                    <app-progressbar [value]="vehicle.temperature+50" min="-40" max="220"></app-progressbar>
+                                    <app-progressbar [value]="vehicle.temperaturehigh" min="-40" max="220"></app-progressbar>
                                 </div>
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                             Remaining Energy(kWh):
                         </div>
                         <div class="col-8">
-                            <app-progressbar [value]="vehicle.soc" max="100"></app-progressbar>
+                            <app-progressbar [value]="vehicle.remainingenergy" max="60"></app-progressbar>
                         </div>
                     </div>
                 </div>

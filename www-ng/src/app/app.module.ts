@@ -22,7 +22,7 @@ import { ProgressBarComponent } from './components/progressbar/progressbar.compo
 
 import { UtilityService } from './shared/utility.service';
 import { DataRemoteService } from './shared/data-remote.service';
-import { DataLocalService } from './shared/data-local.service';
+import { DataService } from './shared/data.service';
 import { FleetTrackerService } from './shared/fleet-tracker.service';
 import { AnalysisDailyComponent } from './analysis-daily/analysis-daily.component';
 import { AnalysisAlertComponent } from './analysis-alert/analysis-alert.component';
@@ -65,7 +65,7 @@ import { FleetSelectionComponent } from './fleet-selection/fleet-selection.compo
   providers: [
     UtilityService,
     DataRemoteService,
-    DataLocalService,
+    DataService,
     FleetTrackerService
   ],
   bootstrap: [AppComponent]

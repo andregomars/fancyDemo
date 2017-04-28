@@ -8,7 +8,7 @@ import * as Rx from 'rxjs/Rx';
 let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
 
-import { DataLocalService } from '../shared/data-local.service';
+import { DataService } from '../shared/data.service';
 
 
 @Component({
@@ -48,7 +48,7 @@ export class AnalysisDailyComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private dataService: DataLocalService,
+        private dataService: DataService,
     ) { }
 
     ngOnInit(): void {

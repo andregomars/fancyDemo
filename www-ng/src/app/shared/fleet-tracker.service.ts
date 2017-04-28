@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { DataLocalService } from './data-local.service';
+import { DataService } from './data.service';
 import { VehicleIdentity } from '../models/vehicle-identity';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class FleetTrackerService {
   private vehicles: Array<any>;  
 
   constructor(
-    private dataService: DataLocalService
+    private dataService: DataService
   ) { 
     // this.vehicles = this.dataService.getAllVehiclesData();
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataLocalService } from '../shared/data-local.service';
+import { DataService } from '../shared/data.service';
 import { VehicleIdentity } from '../models/vehicle-identity';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -15,7 +15,7 @@ export class FleetSelectionComponent implements OnInit {
   fleets$: Observable<Array<string>>;
 
   constructor(
-    private dataService: DataLocalService
+    private dataService: DataService
   ) { }
 
   ngOnInit() {

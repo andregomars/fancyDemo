@@ -1,32 +1,42 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
-// import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
 import { VehicleIdentity } from '../models/vehicle-identity';
-
-// const URL_VehicleIdentities = "http://www.mocky.io/v2/58e926392a000014022dbbb4";
-const URL_VehicleIdentities = "http://localhost:5000/api/VehicleIdentity";
+import { VehicleStatus } from '../models/vehicle-status';
 
 @Injectable()
 export class DataRemoteService {
   private vehicleIdentities: Array<VehicleIdentity>;
+  private URL_RemoteApiRoot: string = "http://localhost:5000/api";
+  private Endpoint_VehicleIdentities: string = "/VehicleIdentity";
+  private Endpoint_VehicleStatus:string = "/VehicleStatus";
+
+  private URL_VehicleIdentities: string;
+  private URL_VehicleStatus: string;
 
   constructor(private http: Http)
-  { }
+  { 
+    this.initURLEndpoints();
+  }
 
+  private initURLEndpoints() {
+    this.URL_VehicleIdentities = this.URL_RemoteApiRoot + this.Endpoint_VehicleIdentities;
+    this.URL_VehicleStatus = this.URL_RemoteApiRoot + this.Endpoint_VehicleStatus;
+  }
 
+  // api: $root/VehicleIdentities
   getVehicleIdentities$(): Observable<Array<VehicleIdentity>> {
-    return this.http.get(URL_VehicleIdentities)
+    return this.http.get(this.URL_VehicleIdentities)
       .map(res => res.json())
       .catch(this.handleError);
   }
 
   getFleetIdentities$(): Observable<Array<string>> {
-    return this.http.get(URL_VehicleIdentities)
+    return this.http.get(this.URL_VehicleIdentities)
       .map(res => res.json()
         .map(v => v.fname)
         .filter((el, i, arr) => arr.indexOf(el) === i)
@@ -34,11 +44,20 @@ export class DataRemoteService {
       .catch(this.handleError);
   }
 
+  // api: $root/VehicleStatus/$vname
+  getVehicleStatus$(vname: string): Observable<VehicleStatus> {
+    return this.http.get(`${this.URL_VehicleStatus}/${vname}`)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+
+/*
   getVehicleIdentities(): Array<VehicleIdentity> {
     //if (!this.vehicleIdentities) return this.vehicleIdentities;
 
     var vehicleIdentities = new Array<VehicleIdentity>();
-    this.http.get(URL_VehicleIdentities)
+    this.http.get(this.URL_RemoteApiRoot + this.Endpoint_VehicleIdentities)
       // .flatMap(data => data.json() as Array<VehicleIdentity>)
       // .subscribe(data => this.vehicleIdentities.push(data));
 			// .map(data => data.json())
@@ -53,6 +72,7 @@ export class DataRemoteService {
     if (!data) return null;
     return data.map(el => el.fname).filter((el, i, arr) => arr.indexOf(el) === i);
   }
+*/
 
   //helper methods
   private extractData(res: Response) {
@@ -73,33 +93,4 @@ export class DataRemoteService {
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
-
-
-
-  // getUrl(): string {
-  //     let urls = [
-  //         "http://www.mocky.io/v2/589ebc1f270000ab24ed0efe"
-  //     // "http://www.mocky.io/v2/58789d370f0000a71f0d49ed"
-  //     // ,"http://www.mocky.io/v2/587d44fc0f00004e0c5df626"
-  //     // ,"http://www.mocky.io/v2/587d47d50f0000930c5df627"
-  //     // ,"http://www.mocky.io/v2/587d49050f0000aa0c5df629"
-  //     // ,"http://www.mocky.io/v2/587d49960f0000bd0c5df62a"
-  //     ];
-  //     return urls[Math.floor(Math.random()*urls.length)];
-  // }
-
-  // getFleet(): Promise<any> {
-  //     var url = this.getUrl();
-  // 	return this.http.get(url)
-  // 		.toPromise()
-  // 		.then(response => response.json())
-  // 		// .then(response => {console.dir(response);return response.json()})
-  // 		.catch(this.handleError);
-  // }
-
-  // private handleError(error: any): Promise<any> {
-  // 	console.error('An error occured', error);
-  // 	return Promise.reject(error.message || error);
-  // }
-
 }

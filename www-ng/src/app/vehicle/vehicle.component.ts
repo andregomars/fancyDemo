@@ -7,7 +7,7 @@ import * as Rx from 'rxjs/Rx';
 let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
 
-import { DataLocalService } from '../shared/data-local.service';
+import { DataService } from '../shared/data.service';
 import { VehicleIdentity } from '../models/vehicle-identity';
 import { YAxis } from '../models/yAxis.model';
 import { FleetTrackerService } from '../shared/fleet-tracker.service';
@@ -21,8 +21,8 @@ import { VehicleStatus } from '../models/vehicle-status'
 export class VehicleComponent implements OnInit {
  
  vehicle: VehicleStatus = 
-  new VehicleStatus(0, '', 0, '', 0, '', 0, 0, 
-      0, 0, 0, 0, new Date());
+  new VehicleStatus(0, '', 0, '', 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, new Date());
  optionGaugeSOC: any;
  optionGaugeSpeed: any;
  lineChartData: any;
@@ -53,7 +53,7 @@ export class VehicleComponent implements OnInit {
 
  constructor(
 		private route: ActivatedRoute,
-    private dataService: DataLocalService,
+    private dataService: DataService,
     private fleetTracker: FleetTrackerService
  ) {
   

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import * as Rx from 'rxjs/Rx';
 
-import { DataLocalService } from '../shared/data-local.service';
+import { DataService } from '../shared/data.service';
 import { FleetTrackerService } from '../shared/fleet-tracker.service';
 import { VehicleStatus } from '../models/vehicle-status';
 
@@ -18,7 +18,7 @@ export class FleetComponent implements OnInit {
   constructor (
     private route: ActivatedRoute,
     private fleetTracker: FleetTrackerService,
-    private dataService: DataLocalService
+    private dataService: DataService
   ) {}
   
   ngOnInit() {

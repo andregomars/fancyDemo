@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import * as Rx from 'rxjs/Rx';
 
 import { UtilityService } from '../shared/utility.service';
-import { DataLocalService } from '../shared/data-local.service';
+import { DataService } from '../shared/data.service';
 import { Vehicle } from '../models/vehicle.model';
 
 
@@ -24,7 +24,7 @@ export class DailyReportComponent implements OnInit {
   constructor(
     private utility: UtilityService,
     private route: ActivatedRoute,
-    private dataService: DataLocalService
+    private dataService: DataService
   ) { }
 
   ngOnInit() {

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MenuModule, MenuItem } from 'primeng/primeng';
 import { FleetTrackerService } from '../shared/fleet-tracker.service';
-import { DataLocalService } from '../shared/data-local.service';
+import { DataService } from '../shared/data.service';
 import { VehicleIdentity } from '../models/vehicle-identity'
 
 @Component({
@@ -22,7 +22,7 @@ export class MenuComponent implements OnInit {
 
     constructor(
       private fleetTracker: FleetTrackerService,
-      private dataService: DataLocalService
+      private dataService: DataService
     ){}
     
     ngOnInit() {
