@@ -50,10 +50,10 @@ export class DataLocalService {
         .map(vehicle => this.utility.genRandomVehicleStatus(vehicle)) ;
     }
 
-    getAllFleetID(): Array<string> {
-      var data = this.dataRemoteService.getFleetIdentities();
-      return data;
-   }
+//     getAllFleetID(): Array<string> {
+//       var data = this.dataRemoteService.getFleetIdentities();
+//       return data;
+//    }
 
     getAllVehiclesData(): Array<VehicleIdentity> {
         if (this.allVehicles) return this.allVehicles;
