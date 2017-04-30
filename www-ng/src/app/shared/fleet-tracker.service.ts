@@ -20,7 +20,8 @@ export class FleetTrackerService {
   setFleetIDByVehicle(vname: string): void {
     if (!this.vehicles) this.vehicles = this.dataService.getAllVehiclesData();
 
-    this.fname = this.vehicles.find(v => v.vname === vname).fname;
+    var vehicle = this.vehicles.find(v => v.vname === vname);
+    this.fname = vehicle ? vehicle.fname : "";
     this.subject.next(this.fname);
   }
 

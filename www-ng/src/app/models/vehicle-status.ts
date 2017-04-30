@@ -10,7 +10,8 @@ export class VehicleStatus {
     public mileage: number,
     public voltage: number,
     public current: number,
-    public temperature: number,
+    public temperaturehigh: number,
+    public temperaturelow: number,
     public speed: number,
     public remainingenergy: number,
     public updated: Date

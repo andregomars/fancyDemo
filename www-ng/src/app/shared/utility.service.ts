@@ -146,14 +146,16 @@ export class UtilityService {
       let mileage: number = +_.random(0, 250, true).toFixed(1);
       let voltage: number = _.random(0, 800, false);
       let current: number = _.random(-400, 400, false);
-      let temperature: number = _.random(-40, 220, false);
+      let temperaturehigh: number = _.random(-40, 80, false);
+      let temperaturelow: number = _.random(80, 220, false);
       let speed: number = _.random(0, 65, false);
       let remainingenergy: number = _.random(0, 60, false);
       let updated: Date = moment().subtract(_.random(300,3600), 'seconds').toDate(); 
       // let updated: string = moment().subtract(_.random(300,3600), 'seconds').format('MM/DD/YYYY hh:mm:ss'); 
 
       return new VehicleStatus(vehicle.vid, vehicle.vname, vehicle.fid, vehicle.fname, 
-        soc, status, range, mileage, voltage, current, temperature, speed, remainingenergy, updated);
+        soc, status, range, mileage, voltage, current, 
+        temperaturehigh, temperaturelow, speed, remainingenergy, updated);
     }
 
   //*** private helper methods ***

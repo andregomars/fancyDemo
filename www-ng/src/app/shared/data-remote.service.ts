@@ -13,10 +13,12 @@ export class DataRemoteService {
   private vehicleIdentities: Array<VehicleIdentity>;
   private URL_RemoteApiRoot: string = "http://localhost:5000/api";
   private Endpoint_VehicleIdentities: string = "/VehicleIdentity";
-  private Endpoint_VehicleStatus:string = "/VehicleStatus";
+  private Endpoint_VehicleStatusByVehicleName: string = "/VehicleStatus/GetByVehicleName";
+  private Endpoint_AllVehicleStatusByFleetName: string = "/VehicleStatus/GetAllByFleetName";
 
   private URL_VehicleIdentities: string;
-  private URL_VehicleStatus: string;
+  private URL_VehicleStatusByVehicleName: string;
+  private URL_AllVehicleStatusByFleetName: string;
 
   constructor(private http: Http)
   { 
@@ -25,7 +27,8 @@ export class DataRemoteService {
 
   private initURLEndpoints() {
     this.URL_VehicleIdentities = this.URL_RemoteApiRoot + this.Endpoint_VehicleIdentities;
-    this.URL_VehicleStatus = this.URL_RemoteApiRoot + this.Endpoint_VehicleStatus;
+    this.URL_VehicleStatusByVehicleName = this.URL_RemoteApiRoot + this.Endpoint_VehicleStatusByVehicleName;
+    this.URL_AllVehicleStatusByFleetName = this.URL_RemoteApiRoot + this.Endpoint_AllVehicleStatusByFleetName;
   }
 
   // api: $root/VehicleIdentities
@@ -44,9 +47,14 @@ export class DataRemoteService {
       .catch(this.handleError);
   }
 
-  // api: $root/VehicleStatus/$vname
   getVehicleStatus$(vname: string): Observable<VehicleStatus> {
-    return this.http.get(`${this.URL_VehicleStatus}/${vname}`)
+    return this.http.get(`${this.URL_VehicleStatusByVehicleName}/${vname}`)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+  getAllVehicleStatusByFleetName$(fname: string): Observable<Array<VehicleStatus>> {
+    return this.http.get(`${this.URL_AllVehicleStatusByFleetName}/${fname}`)
       .map(res => res.json())
       .catch(this.handleError);
   }

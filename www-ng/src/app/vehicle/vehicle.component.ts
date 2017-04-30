@@ -20,9 +20,7 @@ import { VehicleStatus } from '../models/vehicle-status'
 })
 export class VehicleComponent implements OnInit {
  
- vehicle: VehicleStatus = 
-  new VehicleStatus(0, '', 0, '', 0, 0, 0, 0, 
-      0, 0, 0, 0, 0, new Date());
+ vehicle: VehicleStatus = this.getDefaultVehicleStatus();  
  optionGaugeSOC: any;
  optionGaugeSpeed: any;
  lineChartData: any;
@@ -77,6 +75,11 @@ export class VehicleComponent implements OnInit {
    this.setLineChartOptions();
  }
 
+ getDefaultVehicleStatus(): VehicleStatus {
+  return new VehicleStatus(0, '', 0, '', 0, 0, 0, 0, 
+      0, 0, -40, -40, 0, 0, new Date());
+ }
+
  initDatePicker(): void {
     this.optionDatePicker = {
             dateFormat: "mm/dd/yyyy",
@@ -122,9 +125,9 @@ export class VehicleComponent implements OnInit {
     this.route.params
       .switchMap((params: Params) => 
         this.dataService.getVehicleStatus$(params["vname"]))
-      .subscribe((vehicle: VehicleStatus) => { 
-        this.vehicle = vehicle;
-        this.fleetTracker.setFleetIDByVehicle(vehicle.vname);
+      .subscribe((vStatus: VehicleStatus) => { 
+        this.vehicle = vStatus ? vStatus : this.getDefaultVehicleStatus();
+        this.fleetTracker.setFleetIDByVehicle(this.vehicle.vname);
       });
  }
 

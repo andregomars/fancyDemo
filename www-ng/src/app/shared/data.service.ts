@@ -33,16 +33,17 @@ export class DataService {
    }
 
    getVehiclesStatusByFleet$(fname: string): Observable<Array<VehicleStatus>> {
-      var data$ = this.getAllVehicleStatusData$();
-      return data$.map(el => el.filter(status => status.fname === fname));
+       return this.dataService.getAllVehicleStatusByFleetName$(fname);
+    //   var data$ = this.getAllVehicleStatusData$();
+    //   return data$.map(el => el.filter(status => status.fname === fname));
    }
 
-   getAllVehicleStatusData$(): Observable<Array<VehicleStatus>> {
-      var allVehicles$ = this.getAllVehiclesData$();
-      var allVehiclesStatus = 
-        allVehicles$.map(vList => vList.map(v => this.utility.genRandomVehicleStatus(v)));
-      return allVehiclesStatus;
-    }
+//    getAllVehicleStatusData$(): Observable<Array<VehicleStatus>> {
+//       var allVehicles$ = this.getAllVehiclesData$();
+//       var allVehiclesStatus = 
+//         allVehicles$.map(vList => vList.map(v => this.utility.genRandomVehicleStatus(v)));
+//       return allVehiclesStatus;
+//     }
 
     getVehicleStatus$(vname: string): Observable<VehicleStatus> {
         return this.dataService.getVehicleStatus$(vname);
