@@ -19,6 +19,7 @@ import { DataTableComponent } from './fleet/datatable.component';
 import { DataCardsComponent } from './fleet/datacards.component';
 import { MenuComponent } from './menu/menu.component';
 import { ProgressBarComponent } from './components/progressbar/progressbar.component';
+import { AgmCoreModule } from '@agm/core';
 
 import { UtilityService } from './shared/utility.service';
 import { DataRemoteService } from './shared/data-remote.service';
@@ -30,6 +31,7 @@ import { MonthlyReportComponent } from './monthly-report/monthly-report.componen
 import { VehicleDailyLogComponent } from './vehicle-daily-log/vehicle-daily-log.component';
 import { DailyReportComponent } from './daily-report/daily-report.component';
 import { FleetSelectionComponent } from './fleet-selection/fleet-selection.component';
+import { FleetMapComponent } from './fleet/fleet-map.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { FleetSelectionComponent } from './fleet-selection/fleet-selection.compo
     MonthlyReportComponent,
     VehicleDailyLogComponent,
     DailyReportComponent,
-    FleetSelectionComponent
+    FleetSelectionComponent,
+    FleetMapComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +63,10 @@ import { FleetSelectionComponent } from './fleet-selection/fleet-selection.compo
     MyDateRangePickerModule,
     TieredMenuModule,
     MegaMenuModule,
-    JustgageModule
+    JustgageModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAqZcZ_L6UIsGVHcDqWdu-GrsRSPcpWeqU'
+    })
   ],
   providers: [
     UtilityService,

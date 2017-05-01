@@ -12,7 +12,7 @@ import { VehicleStatus } from '../models/vehicle-status';
 })
 export class FleetComponent implements OnInit {
 	viewComponent:string = "table";
-  data: any;
+  data: Array<VehicleStatus>;
   fname: string;
 
   constructor (
@@ -38,20 +38,6 @@ export class FleetComponent implements OnInit {
         this.fleetTracker.setFleetIDByFleet(this.fname);
       });
  }
-
-//  getFleet(): void {
-//     this.route.params
-//       .switchMap((params: Params) => Rx.Observable.create(ob => 
-//         { 
-//           this.fid = params["fid"];
-//           ob.next(this.dataService.getVehiclesStatusByFleet(this.fid));
-//         }
-//       ))
-//       .subscribe((vehcilesStatus: Array<VehicleStatus>) => { 
-//         this.data = vehcilesStatus;
-//         this.fleetTracker.setFleetIDByFleet(this.fid);
-//       });
-//  }
 
   toggleView(view: string) {
     this.viewComponent = view;

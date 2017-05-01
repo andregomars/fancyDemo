@@ -1,0 +1,9 @@
+<agm-map *ngIf="statusList && statusList.length > 0" 
+    [latitude]="statusList[0].lat" [longitude]="statusList[0].lng" [zoom]=10 
+    [streetViewControl]=false [zoomControl]=false>
+  <agm-marker *ngFor="let m of statusList"
+      [latitude]="m.lat" [longitude]="m.lng"
+      [label]="'V'" [title]="m.vname" 
+      [markerDraggable]=false> 
+  </agm-marker>
+</agm-map>

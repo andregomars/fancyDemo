@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataTableModule, ProgressBarModule, Message } from 'primeng/primeng';
+import { VehicleStatus } from '../models/vehicle-status';
 
 @Component({
   selector: 'datatable',
@@ -10,7 +11,7 @@ import { DataTableModule, ProgressBarModule, Message } from 'primeng/primeng';
 })
 export class DataTableComponent implements OnInit {
   @Input("items")
-  data: any[];
+  data: Array<VehicleStatus>;
 
   msgs: Message[] = [];
 

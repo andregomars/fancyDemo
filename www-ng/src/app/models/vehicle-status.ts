@@ -4,6 +4,8 @@ export class VehicleStatus {
     public vname: string,
     public fid: number,
     public fname: string,
+    public lat: number,
+    public lng: number,
     public soc: number,
     public status: number,
     public range: number,

@@ -1,5 +1,10 @@
 <div class="container">
     <div class="row m-3">
+        <div class="col">
+            <app-fleet-map *ngIf="data" [items]="data"></app-fleet-map>
+        </div>
+    </div>
+    <div class="row m-3">
         <div class="col-10 text-center">
             <h5>{{fname}}</h5>
         </div>

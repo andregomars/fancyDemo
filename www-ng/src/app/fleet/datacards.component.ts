@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { VehicleStatus } from '../models/vehicle-status';
 
 @Component({
   selector: 'datacards',
@@ -8,7 +9,7 @@ import { Component, Input } from '@angular/core';
 })
 export class DataCardsComponent {
     @Input() 
-    items: any;
+    items: Array<VehicleStatus>;
 
 }
 
