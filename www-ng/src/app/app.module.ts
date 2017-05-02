@@ -32,6 +32,7 @@ import { VehicleDailyLogComponent } from './vehicle-daily-log/vehicle-daily-log.
 import { DailyReportComponent } from './daily-report/daily-report.component';
 import { FleetSelectionComponent } from './fleet-selection/fleet-selection.component';
 import { FleetMapComponent } from './fleet/fleet-map.component';
+import { VehicleMapComponent } from './vehicle/vehicle-map.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { FleetMapComponent } from './fleet/fleet-map.component';
     VehicleDailyLogComponent,
     DailyReportComponent,
     FleetSelectionComponent,
-    FleetMapComponent
+    FleetMapComponent,
+    VehicleMapComponent
   ],
   imports: [
     BrowserModule,

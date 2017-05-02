@@ -1,0 +1,15 @@
+<agm-map *ngIf="statusList && statusList.length > 0" 
+    [latitude]="statusList[0].lat" [longitude]="statusList[0].lng" [zoom]=14 
+    [streetViewControl]=false [zoomControl]=false>
+  <agm-marker 
+      [latitude]="statusList[0].lat" [longitude]="statusList[0].lng"
+      [label]="'V'" [title]="statusList[0].vname" 
+      [markerDraggable]=false> 
+  </agm-marker>
+  <agm-polyline [polylineDraggable]=false 
+    [strokeColor]="red" [strokeOpacity]="0.5" [strokeWeight]="5">
+    <agm-polyline-point *ngFor="let m of statusList"
+      [latitude]="m.lat" [longitude]="m.lng">
+    </agm-polyline-point>
+  </agm-polyline>
+</agm-map>

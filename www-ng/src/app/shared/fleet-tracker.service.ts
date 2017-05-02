@@ -14,11 +14,11 @@ export class FleetTrackerService {
   constructor(
     private dataService: DataService
   ) { 
-    // this.vehicles = this.dataService.getAllVehiclesData();
   }
 
   setFleetIDByVehicle(vname: string): void {
-    if (!this.vehicles) this.vehicles = this.dataService.getAllVehiclesData();
+    this.vehicles = this.dataService.getAllVehiclesData();
+    if (!this.vehicles) return;
 
     var vehicle = this.vehicles.find(v => v.vname === vname);
     this.fname = vehicle ? vehicle.fname : "";
@@ -26,8 +26,9 @@ export class FleetTrackerService {
   }
 
   setFleetIDByFleet(fname: string): void {
-    if (!this.vehicles) this.vehicles = this.dataService.getAllVehiclesData();
-    
+    this.vehicles = this.dataService.getAllVehiclesData();
+    if (!this.vehicles) return;
+
     this.fname = fname;
     this.subject.next(fname);
   }

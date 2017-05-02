@@ -2,7 +2,6 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core'
 import { ActivatedRoute, Params } from '@angular/router'
 import { DataTableModule, ChartModule, UIChart } from 'primeng/primeng';
 import { IMyOptions, IMyDateModel } from 'mydatepicker';
-// import 'rxjs/add/operator/switchMap';
 import * as Rx from 'rxjs/Rx';
 let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
@@ -21,6 +20,7 @@ import { VehicleStatus } from '../models/vehicle-status'
 export class VehicleComponent implements OnInit {
  
  vehicle: VehicleStatus = this.getDefaultVehicleStatus();  
+ recentStatusList: Array<VehicleStatus>;
  optionGaugeSOC: any;
  optionGaugeSpeed: any;
  lineChartData: any;
@@ -53,12 +53,11 @@ export class VehicleComponent implements OnInit {
 		private route: ActivatedRoute,
     private dataService: DataService,
     private fleetTracker: FleetTrackerService
- ) {
-  
- }
+ ) { }
 
  ngOnInit(): void {
    this.getVehicleStatus();
+   this.getRecentVehicleStatusList();
   
    this.setGaugeOptions();
    this.initLatestAlertAndSnapshotList();
@@ -75,8 +74,27 @@ export class VehicleComponent implements OnInit {
    this.setLineChartOptions();
  }
 
+ getVehicleStatus(): void {
+    this.route.params
+      .switchMap((params: Params) => 
+        this.dataService.getVehicleStatus$(params["vname"]))
+      .subscribe((vStatus: VehicleStatus) => { 
+        this.vehicle = vStatus ? vStatus : this.getDefaultVehicleStatus();
+        this.fleetTracker.setFleetIDByVehicle(this.vehicle.vname);
+      });
+ }
+
+ getRecentVehicleStatusList(): void {
+   this.route.params
+    .switchMap((params: Params) =>
+      this.dataService.getRecentVehicleStatusList$(params["vname"]))
+    .subscribe((vStatusList: Array<VehicleStatus>) => {
+      this.recentStatusList = vStatusList;
+    });
+ }
+
  getDefaultVehicleStatus(): VehicleStatus {
-  return new VehicleStatus(0, '', 0, '', 0, 0, 0, 0, 
+  return new VehicleStatus(0, '', 0, '', 34.134330, 117.928273, 0, 0, 0, 0, 
       0, 0, -40, -40, 0, 0, new Date());
  }
 
@@ -93,7 +111,6 @@ export class VehicleComponent implements OnInit {
 
  initLatestAlertAndSnapshotList(): void {
    this.dataLatestAlertList = this.dataService.getLatestAlertsData();
-   this.dataLatestSnapshotList = this.dataService.getLatestSnapshotsData();
  }
 
  initVehicleStatusTable(): void {
@@ -120,27 +137,6 @@ export class VehicleComponent implements OnInit {
    let rightY = new YAxis("RunningStatus", "#565656", 0, 250);
    this.optionChargingRunningStatusChart = this.getChartDualOptions(leftY, rightY);
  }
-
- getVehicleStatus(): void {
-    this.route.params
-      .switchMap((params: Params) => 
-        this.dataService.getVehicleStatus$(params["vname"]))
-      .subscribe((vStatus: VehicleStatus) => { 
-        this.vehicle = vStatus ? vStatus : this.getDefaultVehicleStatus();
-        this.fleetTracker.setFleetIDByVehicle(this.vehicle.vname);
-      });
- }
-
-//  getVehicleStatus(): void {
-//     this.route.params
-//       .switchMap((params: Params) => Rx.Observable.create(ob => 
-//         { ob.next(this.dataService.getVehicleStatus(params["vid"])) }
-//       ))
-//       .subscribe((vehicle: VehicleStatus) => { 
-//         this.vehicle = vehicle;
-//         this.fleetTracker.setFleetIDByVehicle(vehicle.vid);
-//       });
-//  }
 
   setGaugeOptions(): void {
     this.optionGaugeSOC = {

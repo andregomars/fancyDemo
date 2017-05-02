@@ -6,7 +6,6 @@
                     <h5><i class="fa fa-bus"></i> {{vehicle.fname}} / {{vehicle.vname}}</h5>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-5">
                     <div class="row">
@@ -78,6 +77,9 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-5 col-xs-12">
+            <app-vehicle-map *ngIf="recentStatusList" [items]="recentStatusList"></app-vehicle-map>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-5 col-xs-12">
@@ -101,9 +103,9 @@
                             </ul>
                         </div>
                         <div class="tab-pane" id="tab-snapshot">
-                            <ul class="fa-ul">
-                                <li *ngFor="let row of dataLatestSnapshotList">
-                                    <i class="fa-li fa fa-camera"></i>{{row.time}}
+                            <ul class="fa-ul" *ngIf="recentStatusList">
+                                <li *ngFor="let status of recentStatusList">
+                                    <i class="fa-li fa fa-camera"></i>{{status.updated}}
                                 </li>
                             </ul>
                         </div>

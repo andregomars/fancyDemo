@@ -38,6 +38,10 @@ export class DataService {
     //   return data$.map(el => el.filter(status => status.fname === fname));
    }
 
+   getRecentVehicleStatusList$(vname: string): Observable<Array<VehicleStatus>> {
+       return this.dataService.getRecentAllVehicleStatusByVehicleName$(vname);
+   }
+   
 //    getAllVehicleStatusData$(): Observable<Array<VehicleStatus>> {
 //       var allVehicles$ = this.getAllVehiclesData$();
 //       var allVehiclesStatus = 
@@ -47,9 +51,6 @@ export class DataService {
 
     getVehicleStatus$(vname: string): Observable<VehicleStatus> {
         return this.dataService.getVehicleStatus$(vname);
-    //   return this.getAllVehiclesData$()
-    //     .map(vehicles => vehicles.find(v => v.vname === vname))
-    //     .map(vehicle => this.utility.genRandomVehicleStatus(vehicle)) ;
     }
 
 //     getAllFleetID(): Array<string> {
@@ -339,32 +340,6 @@ export class DataService {
         }, {
             "type": "Low Temp",
             "value": "35 F",
-            "time": "2017-01-10 19:36:57"
-        }]
-    }
-
-    getLatestSnapshotsData() {
-        return [{
-            "time": "2017-03-02 00:22:13"
-        }, {
-            "time": "2017-03-02 00:22:13"
-        }, {
-            "time": "2017-03-01 12:26:07"
-        }, {
-            "time": "2017-03-02 19:36:57"
-        }, {
-            "time": "2017-02-27 10:07:25"
-        }, {
-            "time": "2017-02-22 07:25:33"
-        }, {
-            "time": "2017-02-20 17:36:57"
-        }, {
-            "time": "2017-02-11 19:36:57"
-        }, {
-            "time": "2017-02-10 19:36:57"
-        }, {
-            "time": "2017-01-11 19:36:57"
-        }, {
             "time": "2017-01-10 19:36:57"
         }]
     }

@@ -152,9 +152,11 @@ export class UtilityService {
       let remainingenergy: number = _.random(0, 60, false);
       let updated: Date = moment().subtract(_.random(300,3600), 'seconds').toDate(); 
       // let updated: string = moment().subtract(_.random(300,3600), 'seconds').format('MM/DD/YYYY hh:mm:ss'); 
+      let lat: number = 40.734593;
+      let lng: number = -73.994646;
 
       return new VehicleStatus(vehicle.vid, vehicle.vname, vehicle.fid, vehicle.fname, 
-        soc, status, range, mileage, voltage, current, 
+        lat, lng, soc, status, range, mileage, voltage, current, 
         temperaturehigh, temperaturelow, speed, remainingenergy, updated);
     }
 

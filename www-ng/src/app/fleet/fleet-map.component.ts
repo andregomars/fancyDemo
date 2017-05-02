@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { VehicleStatus } from '../models/vehicle-status';
 
 @Component({
@@ -6,10 +6,15 @@ import { VehicleStatus } from '../models/vehicle-status';
   templateUrl: './fleet-map.component.html',
   styleUrls: ['./fleet-map.component.css']
 })
-export class FleetMapComponent { 
+export class FleetMapComponent implements OnInit { 
   @Input("items")
   statusList: Array<VehicleStatus>;
 
+  ngOnInit() {
+
+    console.log("status list in fleet map: ");
+    console.log(this.statusList);
+  }
   /* markder sample
    {
 		  lat: 51.673858,
