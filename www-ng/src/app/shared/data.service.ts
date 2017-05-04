@@ -8,9 +8,10 @@ import { UtilityService } from './utility.service';
 import { DailyNumber } from '../models/dailyNumber.model';
 import { Vehicle } from '../models/vehicle.model';
 import { Fleet } from '../models/fleet.model';
+import { DataRemoteService } from './data-remote.service';
 import { VehicleStatus } from '../models/vehicle-status';
 import { VehicleIdentity } from '../models/vehicle-identity';
-import { DataRemoteService } from './data-remote.service';
+import { VehicleAlert } from '../models/vehicle-alert';
 
 @Injectable()
 export class DataService {
@@ -40,6 +41,10 @@ export class DataService {
 
    getRecentVehicleStatusList$(vname: string): Observable<Array<VehicleStatus>> {
        return this.dataService.getRecentAllVehicleStatusByVehicleName$(vname);
+   }
+ 
+   getRecentVehicleAlertList$(vname: string): Observable<Array<VehicleAlert>> {
+       return this.dataService.getRecentAllVehicleAlertByVehicleName$(vname);
    }
    
 //    getAllVehicleStatusData$(): Observable<Array<VehicleStatus>> {

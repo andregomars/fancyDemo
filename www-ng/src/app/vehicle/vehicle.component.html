@@ -96,9 +96,9 @@
 
                     <div class="tab-content small">
                         <div class="tab-pane active" id="tab-alert">
-                            <ul class="fa-ul">
-                                <li *ngFor="let row of dataLatestAlertList">
-                                    <i class="fa-li fa fa-exclamation-triangle"></i>{{row.time}} - {{row.type}}
+                            <ul class="fa-ul" *ngIf="recentAlertList">
+                                <li *ngFor="let alert of recentAlertList">
+                                    <i class="fa-li fa fa-exclamation-triangle"></i>{{alert.updated}} - {{alert.name}}
                                 </li>
                             </ul>
                         </div>

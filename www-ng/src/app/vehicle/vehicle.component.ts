@@ -11,6 +11,7 @@ import { VehicleIdentity } from '../models/vehicle-identity';
 import { YAxis } from '../models/yAxis.model';
 import { FleetTrackerService } from '../shared/fleet-tracker.service';
 import { VehicleStatus } from '../models/vehicle-status'
+import { VehicleAlert } from '../models/vehicle-alert'
 
 @Component({
   moduleId: module.id,
@@ -21,13 +22,14 @@ export class VehicleComponent implements OnInit {
  
  vehicle: VehicleStatus = this.getDefaultVehicleStatus();  
  recentStatusList: Array<VehicleStatus>;
+ recentAlertList: Array<VehicleAlert>;
  optionGaugeSOC: any;
  optionGaugeSpeed: any;
  lineChartData: any;
  optLineChart: any;
 
- dataLatestAlertList: any;
- dataLatestSnapshotList: any;
+//  dataLatestAlertList: any;
+//  dataLatestSnapshotList: any;
  dataVehicleStatus: any;
  
  optionDatePicker: IMyOptions;
@@ -58,10 +60,11 @@ export class VehicleComponent implements OnInit {
  ngOnInit(): void {
    this.getVehicleStatus();
    this.getRecentVehicleStatusList();
+   this.getRecentVehicleAlertList();
   
    this.setGaugeOptions();
-   this.initLatestAlertAndSnapshotList();
-   this.initVehicleStatusTable();
+  //  this.initLatestAlertAndSnapshotList();
+  //  this.initVehicleStatusTable();
 
    this.initDatePicker();
 
@@ -93,6 +96,16 @@ export class VehicleComponent implements OnInit {
     });
  }
 
+ getRecentVehicleAlertList(): void {
+   this.route.params
+    .switchMap((params: Params) =>
+      this.dataService.getRecentVehicleAlertList$(params["vname"]))
+    .subscribe((vAlertList: Array<VehicleAlert>) => {
+      this.recentAlertList = vAlertList;
+    });
+ }
+
+
  getDefaultVehicleStatus(): VehicleStatus {
   return new VehicleStatus(0, '', 0, '', 34.134330, 117.928273, 0, 0, 0, 0, 
       0, 0, -40, -40, 0, 0, new Date());
@@ -109,13 +122,13 @@ export class VehicleComponent implements OnInit {
     }
  } 
 
- initLatestAlertAndSnapshotList(): void {
-   this.dataLatestAlertList = this.dataService.getLatestAlertsData();
- }
+//  initLatestAlertAndSnapshotList(): void {
+//    this.dataLatestAlertList = this.dataService.getLatestAlertsData();
+//  }
 
- initVehicleStatusTable(): void {
-   this.dataVehicleStatus = this.dataService.getVehicleStatusData();
- }
+//  initVehicleStatusTable(): void {
+//    this.dataVehicleStatus = this.dataService.getVehicleStatusData();
+//  }
 
  initSocRangeChart(): void {
    this.dataSocRangeChart = this.dataService.getSocRangeChartData();

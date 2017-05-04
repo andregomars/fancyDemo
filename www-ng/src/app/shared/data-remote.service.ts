@@ -7,6 +7,7 @@ import 'rxjs/add/operator/switchMap';
 
 import { VehicleIdentity } from '../models/vehicle-identity';
 import { VehicleStatus } from '../models/vehicle-status';
+import { VehicleAlert } from '../models/vehicle-alert';
 
 @Injectable()
 export class DataRemoteService {
@@ -17,12 +18,14 @@ export class DataRemoteService {
   private Endpoint_AllVehicleStatusByFleetName: string = "/VehicleStatus/GetAllByFleetName";
   private Endpoint_RecentAllVehicleStatusByVehicleName: string = 
     "/VehicleStatus/GetRecentAllByVehicleName";
+  private Endpoint_RecentAllVehicleAlertByVehicleName: string = 
+    "/VehicleAlert/GetRecentAllByVehicleName";
 
   private URL_VehicleIdentities: string;
   private URL_VehicleStatusByVehicleName: string;
   private URL_AllVehicleStatusByFleetName: string;
   private URL_RecentAllVehicleStatusByVehicleName: string;
-
+  private URL_RecentAllVehicleAlertByVehicleName: string;
 
   constructor(private http: Http)
   { 
@@ -35,6 +38,8 @@ export class DataRemoteService {
     this.URL_AllVehicleStatusByFleetName = this.URL_RemoteApiRoot + this.Endpoint_AllVehicleStatusByFleetName;
     this.URL_RecentAllVehicleStatusByVehicleName = 
       this.URL_RemoteApiRoot + this.Endpoint_RecentAllVehicleStatusByVehicleName;
+    this.URL_RecentAllVehicleAlertByVehicleName = 
+      this.URL_RemoteApiRoot + this.Endpoint_RecentAllVehicleAlertByVehicleName;
   }
 
   // api: $root/VehicleIdentities
@@ -71,7 +76,11 @@ export class DataRemoteService {
       .catch(this.handleError);
   }
 
-
+  getRecentAllVehicleAlertByVehicleName$(vname: string): Observable<Array<VehicleAlert>> {
+    return this.http.get(`${this.URL_RecentAllVehicleAlertByVehicleName}/${vname}`)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
 
 /*
   getVehicleIdentities(): Array<VehicleIdentity> {
