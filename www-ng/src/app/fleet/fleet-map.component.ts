@@ -12,8 +12,6 @@ export class FleetMapComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log("status list in fleet map: ");
-    console.log(this.statusList);
   }
   /* markder sample
    {
