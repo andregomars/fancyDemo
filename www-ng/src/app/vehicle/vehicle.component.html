@@ -113,12 +113,8 @@
                 </div>
             </div>
             <div class="row">
-                <p-dataTable [value]="dataVehicleStatus" class="table small">
-                    <p-column field="TypeCode" header="TypeCode"></p-column>
-                    <p-column field="Name" header="Name"></p-column>
-                    <p-column field="Value" header="Value"></p-column>
-                </p-dataTable>
-            </div>
+                <app-vehicle-snapshot-table [data]="dataVehicleStatus"></app-vehicle-snapshot-table>
+           </div>
         </div>
         <div class="col-md-7 col-xs-12">
             <div class="row ">
