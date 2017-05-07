@@ -10,6 +10,7 @@ import { Vehicle } from '../models/vehicle.model';
 import { Fleet } from '../models/fleet.model';
 import { DataRemoteService } from './data-remote.service';
 import { VehicleStatus } from '../models/vehicle-status';
+import { VehicleSnapshot } from '../models/vehicle-snapshot';
 import { VehicleIdentity } from '../models/vehicle-identity';
 import { VehicleAlert } from '../models/vehicle-alert';
 
@@ -57,6 +58,16 @@ export class DataService {
     getVehicleStatus$(vname: string): Observable<VehicleStatus> {
         return this.dataService.getVehicleStatus$(vname);
     }
+
+    getVehicleSnapshot$(vname: string): Observable<Array<VehicleSnapshot>> {
+        return this.dataService.getVehicleSnapshot$(vname);
+    }
+
+    getVehicleWholeDaySnapshot$(vname: string, date: Date): Observable<Array<VehicleSnapshot>> {
+        return this.dataService.getWholeDayVehicleSnapshot$(vname, date);
+    }
+
+
 
 //     getAllFleetID(): Array<string> {
 //       var data = this.dataService.getFleetIdentities();

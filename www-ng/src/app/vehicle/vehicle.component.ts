@@ -11,6 +11,7 @@ import { VehicleIdentity } from '../models/vehicle-identity';
 import { YAxis } from '../models/yAxis.model';
 import { FleetTrackerService } from '../shared/fleet-tracker.service';
 import { VehicleStatus } from '../models/vehicle-status'
+import { VehicleSnapshot } from '../models/vehicle-snapshot'
 import { VehicleAlert } from '../models/vehicle-alert'
 
 @Component({
@@ -21,6 +22,10 @@ import { VehicleAlert } from '../models/vehicle-alert'
 export class VehicleComponent implements OnInit {
  
  vehicle: VehicleStatus = this.getDefaultVehicleStatus();  
+ vehicleSnapshots: Array<VehicleSnapshot>;
+ vehicleSnapshotsWholeDay: Array<VehicleSnapshot>;
+ selectedDate = new Date(2017,4,4);
+
  recentStatusList: Array<VehicleStatus>;
  recentAlertList: Array<VehicleAlert>;
  optionGaugeSOC: any;
@@ -59,7 +64,9 @@ export class VehicleComponent implements OnInit {
 
  ngOnInit(): void {
    this.getVehicleStatus();
-   this.getRecentVehicleStatusList();
+  //  this.getRecentVehicleStatusList();
+   this.getVehicleSnapshot();
+   this.getVehicleSnapshotWholeDay();
    this.getRecentVehicleAlertList();
   
    this.setGaugeOptions();
@@ -87,14 +94,31 @@ export class VehicleComponent implements OnInit {
       });
  }
 
- getRecentVehicleStatusList(): void {
-   this.route.params
-    .switchMap((params: Params) =>
-      this.dataService.getRecentVehicleStatusList$(params["vname"]))
-    .subscribe((vStatusList: Array<VehicleStatus>) => {
-      this.recentStatusList = vStatusList;
-    });
+ getVehicleSnapshot(): void {
+    this.route.params
+      .switchMap((params: Params) => 
+        this.dataService.getVehicleSnapshot$(params["vname"]))
+      .subscribe((vSnapshots: Array<VehicleSnapshot>) => { 
+        this.vehicleSnapshots = vSnapshots;
+      });
  }
+
+ getVehicleSnapshotWholeDay(): void {
+    this.route.params
+      .switchMap((params: Params) => 
+        this.dataService.getVehicleWholeDaySnapshot$(params["vname"], this.selectedDate))
+      .subscribe((vSnapshots: Array<VehicleSnapshot>) => { 
+        this.vehicleSnapshotsWholeDay = vSnapshots;
+      });
+ }
+//  getRecentVehicleStatusList(): void {
+//    this.route.params
+//     .switchMap((params: Params) =>
+//       this.dataService.getRecentVehicleStatusList$(params["vname"]))
+//     .subscribe((vStatusList: Array<VehicleStatus>) => {
+//       this.recentStatusList = vStatusList;
+//     });
+//  }
 
  getRecentVehicleAlertList(): void {
    this.route.params

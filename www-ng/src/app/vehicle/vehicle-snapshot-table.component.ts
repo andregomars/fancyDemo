@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { VehicleStatus } from '../models/vehicle-status'
+import { VehicleSnapshot } from '../models/vehicle-snapshot'
 
 @Component({
   selector: 'app-vehicle-snapshot-table',
@@ -8,7 +8,7 @@ import { VehicleStatus } from '../models/vehicle-status'
 })
 export class VehicleSnapshotTableComponent implements OnInit {
   @Input("data")
-  dataVehicleStatus: VehicleStatus
+  dataVehicleSnapshot: VehicleSnapshot
 
   ngOnInit() {
   }

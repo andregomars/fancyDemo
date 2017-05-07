@@ -4,9 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
+import * as moment from 'moment';
 
 import { VehicleIdentity } from '../models/vehicle-identity';
 import { VehicleStatus } from '../models/vehicle-status';
+import { VehicleSnapshot } from '../models/vehicle-snapshot';
 import { VehicleAlert } from '../models/vehicle-alert';
 
 @Injectable()
@@ -18,6 +20,8 @@ export class DataRemoteService {
   private Endpoint_AllVehicleStatusByFleetName: string = "/VehicleStatus/GetAllByFleetName";
   private Endpoint_RecentAllVehicleStatusByVehicleName: string = 
     "/VehicleStatus/GetRecentAllByVehicleName";
+  private Endpoint_VehicleSnapshotByVehicleName: string = "/VehicleSnapshot/GetByVehicleName";
+  private Endpoint_WholeDayVehicleSnapshot: string = "/VehicleSnapshot/GetWholeDayByVehicleName";
   private Endpoint_RecentAllVehicleAlertByVehicleName: string = 
     "/VehicleAlert/GetRecentAllByVehicleName";
 
@@ -25,6 +29,8 @@ export class DataRemoteService {
   private URL_VehicleStatusByVehicleName: string;
   private URL_AllVehicleStatusByFleetName: string;
   private URL_RecentAllVehicleStatusByVehicleName: string;
+  private URL_VehicleSnapshotByVehicleName: string;
+  private URL_WholeDayVehicleSnapshot: string;
   private URL_RecentAllVehicleAlertByVehicleName: string;
 
   constructor(private http: Http)
@@ -38,6 +44,8 @@ export class DataRemoteService {
     this.URL_AllVehicleStatusByFleetName = this.URL_RemoteApiRoot + this.Endpoint_AllVehicleStatusByFleetName;
     this.URL_RecentAllVehicleStatusByVehicleName = 
       this.URL_RemoteApiRoot + this.Endpoint_RecentAllVehicleStatusByVehicleName;
+    this.URL_VehicleSnapshotByVehicleName = this.URL_RemoteApiRoot + this.Endpoint_VehicleSnapshotByVehicleName;
+    this.URL_WholeDayVehicleSnapshot = this.URL_RemoteApiRoot + this.Endpoint_WholeDayVehicleSnapshot;
     this.URL_RecentAllVehicleAlertByVehicleName = 
       this.URL_RemoteApiRoot + this.Endpoint_RecentAllVehicleAlertByVehicleName;
   }
@@ -72,6 +80,19 @@ export class DataRemoteService {
 
   getRecentAllVehicleStatusByVehicleName$(vname: string): Observable<Array<VehicleStatus>> {
     return this.http.get(`${this.URL_RecentAllVehicleStatusByVehicleName}/${vname}`)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+  getVehicleSnapshot$(vname: string): Observable<Array<VehicleSnapshot>> {
+    return this.http.get(`${this.URL_VehicleSnapshotByVehicleName}/${vname}`)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+  getWholeDayVehicleSnapshot$(vname: string, date: Date): Observable<Array<VehicleSnapshot>> {
+    var dateOnly: string = moment(date).format('YYYY-MM-DD');
+    return this.http.get(`${this.URL_WholeDayVehicleSnapshot}/${vname}/${dateOnly}`)
       .map(res => res.json())
       .catch(this.handleError);
   }
