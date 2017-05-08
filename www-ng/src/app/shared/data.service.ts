@@ -67,6 +67,10 @@ export class DataService {
         return this.dataService.getWholeDayVehicleSnapshot$(vname, date);
     }
 
+    getVehicleWholeDaySnapshot(vname: string, date: Date): Promise<Array<VehicleSnapshot>> {
+        return this.dataService.getWholeDayVehicleSnapshot(vname, date);
+    }
+
 
 
 //     getAllFleetID(): Array<string> {
@@ -124,8 +128,6 @@ export class DataService {
       return allVehiclesStatus.filter(s => s.fname === fname);
     }
 
-
-
     getLineChart(): any {
         return {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -154,87 +156,6 @@ export class DataService {
                     yAxisID: 'yTemperature',
                     fill: false,
                     borderColor: '#f47d41'
-                }
-            ]
-        }
-    }
-
-    getSocRangeChartData(): any {
-        return {
-            labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
-                     '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
-                     '12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
-                     '18:00', '19:00', '20:00', '21:00', '22:00', '23:00' ],
-            datasets: [
-                {
-                    type: 'line',
-                    label: 'SOC',
-                    data: this.utility.getRandomNumberList(24, 0, 100),
-                    yAxisID: 'ySOC',
-                    fill: false,
-                    borderColor: '#4bc0c0'
-                }, {
-                    type: 'line',
-                    label: 'kWh',
-                    data: this.utility.getRandomNumberList(24, 0, 250),
-                    yAxisID: 'yRange',
-                    fill: false,
-                    borderColor: '#565656',
-                    borderWidth: 1
-                }
-            ]
-        }
-    }
-
-    getEstActualDistanceData(): any {
-        return {
-            labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
-                     '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
-                     '12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
-                     '18:00', '19:00', '20:00', '21:00', '22:00', '23:00' ],
-            datasets: [
-                {
-                    type: 'line',
-                    label: 'Range',
-                    data: this.utility.getRandomNumberList(24, 0, 100),
-                    yAxisID: 'yEstimateDistance',
-                    fill: false,
-                    borderColor: '#4bc0c0'
-                }, {
-                    type: 'line',
-                    label: 'Actual Distance',
-                    data: this.utility.getRandomNumberList(24, 0, 250),
-                    yAxisID: 'yActualDistance',
-                    fill: false,
-                    borderColor: '#565656',
-                    borderWidth: 1
-                }
-            ]
-        }
-    }
-
-    getChargingRunningStatusData(): any {
-        return {
-            labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
-                     '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
-                     '12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
-                     '18:00', '19:00', '20:00', '21:00', '22:00', '23:00' ],
-            datasets: [
-                {
-                    type: 'line',
-                    label: 'Charging Status',
-                    data: this.utility.getRandomNumberList(24, 0, 100),
-                    yAxisID: 'yChargingStatus',
-                    fill: false,
-                    borderColor: '#4bc0c0'
-                }, {
-                    type: 'line',
-                    label: 'High Voltage Status',
-                    data: this.utility.getRandomNumberList(24, 0, 250),
-                    yAxisID: 'yRunningStatus',
-                    fill: false,
-                    borderColor: '#565656',
-                    borderWidth: 1
                 }
             ]
         }

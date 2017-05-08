@@ -34,6 +34,7 @@ import { FleetSelectionComponent } from './fleet-selection/fleet-selection.compo
 import { FleetMapComponent } from './fleet/fleet-map.component';
 import { VehicleMapComponent } from './vehicle/vehicle-map.component';
 import { VehicleSnapshotTableComponent } from './vehicle/vehicle-snapshot-table.component';
+import { VehicleDualChartComponent } from './vehicle/vehicle-dual-chart.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { VehicleSnapshotTableComponent } from './vehicle/vehicle-snapshot-table.
     FleetSelectionComponent,
     FleetMapComponent,
     VehicleMapComponent,
-    VehicleSnapshotTableComponent
+    VehicleSnapshotTableComponent,
+    VehicleDualChartComponent
   ],
   imports: [
     BrowserModule,

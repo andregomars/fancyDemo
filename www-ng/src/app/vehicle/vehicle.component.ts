@@ -3,6 +3,8 @@ import { ActivatedRoute, Params } from '@angular/router'
 import { DataTableModule, ChartModule, UIChart } from 'primeng/primeng';
 import { IMyOptions, IMyDateModel } from 'mydatepicker';
 import * as Rx from 'rxjs/Rx';
+import * as moment from 'moment';
+import { Observable } from 'rxjs/Observable';
 let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
 
@@ -24,6 +26,8 @@ export class VehicleComponent implements OnInit {
  vehicle: VehicleStatus = this.getDefaultVehicleStatus();  
  vehicleSnapshots: Array<VehicleSnapshot>;
  vehicleSnapshotsWholeDay: Array<VehicleSnapshot>;
+ vehicleSnapshotsWholeDay$: Observable<Array<VehicleSnapshot>>;
+ vehicleName: string;
  selectedDate = new Date(2017,4,4);
 
  recentStatusList: Array<VehicleStatus>;
@@ -45,16 +49,24 @@ export class VehicleComponent implements OnInit {
  optionEstActualDistanceChart: any;
  dataChargingRunningStatusChart: any;
  optionChargingRunningStatusChart: any;
+ dataComplexChart: any;
+ optionComplexChart: any;
 
  @ViewChild("divDualCharts")
  divDualCharts: ElementRef;
+ 
+ @ViewChild("datePicker")
+ datePicker: UIChart;
 
  @ViewChild("chartSocRange")
- chartSocRange: UIChart;
+ chartSocRange: UIChart
  @ViewChild("chartEstActualDistance")
  chartEstActualDistance: UIChart;
  @ViewChild("chartChargingRunningStatus")
  chartChargingRunningStatus: UIChart;
+ @ViewChild("chartComplex")
+ chartComplex: UIChart;
+
 
  constructor(
 		private route: ActivatedRoute,
@@ -66,7 +78,7 @@ export class VehicleComponent implements OnInit {
    this.getVehicleStatus();
   //  this.getRecentVehicleStatusList();
    this.getVehicleSnapshot();
-   this.getVehicleSnapshotWholeDay();
+  //  this.getVehicleSnapshotWholeDay();
    this.getRecentVehicleAlertList();
   
    this.setGaugeOptions();
@@ -75,13 +87,11 @@ export class VehicleComponent implements OnInit {
 
    this.initDatePicker();
 
-   //initilize dual comparision charts
+   //initilize charts
    this.initSocRangeChart();
    this.initEstActualDistanceChart();
    this.initChargingRunningStatusChart();
-
-   this.lineChartData = this.dataService.getLineChart();
-   this.setLineChartOptions();
+   this.initComplexChart();
  }
 
  getVehicleStatus(): void {
@@ -90,7 +100,9 @@ export class VehicleComponent implements OnInit {
         this.dataService.getVehicleStatus$(params["vname"]))
       .subscribe((vStatus: VehicleStatus) => { 
         this.vehicle = vStatus ? vStatus : this.getDefaultVehicleStatus();
+        this.vehicleName = vStatus ? vStatus.vname : null;
         this.fleetTracker.setFleetIDByVehicle(this.vehicle.vname);
+        this.loadComplexChartData();
       });
  }
 
@@ -103,14 +115,6 @@ export class VehicleComponent implements OnInit {
       });
  }
 
- getVehicleSnapshotWholeDay(): void {
-    this.route.params
-      .switchMap((params: Params) => 
-        this.dataService.getVehicleWholeDaySnapshot$(params["vname"], this.selectedDate))
-      .subscribe((vSnapshots: Array<VehicleSnapshot>) => { 
-        this.vehicleSnapshotsWholeDay = vSnapshots;
-      });
- }
 //  getRecentVehicleStatusList(): void {
 //    this.route.params
 //     .switchMap((params: Params) =>
@@ -155,24 +159,21 @@ export class VehicleComponent implements OnInit {
 //  }
 
  initSocRangeChart(): void {
-   this.dataSocRangeChart = this.dataService.getSocRangeChartData();
    let leftY = new YAxis("SOC", "#4bc0c0", 0, 100);
-   let rightY = new YAxis("Range", "#565656", 0, 250);
-   this.optionSocRangeChart = this.getChartDualOptions(leftY, rightY);
+   let rightY = new YAxis("kWh", "#565656", 0, 600);
+   this.optionSocRangeChart = this.getChartOptions(leftY, rightY);
  }
 
  initEstActualDistanceChart(): void {
-   this.dataEstActualDistanceChart = this.dataService.getEstActualDistanceData();
-   let leftY = new YAxis("EstimateDistance", "#4bc0c0", 0, 100);
+   let leftY = new YAxis("Range", "#4bc0c0", 0, 300);
    let rightY = new YAxis("ActualDistance", "#565656", 0, 250);
-   this.optionEstActualDistanceChart = this.getChartDualOptions(leftY, rightY);
+   this.optionEstActualDistanceChart = this.getChartOptions(leftY, rightY);
  }
 
  initChargingRunningStatusChart(): void {
-   this.dataChargingRunningStatusChart = this.dataService.getChargingRunningStatusData();
-   let leftY = new YAxis("ChargingStatus", "#4bc0c0", 0, 100);
-   let rightY = new YAxis("RunningStatus", "#565656", 0, 250);
-   this.optionChargingRunningStatusChart = this.getChartDualOptions(leftY, rightY);
+   let leftY = new YAxis("ChargingStatus", "#4bc0c0", 0, 1);
+   let rightY = new YAxis("RunningStatus", "#565656", 0, 800);
+   this.optionChargingRunningStatusChart = this.getChartOptions(leftY, rightY);
  }
 
   setGaugeOptions(): void {
@@ -200,8 +201,8 @@ export class VehicleComponent implements OnInit {
     };
   }
 
-  setLineChartOptions(): void {
-    this.optLineChart = {
+  initComplexChart(): void {
+    this.optionComplexChart = {
       animation: {
         duration: 0
       },
@@ -213,14 +214,14 @@ export class VehicleComponent implements OnInit {
           id: 'ySOC',
           scaleLabel: {
            display: true,
-           labelString: 'soc',
+           labelString: 'SOC',
            fontColor: '#4bc0c0'
           },
           type: 'linear',
           position: 'left',
           ticks: {
             fontColor: '#4bc0c0',
-            max: 85,
+            max: 600,
             min: 0
           }
         }, {
@@ -234,7 +235,7 @@ export class VehicleComponent implements OnInit {
           position: 'right',
           ticks: {
             fontColor: '#565656',
-            max: 100,
+            max: 300,
             min: 0
           }
         }, {
@@ -248,8 +249,8 @@ export class VehicleComponent implements OnInit {
           position: 'right',
           ticks: {
             fontColor: '#4286f4',
-            max: 30,
-            min: 0
+            max: 400,
+            min: -400
           }
         }, {
           id: 'yTemperature',
@@ -262,15 +263,184 @@ export class VehicleComponent implements OnInit {
           position: 'right',
           ticks: {
             fontColor: '#f47d41',
-            max: 200,
-            min: -20
+            max: 220,
+            min: 0
           }
         }]
       }
     };
   }
 
-  getChartDualOptions(leftY: YAxis, rightY: YAxis): any {
+  onDateChanged(event: IMyDateModel) {
+      if (event.jsdate) {
+        this.selectedDate = event.jsdate; 
+
+        this.dataService.getVehicleWholeDaySnapshot$(this.vehicleName, this.selectedDate)
+          .subscribe(data => {
+              if(!data) { console.log('no response data'); return; }
+              this.chartSocRange.data = this.getChartDataSOCEnergy(data);
+              this.chartEstActualDistance.data = this.getChartDataEstActualDistance(data);
+              this.chartChargingRunningStatus.data = this.getChargingRunningStatusData(data);
+
+              this.chartSocRange.reinit();
+              this.chartEstActualDistance.reinit();
+              this.chartChargingRunningStatus.reinit();
+        });
+      }
+  }
+
+  loadComplexChartData(): void {
+    var date = moment('2017-05-03').startOf('day').toDate(); //test purpose only
+    // var date = moment().startOf('day').toDate();
+    this.dataService.getVehicleWholeDaySnapshot$(this.vehicleName, date)
+      .subscribe(data => {
+         if(!data) { console.log('no response data'); return; }
+         this.dataComplexChart = this.getChartDataComplex(data);
+         this.chartComplex.reinit();
+      });
+  }
+
+  getChartDataComplex(list: VehicleSnapshot[]): any {
+    var filtered_A = list.filter(e => e.code === '1J');
+    var filtered_B = list.filter(e => e.code === '1F');
+    var filtered_C = list.filter(e => e.code === '2F');
+    var filtered_D = list.filter(e => e.code === '2G');
+
+    var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
+    var data_A = filtered_A.map(el => el.value);
+    var data_B = filtered_B.map(el => el.value);
+    var data_C = filtered_C.map(el => el.value);
+    var data_D = filtered_D.map(el => el.value);
+
+    console.log(labels);
+    console.log(data_A);
+
+    return {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Energy',
+                data: data_A,
+                yAxisID: 'ySOC',
+                fill: false,
+                borderColor: '#4bc0c0'
+            }, {
+                label: 'Voltage',
+                data: data_B,
+                yAxisID: 'yRange',
+                fill: false,
+                borderColor: '#565656'
+            }, {
+                label: 'Current',
+                data: data_C,
+                yAxisID: 'yCurrent',
+                fill: false,
+                borderColor: '#4286f4'
+            }, {
+                label: 'Temperature',
+                data: data_D,
+                yAxisID: 'yTemperature',
+                fill: false,
+                borderColor: '#f47d41'
+            }
+        ]
+    }
+  }
+
+  getChartDataSOCEnergy(list: VehicleSnapshot[]): any {
+    var filtered_A = list.filter(e => e.code === '1E');
+    var filtered_B = list.filter(e => e.code === '1J');
+
+    var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
+    var data_A = filtered_A.map(el => el.value);
+    var data_B = filtered_B.map(el => el.value);
+
+    return {
+      labels: labels,
+      datasets: [
+        {
+          type: 'line',
+          label: 'SOC',
+          data: data_A,
+          yAxisID: 'ySOC',
+          fill: false,
+          borderColor: '#4bc0c0'
+        }, {
+          type: 'line',
+          label: 'kWh',
+          data: data_B,
+          yAxisID: 'ykWh',
+          fill: false,
+          borderColor: '#565656',
+          borderWidth: 1
+        }
+      ]
+    }
+  }
+  
+  getChartDataEstActualDistance(list: VehicleSnapshot[]): any {
+    var filtered_A = list.filter(e => e.code === '2H'); 
+    var filtered_B = list.filter(e => e.code === '1H');
+
+    var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
+    var data_A = filtered_A.map(el => el.value);
+    var data_B = filtered_B.map(el => el.value);
+
+    return {
+      labels: labels,
+      datasets: [
+        {
+          type: 'line',
+          label: 'Range',
+          data: data_A,
+          yAxisID: 'yRange',
+          fill: false,
+          borderColor: '#4bc0c0'
+        }, {
+          type: 'line',
+          label: 'Actual Distance',
+          data: data_B,
+          yAxisID: 'yActualDistance',
+          fill: false,
+          borderColor: '#565656',
+          borderWidth: 1
+        }
+      ]
+    }
+  }
+
+  getChargingRunningStatusData(list: VehicleSnapshot[]): any {
+    var filtered_A = list.filter(e => e.code === '1I'); 
+    var filtered_B = list.filter(e => e.code === '1K');
+
+    var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
+    var data_A = filtered_A.map(el => el.value);
+    var data_B = filtered_B.map(el => el.value);
+
+    return {
+      labels: labels,
+      datasets: [
+        {
+          type: 'line',
+          label: 'Charging Status',
+          data: data_A,
+          yAxisID: 'yChargingStatus',
+          fill: false,
+          borderColor: '#4bc0c0'
+        }, {
+          type: 'line',
+          label: 'High Voltage Status',
+          data: data_B,
+          yAxisID: 'yRunningStatus',
+          fill: false,
+          borderColor: '#565656',
+          borderWidth: 1
+        }
+      ]
+    }
+  }
+
+  getChartOptions(leftY: YAxis, rightY: YAxis): any {
     return {
       animation: {
         duration: 0
@@ -280,11 +450,11 @@ export class VehicleComponent implements OnInit {
       },
       scales: {
         yAxes: [{
-          id: 'y'+leftY.label,
+          id: 'y' + leftY.label,
           scaleLabel: {
-           display: false,
-           labelString: leftY.label,
-           fontColor: leftY.color
+            display: false,
+            labelString: leftY.label,
+            fontColor: leftY.color
           },
           type: 'linear',
           position: 'left',
@@ -294,11 +464,11 @@ export class VehicleComponent implements OnInit {
             min: leftY.min
           }
         }, {
-          id: 'y'+rightY.label,
+          id: 'y' + rightY.label,
           scaleLabel: {
-           display: false,
-           labelString: rightY.label,
-           fontColor: rightY.color 
+            display: false,
+            labelString: rightY.label,
+            fontColor: rightY.color
           },
           type: 'linear',
           position: 'right',
@@ -310,17 +480,6 @@ export class VehicleComponent implements OnInit {
         }]
       }
     };
-  }
-
-  onDateChanged(event: IMyDateModel) {
-      if (event.jsdate) {
-        this.chartSocRange.data = this.dataService.getSocRangeChartData();
-        this.chartEstActualDistance.data = this.dataService.getEstActualDistanceData()
-        this.chartChargingRunningStatus.data = this.dataService.getChargingRunningStatusData()
-        this.chartSocRange.reinit();
-        this.chartEstActualDistance.reinit();
-        this.chartChargingRunningStatus.reinit();
-      }
   }
   
   exportDualCharts(): void {
@@ -338,3 +497,4 @@ export class VehicleComponent implements OnInit {
 
 }
 
+ 

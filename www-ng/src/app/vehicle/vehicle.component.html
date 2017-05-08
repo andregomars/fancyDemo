@@ -119,7 +119,7 @@
         <div class="col-md-7 col-xs-12">
             <div class="row ">
                 <div class="col-8 text-right">
-                    <my-date-picker [options]="optionDatePicker" (dateChanged)="onDateChanged($event)" placeholder="Select Date"></my-date-picker>
+                    <my-date-picker #datePicker [options]="optionDatePicker" (dateChanged)="onDateChanged($event)" placeholder="Select Date"></my-date-picker>
                 </div>
                 <div class="col-4">
                     <button type="button" class="btn btn-secondary btn-sm" (click)="exportDualCharts()">Export Charts</button>
@@ -127,13 +127,14 @@
             </div>
             <div #divDualCharts class="row align-items-center p-2">
                 <div class="col">
-                    <p-chart #chartSocRange type="bar" [data]="dataSocRangeChart" [options]="optionSocRangeChart"></p-chart>
+                    <p-chart #chartSocRange type="line" [data]="dataSocRangeChart" [options]="optionSocRangeChart"></p-chart>
+                    <!--<app-vehicle-dual-chart [data]="vehicleSnapshotsWholeDay$" ></app-vehicle-dual-chart>-->
                 </div>
                 <div class="col">
-                    <p-chart #chartEstActualDistance type="bar" [data]="dataEstActualDistanceChart" [options]="optionEstActualDistanceChart"></p-chart>
+                    <p-chart #chartEstActualDistance type="line" [data]="dataSocRangeChart" [options]="optionEstActualDistanceChart"></p-chart>
                 </div>
                 <div class="col">
-                    <p-chart #chartChargingRunningStatus type="bar" [data]="dataChargingRunningStatusChart" [options]="optionChargingRunningStatusChart"></p-chart>
+                    <p-chart #chartChargingRunningStatus type="line" [data]="dataSocRangeChart" [options]="optionChargingRunningStatusChart"></p-chart>
                 </div>
             </div>
         </div>
@@ -141,7 +142,7 @@
 
     <div class="row align-items-center no-gutters p-2 m-2">
         <div class="col">
-            <p-chart type="line" [data]="lineChartData" [options]="optLineChart"></p-chart>
+            <p-chart #chartComplex type="line" [data]="dataComplexChart" [options]="optionComplexChart"></p-chart>
         </div>
     </div>
 
