@@ -127,14 +127,14 @@
             </div>
             <div #divDualCharts class="row align-items-center p-2">
                 <div class="col">
-                    <p-chart #chartSocRange type="line" [data]="dataSocRangeChart" [options]="optionSocRangeChart"></p-chart>
+                    <p-chart #chartSocRange type="line"  [options]="optionSocRangeChart"></p-chart>
                     <!--<app-vehicle-dual-chart [data]="vehicleSnapshotsWholeDay$" ></app-vehicle-dual-chart>-->
                 </div>
                 <div class="col">
-                    <p-chart #chartEstActualDistance type="line" [data]="dataSocRangeChart" [options]="optionEstActualDistanceChart"></p-chart>
+                    <p-chart #chartEstActualDistance type="line" [options]="optionEstActualDistanceChart"></p-chart>
                 </div>
                 <div class="col">
-                    <p-chart #chartChargingRunningStatus type="line" [data]="dataSocRangeChart" [options]="optionChargingRunningStatusChart"></p-chart>
+                    <p-chart #chartChargingRunningStatus type="line" [options]="optionChargingRunningStatusChart"></p-chart>
                 </div>
             </div>
         </div>
@@ -142,7 +142,7 @@
 
     <div class="row align-items-center no-gutters p-2 m-2">
         <div class="col">
-            <p-chart #chartComplex type="line" [data]="dataComplexChart" [options]="optionComplexChart"></p-chart>
+            <p-chart #chartComplex type="line" [options]="optionComplexChart"></p-chart>
         </div>
     </div>
 

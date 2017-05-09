@@ -28,14 +28,13 @@ export class VehicleComponent implements OnInit {
  vehicleSnapshotsWholeDay: Array<VehicleSnapshot>;
  vehicleSnapshotsWholeDay$: Observable<Array<VehicleSnapshot>>;
  vehicleName: string;
- selectedDate = new Date(2017,4,4);
+//selectedDate: Date = moment().startOf('day').toDate(); 
+ selectedDate: Date = new Date(2017,4,3);  //test only
 
  recentStatusList: Array<VehicleStatus>;
  recentAlertList: Array<VehicleAlert>;
  optionGaugeSOC: any;
  optionGaugeSpeed: any;
- lineChartData: any;
- optLineChart: any;
 
 //  dataLatestAlertList: any;
 //  dataLatestSnapshotList: any;
@@ -43,13 +42,9 @@ export class VehicleComponent implements OnInit {
  
  optionDatePicker: IMyOptions;
 
- dataSocRangeChart: any;
  optionSocRangeChart: any;
- dataEstActualDistanceChart: any;
  optionEstActualDistanceChart: any;
- dataChargingRunningStatusChart: any;
  optionChargingRunningStatusChart: any;
- dataComplexChart: any;
  optionComplexChart: any;
 
  @ViewChild("divDualCharts")
@@ -64,6 +59,7 @@ export class VehicleComponent implements OnInit {
  chartEstActualDistance: UIChart;
  @ViewChild("chartChargingRunningStatus")
  chartChargingRunningStatus: UIChart;
+
  @ViewChild("chartComplex")
  chartComplex: UIChart;
 
@@ -87,18 +83,41 @@ export class VehicleComponent implements OnInit {
 
    this.initDatePicker();
 
-   //initilize charts
+   //initialize dual charts
    this.initSocRangeChart();
    this.initEstActualDistanceChart();
    this.initChargingRunningStatusChart();
+   this.initDualChartsData();
+   
+   //initialize complext chart
    this.initComplexChart();
+
+
+ }
+
+ initDualChartsData(): void {
+   this.route.params
+      .switchMap((params: Params) => Rx.Observable.of(params["vname"]))
+      .subscribe(vname => {
+        this.vehicleName = vname;
+        this.loadDualChartsData();
+      });
+ }
+
+ initComplexChartData(): void {
+   this.route.params
+      .switchMap((params: Params) => Rx.Observable.of(params["vname"]))
+      .subscribe(vname => {
+        this.vehicleName = vname;
+        this.loadComplexChartData();
+      });
  }
 
  getVehicleStatus(): void {
     this.route.params
       .switchMap((params: Params) => 
         this.dataService.getVehicleStatus$(params["vname"]))
-      .subscribe((vStatus: VehicleStatus) => { 
+      .subscribe((vStatus: VehicleStatus) => {  
         this.vehicle = vStatus ? vStatus : this.getDefaultVehicleStatus();
         this.vehicleName = vStatus ? vStatus.vname : null;
         this.fleetTracker.setFleetIDByVehicle(this.vehicle.vname);
@@ -211,10 +230,10 @@ export class VehicleComponent implements OnInit {
       },
       scales: {
         yAxes: [{
-          id: 'ySOC',
+          id: 'yEnergy',
           scaleLabel: {
            display: true,
-           labelString: 'SOC',
+           labelString: 'Energy',
            fontColor: '#4bc0c0'
           },
           type: 'linear',
@@ -225,17 +244,17 @@ export class VehicleComponent implements OnInit {
             min: 0
           }
         }, {
-          id: 'yRange',
+          id: 'yVoltage',
           scaleLabel: {
            display: true,
-           labelString: 'Range',
+           labelString: 'Voltage',
            fontColor: '#565656'
           },
           type: 'linear',
           position: 'right',
           ticks: {
             fontColor: '#565656',
-            max: 300,
+            max: 800,
             min: 0
           }
         }, {
@@ -274,28 +293,29 @@ export class VehicleComponent implements OnInit {
   onDateChanged(event: IMyDateModel) {
       if (event.jsdate) {
         this.selectedDate = event.jsdate; 
+        this.loadDualChartsData();
+     }
+  }
 
-        this.dataService.getVehicleWholeDaySnapshot$(this.vehicleName, this.selectedDate)
-          .subscribe(data => {
-              if(!data) { console.log('no response data'); return; }
-              this.chartSocRange.data = this.getChartDataSOCEnergy(data);
-              this.chartEstActualDistance.data = this.getChartDataEstActualDistance(data);
-              this.chartChargingRunningStatus.data = this.getChargingRunningStatusData(data);
+  loadDualChartsData(): void {
+    this.dataService.getVehicleWholeDaySnapshot$(this.vehicleName, this.selectedDate)
+      .subscribe(data => {
+          if(!data) { console.log('no response data'); return; }
+          this.chartSocRange.data = this.getChartDataSOCEnergy(data);
+          this.chartEstActualDistance.data = this.getChartDataEstActualDistance(data);
+          this.chartChargingRunningStatus.data = this.getChargingRunningStatusData(data);
 
-              this.chartSocRange.reinit();
-              this.chartEstActualDistance.reinit();
-              this.chartChargingRunningStatus.reinit();
-        });
-      }
+          this.chartSocRange.reinit();
+          this.chartEstActualDistance.reinit();
+          this.chartChargingRunningStatus.reinit();
+    });
   }
 
   loadComplexChartData(): void {
-    var date = moment('2017-05-03').startOf('day').toDate(); //test purpose only
-    // var date = moment().startOf('day').toDate();
-    this.dataService.getVehicleWholeDaySnapshot$(this.vehicleName, date)
+    this.dataService.getVehicleWholeDaySnapshot$(this.vehicleName, this.selectedDate)
       .subscribe(data => {
          if(!data) { console.log('no response data'); return; }
-         this.dataComplexChart = this.getChartDataComplex(data);
+         this.chartComplex.data = this.getChartDataComplex(data);
          this.chartComplex.reinit();
       });
   }
@@ -312,22 +332,19 @@ export class VehicleComponent implements OnInit {
     var data_C = filtered_C.map(el => el.value);
     var data_D = filtered_D.map(el => el.value);
 
-    console.log(labels);
-    console.log(data_A);
-
     return {
         labels: labels,
         datasets: [
             {
                 label: 'Energy',
                 data: data_A,
-                yAxisID: 'ySOC',
+                yAxisID: 'yEnergy',
                 fill: false,
                 borderColor: '#4bc0c0'
             }, {
                 label: 'Voltage',
                 data: data_B,
-                yAxisID: 'yRange',
+                yAxisID: 'yVoltage',
                 fill: false,
                 borderColor: '#565656'
             }, {
