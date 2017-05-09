@@ -67,11 +67,6 @@ export class DataService {
         return this.dataService.getWholeDayVehicleSnapshot$(vname, date);
     }
 
-    getVehicleWholeDaySnapshot(vname: string, date: Date): Promise<Array<VehicleSnapshot>> {
-        return this.dataService.getWholeDayVehicleSnapshot(vname, date);
-    }
-
-
 
 //     getAllFleetID(): Array<string> {
 //       var data = this.dataService.getFleetIdentities();
@@ -126,39 +121,6 @@ export class DataService {
     //   if (!this.allVehiclesStatus) this.getAllVehicleStatusData();
       var allVehiclesStatus = this.getAllVehicleStatusData();
       return allVehiclesStatus.filter(s => s.fname === fname);
-    }
-
-    getLineChart(): any {
-        return {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [
-                {
-                    label: 'Energy',
-                    data: [65, 59, 80, 81, 56, 55, 40],
-                    yAxisID: 'ySOC',
-                    fill: false,
-                    borderColor: '#4bc0c0'
-                }, {
-                    label: 'Voltage',
-                    data: [28, 48, 40, 19, 86, 27, 90],
-                    yAxisID: 'yRange',
-                    fill: false,
-                    borderColor: '#565656'
-                }, {
-                    label: 'Current',
-                    data: [10, 12, 16, 20, 12, 12, 16],
-                    yAxisID: 'yCurrent',
-                    fill: false,
-                    borderColor: '#4286f4'
-                }, {
-                    label: 'Temperature',
-                    data: [45, 30, 80, 96, 127, 134, 150],
-                    yAxisID: 'yTemperature',
-                    fill: false,
-                    borderColor: '#f47d41'
-                }
-            ]
-        }
     }
 
     getVehicleStatusData(): any {
@@ -233,54 +195,7 @@ export class DataService {
         }]
     }
 
-    getLatestAlertsData() {
-        return [{
-            "type": "Slow Charging",
-            "value": "1000 A",
-            "time": "2017-03-02 19:36:57"
-        }, {
-            "type": "Slow Charging",
-            "value": "1000 A",
-            "time": "2017-03-02 19:36:57"
-        }, {
-            "type": "Low Temp",
-            "value": "35 F",
-            "time": "2017-03-02 00:22:13"
-        }, {
-            "type": "Low Voltage",
-            "value": "80 V",
-            "time": "2017-03-01 12:26:07"
-        }, {
-            "type": "Slow Charging",
-            "value": "1000 A",
-            "time": "2017-02-27 10:07:25"
-        }, {
-            "type": "Slow Charging",
-            "value": "1000 A",
-            "time": "2017-02-22 07:25:33"
-        }, {
-            "type": "Low Temp",
-            "value": "35 F",
-            "time": "2017-02-20 17:36:57"
-        }, {
-            "type": "Low Voltage",
-            "value": "80 V",
-            "time": "2017-02-11 19:36:57"
-        }, {
-            "type": "Slow Charging",
-            "value": "1000 A",
-            "time": "2017-02-10 19:36:57"
-        }, {
-            "type": "Slow Charging",
-            "value": "1000 A",
-            "time": "2017-01-11 19:36:57"
-        }, {
-            "type": "Low Temp",
-            "value": "35 F",
-            "time": "2017-01-10 19:36:57"
-        }]
-    }
-
+ 
     getBackwardDaysVehicleDailyMileage(backwardDays: number): any {
         return {
             labels: this.utility.getBackwardDateList(backwardDays, new Date()),

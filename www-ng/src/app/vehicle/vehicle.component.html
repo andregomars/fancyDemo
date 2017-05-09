@@ -3,18 +3,16 @@
         <div class="col-md-7 col-xs-12">
             <div class="row p-2">
                 <div class="col text-center">
-                    <h5><i class="fa fa-bus"></i> {{vehicle.fname}} / {{vehicle.vname}}</h5>
+                    <h5><i class="fa fa-bus"></i> {{lastVehicleStatus.fname}} / {{lastVehicleStatus.vname}}</h5>
                 </div>
             </div>
             <div class="row">
                 <div class="col-5">
                     <div class="row">
-                        <!--<app-gauge [options]="optionGaugeSOC" [value]="optionGaugeSOC.value" [max]="optionGaugeSOC.max"></app-gauge>-->
-                        <justgage [options]="optionGaugeSOC" [value]="vehicle.soc" min="0" max="100" class="app-justgage"></justgage>
+                        <justgage [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc" min="0" max="100" class="app-justgage"></justgage>
                     </div>
                     <div class="row">
-                        <!--<app-gauge [options]="optionGaugeSpeed" [value]="optionGaugeSpeed.value" [max]="optionGaugeSpeed.max"></app-gauge>-->
-                        <justgage [options]="optionGaugeSpeed" [value]="vehicle.speed" min="0" max="65" class="app-justgage"></justgage>
+                        <justgage [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed" min="0" max="65" class="app-justgage"></justgage>
                     </div>
                 </div>
                 <div class="col-7">
@@ -22,12 +20,12 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col">Voltage(V):
-                                    <app-progressbar [value]="vehicle.voltage" max="800"></app-progressbar>
+                                    <app-progressbar [value]="lastVehicleStatus.voltage" max="800"></app-progressbar>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">Current(A):
-                                    <app-progressbar [value]="vehicle.current" min="-400" max="400"></app-progressbar>
+                                    <app-progressbar [value]="lastVehicleStatus.current" min="-400" max="400"></app-progressbar>
                                 </div>
                             </div>
                         </div>
@@ -36,12 +34,12 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col">Low Temp(F):
-                                    <app-progressbar [value]="vehicle.temperaturelow" min="-40" max="220"></app-progressbar>
+                                    <app-progressbar [value]="lastVehicleStatus.temperaturelow" min="-40" max="220"></app-progressbar>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">High Temp(F):
-                                    <app-progressbar [value]="vehicle.temperaturehigh" min="-40" max="220"></app-progressbar>
+                                    <app-progressbar [value]="lastVehicleStatus.temperaturehigh" min="-40" max="220"></app-progressbar>
                                 </div>
                             </div>
                         </div>
@@ -55,7 +53,7 @@
                             Mileage(Miles):
                         </div>
                         <div class="col-8">
-                            <app-progressbar [value]="vehicle.mileage" max="250"></app-progressbar>
+                            <app-progressbar [value]="lastVehicleStatus.mileage" max="250"></app-progressbar>
                         </div>
                     </div>
                     <div class="row p-2">
@@ -63,7 +61,7 @@
                             Range(Miles):
                         </div>
                         <div class="col-8">
-                            <app-progressbar [value]="vehicle.range" max="250"></app-progressbar>
+                            <app-progressbar [value]="lastVehicleStatus.range" max="250"></app-progressbar>
                         </div>
                     </div>
                     <div class="row p-2">
@@ -71,7 +69,7 @@
                             Remaining Energy(kWh):
                         </div>
                         <div class="col-8">
-                            <app-progressbar [value]="vehicle.remainingenergy" max="60"></app-progressbar>
+                            <app-progressbar [value]="lastVehicleStatus.remainingenergy" max="60"></app-progressbar>
                         </div>
                     </div>
                 </div>
@@ -113,7 +111,7 @@
                 </div>
             </div>
             <div class="row">
-                <app-vehicle-snapshot-table [data]="vehicleSnapshot"></app-vehicle-snapshot-table>
+                <app-vehicle-snapshot-table [data]="lastVehicleSnapshot"></app-vehicle-snapshot-table>
            </div>
         </div>
         <div class="col-md-7 col-xs-12">
@@ -127,14 +125,13 @@
             </div>
             <div #divDualCharts class="row align-items-center p-2">
                 <div class="col">
-                    <p-chart #chartSocRange type="line"  [options]="optionSocRangeChart"></p-chart>
-                    <!--<app-vehicle-dual-chart [data]="vehicleSnapshotsWholeDay$" ></app-vehicle-dual-chart>-->
+                    <p-chart #chartSocRange type="line" [data]="dataSocRangeChart" [options]="optionSocRangeChart"></p-chart>
                 </div>
                 <div class="col">
-                    <p-chart #chartEstActualDistance type="line" [options]="optionEstActualDistanceChart"></p-chart>
+                    <p-chart #chartEstActualDistance type="line" [data]="dataSocRangeChart" [options]="optionEstActualDistanceChart"></p-chart>
                 </div>
                 <div class="col">
-                    <p-chart #chartChargingRunningStatus type="line" [options]="optionChargingRunningStatusChart"></p-chart>
+                    <p-chart #chartChargingRunningStatus type="line" [data]="dataSocRangeChart" [options]="optionChargingRunningStatusChart"></p-chart>
                 </div>
             </div>
         </div>
@@ -142,7 +139,7 @@
 
     <div class="row align-items-center no-gutters p-2 m-2">
         <div class="col">
-            <p-chart #chartComplex type="line" [options]="optionComplexChart"></p-chart>
+            <p-chart #chartComplex type="line" [data]="dataComplexChart" [options]="optionComplexChart"></p-chart>
         </div>
     </div>
 

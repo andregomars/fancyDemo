@@ -23,24 +23,19 @@ import { VehicleAlert } from '../models/vehicle-alert'
 })
 export class VehicleComponent implements OnInit {
  
- vehicle: VehicleStatus = this.getDefaultVehicleStatus();  
- vehicleSnapshots: Array<VehicleSnapshot>;
- vehicleSnapshotsWholeDay: Array<VehicleSnapshot>;
- vehicleSnapshotsWholeDay$: Observable<Array<VehicleSnapshot>>;
  vehicleName: string;
-//selectedDate: Date = moment().startOf('day').toDate(); 
- selectedDate: Date = new Date(2017,4,3);  //test only
-
+ lastVehicleStatus: VehicleStatus = this.getDefaultVehicleStatus(); 
  recentStatusList: Array<VehicleStatus>;
  recentAlertList: Array<VehicleAlert>;
+ lastVehicleSnapshot: Array<VehicleSnapshot>;
  optionGaugeSOC: any;
  optionGaugeSpeed: any;
 
-//  dataLatestAlertList: any;
-//  dataLatestSnapshotList: any;
- dataVehicleStatus: any;
  
  optionDatePicker: IMyOptions;
+//selectedDate: Date = moment().startOf('day').toDate(); 
+ selectedDate: Date = new Date(2017,4,3);  //test only
+
 
  optionSocRangeChart: any;
  optionEstActualDistanceChart: any;
@@ -71,94 +66,104 @@ export class VehicleComponent implements OnInit {
  ) { }
 
  ngOnInit(): void {
-   this.getVehicleStatus();
-  //  this.getRecentVehicleStatusList();
-   this.getVehicleSnapshot();
-  //  this.getVehicleSnapshotWholeDay();
-   this.getRecentVehicleAlertList();
-  
    this.setGaugeOptions();
-  //  this.initLatestAlertAndSnapshotList();
-  //  this.initVehicleStatusTable();
-
-   this.initDatePicker();
-
-   //initialize dual charts
+   this.setDatePicker();
+   this.setDualChartsOptions();
+   this.setComplexChartOptions();
+   
+   this.initData();
+/*
+   //initialize bars, gauges & tables, and populate data
+   this.initLastVehicleStatus();
+   this.initRecentVehicleSnapshots();
+   this.initRecentVehicleAlerts();
+   this.initLastVehicleSnapshot();
+  
+   //initialize dual charts, and populate data
    this.initSocRangeChart();
    this.initEstActualDistanceChart();
    this.initChargingRunningStatusChart();
    this.initDualChartsData();
    
-   //initialize complext chart
-   this.initComplexChart();
-
+   //initialize complext chart and populate data
+   this.setComplexChartOptions();
+*/
 
  }
 
- initDualChartsData(): void {
-   this.route.params
+ initData(): void {
+    this.route.params
       .switchMap((params: Params) => Rx.Observable.of(params["vname"]))
       .subscribe(vname => {
         this.vehicleName = vname;
+        this.fleetTracker.setFleetIDByVehicle(vname);
+        
+        this.loadLastVehicleStatus();
+        this.loadRecentVehicleSnapshots();
+        this.loadRecentVehicleAlerts();
+        this.loadLastVehicleSnapshot();
         this.loadDualChartsData();
-      });
- }
-
- initComplexChartData(): void {
-   this.route.params
-      .switchMap((params: Params) => Rx.Observable.of(params["vname"]))
-      .subscribe(vname => {
-        this.vehicleName = vname;
         this.loadComplexChartData();
       });
  }
 
- getVehicleStatus(): void {
-    this.route.params
-      .switchMap((params: Params) => 
-        this.dataService.getVehicleStatus$(params["vname"]))
-      .subscribe((vStatus: VehicleStatus) => {  
-        this.vehicle = vStatus ? vStatus : this.getDefaultVehicleStatus();
-        this.vehicleName = vStatus ? vStatus.vname : null;
-        this.fleetTracker.setFleetIDByVehicle(this.vehicle.vname);
-        this.loadComplexChartData();
-      });
- }
-
- getVehicleSnapshot(): void {
-    this.route.params
-      .switchMap((params: Params) => 
-        this.dataService.getVehicleSnapshot$(params["vname"]))
-      .subscribe((vSnapshots: Array<VehicleSnapshot>) => { 
-        this.vehicleSnapshots = vSnapshots;
-      });
- }
-
-//  getRecentVehicleStatusList(): void {
-//    this.route.params
-//     .switchMap((params: Params) =>
-//       this.dataService.getRecentVehicleStatusList$(params["vname"]))
-//     .subscribe((vStatusList: Array<VehicleStatus>) => {
-//       this.recentStatusList = vStatusList;
-//     });
-//  }
-
- getRecentVehicleAlertList(): void {
-   this.route.params
-    .switchMap((params: Params) =>
-      this.dataService.getRecentVehicleAlertList$(params["vname"]))
-    .subscribe((vAlertList: Array<VehicleAlert>) => {
-      this.recentAlertList = vAlertList;
+ loadLastVehicleStatus(): void {
+   this.dataService.getVehicleStatus$(this.vehicleName)
+    .subscribe((data: VehicleStatus) => {
+      this.lastVehicleStatus = data ? data : this.getDefaultVehicleStatus();
     });
  }
 
+ loadLastVehicleSnapshot(): void {
+   this.dataService.getVehicleSnapshot$(this.vehicleName)
+    .subscribe((data: Array<VehicleSnapshot>) => {
+      this.lastVehicleSnapshot = data;
+    });
+ }
+
+ loadRecentVehicleSnapshots(): void {
+   this.dataService.getRecentVehicleStatusList$(this.vehicleName)
+    .subscribe((data: Array<VehicleStatus>) => {
+      this.recentStatusList = data;
+    });
+ }
+
+ loadRecentVehicleAlerts(): void {
+   this.dataService.getRecentVehicleAlertList$(this.vehicleName)
+    .subscribe((data: Array<VehicleAlert>) => {
+      this.recentAlertList = data;
+    });
+ }
+ 
+  loadDualChartsData(): void {
+    this.dataService.getVehicleWholeDaySnapshot$(this.vehicleName, this.selectedDate)
+      .subscribe(data => {
+          if(!data) return; 
+          this.chartSocRange.data = this.getChartDataSOCEnergy(data);
+          this.chartEstActualDistance.data = this.getChartDataEstActualDistance(data);
+          this.chartChargingRunningStatus.data = this.getChargingRunningStatusData(data);
+
+          this.chartSocRange.reinit();
+          this.chartEstActualDistance.reinit();
+          this.chartChargingRunningStatus.reinit();
+    });
+  }
+
+  loadComplexChartData(): void {
+    this.dataService.getVehicleWholeDaySnapshot$(this.vehicleName, this.selectedDate)
+      .subscribe(data => {
+         if(!data) return; 
+         this.chartComplex.data = this.getChartDataComplex(data);
+         this.chartComplex.reinit();
+      });
+  }
 
  getDefaultVehicleStatus(): VehicleStatus {
   return new VehicleStatus(0, '', 0, '', 34.134330, 117.928273, 0, 0, 0, 0, 
       0, 0, -40, -40, 0, 0, new Date());
  }
 
- initDatePicker(): void {
+ setDatePicker(): void {
     this.optionDatePicker = {
             dateFormat: "mm/dd/yyyy",
             width: "200px",
@@ -169,31 +174,19 @@ export class VehicleComponent implements OnInit {
     }
  } 
 
-//  initLatestAlertAndSnapshotList(): void {
-//    this.dataLatestAlertList = this.dataService.getLatestAlertsData();
-//  }
-
-//  initVehicleStatusTable(): void {
-//    this.dataVehicleStatus = this.dataService.getVehicleStatusData();
-//  }
-
- initSocRangeChart(): void {
-   let leftY = new YAxis("SOC", "#4bc0c0", 0, 100);
-   let rightY = new YAxis("kWh", "#565656", 0, 600);
+setDualChartsOptions(): void {
+   var leftY = new YAxis("SOC", "#4bc0c0", 0, 100);
+   var rightY = new YAxis("kWh", "#565656", 0, 600);
    this.optionSocRangeChart = this.getChartOptions(leftY, rightY);
- }
 
- initEstActualDistanceChart(): void {
-   let leftY = new YAxis("Range", "#4bc0c0", 0, 300);
-   let rightY = new YAxis("ActualDistance", "#565656", 0, 250);
+   leftY = new YAxis("Range", "#4bc0c0", 0, 300);
+   rightY = new YAxis("ActualDistance", "#565656", 0, 250);
    this.optionEstActualDistanceChart = this.getChartOptions(leftY, rightY);
- }
 
- initChargingRunningStatusChart(): void {
-   let leftY = new YAxis("ChargingStatus", "#4bc0c0", 0, 1);
-   let rightY = new YAxis("RunningStatus", "#565656", 0, 800);
+   leftY = new YAxis("ChargingStatus", "#4bc0c0", 0, 1);
+   rightY = new YAxis("RunningStatus", "#565656", 0, 800);
    this.optionChargingRunningStatusChart = this.getChartOptions(leftY, rightY);
- }
+}
 
   setGaugeOptions(): void {
     this.optionGaugeSOC = {
@@ -220,7 +213,7 @@ export class VehicleComponent implements OnInit {
     };
   }
 
-  initComplexChart(): void {
+  setComplexChartOptions(): void {
     this.optionComplexChart = {
       animation: {
         duration: 0
@@ -297,28 +290,7 @@ export class VehicleComponent implements OnInit {
      }
   }
 
-  loadDualChartsData(): void {
-    this.dataService.getVehicleWholeDaySnapshot$(this.vehicleName, this.selectedDate)
-      .subscribe(data => {
-          if(!data) { console.log('no response data'); return; }
-          this.chartSocRange.data = this.getChartDataSOCEnergy(data);
-          this.chartEstActualDistance.data = this.getChartDataEstActualDistance(data);
-          this.chartChargingRunningStatus.data = this.getChargingRunningStatusData(data);
 
-          this.chartSocRange.reinit();
-          this.chartEstActualDistance.reinit();
-          this.chartChargingRunningStatus.reinit();
-    });
-  }
-
-  loadComplexChartData(): void {
-    this.dataService.getVehicleWholeDaySnapshot$(this.vehicleName, this.selectedDate)
-      .subscribe(data => {
-         if(!data) { console.log('no response data'); return; }
-         this.chartComplex.data = this.getChartDataComplex(data);
-         this.chartComplex.reinit();
-      });
-  }
 
   getChartDataComplex(list: VehicleSnapshot[]): any {
     var filtered_A = list.filter(e => e.code === '1J');

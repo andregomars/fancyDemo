@@ -97,15 +97,6 @@ export class DataRemoteService {
       .catch(this.handleError);
   }
 
-  getWholeDayVehicleSnapshot(vname: string, date: Date): Promise<Array<VehicleSnapshot>> {
-    var dateOnly: string = moment(date).format('YYYY-MM-DD');
-    return this.http.get(`${this.URL_WholeDayVehicleSnapshot}/${vname}/${dateOnly}`)
-      .map(res => res.json())
-      .catch(this.handleError)
-      .toPromise<Array<VehicleSnapshot>>();
-  }
-
-
   getRecentAllVehicleAlertByVehicleName$(vname: string): Observable<Array<VehicleAlert>> {
     return this.http.get(`${this.URL_RecentAllVehicleAlertByVehicleName}/${vname}`)
       .map(res => res.json())
