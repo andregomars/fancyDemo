@@ -10,6 +10,7 @@ import { VehicleIdentity } from '../models/vehicle-identity';
 import { VehicleStatus } from '../models/vehicle-status';
 import { VehicleSnapshot } from '../models/vehicle-snapshot';
 import { VehicleAlert } from '../models/vehicle-alert';
+import { VehicleDailyUsage } from '../models/vehicle-daily-usage';
 
 @Injectable()
 export class DataRemoteService {
@@ -24,6 +25,9 @@ export class DataRemoteService {
   private Endpoint_WholeDayVehicleSnapshot: string = "/VehicleSnapshot/GetWholeDayByVehicleName";
   private Endpoint_RecentAllVehicleAlertByVehicleName: string = 
     "/VehicleAlert/GetRecentAllByVehicleName";
+  private Endpoint_VehicleDailyUsageByDateScope: string = 
+    "/VehicleDailyUsage/GetByDateRange";
+
 
   private URL_VehicleIdentities: string;
   private URL_VehicleStatusByVehicleName: string;
@@ -32,6 +36,7 @@ export class DataRemoteService {
   private URL_VehicleSnapshotByVehicleName: string;
   private URL_WholeDayVehicleSnapshot: string;
   private URL_RecentAllVehicleAlertByVehicleName: string;
+  private URL_VehicleDailyUsageByDateScope: string;
 
   constructor(private http: Http)
   { 
@@ -48,6 +53,8 @@ export class DataRemoteService {
     this.URL_WholeDayVehicleSnapshot = this.URL_RemoteApiRoot + this.Endpoint_WholeDayVehicleSnapshot;
     this.URL_RecentAllVehicleAlertByVehicleName = 
       this.URL_RemoteApiRoot + this.Endpoint_RecentAllVehicleAlertByVehicleName;
+    this.URL_VehicleDailyUsageByDateScope = 
+      this.URL_RemoteApiRoot + this.Endpoint_VehicleDailyUsageByDateScope;
   }
 
   // api: $root/VehicleIdentities
@@ -99,6 +106,13 @@ export class DataRemoteService {
 
   getRecentAllVehicleAlertByVehicleName$(vname: string): Observable<Array<VehicleAlert>> {
     return this.http.get(`${this.URL_RecentAllVehicleAlertByVehicleName}/${vname}`)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+  getVehicleDailyUsageByDateRange$(vname: string, 
+    begindate: Date, enddate: Date): Observable<Array<VehicleDailyUsage>> {
+    return this.http.get(`${this.URL_VehicleDailyUsageByDateScope}/${vname}/${begindate}/${enddate}`)
       .map(res => res.json())
       .catch(this.handleError);
   }

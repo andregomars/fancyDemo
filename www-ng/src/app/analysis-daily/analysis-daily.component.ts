@@ -73,11 +73,11 @@ export class AnalysisDailyComponent implements OnInit {
         this.initSocMileageEnergyChartData();
     }
 
-    private reloadData(): void {
-        let endDate = new Date();
-        let beginDate = this.dataService.getDateOfACoupleWeeksAgo(endDate);
-        this.updateMileageChartData(beginDate, endDate);
-    }
+    // private reloadData(): void {
+    //     let endDate = new Date();
+    //     let beginDate = this.dataService.getDateOfACoupleWeeksAgo(endDate);
+    //     this.updateMileageChartData(beginDate, endDate);
+    // }
 
     /*** Section - Daily Mileage ***/
     private initMilageDateRangePicker(): void {
