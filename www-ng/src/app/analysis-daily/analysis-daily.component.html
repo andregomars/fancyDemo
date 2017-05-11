@@ -18,12 +18,13 @@
           <h3>Daily Mileage</h3>
         </div>
         <div class="col text-left">
-          <my-date-range-picker [options]="optionMileageDateRangePicker" (dateRangeChanged)="onMileageDateChanged($event)" placeholder="Select Date Range">
+          <my-date-range-picker [options]="optionMileageDateRangePicker" 
+            (dateRangeChanged)="onMileageDateChanged($event)" placeholder="Select Date Range">
           </my-date-range-picker>
         </div>
       </div>
       <div class="row p-2">
-        <p-chart #chartMileage type="bar" [data]="dataMileageChart" [options]="optionMileageChart" width="960px" height="300px"></p-chart>
+        <p-chart #chartMileage type="bar" [options]="optionMileageChart" width="960px" height="300px"></p-chart>
       </div>
       <div class="row mt-4">
         <div class="col text-right text-primary">

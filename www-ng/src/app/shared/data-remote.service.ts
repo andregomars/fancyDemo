@@ -110,8 +110,9 @@ export class DataRemoteService {
       .catch(this.handleError);
   }
 
+  // date format: yyyy-mm-dd, e.g. 2017-05-03
   getVehicleDailyUsageByDateRange$(vname: string, 
-    begindate: Date, enddate: Date): Observable<Array<VehicleDailyUsage>> {
+    begindate: string, enddate: string): Observable<Array<VehicleDailyUsage>> {
     return this.http.get(`${this.URL_VehicleDailyUsageByDateScope}/${vname}/${begindate}/${enddate}`)
       .map(res => res.json())
       .catch(this.handleError);

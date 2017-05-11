@@ -69,7 +69,7 @@ export class DataService {
     }
 
     getVehicleDailyUsageByDateRange$(vname: string, 
-      begindate: Date, enddate: Date): Observable<Array<VehicleDailyUsage>> {
+      begindate: string, enddate: string): Observable<Array<VehicleDailyUsage>> {
       return this.dataService.getVehicleDailyUsageByDateRange$(vname, begindate, enddate);
     }
 
