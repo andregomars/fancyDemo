@@ -10,6 +10,7 @@ let html2canvas = require("html2canvas");
 
 import { DataService } from '../shared/data.service';
 import { VehicleDailyUsage } from '../models/vehicle-daily-usage';
+import { VehicleIdentity } from '../models/vehicle-identity';
 
 
 @Component({
@@ -19,38 +20,43 @@ import { VehicleDailyUsage } from '../models/vehicle-daily-usage';
 })
 export class AnalysisDailyComponent implements OnInit {
 
-  fleetID: string;
-  vehicleID: string;
+  fleetName: string;
   vehicleName: string;
-  today: Date = new Date(2017, 4, 3);
-  backDays: number = 6;
-  begin = {year: 2017, month: 5, day: 2};
-  end = {year: 2017, month: 5, day: 4};
+//   today: Date = new Date(2017, 4, 3);
+  today: Date = new Date();
+  backDays: number = 13;
+  ratioDGE: number = 0.027
 
   //Daily Mileage Chart properties
   optionMileageDateRangePicker: IMyOptions;
-  // dataMileageChart: any;
   optionMileageChart: any;
 
   //SOC & Energy Chart properties
   optionSocEnergyDateRangePicker: IMyOptions;
-  dataSocEnergyChart: any;
   optionSocEnergyChart: any;
 
   //SOC, Mileage & Energy Chart properties
   optionSocMileageEnergyDateRangePicker: IMyOptions;
-  dataSocMileageEnergyChart: any;
   optionSocMileageEnergyChart: any
 
+  //Emission Reduction Chart properties 
+  optionEmissionReductionDateRangePicker: IMyOptions;
+  optionEmissionReductionChart: any;
+
   //child views
-  @ViewChild("charts")
-  charts: ElementRef;
+  @ViewChild("chartsP1")
+  chartsP1: ElementRef;
+   @ViewChild("chartsP2")
+  chartsP2: ElementRef;
   @ViewChild("chartMileage")
   chartMileage: UIChart;
   @ViewChild("chartSocEnergy")
   chartSocEnergy: UIChart;
   @ViewChild("chartSocMileageEnergy")
   chartSocMileageEnergy: UIChart;
+  @ViewChild("chartEmissionReduction")
+  chartEmissionReduction: UIChart;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -58,14 +64,12 @@ export class AnalysisDailyComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.initData();
-    // this.loadVehicle();
     this.initDatePicker();
     this.initChartsOptions();
     this.initChartsData();
   }
 
-  initDatePicker(): void {
+  private initDatePicker(): void {
     var optionDateRangePickerDefault = {
       dateFormat: "mm/dd/yyyy",
       width: "200px",
@@ -77,41 +81,39 @@ export class AnalysisDailyComponent implements OnInit {
     this.optionMileageDateRangePicker = optionDateRangePickerDefault;
     this.optionSocEnergyDateRangePicker = optionDateRangePickerDefault;
     this.optionSocMileageEnergyDateRangePicker = optionDateRangePickerDefault;
+    this.optionEmissionReductionDateRangePicker = optionDateRangePickerDefault;
+ }
 
-    var defaultRangeData = {
-      beginDate: {year: 2017, month: 5, day: 2},
-      endDate: {year: 2017, month: 5, day: 4}
-    }
-
-
-  }
-
-  initChartsOptions(): void {
+  private initChartsOptions(): void {
     this.initMileageChartOption();
     this.initSocEnergyChartOption();
     this.initSocMileageEnergyChartOption();
+    this.initEmissionReductionChartOption();
   }
 
-  initChartsData(): void {
+  private initChartsData(): void {
     this.route.params
       .switchMap((params: Params) => Rx.Observable.of(params["vname"]))
       .subscribe(vname => {
         this.vehicleName = vname;
+        this.fleetName = this.dataService.getVehicleIdentity(vname).fname;
 
         let endDate = moment(this.today).startOf('day').toDate();
         let beginDate = moment(this.today).subtract(this.backDays, 'days').startOf('day').toDate();
 
         this.loadMileageChartData(beginDate, endDate);
+        this.loadSocEnergyChartData(beginDate, endDate);
+        this.loadSocMileageEnergyData(beginDate, endDate);
+        this.loadEmissionReductionChartData(beginDate, endDate);
       });
   }
 
-  loadMileageChartData(beginDate: Date, endDate: Date): void {
-    var beginDay = moment(beginDate).startOf('day').format('YYYY-MM-DD');
-    var endDay = moment(endDate).startOf('day').format('YYYY-MM-DD');
-    this.dataService.getVehicleDailyUsageByDateRange$(this.vehicleName, beginDay, endDay)
+  /*** Section - Mileage ***/
+  private loadMileageChartData(beginDate: Date, endDate: Date): void {
+    this.dataService.getVehicleDailyUsageByDateRange$(this.vehicleName, beginDate, endDate)
       .subscribe(data => {
         if (!data) return;
-        this.chartMileage.data = this.getMileageChartData(data);
+        this.chartMileage.data = this.buildMileageChartData(data);
         this.chartMileage.reinit();
          // this.chartMileage.data.labels = newData.labels;
           // this.chartMileage.data.datasets[0].data = newData.data; 
@@ -119,8 +121,7 @@ export class AnalysisDailyComponent implements OnInit {
        });
   }
 
-  getMileageChartData(list: VehicleDailyUsage[]): any {
-    console.log(list);
+  private buildMileageChartData(list: VehicleDailyUsage[]): any {
     var labels = list.map(el => moment(el.date).format('MM/DD'));
     var data = list.map(el => el.mileage);
     return {
@@ -129,49 +130,20 @@ export class AnalysisDailyComponent implements OnInit {
         {
           label: 'Daily Mileage',
           data: data,
-          borderColor: '#4bc0c0'
+          borderColor: '#4bc0c0',
+          borderWidth: 1
         }
       ]
     };
   }
 
-  onMileageDateChanged(event: IMyDateRangeModel): void {
+  private onMileageDateChanged(event: IMyDateRangeModel): void {
     if (event.beginJsDate && event.endJsDate) {
-      // this.updateMileageChartData(event.beginJsDate, event.endJsDate);
       this.loadMileageChartData(event.beginJsDate, event.endJsDate);
     }
   }
 
-  /***** originals ******/
-
-  private initData(): void {
-    // Daily Mileage
-    // this.initMilageDateRangePicker();
-    // this.initMileageChartOption();
-    // this.initMileageChartData();
-
-    // Daily SOC & Energy
-    // this.initSocEnergyDateRangePicker();
-    // this.initSocEnergyChartOption();
-    this.initSocEnergyChartData();
-
-    // Daily SOC, Mileage & Energy
-    // this.initSocMileageEnergyDateRangePicker();
-    // this.initSocMileageEnergyChartOption();
-    this.initSocMileageEnergyChartData();
-  }
-
-  // private reloadData(): void {
-  //     let endDate = new Date();
-  //     let beginDate = this.dataService.getDateOfACoupleWeeksAgo(endDate);
-  //     this.updateMileageChartData(beginDate, endDate);
-  // }
-
-  /*** Section - Daily Mileage ***/
-  // private initMilageDateRangePicker(): void {
-  //     this.optionMileageDateRangePicker = this.getDefaultDateRangePickerOptions();
-  // }
-  private initMileageChartOption(): void {
+ private initMileageChartOption(): void {
     this.optionMileageChart = {
       responsive: false,
       maintainAspectRatio: true,
@@ -190,48 +162,12 @@ export class AnalysisDailyComponent implements OnInit {
     this.resetChartDefaultOptions(this.optionMileageChart);
   }
 
-  // private initMileageChartData(): void {
-  //     let endDate = new Date();
-  //     let beginDate = this.dataService.getDateOfACoupleWeeksAgo(endDate);
-  //     let data = this.dataService.getVehicleDailySocEnergy(beginDate, endDate);
-  //     this.dataMileageChart = {
-  //         labels: this.dataService.getVehicleDailyMileage(beginDate, endDate).labels,
-  //         datasets: [
-  //             {
-  //                 label: 'Daily Mileage',
-  //                 data: this.dataService.getVehicleDailyMileage(beginDate, endDate).data,
-  //                 borderColor: '#4bc0c0'
-  //             }
-  //         ]
-  //     };
-  // }
-
-  private updateMileageChartData(beginDate: Date, endDate: Date): void {
-    let data = this.dataService.getVehicleDailyMileage(beginDate, endDate);
-    let chartData = {
-      labels: data.labels,
-      datasets: [{
-        label: 'Daily Mileage',
-        data: data.data,
-        boarderColor: '#4bc0c0'
-      }]
-    };
-    this.chartMileage.data.labels = data.labels;
-    this.chartMileage.data.datasets[0].data = data.data;
-    // this.chartMileage.data = chartData;
-    this.chartMileage.refresh();
-  }
-
-  /*** Section - Daily SOC & Energy ***/
-  onSocEnergyDateChanged(event: IMyDateRangeModel): void {
+  /*** Section - SOC & Engery ***/
+  private onSocEnergyDateChanged(event: IMyDateRangeModel): void {
     if (event.beginJsDate && event.endJsDate) {
-      this.updateSocEnergyChartData(event.beginJsDate, event.endJsDate);
+      this.loadSocEnergyChartData(event.beginJsDate, event.endJsDate);
     }
   }
-
-  // private initSocEnergyDateRangePicker(): void {
-  //     this.optionSocEnergyDateRangePicker = this.getDefaultDateRangePickerOptions();
-  // }
 
   private initSocEnergyChartOption(): void {
     this.optionSocEnergyChart = {
@@ -279,7 +215,7 @@ export class AnalysisDailyComponent implements OnInit {
           ticks: {
             fontColor: '#4286f4',
             min: 0,
-            max: 2500
+            max: 600
           }
         }, {
           id: 'yEnergyUsed',
@@ -293,7 +229,7 @@ export class AnalysisDailyComponent implements OnInit {
           ticks: {
             fontColor: '#f47d41',
             min: 0,
-            max: 2500
+            max: 600
           }
         }]
       }
@@ -301,61 +237,59 @@ export class AnalysisDailyComponent implements OnInit {
     this.resetChartDefaultOptions(this.optionSocEnergyChart);
   }
 
-  private initSocEnergyChartData(): void {
-    let endDate = new Date();
-    let beginDate = this.dataService.getDateOfACoupleWeeksAgo(endDate);
-    let data = this.dataService.getVehicleDailySocEnergy(beginDate, endDate);
-    this.dataSocEnergyChart = {
-      labels: data.labels,
+  private loadSocEnergyChartData(beginDate: Date, endDate: Date): void {
+    this.dataService.getVehicleDailyUsageByDateRange$(this.vehicleName, beginDate, endDate)
+      .subscribe(data => {
+        if (!data) return;
+        this.chartSocEnergy.data = this.buildSocEnergyChartData(data);
+        this.chartSocEnergy.reinit();
+       });
+  }
+
+  private buildSocEnergyChartData(list: VehicleDailyUsage[]): any {
+    var labels = list.map(el => moment(el.date).format('MM/DD'));
+    var dataSocCharged = list.map(el => el.soccharged);
+    var dataSocUsed = list.map(el => el.socused);
+    var dataEnergyCharged = list.map(el => el.energycharged);
+    var dataEnergyUsed = list.map(el => el.energyused);
+
+    return {
+      labels: labels,
       datasets: [{
         label: "SOC charged",
-        data: data.dataSocCharged,
+        data: dataSocCharged,
         yAxisID: 'ySocCharged',
         fill: true,
         borderColor: '#4bc0c0',
         borderWidth: 1
       }, {
         label: "SOC used",
-        data: data.dataSocUsed,
+        data: dataSocUsed, 
         yAxisID: 'ySocUsed',
         borderColor: '#565656',
         borderWidth: 1
       }, {
         label: "Energy charged",
-        data: data.dataEnergyCharged,
+        data: dataEnergyCharged,
         yAxisID: 'yEnergyCharged',
         borderColor: '#4286f4',
         borderWidth: 1
       }, {
         label: "Energy used",
-        data: data.dataEnergyUsed,
+        data: dataEnergyUsed,
         yAxisID: 'yEnergyUsed',
         borderColor: '#f47d41',
         borderWidth: 1
       }]
-    }
-  }
-
-  private updateSocEnergyChartData(beginDate: Date, endDate: Date): void {
-    let data = this.dataService.getVehicleDailySocEnergy(beginDate, endDate);
-    this.chartSocEnergy.data.labels = data.labels;
-    this.chartSocEnergy.data.datasets[0].data = data.dataSocCharged;
-    this.chartSocEnergy.data.datasets[1].data = data.dataSocUsed;
-    this.chartSocEnergy.data.datasets[2].data = data.dataEnergyCharged;
-    this.chartSocEnergy.data.datasets[3].data = data.dataEnergyUsed;
-    this.chartSocEnergy.refresh();
+    };
   }
 
   /*** Section - Daily SOC, Mileage & Energy ***/
   onSocMileageEnergyDateChanged(event: IMyDateRangeModel): void {
     if (event.beginJsDate && event.endJsDate) {
-      this.updateSocMileageEnergyChartData(event.beginJsDate, event.endJsDate);
+      this.loadSocMileageEnergyData(event.beginJsDate, event.endJsDate);
     }
   }
-
-  // private initSocMileageEnergyDateRangePicker(): void {
-  //     this.optionSocMileageEnergyDateRangePicker = this.getDefaultDateRangePickerOptions();
-  // }
 
   private initSocMileageEnergyChartOption(): void {
     this.optionSocMileageEnergyChart = {
@@ -372,7 +306,7 @@ export class AnalysisDailyComponent implements OnInit {
           ticks: {
             fontColor: '#4bc0c0',
             min: 0,
-            max: 100
+            max: 10
           }
         }, {
           id: 'yMileageSoc',
@@ -386,7 +320,7 @@ export class AnalysisDailyComponent implements OnInit {
           ticks: {
             fontColor: '#565656',
             min: 0,
-            max: 100
+            max: 10
           }
         }, {
           id: 'yMileageEnergy',
@@ -400,7 +334,7 @@ export class AnalysisDailyComponent implements OnInit {
           ticks: {
             fontColor: '#4286f4',
             min: 0,
-            max: 1
+            max: 10
           }
         }, {
           id: 'yEnergyMileage',
@@ -414,7 +348,7 @@ export class AnalysisDailyComponent implements OnInit {
           ticks: {
             fontColor: '#f47d41',
             min: 0,
-            max: 25
+            max: 10
           }
         }]
       }
@@ -422,83 +356,206 @@ export class AnalysisDailyComponent implements OnInit {
     this.resetChartDefaultOptions(this.optionSocMileageEnergyChart);
   }
 
-  private initSocMileageEnergyChartData(): void {
-    let endDate = new Date();
-    let beginDate = this.dataService.getDateOfACoupleWeeksAgo(endDate);
-    let data = this.dataService.getVehicleDailySocMileageEnergy(beginDate, endDate);
-    this.dataSocMileageEnergyChart = {
-      labels: data.labels,
+  private loadSocMileageEnergyData(beginDate: Date, endDate: Date): void {
+    this.dataService.getVehicleDailyUsageByDateRange$(this.vehicleName, beginDate, endDate)
+      .subscribe(data => {
+        if (!data) return;
+        this.chartSocMileageEnergy.data = this.buildSocMileageEnergyChartData(data);
+        this.chartSocMileageEnergy.reinit();
+       });
+  }
+
+  private buildSocMileageEnergyChartData(list: VehicleDailyUsage[]): any {
+    var labels = list.map(el => moment(el.date).format('MM/DD'));
+    var dataSocMileage = list.map(el => el.mileage != 0? el.socused/el.mileage : 10 );
+    var dataMileageSoc = list.map(el => el.socused != 0? el.mileage/el.socused : 10 );
+    var dataMileageEnergy = list.map(el => el.energyused != 0? el.mileage/el.energyused : 10 );
+    var dataEnergyMileage = list.map(el => el.mileage != 0? el.energyused/el.mileage : 10 );
+
+    return {
+      labels: labels,
       datasets: [{
         label: "SOC/Mileage",
-        data: data.dataSocMileage,
+        data: dataSocMileage, 
         yAxisID: 'ySocMileage',
         fill: true,
         borderColor: '#4bc0c0',
         borderWidth: 1
       }, {
         label: "Mileage/SOC",
-        data: data.dataMileageSoc,
+        data: dataMileageSoc, 
         yAxisID: 'yMileageSoc',
         borderColor: '#565656',
         borderWidth: 1
       }, {
         label: "Mileage/Energy",
-        data: data.dataMileageEnerg,
+        data: dataMileageEnergy, 
         yAxisID: 'yMileageEnergy',
         borderColor: '#4286f4',
         borderWidth: 1
       }, {
         label: "Energy/Mileage",
-        data: data.dataEnergyMileag,
+        data: dataEnergyMileage, 
         yAxisID: 'yEnergyMileage',
         borderColor: '#f47d41',
         borderWidth: 1
       }]
+    };
+  }
+
+/*
+	Item #1: Total Diesel Gallon Equivalent (DGE) Saved = [Total Electric Fleet Energy Consumed (kWh)] x .027
+	Item #2: NOx (tons) = [DGE] x 3.44 x [1/907,200]
+	Item #3: ROG (tons) = [DGE] x .18 x [1/907,200]
+	Item #4: PM2.5 (tons) = [DGE] x .136 x [1/907,200]
+	Item #5: PM10 (tons) = [DGE] x .15 x [1/907,200]
+*/
+
+  /*** Section: Emission Reduction ***/
+ private onEmissionReductionDateChanged(event: IMyDateRangeModel): void {
+    if (event.beginJsDate && event.endJsDate) {
+      this.loadEmissionReductionChartData(event.beginJsDate, event.endJsDate);
     }
   }
 
-  private updateSocMileageEnergyChartData(beginDate: Date, endDate: Date): void {
-    let data = this.dataService.getVehicleDailySocMileageEnergy(beginDate, endDate);
-    this.chartSocMileageEnergy.data.labels = data.labels;
-    this.chartSocMileageEnergy.data.datasets[0].data = data.dataSocMileage;
-    this.chartSocMileageEnergy.data.datasets[1].data = data.dataMileageSoc;
-    this.chartSocMileageEnergy.data.datasets[2].data = data.dataMileageEnergy;
-    this.chartSocMileageEnergy.data.datasets[3].data = data.dataEnergyMileage;
-    this.chartSocMileageEnergy.refresh();
+  private initEmissionReductionChartOption(): void {
+    this.optionEmissionReductionChart = {
+      legend: {
+        onClick: (e) => e.stopPropagation()
+      },
+      scales: {
+        yAxes: [{
+          id: 'yDGE',
+          scaleLabel: {
+            display: true,
+            labelString: 'DGE',
+            fontColor: '#4bc0c0'
+          },
+          type: 'linear',
+          position: 'left',
+          ticks: {
+            fontColor: '#4bc0c0',
+            min: 0,
+            max: 2
+          }
+        }, {
+          id: 'yNOx',
+          scaleLabel: {
+            display: true,
+            labelString: 'NOx',
+            fontColor: '#565656'
+          },
+          type: 'linear',
+          position: 'right',
+          ticks: {
+            fontColor: '#565656',
+            min: 0,
+            max: 2
+          }
+        }, {
+          id: 'yROG',
+          scaleLabel: {
+            display: true,
+            labelString: 'ROG',
+            fontColor: '#4286f4'
+          },
+          type: 'linear',
+          position: 'right',
+          ticks: {
+            fontColor: '#4286f4',
+            min: 0,
+            max: 1
+          }
+        }, {
+          id: 'yPM25',
+          scaleLabel: {
+            display: true,
+            labelString: 'PM2.5',
+            fontColor: '#f47d41'
+          },
+          type: 'linear',
+          position: 'right',
+          ticks: {
+            fontColor: '#f47d41',
+            min: 0,
+            max: 1
+          }
+        }, {
+          id: 'yPM10',
+          scaleLabel: {
+            display: true,
+            labelString: 'PM10',
+            fontColor: '#FFCE56'
+          },
+          type: 'linear',
+          position: 'right',
+          ticks: {
+            fontColor: '#FFCE56',
+            min: 0,
+            max: 1
+          }
+        }]
+      }
+    };
+    this.resetChartDefaultOptions(this.optionEmissionReductionChart);
+  }
+
+  private loadEmissionReductionChartData(beginDate: Date, endDate: Date): void {
+    this.dataService.getVehicleDailyUsageByDateRange$(this.vehicleName, beginDate, endDate)
+      .subscribe(data => {
+        if (!data) return;
+        this.chartEmissionReduction.data = this.buildEmissionReductionChartData(data);
+        this.chartEmissionReduction.reinit();
+       });
+  }
+
+  private buildEmissionReductionChartData(list: VehicleDailyUsage[]): any {
+    var labels = list.map(el => moment(el.date).format('MM/DD'));
+    var dataDGE = list.map(el => el.energyused * this.ratioDGE);
+    var dataNOx = list.map(el => el.energyused * this.ratioDGE * 3.44);
+    var dataROG = list.map(el => el.energyused * this.ratioDGE * 0.18);
+    var dataPM25 = list.map(el => el.energyused * this.ratioDGE * 0.136);
+    var dataPM10 = list.map(el => el.energyused * this.ratioDGE * 0.15);
+
+    return {
+      labels: labels,
+      datasets: [{
+        label: "DGE",
+        data: dataDGE,
+        yAxisID: 'yDGE',
+        fill: true,
+        borderColor: '#4bc0c0',
+        borderWidth: 1
+      }, {
+        label: "NOx",
+        data: dataNOx, 
+        yAxisID: 'yNOx',
+        borderColor: '#565656',
+        borderWidth: 1
+      }, {
+        label: "ROG",
+        data: dataROG,
+        yAxisID: 'yROG',
+        borderColor: '#4286f4',
+        borderWidth: 1
+      }, {
+        label: "PM2.5",
+        data: dataPM25,
+        yAxisID: 'yPM25',
+        borderColor: '#f47d41',
+        borderWidth: 1
+      }, {
+        label: "PM10",
+        data: dataPM10,
+        yAxisID: 'yPM10',
+        borderColor: '#FFCE51',
+        borderWidth: 1
+      }]
+    };
   }
 
   /*** Common Section ***/
-  private loadVehicle(): void {
-    this.route.params
-      .switchMap((params: Params) => Rx.Observable.of(params["vname"]))
-      .subscribe((vname: string) => {
-        this.vehicleID = vname;
-        this.dataService.getAllVehiclesData$()
-          .map(el => el.find(v => v.vname === vname))
-          .map(v => v.fname)
-          .subscribe(fname => this.fleetID = fname);
-      });
-  }
-  // private loadVehicle(): void {
-  //     this.route.params
-  //         .switchMap((params: Params) => Rx.Observable.create(ob=>ob.next(params["vid"])))
-  //         .subscribe((vid: string) => { 
-  //             this.vehicleID = vid;
-  //             this.fleetID = this.dataService.getVehicleIdentity(vid).fid;
-  //             // this.reloadData();
-  //         });
-  // }
 
-  private getDefaultDateRangePickerOptions(): any {
-    return {
-      dateFormat: "mm/dd/yyyy",
-      width: "200px",
-      height: "23px",
-      selectionTxtFontSize: "12px",
-      editableDateRangeField: false,
-      alignSelectorRight: true
-    };
-  }
 
   private resetChartDefaultOptions(option: any): void {
     option.animation = {
@@ -519,13 +576,22 @@ export class AnalysisDailyComponent implements OnInit {
   }
 
   exportCharts(): void {
-    html2canvas(this.charts.nativeElement, {
+    //print page by page
+    html2canvas(this.chartsP1.nativeElement, {
       onrendered: function (canvas) {
         const contentDataURL = canvas.toDataURL("image/png");
         let pdf = new jsPDF("landscape");
         pdf.addImage(contentDataURL, "PNG", 10, 10);
-        pdf.save("Vehicle.DualCharts.pdf");
-      }
-    })
+        pdf.save("DailyAnalysis.P1.pdf");
+      },
+    });
+    html2canvas(this.chartsP2.nativeElement, {
+      onrendered: function (canvas) {
+        const contentDataURL = canvas.toDataURL("image/png");
+        let pdf = new jsPDF("landscape");
+        pdf.addImage(contentDataURL, "PNG", 10, 10);
+        pdf.save("DailyAnalysis.P2.pdf");
+      },
+    });
   }
 }

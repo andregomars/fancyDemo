@@ -69,8 +69,8 @@ export class DataService {
     }
 
     getVehicleDailyUsageByDateRange$(vname: string, 
-      begindate: string, enddate: string): Observable<Array<VehicleDailyUsage>> {
-      return this.dataService.getVehicleDailyUsageByDateRange$(vname, begindate, enddate);
+      beginDate: Date, endDate: Date): Observable<Array<VehicleDailyUsage>> {
+      return this.dataService.getVehicleDailyUsageByDateRange$(vname, beginDate, endDate);
     }
 
 //     getAllFleetID(): Array<string> {

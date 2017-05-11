@@ -112,8 +112,10 @@ export class DataRemoteService {
 
   // date format: yyyy-mm-dd, e.g. 2017-05-03
   getVehicleDailyUsageByDateRange$(vname: string, 
-    begindate: string, enddate: string): Observable<Array<VehicleDailyUsage>> {
-    return this.http.get(`${this.URL_VehicleDailyUsageByDateScope}/${vname}/${begindate}/${enddate}`)
+    beginDate: Date, endDate: Date): Observable<Array<VehicleDailyUsage>> {
+    var beginDay = moment(beginDate).startOf('day').format('YYYY-MM-DD');
+    var endDay = moment(endDate).startOf('day').format('YYYY-MM-DD');
+    return this.http.get(`${this.URL_VehicleDailyUsageByDateScope}/${vname}/${beginDay}/${endDay}`)
       .map(res => res.json())
       .catch(this.handleError);
   }
