@@ -137,7 +137,7 @@ export class AnalysisDailyComponent implements OnInit {
     };
   }
 
-  private onMileageDateChanged(event: IMyDateRangeModel): void {
+  onMileageDateChanged(event: IMyDateRangeModel): void {
     if (event.beginJsDate && event.endJsDate) {
       this.loadMileageChartData(event.beginJsDate, event.endJsDate);
     }
@@ -163,7 +163,7 @@ export class AnalysisDailyComponent implements OnInit {
   }
 
   /*** Section - SOC & Engery ***/
-  private onSocEnergyDateChanged(event: IMyDateRangeModel): void {
+  onSocEnergyDateChanged(event: IMyDateRangeModel): void {
     if (event.beginJsDate && event.endJsDate) {
       this.loadSocEnergyChartData(event.beginJsDate, event.endJsDate);
     }
@@ -412,7 +412,7 @@ export class AnalysisDailyComponent implements OnInit {
 */
 
   /*** Section: Emission Reduction ***/
- private onEmissionReductionDateChanged(event: IMyDateRangeModel): void {
+ onEmissionReductionDateChanged(event: IMyDateRangeModel): void {
     if (event.beginJsDate && event.endJsDate) {
       this.loadEmissionReductionChartData(event.beginJsDate, event.endJsDate);
     }

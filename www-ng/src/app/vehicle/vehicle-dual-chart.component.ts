@@ -15,6 +15,7 @@ export class VehicleDualChartComponent implements OnInit {
 
   @Input("data")
   snapshotList$: Observable<Array<VehicleSnapshot>>;
+  snapshotList: Array<VehicleSnapshot>;
 
   @ViewChild("chartSocRange")
   chartSocRange: UIChart;
