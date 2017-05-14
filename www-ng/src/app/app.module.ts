@@ -1,4 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { APP_BASE_HREF } from '@angular/common';
+
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -35,6 +37,7 @@ import { FleetMapComponent } from './fleet/fleet-map.component';
 import { VehicleMapComponent } from './vehicle/vehicle-map.component';
 import { VehicleSnapshotTableComponent } from './vehicle/vehicle-snapshot-table.component';
 import { VehicleDualChartComponent } from './vehicle/vehicle-dual-chart.component';
+import { GeoPipe } from './components/pipes/geo.pipe';
 
 @NgModule({
   declarations: [
@@ -55,7 +58,8 @@ import { VehicleDualChartComponent } from './vehicle/vehicle-dual-chart.componen
     FleetMapComponent,
     VehicleMapComponent,
     VehicleSnapshotTableComponent,
-    VehicleDualChartComponent
+    VehicleDualChartComponent,
+    GeoPipe,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +79,7 @@ import { VehicleDualChartComponent } from './vehicle/vehicle-dual-chart.componen
     })
   ],
   providers: [
+    // { provide: APP_BASE_HREF, useValue : '/ioc/index.php/hams/' },
     UtilityService,
     DataRemoteService,
     DataService,

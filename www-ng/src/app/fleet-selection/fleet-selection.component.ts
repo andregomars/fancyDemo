@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataService } from '../shared/data.service';
 import { VehicleIdentity } from '../models/vehicle-identity';
 import { Observable } from 'rxjs/Observable';
@@ -7,7 +7,8 @@ import 'rxjs/add/operator/map';
 @Component({
   selector: 'app-fleet-selection',
   templateUrl: './fleet-selection.component.html',
-  styleUrls: ['./fleet-selection.component.css']
+  styleUrls: ['./fleet-selection.component.css'],
+  // encapsulation: ViewEncapsulation.Native
 })
 export class FleetSelectionComponent implements OnInit {
 

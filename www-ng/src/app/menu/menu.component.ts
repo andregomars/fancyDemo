@@ -9,7 +9,7 @@ import { VehicleIdentity } from '../models/vehicle-identity'
   moduleId: module.id,
   templateUrl: 'menu.component.html',
   styleUrls: [ 'menu.component.css' ],
-  encapsulation: ViewEncapsulation.None
+  // encapsulation: ViewEncapsulation.None
 })
 export class MenuComponent implements OnInit {
 

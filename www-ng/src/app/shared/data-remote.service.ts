@@ -15,7 +15,7 @@ import { VehicleDailyUsage } from '../models/vehicle-daily-usage';
 @Injectable()
 export class DataRemoteService {
   private vehicleIdentities: Array<VehicleIdentity>;
-  private URL_RemoteApiRoot: string = "http://52.35.12.17/api";
+  private URL_RemoteApiRoot: string = "http://localhost/api";
   private Endpoint_VehicleIdentities: string = "/VehicleIdentity";
   private Endpoint_VehicleStatusByVehicleName: string = "/VehicleStatus/GetByVehicleName";
   private Endpoint_AllVehicleStatusByFleetName: string = "/VehicleStatus/GetAllByFleetName";

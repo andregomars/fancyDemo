@@ -3,7 +3,11 @@
 }
 
 .ui-menu {
-    width: auto
+    width: 100%
+}
+
+.ui-tieredmenu {
+    width: 100%
 }
 
 .submenu {
