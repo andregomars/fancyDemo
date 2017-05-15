@@ -9,6 +9,7 @@ import { DataTableModule, ProgressBarModule,
 import { MyDatePickerModule } from 'mydatepicker';
 import { MyDateRangePickerModule } from 'mydaterangepicker';
 import { JustgageModule } from 'angular2-justgage';
+import { CookieModule } from 'ngx-cookie';
 import './shared/rxjs-extensions';
 import './shared/vendor';
 
@@ -74,6 +75,7 @@ import { GeoPipe } from './components/pipes/geo.pipe';
     TieredMenuModule,
     MegaMenuModule,
     JustgageModule,
+    CookieModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAqZcZ_L6UIsGVHcDqWdu-GrsRSPcpWeqU'
     })

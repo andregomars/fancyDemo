@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core'
+import { Component, OnInit, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core'
 import { ActivatedRoute, Params } from '@angular/router'
 import { DataTableModule, ChartModule, UIChart } from 'primeng/primeng';
 import { IMyOptions, IMyDateModel } from 'mydatepicker';
@@ -19,7 +19,8 @@ import { VehicleAlert } from '../models/vehicle-alert'
 @Component({
   moduleId: module.id,
   templateUrl: 'vehicle.component.html',
-  styleUrls: [ 'vehicle.component.css' ]
+  styleUrls: [ 'vehicle.component.css' ],
+  // encapsulation: ViewEncapsulation.Native
 })
 export class VehicleComponent implements OnInit {
  

@@ -13,7 +13,7 @@
     "build": "ng build --prod -vc false -oh none",
     "//postbuild": "cp ./dist/*.js ./../www/wp-includes/js/hams/ && cp ./dist/*.css ./../www/wp-includes/css/hams/ && cp ./dist/assets/styles/* ./../www/wp-includes/css/hams/",
     "////postbuild": "cp ./dist/*.js /c/inetpub/wwwroot/ioc/wp-includes/js/hams/ && cp ./dist/*.css /c/inetpub/wwwroot/ioc/wp-includes/css/hams/ && cp -r ./dist/assets/styles/ /c/inetpub/wwwroot/ioc/wp-includes/css/hams/styles/",
-    "postbuild": "cp -r ./dist/assets /c/inetpub/wwwroot/ioc/wp-includes/. && cp ./dist/*.js /c/inetpub/wwwroot/ioc/wp-includes/assets/scripts" 
+    "postbuild": "cp -r ./dist/assets /c/inetpub/wwwroot/ioc/wp-includes/. && cp ./dist/*.js /c/inetpub/wwwroot/ioc/wp-includes/assets/scripts"
   },
   "private": true,
   "dependencies": {
@@ -38,6 +38,7 @@
     "moment": "^2.17.1",
     "mydatepicker": "^1.7.3",
     "mydaterangepicker": "^1.4.1",
+    "ngx-cookie": "^1.0.0",
     "primeng": "^2.0.5",
     "rxjs": "^5.1.1",
     "ts-helpers": "^1.1.1",

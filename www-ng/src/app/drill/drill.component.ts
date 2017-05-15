@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, AfterViewInit, Renderer, ViewChild } from '@angular/core';
 import { DataTableModule, ChartModule } from 'primeng/primeng';
 import { IMyOptions, IMyDateModel } from 'mydatepicker';
+import { CookieService } from 'ngx-cookie';
 
 let jsPDF = require("jspdf")
 let html2canvas = require("html2canvas");
@@ -20,15 +21,20 @@ export class DrillComponent implements OnInit, AfterViewInit {
     @ViewChild("export")
     elExport: ElementRef;
 
+    user: string;
     data: any;
     dataChart: any;
     optionDatePicker: IMyOptions;
     optionGauge: any;
 
-    constructor(private renderer: Renderer) {
+    constructor(
+        private renderer: Renderer,
+        private cookie:CookieService) {
     }
 
     ngOnInit(): void {
+        this.user = this.cookie.get('ioc_loggedin');
+
         this.optionGauge = {
             id: "gauge",
             value: 67,
