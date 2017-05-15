@@ -1,13 +1,20 @@
 <div class="container">
   <div class="row mt-4">
     <div class="col-sm-6 col-12 p-2 text-center" *ngFor="let fname of fleets$ | async">
-      <span class="fa-stack fa-lg">
+      <!--<span class="fa-stack fa-lg">
         <i class="fa fa-circle fa-stack-2x"></i>
         <i class="fa fa-flag fa-stack-1x fa-inverse"></i>
-      </span>
-      <h4>
-        <a [routerLink]="['/fleet', fname]">{{ fname }}</a>
-      </h4>
+      </span>-->
+      <div class="row">
+        <div class="col">
+          <div class="icon-flag"></div>
+        </div>
+      </div>
+      <div class="row">
+         <div class="col">
+              <a [routerLink]="['/fleet', fname]">{{ fname }}</a>
+         </div>
+      </div>
     </div>
   </div>
 </div>

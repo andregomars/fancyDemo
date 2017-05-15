@@ -13,42 +13,15 @@
             </div>
             <div *ngSwitchDefault class="card bg-bus-blue">
                 <div class="card-block">
-                    <h4 class="card-title">
-                        <a [routerLink]="['/vehicle', row.vname]">{{row.vname}}</a>
-                    </h4>
-                    <p class="card-text">{{row.soc}}%</p>
-                    <p>&nbsp;</p>
+                    <p class="card-title">
+                        <a [routerLink]="['/vehicle', row.vname]">*&nbsp;{{row.vname}}&nbsp;*</a>
+                    </p>
+                    <h3 class="card-text">{{row.soc}}%</h3>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!--<div class="container">
-    <div class="row" >
-        <div class="col-md-2 col-sm-6 col-12 p-2 text-center" 
-          *ngFor="let row of items; let i = index" [ngSwitch]="row.status">
-            <div *ngSwitchCase="'Charging'" 
-              class="card  card-outline-success iconcard">
-                <div class="card-block">
-                    <h4 class="card-title text-success inner">
-                        <a [routerLink]="['/vehicle', row.vid]">{{row.vid}}</a>
-                    </h4>
-                    <p class="card-text text-success inner">{{row.soc}}</p>
-                    <p class="text-success inner">{{row.status}}</p>
-                </div>
-            </div>
-            <div *ngSwitchDefault class="card iconcard">
-                <div class="card-block">
-                    <h4 class="card-title inner">
-                        <a [routerLink]="['/vehicle', row.vid]">{{row.vid}}</a>
-                    </h4>
-                    <p class="card-text inner">{{row.soc}}</p>
-                    <p class="inner">{{row.status}}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
 
 

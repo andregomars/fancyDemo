@@ -11,6 +11,7 @@ import { VehicleStatus } from '../models/vehicle-status';
   templateUrl: 'fleet.component.html'
 })
 export class FleetComponent implements OnInit {
+  // layout of "table" or "cards" by default
 	viewComponent:string = "table";
   data: Array<VehicleStatus>;
   fname: string;
@@ -39,8 +40,13 @@ export class FleetComponent implements OnInit {
       });
  }
 
-  toggleView(view: string) {
-    this.viewComponent = view;
+  // toggleView(view: string) {
+  //   console.log('toggled view is: '+view);
+  //   this.viewComponent = view;
+  // }
+
+  toggleView() {
+    this.viewComponent = this.viewComponent === 'table' ? 'cards' : 'table';
   }
 
   isShown(view: string) {
