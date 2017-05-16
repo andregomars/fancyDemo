@@ -1,11 +1,14 @@
 <div class="container">
+   <div class="row p-2">
+        <div class="col text-center">
+            <h5><i class="fa fa-bus"></i> 
+            {{lastVehicleStatus.fname}} / {{lastVehicleStatus.vname}} 
+            <small>{{lastVehicleStatus.updated | date:'short'}}</small>
+            </h5>
+        </div>
+    </div>
     <div class="row">
-        <div class="col-md-7 col-xs-12">
-            <div class="row p-2">
-                <div class="col text-center">
-                    <h5><i class="fa fa-bus"></i> {{lastVehicleStatus.fname}} / {{lastVehicleStatus.vname}}</h5>
-                </div>
-            </div>
+        <div class="col-md-6 col-xs-12">
             <div class="row">
                 <div class="col-5">
                     <div class="row">
@@ -16,30 +19,36 @@
                     </div>
                 </div>
                 <div class="col-7">
-                    <div class="row mb-4 align-top app-processbar">
+                    <div class="row mb-4 align-top ">
                         <div class="col">
-                            <div class="row">
+                            <div class="row p-1">
                                 <div class="col">Voltage(V):
                                     <app-progressbar [value]="lastVehicleStatus.voltage" max="800"></app-progressbar>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row p-1">
                                 <div class="col">Current(A):
-                                    <app-progressbar [value]="lastVehicleStatus.current" min="-400" max="400"></app-progressbar>
+                                    <app-progressbar [value]="lastVehicleStatus.current" min="0" max="120"></app-progressbar>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row mt-4 align-bottom app-processbar">
-                        <div class="col">
-                            <div class="row">
+                            <div class="row p-1">
                                 <div class="col">Low Temp(F):
                                     <app-progressbar [value]="lastVehicleStatus.temperaturelow" min="-40" max="220"></app-progressbar>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row p-1">
                                 <div class="col">High Temp(F):
                                     <app-progressbar [value]="lastVehicleStatus.temperaturehigh" min="-40" max="220"></app-progressbar>
+                                </div>
+                            </div>
+                            <div class="row p-1">
+                                <div class="col">Range(Miles):
+                                    <app-progressbar [value]="lastVehicleStatus.range | number: '1.2-2'" max="250"></app-progressbar>
+                                </div>
+                            </div>
+                            <div class="row p-1">
+                                <div class="col">Remaining(kWh):
+                                    <app-progressbar [value]="lastVehicleStatus.remainingenergy  | number: '1.2-2'" max="60"></app-progressbar>
                                 </div>
                             </div>
                         </div>
@@ -49,58 +58,39 @@
             <div class="row">
                 <div class="col">
                     <div class="row p-2">
-                        <div class="col-4 small">
-                            Mileage(Miles):
+                        <div class="col-5">
+                            Odometer(Miles):
                         </div>
-                        <div class="col-8">
-                            <app-progressbar [value]="lastVehicleStatus.mileage" max="250"></app-progressbar>
-                        </div>
-                    </div>
-                    <div class="row p-2">
-                        <div class="col-4 small">
-                            Range(Miles):
-                        </div>
-                        <div class="col-8">
-                            <app-progressbar [value]="lastVehicleStatus.range" max="250"></app-progressbar>
+                        <div class="col-7">
+                            <p class="app-scoreboard">{{lastVehicleStatus.mileage | number: '1.2-2'}}</p>
                         </div>
                     </div>
-                    <div class="row p-2">
-                        <div class="col-4 small">
-                            Remaining Energy(kWh):
-                        </div>
-                        <div class="col-8">
-                            <app-progressbar [value]="lastVehicleStatus.remainingenergy" max="60"></app-progressbar>
-                        </div>
-                    </div>
+ 
+                    
                 </div>
             </div>
         </div>
-        <div class="col-md-5 col-xs-12">
-            <app-vehicle-map *ngIf="recentStatusList" [items]="recentStatusList"></app-vehicle-map>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5 col-xs-12">
+        <div class="col-md-6 col-xs-12">
             <div class="row">
                 <div class="col">
-                    <ul class="nav nav-tabs small">
+                    <ul class="nav nav-tabs ">
                         <li class="nav-item">
-                            <a class="nav-link active " data-toggle="tab" href="#tab-alert">Latest Alert</a>
+                            <a class="nav-link" data-toggle="tab" href="#tab-alert">Latest Alert</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " data-toggle="tab" href="#tab-snapshot">Latest Snapshot</a>
+                            <a class="nav-link active" data-toggle="tab" href="#tab-snapshot">Latest Snapshot</a>
                         </li>
                     </ul>
 
-                    <div class="tab-content small">
-                        <div class="tab-pane active" id="tab-alert">
+                    <div class="tab-content">
+                        <div class="tab-pane app-tab-pane" id="tab-alert">
                             <ul class="fa-ul" *ngIf="recentAlertList">
                                 <li *ngFor="let alert of recentAlertList">
                                     <i class="fa-li fa fa-exclamation-triangle"></i>{{alert.updated}} - {{alert.name}}
                                 </li>
                             </ul>
                         </div>
-                        <div class="tab-pane" id="tab-snapshot">
+                        <div class="tab-pane active app-tab-pane" id="tab-snapshot">
                             <ul class="fa-ul" *ngIf="recentStatusList">
                                 <li *ngFor="let status of recentStatusList">
                                     <i class="fa-li fa fa-camera"></i>{{status.updated}}
@@ -110,11 +100,39 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-xs-12">
+           <div class="row p-2">
+                <div class="col-5">
+                    AxisX(degree):
+                </div>
+                <div class="col-7">
+                    <p class="app-scoreboard">{{lastVehicleStatus.axisx | number: '1.2-2'}}</p>
+                </div>
+            </div>
+            <div class="row p-2">
+                <div class="col-5">
+                    AxisY(degree):
+                </div>
+                <div class="col-7">
+                    <p class="app-scoreboard">{{lastVehicleStatus.axisy | number: '1.2-2'}}</p>
+                </div>
+            </div>
+            <div class="row p-2">
+                <div class="col-5">
+                    AxisZ(degree):
+                </div>
+                <div class="col-7">
+                    <p class="app-scoreboard">{{lastVehicleStatus.axisz | number: '1.2-2'}}</p>
+                </div>
+            </div> 
             <div class="row">
                 <app-vehicle-snapshot-table [data]="lastVehicleSnapshot"></app-vehicle-snapshot-table>
            </div>
         </div>
-        <div class="col-md-7 col-xs-12">
+        <div class="col-md-6 col-xs-12">
             <div class="row ">
                 <div class="col-8 text-right">
                     <my-date-picker #datePicker [options]="optionDatePicker" (dateChanged)="onDateChanged($event)" placeholder="Select Date"></my-date-picker>
@@ -124,6 +142,9 @@
                 </div>
             </div>
             <div #divDualCharts class="row align-items-center p-2">
+                <div class="col-12 m-2">
+                    <app-vehicle-map *ngIf="recentStatusList" [items]="recentStatusList"></app-vehicle-map>
+                </div>
                 <div class="col">
                     <p-chart #chartSocRange type="line" [options]="optionSocRangeChart"></p-chart>
                 </div>

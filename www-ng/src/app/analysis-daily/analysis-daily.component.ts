@@ -26,6 +26,7 @@ export class AnalysisDailyComponent implements OnInit {
   today: Date = new Date();
   backDays: number = 13;
   ratioDGE: number = 0.027
+  factor: number = 907200;
 
   //Daily Mileage Chart properties
   optionMileageDateRangePicker: IMyOptions;
@@ -123,13 +124,14 @@ export class AnalysisDailyComponent implements OnInit {
 
   private buildMileageChartData(list: VehicleDailyUsage[]): any {
     var labels = list.map(el => moment(el.date).format('MM/DD'));
-    var data = list.map(el => el.mileage);
+    var data = list.map(el => el.mileage).map(x => x.toFixed(2));
     return {
       labels: labels,
       datasets: [
         {
           label: 'Daily Mileage',
           data: data,
+          backgroundColor: '#4bc0c0',
           borderColor: '#4bc0c0',
           borderWidth: 1
         }
@@ -154,7 +156,7 @@ export class AnalysisDailyComponent implements OnInit {
         yAxes: [{
           ticks: {
             min: 0,
-            max: 100
+            max: 200
           }
         }]
       }
@@ -187,7 +189,7 @@ export class AnalysisDailyComponent implements OnInit {
           ticks: {
             fontColor: '#4bc0c0',
             min: 0,
-            max: 100
+            max: 200
           }
         }, {
           id: 'ySocUsed',
@@ -201,7 +203,7 @@ export class AnalysisDailyComponent implements OnInit {
           ticks: {
             fontColor: '#565656',
             min: 0,
-            max: 100
+            max: 200
           }
         }, {
           id: 'yEnergyCharged',
@@ -250,8 +252,8 @@ export class AnalysisDailyComponent implements OnInit {
     var labels = list.map(el => moment(el.date).format('MM/DD'));
     var dataSocCharged = list.map(el => el.soccharged);
     var dataSocUsed = list.map(el => el.socused);
-    var dataEnergyCharged = list.map(el => el.energycharged);
-    var dataEnergyUsed = list.map(el => el.energyused);
+    var dataEnergyCharged = list.map(el => el.energycharged).map(x => x.toFixed(2));
+    var dataEnergyUsed = list.map(el => el.energyused).map(x => x.toFixed(2));
 
     return {
       labels: labels,
@@ -260,25 +262,29 @@ export class AnalysisDailyComponent implements OnInit {
         data: dataSocCharged,
         yAxisID: 'ySocCharged',
         fill: true,
+        backgroundColor: '#4bc0c0',
         borderColor: '#4bc0c0',
         borderWidth: 1
       }, {
         label: "SOC used",
         data: dataSocUsed, 
-        yAxisID: 'ySocUsed',
+        AxisID: 'ySocUsed',
+        backgroundColor: '#565656',
         borderColor: '#565656',
         borderWidth: 1
       }, {
         label: "Energy charged",
         data: dataEnergyCharged,
         yAxisID: 'yEnergyCharged',
-        borderColor: '#4286f4',
+        backgroundColor: '#4bc0c0',
+        borderColor: '#4bc0c0',
         borderWidth: 1
       }, {
         label: "Energy used",
         data: dataEnergyUsed,
         yAxisID: 'yEnergyUsed',
-        borderColor: '#f47d41',
+        backgroundColor: '#4bc0c0',
+        borderColor: '#4bc0c0',
         borderWidth: 1
       }]
     };
@@ -367,10 +373,10 @@ export class AnalysisDailyComponent implements OnInit {
 
   private buildSocMileageEnergyChartData(list: VehicleDailyUsage[]): any {
     var labels = list.map(el => moment(el.date).format('MM/DD'));
-    var dataSocMileage = list.map(el => el.mileage != 0? el.socused/el.mileage : 10 );
-    var dataMileageSoc = list.map(el => el.socused != 0? el.mileage/el.socused : 10 );
-    var dataMileageEnergy = list.map(el => el.energyused != 0? el.mileage/el.energyused : 10 );
-    var dataEnergyMileage = list.map(el => el.mileage != 0? el.energyused/el.mileage : 10 );
+    var dataSocMileage = list.map(el => el.mileage != 0? el.socused/el.mileage : 10 ).map(x => x.toFixed(2));
+    var dataMileageSoc = list.map(el => el.socused != 0? el.mileage/el.socused : 10 ).map(x => x.toFixed(2));
+    var dataMileageEnergy = list.map(el => el.energyused != 0? el.mileage/el.energyused : 10 ).map(x => x.toFixed(2));
+    var dataEnergyMileage = list.map(el => el.mileage != 0? el.energyused/el.mileage : 10 ).map(x => x.toFixed(2));
 
     return {
       labels: labels,
@@ -379,24 +385,28 @@ export class AnalysisDailyComponent implements OnInit {
         data: dataSocMileage, 
         yAxisID: 'ySocMileage',
         fill: true,
+        backgroundColor: '#4bc0c0',
         borderColor: '#4bc0c0',
         borderWidth: 1
       }, {
         label: "Mileage/SOC",
         data: dataMileageSoc, 
         yAxisID: 'yMileageSoc',
+        backgroundColor: '#565656',
         borderColor: '#565656',
         borderWidth: 1
       }, {
         label: "Mileage/Energy",
         data: dataMileageEnergy, 
         yAxisID: 'yMileageEnergy',
+        backgroundColor: '#4286f4',
         borderColor: '#4286f4',
         borderWidth: 1
       }, {
         label: "Energy/Mileage",
         data: dataEnergyMileage, 
         yAxisID: 'yEnergyMileage',
+        backgroundColor: '#f47d41',
         borderColor: '#f47d41',
         borderWidth: 1
       }]
@@ -442,7 +452,7 @@ export class AnalysisDailyComponent implements OnInit {
           id: 'yNOx',
           scaleLabel: {
             display: true,
-            labelString: 'NOx',
+            labelString: 'NOx x 1E-6',
             fontColor: '#565656'
           },
           type: 'linear',
@@ -456,7 +466,7 @@ export class AnalysisDailyComponent implements OnInit {
           id: 'yROG',
           scaleLabel: {
             display: true,
-            labelString: 'ROG',
+            labelString: 'ROG x 1E-6',
             fontColor: '#4286f4'
           },
           type: 'linear',
@@ -470,7 +480,7 @@ export class AnalysisDailyComponent implements OnInit {
           id: 'yPM25',
           scaleLabel: {
             display: true,
-            labelString: 'PM2.5',
+            labelString: 'PM2.5 x 1E-6',
             fontColor: '#f47d41'
           },
           type: 'linear',
@@ -484,7 +494,7 @@ export class AnalysisDailyComponent implements OnInit {
           id: 'yPM10',
           scaleLabel: {
             display: true,
-            labelString: 'PM10',
+            labelString: 'PM10 x 1E-6',
             fontColor: '#FFCE56'
           },
           type: 'linear',
@@ -511,11 +521,11 @@ export class AnalysisDailyComponent implements OnInit {
 
   private buildEmissionReductionChartData(list: VehicleDailyUsage[]): any {
     var labels = list.map(el => moment(el.date).format('MM/DD'));
-    var dataDGE = list.map(el => el.energyused * this.ratioDGE);
-    var dataNOx = list.map(el => el.energyused * this.ratioDGE * 3.44);
-    var dataROG = list.map(el => el.energyused * this.ratioDGE * 0.18);
-    var dataPM25 = list.map(el => el.energyused * this.ratioDGE * 0.136);
-    var dataPM10 = list.map(el => el.energyused * this.ratioDGE * 0.15);
+    var dataDGE = list.map(el => el.energyused * this.ratioDGE).map(x => x.toFixed(4));
+    var dataNOx = list.map(el => el.energyused * this.ratioDGE * 3.44 / this.factor * 1000000).map(x => x.toFixed(4));
+    var dataROG = list.map(el => el.energyused * this.ratioDGE * 0.18 / this.factor * 1000000).map(x => x.toFixed(4));
+    var dataPM25 = list.map(el => el.energyused * this.ratioDGE * 0.136 / this.factor * 1000000).map(x => x.toFixed(4));
+    var dataPM10 = list.map(el => el.energyused * this.ratioDGE * 0.15 / this.factor * 1000000).map(x => x.toFixed(4));
 
     return {
       labels: labels,
@@ -524,30 +534,35 @@ export class AnalysisDailyComponent implements OnInit {
         data: dataDGE,
         yAxisID: 'yDGE',
         fill: true,
+        backgroundColor: '#4bc0c0',
         borderColor: '#4bc0c0',
         borderWidth: 1
       }, {
         label: "NOx",
         data: dataNOx, 
         yAxisID: 'yNOx',
+        backgroundColor: '#565656',
         borderColor: '#565656',
         borderWidth: 1
       }, {
         label: "ROG",
         data: dataROG,
         yAxisID: 'yROG',
+        backgroundColor: '#4286f4',
         borderColor: '#4286f4',
         borderWidth: 1
       }, {
         label: "PM2.5",
         data: dataPM25,
         yAxisID: 'yPM25',
+        backgroundColor: '#f47d41',
         borderColor: '#f47d41',
         borderWidth: 1
       }, {
         label: "PM10",
         data: dataPM10,
         yAxisID: 'yPM10',
+        backgroundColor: '#FFCE51',
         borderColor: '#FFCE51',
         borderWidth: 1
       }]
@@ -566,13 +581,13 @@ export class AnalysisDailyComponent implements OnInit {
     };
     option.responsive = false;
     option.maintainAspectRatio = true;
-    option.scales.xAxes = [{
-      ticks: {
-        callback: function (value, index, values) {
-          return moment(value).format('MM/DD');
-        }
-      }
-    }];
+    // option.scales.xAxes = [{
+    //   ticks: {
+    //     callback: function (value, index, values) {
+    //       return moment(value).format('MM/DD');
+    //     }
+    //   }
+    // }];
   }
 
   exportCharts(): void {

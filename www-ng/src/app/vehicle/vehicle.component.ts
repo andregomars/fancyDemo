@@ -71,25 +71,7 @@ export class VehicleComponent implements OnInit {
    this.setDatePicker();
    this.setDualChartsOptions();
    this.setComplexChartOptions();
-   
    this.initData();
-/*
-   //initialize bars, gauges & tables, and populate data
-   this.initLastVehicleStatus();
-   this.initRecentVehicleSnapshots();
-   this.initRecentVehicleAlerts();
-   this.initLastVehicleSnapshot();
-  
-   //initialize dual charts, and populate data
-   this.initSocRangeChart();
-   this.initEstActualDistanceChart();
-   this.initChargingRunningStatusChart();
-   this.initDualChartsData();
-   
-   //initialize complext chart and populate data
-   this.setComplexChartOptions();
-*/
-
  }
 
  initData(): void {
@@ -160,7 +142,7 @@ export class VehicleComponent implements OnInit {
   }
 
  getDefaultVehicleStatus(): VehicleStatus {
-  return new VehicleStatus(0, '', 0, '', 34.134330, 117.928273, 0, 0, 0, 0, 
+  return new VehicleStatus(0, '', 0, '', 34.134330, 117.928273, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, -40, -40, 0, 0, new Date());
  }
 
@@ -176,7 +158,7 @@ export class VehicleComponent implements OnInit {
  } 
 
 setDualChartsOptions(): void {
-   var leftY = new YAxis("SOC", "#4bc0c0", 0, 100);
+   var leftY = new YAxis("SOC", "#4bc0c0", 0, 200);
    var rightY = new YAxis("kWh", "#565656", 0, 600);
    this.optionSocRangeChart = this.getChartOptions(leftY, rightY);
 
@@ -223,6 +205,12 @@ setDualChartsOptions(): void {
         animationDuration: 0
       },
       scales: {
+        xAxes: [{
+            ticks: {
+                autoSkip: true,
+                maxTicksLimit: 24
+            }
+        }],
         yAxes: [{
           id: 'yEnergy',
           scaleLabel: {
@@ -313,24 +301,28 @@ setDualChartsOptions(): void {
                 data: data_A,
                 yAxisID: 'yEnergy',
                 fill: false,
+                pointRadius: 2, 
                 borderColor: '#4bc0c0'
             }, {
                 label: 'Voltage',
                 data: data_B,
                 yAxisID: 'yVoltage',
                 fill: false,
+                pointRadius: 2, 
                 borderColor: '#565656'
             }, {
                 label: 'Current',
                 data: data_C,
                 yAxisID: 'yCurrent',
                 fill: false,
+                pointRadius: 2, 
                 borderColor: '#4286f4'
             }, {
                 label: 'Temperature',
                 data: data_D,
                 yAxisID: 'yTemperature',
                 fill: false,
+                pointRadius: 2, 
                 borderColor: '#f47d41'
             }
         ]
@@ -349,20 +341,19 @@ setDualChartsOptions(): void {
       labels: labels,
       datasets: [
         {
-          type: 'line',
           label: 'SOC',
           data: data_A,
           yAxisID: 'ySOC',
           fill: false,
+          pointRadius: 1, 
           borderColor: '#4bc0c0'
         }, {
-          type: 'line',
           label: 'kWh',
           data: data_B,
           yAxisID: 'ykWh',
           fill: false,
+          pointRadius: 1, 
           borderColor: '#565656',
-          borderWidth: 1
         }
       ]
     }
@@ -385,6 +376,7 @@ setDualChartsOptions(): void {
           data: data_A,
           yAxisID: 'yRange',
           fill: false,
+          pointRadius: 1, 
           borderColor: '#4bc0c0'
         }, {
           type: 'line',
@@ -392,8 +384,8 @@ setDualChartsOptions(): void {
           data: data_B,
           yAxisID: 'yActualDistance',
           fill: false,
+          pointRadius: 1, 
           borderColor: '#565656',
-          borderWidth: 1
         }
       ]
     }
@@ -416,6 +408,7 @@ setDualChartsOptions(): void {
           data: data_A,
           yAxisID: 'yChargingStatus',
           fill: false,
+          pointRadius: 1, 
           borderColor: '#4bc0c0'
         }, {
           type: 'line',
@@ -423,8 +416,8 @@ setDualChartsOptions(): void {
           data: data_B,
           yAxisID: 'yRunningStatus',
           fill: false,
+          pointRadius: 1, 
           borderColor: '#565656',
-          borderWidth: 1
         }
       ]
     }
@@ -439,10 +432,17 @@ setDualChartsOptions(): void {
         animationDuration: 0
       },
       scales: {
+        xAxes: [{
+            ticks: {
+                autoSkip: true,
+                // autoSkipPadding: 4,
+                maxTicksLimit: 24
+            }
+        }],
         yAxes: [{
           id: 'y' + leftY.label,
           scaleLabel: {
-            display: false,
+            display: true,
             labelString: leftY.label,
             fontColor: leftY.color
           },
@@ -456,7 +456,7 @@ setDualChartsOptions(): void {
         }, {
           id: 'y' + rightY.label,
           scaleLabel: {
-            display: false,
+            display: true,
             labelString: rightY.label,
             fontColor: rightY.color
           },
