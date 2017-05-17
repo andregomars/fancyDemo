@@ -125,6 +125,27 @@ export class UtilityService {
     return array;
   }
 
+  getMonthsByYear(year: number): Array<any> {
+  	//no months return if input year is over this year
+  	if (year > moment().year()) return [];
+
+    var n = 12;
+    var jan = moment().year(year).startOf('year');
+
+    //current year, only load months till this month
+    if (year === moment().year()) 
+      n = moment().startOf('month').diff(jan, 'months') + 1;
+
+    return new Array(n).fill(jan)
+    	.map((m,i)=>moment(m).add(i,'months'))
+    	.map(x=> {
+    		return {
+    			name: x.format('MMM'),
+    			value: x.toDate()
+    		}
+    	});
+  }
+
   getDatesInMonth(date: Date): Array<Date> {
     let beginDate = moment(date).startOf('month');
     let lastDayOfMonth = moment(date).endOf('month').startOf('day');

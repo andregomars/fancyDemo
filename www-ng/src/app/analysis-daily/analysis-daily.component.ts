@@ -173,9 +173,6 @@ export class AnalysisDailyComponent implements OnInit {
 
   private initSocEnergyChartOption(): void {
     this.optionSocEnergyChart = {
-      legend: {
-        onClick: (e) => e.stopPropagation()
-      },
       scales: {
         yAxes: [{
           id: 'ySocCharged',
@@ -430,10 +427,7 @@ export class AnalysisDailyComponent implements OnInit {
 
   private initEmissionReductionChartOption(): void {
     this.optionEmissionReductionChart = {
-      legend: {
-        onClick: (e) => e.stopPropagation()
-      },
-      scales: {
+     scales: {
         yAxes: [{
           id: 'yDGE',
           scaleLabel: {

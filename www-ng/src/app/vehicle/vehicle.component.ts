@@ -158,15 +158,15 @@ export class VehicleComponent implements OnInit {
  } 
 
 setDualChartsOptions(): void {
-   var leftY = new YAxis("SOC", "#4bc0c0", 0, 200);
+   var leftY = new YAxis("SOC", "#4286f4", 0, 200);
    var rightY = new YAxis("kWh", "#565656", 0, 600);
    this.optionSocRangeChart = this.getChartOptions(leftY, rightY);
 
-   leftY = new YAxis("Range", "#4bc0c0", 0, 300);
+   leftY = new YAxis("Range", "#4286f4", 0, 300);
    rightY = new YAxis("ActualDistance", "#565656", 0, 250);
    this.optionEstActualDistanceChart = this.getChartOptions(leftY, rightY);
 
-   leftY = new YAxis("ChargingStatus", "#4bc0c0", 0, 1);
+   leftY = new YAxis("ChargingStatus", "#4286f4", 0, 1);
    rightY = new YAxis("RunningStatus", "#565656", 0, 800);
    this.optionChargingRunningStatusChart = this.getChartOptions(leftY, rightY);
 }
@@ -346,7 +346,7 @@ setDualChartsOptions(): void {
           yAxisID: 'ySOC',
           fill: false,
           pointRadius: 1, 
-          borderColor: '#4bc0c0'
+          borderColor: '#4286f4'
         }, {
           label: 'kWh',
           data: data_B,
@@ -377,7 +377,7 @@ setDualChartsOptions(): void {
           yAxisID: 'yRange',
           fill: false,
           pointRadius: 1, 
-          borderColor: '#4bc0c0'
+          borderColor: '#4286f4'
         }, {
           type: 'line',
           label: 'Actual Distance',
@@ -409,7 +409,7 @@ setDualChartsOptions(): void {
           yAxisID: 'yChargingStatus',
           fill: false,
           pointRadius: 1, 
-          borderColor: '#4bc0c0'
+          borderColor: '#4286f4'
         }, {
           type: 'line',
           label: 'High Voltage Status',

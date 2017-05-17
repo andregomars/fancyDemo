@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import * as Rx from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { UtilityService } from '../shared/utility.service';
 import { DataService } from '../shared/data.service';
@@ -16,6 +17,9 @@ export class DailyReportComponent implements OnInit {
 
   fleetID: string;
   private vehiclesSelected: Vehicle[] = [];
+  thisYear: number = new Date().getFullYear();
+  selectedYear: number;
+  years: number[];
   months: any[];
   vehicles: Vehicle[] = [];
   monthSelected: Date;
@@ -30,6 +34,7 @@ export class DailyReportComponent implements OnInit {
   ngOnInit() {
     this.loadFleet();
     this.initVehicleButtons();
+    this.initYearsSelection();
     this.initMonthButtons();
   }
 
@@ -39,8 +44,17 @@ export class DailyReportComponent implements OnInit {
        .subscribe((fname: string) => this.fleetID = fname);
   }
 
+  private initYearsSelection(): void {
+    this.years = new Array(5).fill(this.thisYear).map((x, i)=>x-i);
+    this.selectedYear = this.thisYear;
+  }
+
   private initMonthButtons(): void {
-    this.months = this.utility.getLatestMonths(12);
+    this.months = this.utility.getMonthsByYear(this.thisYear);
+  }
+
+  onSelect(year: number): void {
+    this.months = this.utility.getMonthsByYear(year);
   }
 
   private initVehicleButtons(): void {

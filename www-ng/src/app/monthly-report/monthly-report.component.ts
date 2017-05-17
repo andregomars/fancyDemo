@@ -7,6 +7,7 @@ let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
 
 import { DataService } from '../shared/data.service';
+import { UtilityService } from '../shared/utility.service';
 import { Vehicle } from '../models/vehicle.model';
 import { Fleet } from '../models/fleet.model';
 
@@ -22,6 +23,14 @@ export class MonthlyReportComponent implements OnInit {
   dataFleetMonthlyAlert: Array<any>;
   optionFleetMonthlyChart: any;
   dataFleetMonthlyChart: any;
+  
+  thisYear: number = new Date().getFullYear();
+  selectedYear: number;
+  selectedMonth: any;
+  years: number[];
+  months: any[];
+
+
   options: any[] = [
     { key: 'socCharged', name: 'SOC Charged' },
     { key: 'socUsed', name: 'SOC Used' },
@@ -39,18 +48,41 @@ export class MonthlyReportComponent implements OnInit {
   chartFleetMonthly: UIChart;
 
   constructor(
+    private utility: UtilityService,
     private route: ActivatedRoute,
     private dataService: DataService
   ) { }
 
   ngOnInit() {
     this.loadFleet();
+    this.initYearsSelection();
+    this.initMonthButtons();
+    
     this.initFleetMonthlyData();
-
     this.initMonthlyChartOption();
     this.initMonthlyChartData();
-
     this.initFleetMonthlyAlertData();
+  }
+
+  private initYearsSelection(): void {
+    this.years = new Array(5).fill(this.thisYear).map((x, i)=>x-i);
+    this.selectedYear = this.thisYear;
+  }
+
+  private initMonthButtons(): void {
+    this.months = this.utility.getMonthsByYear(this.thisYear);
+  }
+
+  onSelect(year: number): void {
+    this.months = this.utility.getMonthsByYear(year);
+  }
+
+  selectMonth(month: any): void {
+    this.selectedMonth = month.value;
+    this.initFleetMonthlyData();
+    this.initMonthlyChartData();
+    this.updateMonthlyChartData();
+
   }
 
   /*** Fleet Status Grid ***/
@@ -88,6 +120,7 @@ export class MonthlyReportComponent implements OnInit {
         {
           label: this.optionSelected.name,
           data: this.dataFleetMonthly.map(v => v[this.optionSelected.key]),
+          backgroundColor: '#4bc0c0',
           borderColor: '#4bc0c0',
           borderWidth: 1
         }

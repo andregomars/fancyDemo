@@ -9,7 +9,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-xs-12">
-            <div class="row">
+            <div class="row app-card-bg">
                 <div class="col-5">
                     <div class="row">
                         <justgage [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc" min="0" max="100" class="app-justgage"></justgage>
@@ -65,8 +65,6 @@
                             <p class="app-scoreboard">{{lastVehicleStatus.mileage | number: '1.2-2'}}</p>
                         </div>
                     </div>
- 
-                    
                 </div>
             </div>
         </div>
@@ -81,7 +79,6 @@
                             <a class="nav-link active" data-toggle="tab" href="#tab-snapshot">Latest Snapshot</a>
                         </li>
                     </ul>
-
                     <div class="tab-content">
                         <div class="tab-pane app-tab-pane" id="tab-alert">
                             <ul class="fa-ul" *ngIf="recentAlertList">
@@ -103,7 +100,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6 col-xs-12">
+        <div class="col-md-6 col-xs-12 pr-2">
            <div class="row p-2">
                 <div class="col-5">
                     AxisX(degree):
@@ -111,16 +108,14 @@
                 <div class="col-7">
                     <p class="app-scoreboard">{{lastVehicleStatus.axisx | number: '1.2-2'}}</p>
                 </div>
-            </div>
-            <div class="row p-2">
+
                 <div class="col-5">
                     AxisY(degree):
                 </div>
                 <div class="col-7">
                     <p class="app-scoreboard">{{lastVehicleStatus.axisy | number: '1.2-2'}}</p>
                 </div>
-            </div>
-            <div class="row p-2">
+
                 <div class="col-5">
                     AxisZ(degree):
                 </div>
@@ -129,16 +124,22 @@
                 </div>
             </div> 
             <div class="row">
-                <app-vehicle-snapshot-table [data]="lastVehicleSnapshot"></app-vehicle-snapshot-table>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-block">
+                            <app-vehicle-snapshot-table [data]="lastVehicleSnapshot"></app-vehicle-snapshot-table>
+                        </div>
+                    </div>
+                </div>
            </div>
         </div>
-        <div class="col-md-6 col-xs-12">
+        <div class="col-md-6 col-xs-12 pt-2 app-card-bg">
             <div class="row ">
                 <div class="col-8 text-right">
                     <my-date-picker #datePicker [options]="optionDatePicker" (dateChanged)="onDateChanged($event)" placeholder="Select Date"></my-date-picker>
                 </div>
                 <div class="col-4">
-                    <button type="button" class="btn btn-secondary btn-sm" (click)="exportDualCharts()">Export Charts</button>
+                    <button type="button" class="btn btn-primary btn-sm" (click)="exportDualCharts()">Export Charts</button>
                 </div>
             </div>
             <div #divDualCharts class="row align-items-center p-2">
