@@ -181,6 +181,7 @@ setDualChartsOptions(): void {
       startAnimationTime: 0,
       refreshAnimationTime: 0,
       pointer: false,
+      gaugeWidthScale: 1.5,
       levelColors: ["#a9d70b", "#a9d70b", "#a9d70b"]
     };
     this.optionGaugeSpeed = {
@@ -192,6 +193,7 @@ setDualChartsOptions(): void {
       startAnimationTime: 0,
       refreshAnimationTime: 0,
       pointer: false,
+      gaugeWidthScale: 1.5,
       levelColors: ["#a9d70b", "#a9d70b", "#a9d70b"]
     };
   }

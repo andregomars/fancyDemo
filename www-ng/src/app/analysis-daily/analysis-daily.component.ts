@@ -273,15 +273,15 @@ export class AnalysisDailyComponent implements OnInit {
         label: "Energy charged",
         data: dataEnergyCharged,
         yAxisID: 'yEnergyCharged',
-        backgroundColor: '#4bc0c0',
-        borderColor: '#4bc0c0',
+        backgroundColor: '#4286f4',
+        borderColor: '#4286f4',
         borderWidth: 1
       }, {
         label: "Energy used",
         data: dataEnergyUsed,
         yAxisID: 'yEnergyUsed',
-        backgroundColor: '#4bc0c0',
-        borderColor: '#4bc0c0',
+        backgroundColor: '#f47d41',
+        borderColor: '#f47d41',
         borderWidth: 1
       }]
     };

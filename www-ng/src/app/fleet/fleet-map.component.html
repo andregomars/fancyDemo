@@ -4,7 +4,7 @@
     [streetViewControl]=false [zoomControl]=false>
   <agm-marker *ngFor="let m of statusList"
       [latitude]="m.lat | geo" [longitude]="m.lng | geo"
-      [label]="'V'" [title]="m.vname" 
+      [label]="m.vname" [title]="m.vname" 
       [markerDraggable]=false> 
   </agm-marker>
 </agm-map>

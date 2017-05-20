@@ -1,4 +1,8 @@
-<p-dataTable [value]="data" class="table" >
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+    <input #gb type="text" pInputText size="50" placeholder="Bus No.">
+</div>
+<p-dataTable [value]="data" class="table" [globalFilter]="gb">
     <p-column field="vname" header="Bus No." [sortable]="true">
        <ng-template let-col let-data="rowData" pTemplate="body">
            <a [routerLink]="['/vehicle', data[col.field]]">{{data[col.field]}}</a>
@@ -10,11 +14,19 @@
         </ng-template>
     </p-column>
     <p-column field="status" header="Status" [sortable]="true"></p-column>
-    <p-column field="range" header="Range" [sortable]="true"></p-column>
-    <p-column field="mileage" header="Mileage" [sortable]="true"></p-column>
+    <p-column field="range" header="Range" [sortable]="true">
+        <ng-template let-col let-data="rowData" pTemplate="body">
+            {{data[col.field] | number:'1.1-1'}}
+        </ng-template>
+    </p-column>
+    <p-column field="mileage" header="Odometer" [sortable]="true">
+      <ng-template let-col let-data="rowData" pTemplate="body">
+            {{data[col.field] | number:'1.1-1'}}
+      </ng-template>
+    </p-column>
     <p-column field="updated" header="Updated">
       <ng-template let-col let-data="rowData" pTemplate="body">
-            {{data[col.field] | date:'MM/dd hh:mm:ss'}}
+            {{data[col.field] | date:'hh:mm:ss'}}
         </ng-template>
     </p-column>
     <p-column header="Action">
