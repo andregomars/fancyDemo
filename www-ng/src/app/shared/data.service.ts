@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import * as Rx from 'rxjs/RX';
+import * as Rx from 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 
 import { UtilityService } from './utility.service';
