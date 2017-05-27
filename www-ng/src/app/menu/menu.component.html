@@ -1,21 +1,18 @@
-<div id="accordion">
+<div id="accordion" class="full-height">
   <div class="card">
-    <div class="card-header p-0">
-      <h5 class="mb-0 ">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseHome" routerLink="/fleet" routerLinkActive="active" class="nav-link">
-          <i class="fa fa-home fa-fw"></i>&nbsp;Home
+      <h5 class="card-header panel-heading">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseHome" 
+          routerLink="/fleet" routerLinkActive="active" >
+          <i class="fa fa-home fa-fw"></i> Home
         </a>
       </h5>
-    </div>
   </div>
   <div class="card">
-    <div class="card-header p-0">
-      <h5 class="mb-0">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFleet" class="nav-link">
-          <i class="fa fa-bus fa-fw"></i>&nbsp;Fleet
+      <h5 class="card-header panel-heading">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFleet"> 
+          <i class="fa fa-bus fa-fw"></i> Fleet
         </a>
       </h5>
-    </div>
     <div id="collapseFleet" class="collapse">
       <div class="card-block p-0">
         <p-tieredMenu [model]="fleetItems"></p-tieredMenu>
@@ -23,13 +20,11 @@
     </div>
   </div>
   <div class="card">
-    <div class="card-header p-0">
-      <h5 class="mb-0">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseDailyAnalysis" class="nav-link">
-          <i class="fa fa-line-chart fa-fw"></i>&nbsp;Daily Analysis
+      <h5 class="card-header panel-heading">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseDailyAnalysis">
+          <i class="fa fa-line-chart fa-fw"></i> Daily Analysis
         </a>
       </h5>
-    </div>
     <div id="collapseDailyAnalysis" class="collapse">
       <div class="card-block p-0 submenu">
         <p-tieredMenu [model]="vehicleItems"></p-tieredMenu>
@@ -37,13 +32,11 @@
     </div>
   </div>
   <div class="card">
-    <div class="card-header p-0">
-      <h5 class="mb-0">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseAlertAnalysis" class="nav-link">
+      <h5 class="card-header panel-heading">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseAlertAnalysis"> 
           <i class="fa fa-line-chart fa-fw"></i>&nbsp;Alert Analysis
         </a>
       </h5>
-    </div>
     <div id="collapseAlertAnalysis" class="collapse">
       <div class="card-block p-0 submenu">
         <p-tieredMenu [model]="alertItems"></p-tieredMenu>
@@ -51,23 +44,23 @@
     </div>
   </div>
   <div class="card">
-    <div class="card-header p-0">
-      <h5 class="mb-0 ">
+      <h5 class="card-header panel-heading">
         <a data-toggle="collapse" data-parent="#accordion" 
-          [routerLink]="monthlyReportItem" routerLinkActive="active" class="nav-link">
+          [routerLink]="monthlyReportItem" routerLinkActive="active"> 
           <i class="fa fa-bar-chart fa-fw"></i>&nbsp;Monthly Report
         </a>
       </h5>
-    </div>
   </div>
   <div class="card">
-    <div class="card-header p-0">
-      <h5 class="mb-0 ">
+      <h5 class="card-header panel-heading">
         <a data-toggle="collapse" data-parent="#accordion" 
-          [routerLink]="dailyReportItem" routerLinkActive="active" class="nav-link">
+          [routerLink]="dailyReportItem" routerLinkActive="active">
           <i class="fa fa-bar-chart fa-fw"></i>&nbsp;Daily Report
         </a>
       </h5>
-    </div>
   </div>
+   <div class="card full-height">
+      <h5 class="card-header panel-heading full-height">
+      </h5>
+  </div> 
 </div>

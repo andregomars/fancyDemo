@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Orbitron');
 
 .app-justgage {
-  height: 150px;
+  height: 160px;
 }
 
 .app-tab-pane {
@@ -10,12 +10,14 @@
 }
 
 .app-scoreboard {
+  /*color: white;*/
+  /*background-color: #0275d8;*/
   font-family: 'Orbitron', sans-serif;
-  color: white;
-  background-color: black;
+  color: #0275d8;
+  background-color: white;
   border: 3px solid;
   border-color: silver;
-  border-radius: 15px;
+  border-radius: 5px;
   text-align: center;
 }
 

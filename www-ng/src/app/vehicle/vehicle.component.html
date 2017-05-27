@@ -1,165 +1,134 @@
-<div class="container">
-   <div class="row p-2">
-        <div class="col text-center">
-            <h5><i class="fa fa-bus"></i> 
-            {{lastVehicleStatus.fname}} / {{lastVehicleStatus.vname}} 
-            <small>{{lastVehicleStatus.updated | date:'M/d/y,H:m:s'}}</small>
-            </h5>
+<!-- Header Section -->
+<div class="navbar text-center bg-faded mb-2">
+    <div class="row no-gutters align-items-center">
+        <div class="col flex-first"></div>
+        <div class="col flex-unordered text-center">
+            <h5> <i class="fa fa-bus"></i> {{lastVehicleStatus.fname}} / {{lastVehicleStatus.vname}} </h5>
+        </div>
+        <div class="col flex-last text-left">{{lastVehicleStatus.updated | date:'M/d/y, H:m:s'}}</div>
+    </div>
+</div>
+
+<!-- 1st Line Section -->
+
+    <div class="card-deck m-2">
+        <!-- Card Left -->
+        <div class="card">
+            <div class="card-header font-weight-bold">Gauges</div>
+            <div class="card-block">
+                <justgage [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc" min="0" max="100" class="app-justgage"></justgage>
+                <justgage [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed" min="0" max="65" class="app-justgage"></justgage>
+            </div>
+        </div>
+
+        <!-- Card Center -->
+        <div class="card">
+            <div class="card-header font-weight-bold">Meters</div>
+            <div class="card-block">
+                <div class="row p-1">
+                    <div class="col">Voltage(V):
+                        <app-progressbar [value]="lastVehicleStatus.voltage" max="800"></app-progressbar>
+                    </div>
+                </div>
+                <div class="row p-1">
+                    <div class="col">Current(A):
+                        <app-progressbar [value]="lastVehicleStatus.current" min="0" max="120"></app-progressbar>
+                    </div>
+                </div>
+                <div class="row p-1">
+                    <div class="col">Low Temp(F):
+                        <app-progressbar [value]="lastVehicleStatus.temperaturelow" min="-40" max="220"></app-progressbar>
+                    </div>
+                </div>
+                <div class="row p-1">
+                    <div class="col">High Temp(F):
+                        <app-progressbar [value]="lastVehicleStatus.temperaturehigh" min="-40" max="220"></app-progressbar>
+                    </div>
+                </div>
+                <div class="row p-1">
+                    <div class="col">Range(Miles):
+                        <app-progressbar [value]="lastVehicleStatus.range | number: '1.2-2'" max="250"></app-progressbar>
+                    </div>
+                </div>
+                <div class="row p-1">
+                    <div class="col">Remaining(kWh):
+                        <app-progressbar [value]="lastVehicleStatus.remainingenergy  | number: '1.2-2'" max="60"></app-progressbar>
+                    </div>
+                </div>
+                <div class="row p-1 align-items-end">
+                    <div class="col-6"> Odometer(Miles): </div>
+                    <div class="col-5 app-scoreboard">
+                        {{lastVehicleStatus.mileage | number: '1.2-2'}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Right -->
+        <div class="card">
+            <div class="card-header font-weight-bold">Logs</div>
+            <div class="card-block">
+                <ul class="nav nav-tabs ">
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tab-alert">Latest Alerts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#tab-snapshot">Latest Snapshots</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane app-tab-pane" id="tab-alert">
+                        <ul class="fa-ul" *ngIf="recentAlertList">
+                            <li *ngFor="let alert of recentAlertList">
+                                <i class="fa-li fa fa-exclamation-triangle"></i>{{alert.updated}} - {{alert.name}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane active app-tab-pane" id="tab-snapshot">
+                        <ul class="fa-ul" *ngIf="recentStatusList">
+                            <li *ngFor="let status of recentStatusList">
+                                <i class="fa-li fa fa-camera"></i>{{status.updated}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-8 col-xs-12 app-card-bg">
-            <div class="row ">
-                <div class="col-5">
-                    <div class="row">
-                        <justgage [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc" 
-                            min="0" max="100" class="app-justgage"></justgage>
-                    </div>
-                    <div class="row">
-                        <justgage [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed" min="0" max="65" class="app-justgage"></justgage>
-                    </div>
-                </div>
-                <div class="col-7">
-                    <div class="row mb-4 align-top ">
-                        <div class="col">
-                            <div class="row p-1">
-                                <div class="col">Voltage(V):
-                                    <app-progressbar [value]="lastVehicleStatus.voltage" max="800"></app-progressbar>
-                                </div>
-                            </div>
-                            <div class="row p-1">
-                                <div class="col">Current(A):
-                                    <app-progressbar [value]="lastVehicleStatus.current" min="0" max="120"></app-progressbar>
-                                </div>
-                            </div>
-                            <div class="row p-1">
-                                <div class="col">Low Temp(F):
-                                    <app-progressbar [value]="lastVehicleStatus.temperaturelow" min="-40" max="220"></app-progressbar>
-                                </div>
-                            </div>
-                            <div class="row p-1">
-                                <div class="col">High Temp(F):
-                                    <app-progressbar [value]="lastVehicleStatus.temperaturehigh" min="-40" max="220"></app-progressbar>
-                                </div>
-                            </div>
-                            <div class="row p-1">
-                                <div class="col">Range(Miles):
-                                    <app-progressbar [value]="lastVehicleStatus.range | number: '1.2-2'" max="250"></app-progressbar>
-                                </div>
-                            </div>
-                            <div class="row p-1">
-                                <div class="col">Remaining(kWh):
-                                    <app-progressbar [value]="lastVehicleStatus.remainingenergy  | number: '1.2-2'" max="60"></app-progressbar>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-5">
-                    <h4>Odometer(Miles):</h4>
-                </div>
-                <div class="col-7">
-                    <p class="app-scoreboard">{{lastVehicleStatus.mileage | number: '1.2-2'}}</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 col-xs-12">
-            <div class="row">
-                <div class="col">
-                    <ul class="nav nav-tabs ">
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tab-alert">Latest Alert</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#tab-snapshot">Latest Snapshot</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane app-tab-pane" id="tab-alert">
-                            <ul class="fa-ul" *ngIf="recentAlertList">
-                                <li *ngFor="let alert of recentAlertList">
-                                    <i class="fa-li fa fa-exclamation-triangle"></i>{{alert.updated}} - {{alert.name}}
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="tab-pane active app-tab-pane" id="tab-snapshot">
-                            <ul class="fa-ul" *ngIf="recentStatusList">
-                                <li *ngFor="let status of recentStatusList">
-                                    <i class="fa-li fa fa-camera"></i>{{status.updated}}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+<!-- 2nd Line Section -->
+<div class="card-deck m-2">
+    <div class="card">
+        <div class="card-header font-weight-bold">Last Snapshot</div>
+        <div class="card-block">
+            <app-vehicle-snapshot-table [data]="lastVehicleSnapshot"></app-vehicle-snapshot-table>
+       </div>
     </div>
-    <div class="row">
-        <div class="col-md-6 col-xs-12 pr-2">
-           <div class="row p-2">
-                <div class="col-5">
-                    AxisX(degree):
-                </div>
-                <div class="col-7">
-                    <p class="app-scoreboard">{{lastVehicleStatus.axisx | number: '1.2-2'}}</p>
-                </div>
-
-                <div class="col-5">
-                    AxisY(degree):
-                </div>
-                <div class="col-7">
-                    <p class="app-scoreboard">{{lastVehicleStatus.axisy | number: '1.2-2'}}</p>
-                </div>
-
-                <div class="col-5">
-                    AxisZ(degree):
-                </div>
-                <div class="col-7">
-                    <p class="app-scoreboard">{{lastVehicleStatus.axisz | number: '1.2-2'}}</p>
-                </div>
-            </div> 
-            <div class="row">
-                <div class="col">
-                    <div class="card">
-                        <div class="card-block">
-                            <app-vehicle-snapshot-table [data]="lastVehicleSnapshot"></app-vehicle-snapshot-table>
-                        </div>
-                    </div>
-                </div>
-           </div>
-        </div>
-        <div class="col-md-6 col-xs-12 pt-2 app-card-bg">
-            <div class="row ">
-                <div class="col-8 text-right">
+    <div class="card w-50">
+        <div class="card-header">
+            <div class="row align-items-start">
+                <div class="col flex-first font-weight-bold">Charts</div>
+                <div class="col flex-unordered text-center">
                     <my-date-picker #datePicker [options]="optionDatePicker" (dateChanged)="onDateChanged($event)" placeholder="Select Date"></my-date-picker>
                 </div>
-                <div class="col-4">
+                <div class="col flex-last text-right">
                     <button type="button" class="btn btn-primary btn-sm" (click)="exportDualCharts()">Export Charts</button>
                 </div>
             </div>
-            <div #divDualCharts class="row align-items-center p-2">
-                <div class="col-12 m-2">
-                    <app-vehicle-map *ngIf="recentStatusList" [items]="recentStatusList"></app-vehicle-map>
-                </div>
-                <div class="col">
-                    <p-chart #chartSocRange type="line" [options]="optionSocRangeChart"></p-chart>
-                </div>
-                <div class="col">
-                    <p-chart #chartEstActualDistance type="line" [options]="optionEstActualDistanceChart"></p-chart>
-                </div>
-                <div class="col">
-                    <p-chart #chartChargingRunningStatus type="line" [options]="optionChargingRunningStatusChart"></p-chart>
-                </div>
-            </div>
+       </div>
+        <div #divDualCharts class="card-block">
+                <app-vehicle-map *ngIf="recentStatusList" [items]="recentStatusList"></app-vehicle-map>
+                <p-chart #chartSocRange type="line" [options]="optionSocRangeChart" ></p-chart>
+                <p-chart #chartEstActualDistance type="line" [options]="optionEstActualDistanceChart"></p-chart>
+                <p-chart #chartChargingRunningStatus type="line" [options]="optionChargingRunningStatusChart"></p-chart>
         </div>
     </div>
+</div>
 
-    <div class="row align-items-center no-gutters p-2 m-2">
-        <div class="col">
-            <p-chart #chartComplex type="line" [options]="optionComplexChart"></p-chart>
-        </div>
+<!-- 3rd Line Section -->
+<div class="card m-2">
+    <div class="card-header font-weight-bold">Analysis</div>
+    <div class="card-block">
+        <p-chart #chartComplex type="line" [options]="optionComplexChart"></p-chart>
     </div>
-
 </div>

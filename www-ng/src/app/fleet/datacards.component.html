@@ -1,6 +1,6 @@
 <div class="container">
-    <div class="row" >
-        <div class="col-md-2 col-sm-6 col-12 p-2 text-center" 
+    <div class="row no-gutters" >
+        <div class="col-1 p-2 text-center" 
           *ngFor="let row of items; let i = index" [ngSwitch]="row.status">
             <div *ngSwitchCase="'Charging'" class="card bg-bus-green">
                 <div class="card-block">
@@ -16,7 +16,14 @@
                     <p class="card-title">
                         <a [routerLink]="['/vehicle', row.vname]">*&nbsp;{{row.vname}}&nbsp;*</a>
                     </p>
-                    <h3 class="card-text">{{row.soc}}%</h3>
+                    <!--<h3 class="card-text text-center">{{row.soc}}</h3><span>%</span>-->
+                    <div class="row no-gutters align-items-center">
+                        <div class="col flex-first"></div>
+                        <div class="col flex-unordered text-center">
+                            <h3>{{row.soc}}</h3>
+                        </div>
+                        <div class="col flex-last text-left">%</div>
+                    </div>
                 </div>
             </div>
         </div>
