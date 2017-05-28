@@ -7,9 +7,9 @@ import { VehicleIdentity } from '../models/vehicle-identity';
 @Injectable()
 export class FleetTrackerService {
 
-  private fname: string;
+  fname: string;
+  vehicles: Array<VehicleIdentity>;  
   private subject: Subject<string> = new Subject<string>();
-  private vehicles: Array<any>;  
 
   constructor(
     private dataService: DataService
@@ -17,20 +17,34 @@ export class FleetTrackerService {
   }
 
   setFleetIDByVehicle(vname: string): void {
-    this.vehicles = this.dataService.getAllVehiclesData();
-    if (!this.vehicles) return;
+    // this.vehicles = this.dataService.getAllVehiclesData();
+    // if (!this.vehicles) return;
 
-    var vehicle = this.vehicles.find(v => v.vname === vname);
-    this.fname = vehicle ? vehicle.fname : "";
-    this.subject.next(this.fname);
+    // var vehicle = this.vehicles.find(v => v.vname === vname);
+    // this.fname = vehicle ? vehicle.fname : "";
+    // this.subject.next(this.fname);
+    this.dataService.getAllVehiclesData$()
+      .subscribe((data: Array<VehicleIdentity>) => {
+        this.vehicles = data;
+        var vehicle = data.find(v => v.vname === vname);
+        this.fname = vehicle ? vehicle.fname : "";
+        this.subject.next(this.fname);
+      });
   }
 
   setFleetIDByFleet(fname: string): void {
-    this.vehicles = this.dataService.getAllVehiclesData();
-    if (!this.vehicles) return;
+    // this.vehicles = this.dataService.getAllVehiclesData();
+    // if (!this.vehicles) return;
 
-    this.fname = fname;
-    this.subject.next(fname);
+    // console.log('fname refreshed: '+fname);
+    // this.fname = fname;
+    // this.subject.next(fname);
+    this.dataService.getAllVehiclesData$()
+      .subscribe((data: Array<VehicleIdentity>) => {
+        this.vehicles = data;
+        this.fname = fname;
+        this.subject.next(fname);
+      });
   }
 
   getFleetID(): Observable<string> {

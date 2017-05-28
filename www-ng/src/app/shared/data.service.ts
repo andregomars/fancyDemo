@@ -319,9 +319,9 @@ export class DataService {
         }
     }
 
-    getFleetAlertStats(beginDate: Date, endDate: Date, fleetID: string): any {
+    getFleetAlertStats(beginDate: Date, endDate: Date, vehicles: Array<VehicleIdentity>): any {
         // let eventCodes = ['AZ01', 'AZ02'];
-        let eventCodes = this.getVehiclesIdentityByFleet(fleetID).map(v => v.vname);
+        let eventCodes = vehicles.map(v => v.vname);
         let maxLength = 20, min = 1, max = 100;
         let events = this.utility.getEventList(10, eventCodes, min, max, beginDate, endDate);
         let stats = _.countBy(events, 'type');
@@ -396,8 +396,8 @@ export class DataService {
         }
     }
 
-     getRandomMonthlyAlertSummaryByFleet(fleetID: string): Array<any> {
-       let vehicles = this.getVehiclesIdentityByFleet(fleetID).map(v => new Vehicle(v.vname));
+     getRandomMonthlyAlertSummaryByFleet(fleetID: string, vehicles: Array<Vehicle>): Array<any> {
+    //    let vehicles = this.getVehiclesIdentityByFleet(fleetID).map(v => new Vehicle(v.vname));
        let array = vehicles.map(v => Object.assign({}, v, this.getRandomMonthlyAlertData()));
        let chargingStoped = array.map(el => el.chargingStoped).reduce((sum, value) => sum + value);
        let slowCharging = array.map(el => el.slowCharging).reduce((sum, value) => sum + value);

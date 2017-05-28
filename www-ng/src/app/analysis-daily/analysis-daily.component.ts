@@ -11,6 +11,7 @@ let html2canvas = require("html2canvas");
 import { DataService } from '../shared/data.service';
 import { VehicleDailyUsage } from '../models/vehicle-daily-usage';
 import { VehicleIdentity } from '../models/vehicle-identity';
+import { FleetTrackerService } from '../shared/fleet-tracker.service';
 
 
 @Component({
@@ -62,6 +63,7 @@ export class AnalysisDailyComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private dataService: DataService,
+    private fleetTracker: FleetTrackerService
   ) { }
 
   ngOnInit(): void {
@@ -97,7 +99,8 @@ export class AnalysisDailyComponent implements OnInit {
       .switchMap((params: Params) => Rx.Observable.of(params["vname"]))
       .subscribe(vname => {
         this.vehicleName = vname;
-        this.fleetName = this.dataService.getVehicleIdentity(vname).fname;
+        this.fleetTracker.setFleetIDByVehicle(vname);
+        this.fleetName = this.fleetTracker.fname;
 
         let endDate = moment(this.today).startOf('day').toDate();
         let beginDate = moment(this.today).subtract(this.backDays, 'days').startOf('day').toDate();

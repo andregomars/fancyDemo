@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import { UtilityService } from '../shared/utility.service';
 import { DataService } from '../shared/data.service';
 import { Vehicle } from '../models/vehicle.model';
+import { VehicleIdentity } from '../models/vehicle-identity';
+import { FleetTrackerService } from '../shared/fleet-tracker.service';
 
 
 @Component({
@@ -28,20 +30,34 @@ export class DailyReportComponent implements OnInit {
   constructor(
     private utility: UtilityService,
     private route: ActivatedRoute,
-    private dataService: DataService
+    private dataService: DataService,
+    private fleetTracker: FleetTrackerService
   ) { }
 
   ngOnInit() {
-    this.loadFleet();
-    this.initVehicleButtons();
     this.initYearsSelection();
     this.initMonthButtons();
+
+    this.loadFleet();
   }
 
   private loadFleet(): void {
     this.route.params
-       .switchMap((params: Params) => Rx.Observable.create(ob=>ob.next(params["fname"])))
-       .subscribe((fname: string) => this.fleetID = fname);
+      .switchMap((params: Params) => Rx.Observable.of(params["fname"]))
+      .subscribe((fname: string) => { 
+        this.fleetID = fname;
+        this.fleetTracker.setFleetIDByFleet(fname);
+
+        this.initData();
+      });
+  }
+
+  private initData() {
+    this.dataService.getVehiclesStatusByFleet$(this.fleetID)
+      .subscribe((data: Array<VehicleIdentity>) => {
+        //init data of vehicle buttons
+        this.vehicles = data.map(v => new Vehicle(v.vname));
+      });
   }
 
   private initYearsSelection(): void {
@@ -55,11 +71,6 @@ export class DailyReportComponent implements OnInit {
 
   onSelect(year: number): void {
     this.months = this.utility.getMonthsByYear(year);
-  }
-
-  private initVehicleButtons(): void {
-    let vehicles = this.dataService.getVehiclesIdentityByFleet(this.fleetID);
-    this.vehicles = vehicles.map(v => new Vehicle(v.vname));
   }
 
   private loadVehicleLogs(): void {

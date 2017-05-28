@@ -8,6 +8,7 @@ let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
 
 import { DataService } from '../shared/data.service';
+import { FleetTrackerService } from '../shared/fleet-tracker.service';
 
 @Component({
   selector: 'app-analysis-alert',
@@ -38,7 +39,8 @@ export class AnalysisAlertComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private dataService: DataService
+    private dataService: DataService,
+    private fleetTracker: FleetTrackerService
   ) { }
 
   ngOnInit() {
@@ -52,7 +54,6 @@ export class AnalysisAlertComponent implements OnInit {
     // Fleet Alert
     this.initFleetAlertDateRangePicker();
     this.initFleetAlertChartOption();
-    this.initFleetAlertChartData();
 
     this.loadVehicle();
   }
@@ -128,7 +129,7 @@ export class AnalysisAlertComponent implements OnInit {
   private initFleetAlertChartData(): void {
     let endDate = new Date();
     let beginDate = this.dataService.getDateOfACoupleWeeksAgo(endDate);
-    let data = this.dataService.getFleetAlertStats(beginDate, endDate, this.fleetID);
+    let data = this.dataService.getFleetAlertStats(beginDate, endDate, this.fleetTracker.vehicles);
     this.dataFleetAlertChart = {
       labels: data.labels,
       datasets: [
@@ -150,7 +151,7 @@ export class AnalysisAlertComponent implements OnInit {
   }
 
   private updateFleetAlertChartData(beginDate: Date, endDate: Date): void {
-    let data = this.dataService.getFleetAlertStats(beginDate, endDate, this.fleetID);
+    let data = this.dataService.getFleetAlertStats(beginDate, endDate, this.fleetTracker.vehicles);
     this.chartFleetAlert.data.labels = data.labels;
     this.chartFleetAlert.data.datasets[0].data = data.data;
     this.chartFleetAlert.refresh();
@@ -162,10 +163,19 @@ export class AnalysisAlertComponent implements OnInit {
       .switchMap((params: Params) => Rx.Observable.of(params["vname"])) 
       .subscribe((vname: string) => {
         this.vehicleID = vname;
-        this.dataService.getAllVehiclesData$()
-          .map(el => el.find(v => v.vname === vname))
-          .map(v => v.fname)
-          .subscribe(fname => this.fleetID = fname);
+        this.fleetTracker.setFleetIDByVehicle(vname);
+        this.fleetID = this.fleetTracker.fname;
+        this.initFleetAlertChartData();
+        // this.dataService.getAllVehiclesData$()
+        //   .map(el => el.find(v => v.vname === vname))
+        //   .map(v => v.fname)
+        //   .subscribe(fname => { 
+        //     this.fleetID = fname
+
+        //     this.initFleetAlertChartData();
+
+        // });
+
     });
   }
 

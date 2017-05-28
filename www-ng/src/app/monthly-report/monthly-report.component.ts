@@ -7,9 +7,11 @@ let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
 
 import { DataService } from '../shared/data.service';
+import { VehicleIdentity } from '../models/vehicle-identity';
 import { UtilityService } from '../shared/utility.service';
 import { Vehicle } from '../models/vehicle.model';
 import { Fleet } from '../models/fleet.model';
+import { FleetTrackerService } from '../shared/fleet-tracker.service';
 
 @Component({
   selector: 'app-monthly-report',
@@ -19,6 +21,7 @@ import { Fleet } from '../models/fleet.model';
 export class MonthlyReportComponent implements OnInit {
 
   fleetID: string;
+  vehicles: Array<Vehicle>;
   dataFleetMonthly: Array<any>;
   dataFleetMonthlyAlert: Array<any>;
   optionFleetMonthlyChart: any;
@@ -50,18 +53,18 @@ export class MonthlyReportComponent implements OnInit {
   constructor(
     private utility: UtilityService,
     private route: ActivatedRoute,
-    private dataService: DataService
+    private dataService: DataService,
+    private fleetTracker: FleetTrackerService
   ) { }
 
   ngOnInit() {
-    this.loadFleet();
     this.initYearsSelection();
     this.initMonthButtons();
-    
-    this.initFleetMonthlyData();
     this.initMonthlyChartOption();
-    this.initMonthlyChartData();
-    this.initFleetMonthlyAlertData();
+
+    this.selectedYear = new Date().getFullYear();
+    this.selectedMonth = new Date().getMonth();
+    this.loadFleet();
   }
 
   private initYearsSelection(): void {
@@ -85,15 +88,26 @@ export class MonthlyReportComponent implements OnInit {
 
   }
 
+  private initData(): void {
+    this.dataService.getVehiclesStatusByFleet$(this.fleetID)
+      .subscribe((data: Array<VehicleIdentity>) => {
+        this.vehicles = data.map(v => new Vehicle(v.vname));
+
+        this.initFleetMonthlyData();
+        this.initMonthlyChartData();
+        this.initFleetMonthlyAlertData();
+      });
+  }
+
   /*** Fleet Status Grid ***/
   private initFleetMonthlyData() {
-    let vehicles = this.dataService.getVehiclesIdentityByFleet(this.fleetID).map(v => new Vehicle(v.vname));
-    this.dataFleetMonthly = this.dataService.getRandomMonthlyDataSetWithVehicles(vehicles);
+    this.dataFleetMonthly = this.dataService.getRandomMonthlyDataSetWithVehicles(this.vehicles);
   }
 
   /*** Fleet Alert Grid ***/
   private initFleetMonthlyAlertData() {
-    this.dataFleetMonthlyAlert = this.dataService.getRandomMonthlyAlertSummaryByFleet(this.fleetID);
+    this.dataFleetMonthlyAlert = 
+      this.dataService.getRandomMonthlyAlertSummaryByFleet(this.fleetID, this.vehicles);
   }
 
   /*** Bar Chart ***/
@@ -106,6 +120,13 @@ export class MonthlyReportComponent implements OnInit {
     this.optionFleetMonthlyChart = {
       responsive: false,
       maintainAspectRatio: true,
+      scales: {
+        xAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      },
       legend: {
         display: false
       }
@@ -114,7 +135,7 @@ export class MonthlyReportComponent implements OnInit {
   }
 
   private initMonthlyChartData(): void {
-    this.dataFleetMonthlyChart = {
+    this.chartFleetMonthly.data = {
       labels: this.dataFleetMonthly.map(v => v.id),
       datasets: [
         {
@@ -126,7 +147,7 @@ export class MonthlyReportComponent implements OnInit {
         }
       ]
     };
-    this.chartFleetMonthly.refresh();
+    this.chartFleetMonthly.reinit();
   }
 
   private updateMonthlyChartData(): void {
@@ -139,8 +160,12 @@ export class MonthlyReportComponent implements OnInit {
   /*** Common Section ***/
   private loadFleet(): void {
     this.route.params
-      .switchMap((params: Params) => Rx.Observable.create(ob => ob.next(params["fname"])))
-      .subscribe((fname: string) => this.fleetID = fname);
+      .switchMap((params: Params) => Rx.Observable.of(params["fname"]))
+      .subscribe((fname: string) => { 
+        this.fleetID = fname;
+        this.fleetTracker.setFleetIDByFleet(fname);
+        this.initData();
+      });
   }
 
   private resetChartDefaultOptions(option: any): void {
