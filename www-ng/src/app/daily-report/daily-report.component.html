@@ -1,73 +1,71 @@
-<div class="container">
-  <div class="row">
-    <div class="col text-center text-primary">
-      <h3>Daily Report</h3>
+<!-- Header Section -->
+<div class="navbar text-center bg-faded mb-2">
+  <div class="row no-gutters align-items-center">
+    <div class="col flex-first"></div>
+    <div class="col flex-unordered text-center">
+      <h5> <i class="fa fa-flag"></i> {{ fleetID }} </h5>
     </div>
+    <div class="col flex-last text-left"></div>
   </div>
-  <div class="row p-2">
-    <div class="col-1 text-right">
-      <div class="text-primary">Fleet:</div>
-    </div>
-    <div class="col-11 text-left">
-      <label>{{ fleetID }}</label>
-    </div>
+</div>
+
+<!-- Vehicle Selection Section -->
+<div class="row p-2">
+  <div class="col-2 col-md-1 text-right">
+    <div class="text-primary">Vehicle:</div>
   </div>
-  <div class="row p-2">
-    <div class="col-1 text-right">
-      <div class="text-primary">Vehicle:</div>
-    </div>
-    <div class="col-11 text-left">
-      <div class="btn-group" data-toggle="buttons">
-        <label *ngFor="let vehicle of vehicles" class="btn btn-secondary" (click)="selectVehicle(vehicle)">
+  <div class="col-10 col-md-11 text-left">
+    <div class="btn-group" data-toggle="buttons">
+      <label *ngFor="let vehicle of vehicles" class="btn btn-secondary" (click)="selectVehicle(vehicle)">
           <input type="checkbox"  autocomplete="off">{{ vehicle.id  }}
         </label>
-      </div>
-    </div>
-  </div>
-  
-  <div class="row p-2">
-    <div class="col-1 text-right">
-      <div class="text-primary">Year:</div>
-    </div>
-    <div class="col-2 text-left">
-      <select [(ngModel)]="selectedYear" (change)="onSelect($event.target.value)" 
-        class="form-control">
-        <option *ngFor="let year of years" [value]="year">{{year}}</option>
-      </select>
-    </div>
-    <div class="col-1 text-right">
-      <div class="text-primary">Month:</div>
-    </div>
-    <div class="col-8 text-left">
-      <div class="btn-group" data-toggle="buttons">
-        <label *ngFor="let month of months" class="btn btn-secondary" (click)="selectMonth(month)">
-          <input type="radio"  autocomplete="off">{{ month.name }}
-        </label>
-      </div>
-    </div>
-  </div>
-  <div class="row text-center p-2">
-    <div class="col">
-      <p-dataTable [value]="vehicleLogs" class="table">
-        <p-column field="id" header="Bus No." [sortable]="true"></p-column>
-        <p-column field="date" header="Date" [sortable]="true"></p-column>
-        <p-column header="File Name">
-          <ng-template let-row="rowData" pTemplate="body">
-            {{row.fileName}}_{{row.id}}       
-          </ng-template>
-        </p-column>
-        <p-column header="Download">
-          <ng-template let-row="rowData" pTemplate="body">
-            <button type="submit" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#requestModal">
-               <i class="fa fa-cloud-download fa-lg">&nbsp;</i>
-            </button>
-          </ng-template>
-        </p-column>
-      </p-dataTable>
     </div>
   </div>
 </div>
 
+<!-- Year & Month Selection Section -->
+<div class="row p-2 align-items-center">
+  <div class="col-2 col-md-1 text-right">
+    <div class="text-primary">Year:</div>
+  </div>
+  <div class="col-10 col-md-2 text-left">
+    <select [(ngModel)]="selectedYear" (change)="onSelect($event.target.value)" class="form-control">
+        <option *ngFor="let year of years" [value]="year">{{year}}</option>
+      </select>
+  </div>
+  <div class="col-2 col-md-1 text-right">
+    <div class="text-primary">Month:</div>
+  </div>
+  <div class="col-10 col-md-8 text-left">
+    <div class="btn-group" data-toggle="buttons">
+      <label *ngFor="let month of months" class="btn btn-secondary" (click)="selectMonth(month)">
+          <input type="radio"  autocomplete="off">{{ month.name }}
+        </label>
+    </div>
+  </div>
+</div>
+<div class="row text-center p-2">
+  <div class="col">
+    <p-dataTable [value]="vehicleLogs" class="table">
+      <p-column field="id" header="Bus No." [sortable]="true"></p-column>
+      <p-column field="date" header="Date" [sortable]="true"></p-column>
+      <p-column header="File Name">
+        <ng-template let-row="rowData" pTemplate="body">
+          {{row.fileName}}_{{row.id}}
+        </ng-template>
+      </p-column>
+      <p-column header="Download">
+        <ng-template let-row="rowData" pTemplate="body">
+          <button type="submit" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#requestModal">
+               <i class="fa fa-cloud-download fa-lg">&nbsp;</i>
+            </button>
+        </ng-template>
+      </p-column>
+    </p-dataTable>
+  </div>
+</div>
+
+<!-- Table output Section -->
 <div class="modal fade" id="requestModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
