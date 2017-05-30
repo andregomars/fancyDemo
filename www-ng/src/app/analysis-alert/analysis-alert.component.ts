@@ -72,8 +72,8 @@ export class AnalysisAlertComponent implements OnInit {
 
   private initVehicleAlertChartOption(): void {
     this.optionVehicleAlertChart = {
-      responsive: false,
-      maintainAspectRatio: true
+      // responsive: false,
+      // maintainAspectRatio: true
     };
     this.resetChartDefaultOptions(this.optionVehicleAlertChart);
   }
@@ -206,7 +206,7 @@ export class AnalysisAlertComponent implements OnInit {
     option.hover = { 
         animationDuration: 0 
     };
-    option.responsive = false;
+    option.responsive= false;
     option.maintainAspectRatio = true;
     option.legend = {
        onClick: (e) => e.stopPropagation()

@@ -101,6 +101,7 @@ export class AnalysisDailyComponent implements OnInit {
         this.vehicleName = vname;
         this.fleetTracker.setFleetIDByVehicle(vname);
         this.fleetName = this.fleetTracker.fname;
+        console.log(this.fleetTracker.fname);
 
         let endDate = moment(this.today).startOf('day').toDate();
         let beginDate = moment(this.today).subtract(this.backDays, 'days').startOf('day').toDate();
@@ -150,8 +151,8 @@ export class AnalysisDailyComponent implements OnInit {
 
  private initMileageChartOption(): void {
     this.optionMileageChart = {
-      responsive: false,
-      maintainAspectRatio: true,
+      // responsive: false,
+      // maintainAspectRatio: true,
       legend: {
         display: false
       },
@@ -576,8 +577,8 @@ export class AnalysisDailyComponent implements OnInit {
     option.hover = {
       animationDuration: 0
     };
-    option.responsive = false;
-    option.maintainAspectRatio = true;
+    // option.responsive = false;
+    // option.maintainAspectRatio = true;
     // option.scales.xAxes = [{
     //   ticks: {
     //     callback: function (value, index, values) {
@@ -593,7 +594,7 @@ export class AnalysisDailyComponent implements OnInit {
       onrendered: function (canvas) {
         const contentDataURL = canvas.toDataURL("image/png");
         let pdf = new jsPDF("landscape");
-        pdf.addImage(contentDataURL, "PNG", 10, 10);
+        pdf.addImage(contentDataURL, "PNG", 10, 5);
         pdf.save("DailyAnalysis.P1.pdf");
       },
     });
@@ -601,7 +602,7 @@ export class AnalysisDailyComponent implements OnInit {
       onrendered: function (canvas) {
         const contentDataURL = canvas.toDataURL("image/png");
         let pdf = new jsPDF("landscape");
-        pdf.addImage(contentDataURL, "PNG", 10, 10);
+        pdf.addImage(contentDataURL, "PNG", 10, 5);
         pdf.save("DailyAnalysis.P2.pdf");
       },
     });

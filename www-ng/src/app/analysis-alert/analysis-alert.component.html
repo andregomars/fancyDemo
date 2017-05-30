@@ -1,45 +1,58 @@
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <div class="row p-2">
-        <div class="col-9 text-center">
-          <h5><i class="fa fa-bus"></i> {{ fleetID }} / {{ vehicleID }}</h5>
+<!-- Header Section -->
+<div class="navbar text-center bg-faded mb-2">
+  <div class="row no-gutters align-items-center">
+    <div class="col flex-first text-left">/ Daily Analysis</div>
+    <div class="col flex-unordered text-center">
+      <h5> <i class="fa fa-flag"></i> {{ fleetID }} - <i class="fa fa-bus"></i> {{ vehicleID }} </h5>
+    </div>
+    <div class="col flex-last text-right">
+      <button type="button" class="btn btn-primary btn-sm text-center" (click)="exportCharts()">Export Charts</button>
+    </div>
+  </div>
+</div>
+
+<div #charts>
+  <!-- Vehicle Alert Proportion -->
+  <div class="card-deck m-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col text-center text-primary"><h5>Vehicle Alert Proportion</h5></div>
+          <div class="col text-left">
+          <my-date-range-picker [options]="optionVehicleAlertDateRangePicker" 
+            (dateRangeChanged)="onVehicleAlertDateChanged($event)" 
+            placeholder="Select Date Range">
+          </my-date-range-picker>
+          </div>
         </div>
-        <div class="col-3">
-          <button type="button" class="btn btn-primary btn-sm text-right" (click)="exportCharts()">Export Charts</button>
-        </div>
+      </div>
+      <div class="card-block">
+         <p-chart #chartVehicleAlert type="pie" [data]="dataVehicleAlertChart" 
+          [options]="optionVehicleAlertChart" width="960" height="300">
+         </p-chart>
       </div>
     </div>
   </div>
-  <div #charts class="row text-center p-2">
-    <div class="col">
-      <div class="row">
-        <div class="col text-right text-primary">
-          <h3>Vehicle Alert Proportion</h3>
-        </div>
-        <div class="col text-left">
-          <my-date-range-picker [options]="optionVehicleAlertDateRangePicker" 
-            (dateRangeChanged)="onVehicleAlertDateChanged($event)" placeholder="Select Date Range">
-          </my-date-range-picker>
-        </div>
-      </div>
-      <div class="row p-2">
-        <p-chart #chartVehicleAlert type="pie" [data]="dataVehicleAlertChart" 
-          [options]="optionVehicleAlertChart" width="960px" height="300px"></p-chart>
-      </div>
-      <div class="row pt-5">
-        <div class="col text-right text-primary">
-          <h3>Fleet Alert Proportion</h3>
-        </div>
-        <div class="col text-left">
-          <my-date-range-picker [options]="optionFleetAlertDateRangePicker" 
-            (dateRangeChanged)="onFleetAlertDateChanged($event)" placeholder="Select Date Range">
-          </my-date-range-picker>
+  <!-- Fleet Alert Proportion -->
+  <div class="card-deck m-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col text-center text-primary"><h5>Fleet Alert Proportion</h5></div>
+          <div class="col text-left">
+            <my-date-range-picker [options]="optionFleetAlertDateRangePicker" 
+              (dateRangeChanged)="onFleetAlertDateChanged($event)" 
+              placeholder="Select Date Range">
+            </my-date-range-picker>
+          </div>
         </div>
       </div>
-      <div class="row p-2">
+      <div class="card-block text-center">
         <p-chart #chartFleetAlert type="pie" [data]="dataFleetAlertChart" 
-          [options]="optionFleetAlertChart" width="960px" height="300px"></p-chart>
+          [options]="optionFleetAlertChart" width="960" height="300">
+        </p-chart>
       </div>
     </div>
   </div>

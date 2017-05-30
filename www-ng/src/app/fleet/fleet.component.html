@@ -1,20 +1,34 @@
-<div class="card m-2 p-0">
-    <div class="card-block pm-0">
-        <app-fleet-map *ngIf="data" [items]="data" class="pm-0"></app-fleet-map>
+<!-- Header Section -->
+<div class="navbar text-center bg-faded mb-2">
+    <div class="row no-gutters align-items-center">
+        <div class="col flex-first text-left">/ Fleet</div>
+        <div class="col flex-unordered text-center">
+            <h5> <i class="fa fa-flag"></i> {{ fname}} </h5>
+        </div>
+        <div class="col flex-last text-left"></div>
     </div>
 </div>
+
+<!-- Google Map Secton -->
+<div *ngIf="data && data.length > 0" class="card m-2 p-0">
+    <div class="card-block pm-0">
+        <app-fleet-map [items]="data" class="pm-0"></app-fleet-map>
+    </div>
+</div>
+
+<!-- Vehicles Table -->
 <div class="card m-2">
     <div class="card-header">
             <div class="row align-items-center">
                 <div class="col flex-first"></div>
                 <div class="col flex-center text-center">
-                    <h5>{{fname}}</h5>
+                    <h5>Vehicles</h5>
                 </div>
                 <div class="col flex-last text-right">
                     <div class="btn-group">
                         <button class="btn btn-link" (click)="toggleView()">
-                          <i class="fa fa-list fa-2x" [hidden]="!isShown('cards')"></i>
-                          <i class="fa fa-th-large fa-2x" [hidden]="!isShown('table')"></i>
+                          <i class="fa fa-list fa-lg" [hidden]="!isShown('cards')"></i>
+                          <i class="fa fa-th-large fa-lg" [hidden]="!isShown('table')"></i>
                         </button>
                     </div>
                 </div>
