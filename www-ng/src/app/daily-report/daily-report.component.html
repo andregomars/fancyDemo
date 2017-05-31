@@ -38,9 +38,17 @@
   </div>
   <div class="col-10 col-md-8 text-left">
     <div class="btn-group" data-toggle="buttons">
-      <label *ngFor="let month of months" class="btn btn-secondary" (click)="selectMonth(month)">
+      <ng-container *ngFor="let month of months; let i = index">
+        <label *ngIf="i == months.length -1; else elseMonthBlock" 
+          class="btn btn-secondary active" (click)="selectMonth(month)">
           <input type="radio"  autocomplete="off">{{ month.name }}
         </label>
+        <ng-template #elseMonthBlock>
+          <label class="btn btn-secondary" (click)="selectMonth(month)">
+            <input type="radio"  autocomplete="off">{{ month.name }}
+          </label>
+        </ng-template>
+      </ng-container>
     </div>
   </div>
 </div>
