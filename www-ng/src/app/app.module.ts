@@ -23,6 +23,7 @@ import { DataCardsComponent } from './fleet/datacards.component';
 import { MenuComponent } from './menu/menu.component';
 import { ProgressBarComponent } from './components/progressbar/progressbar.component';
 import { AgmCoreModule } from '@agm/core';
+import { LinearGaugeComponent, RadialGaugeComponent } from 'ng-canvas-gauges/component';
 
 import { UtilityService } from './shared/utility.service';
 import { DataRemoteService } from './shared/data-remote.service';
@@ -61,6 +62,8 @@ import { GeoPipe } from './components/pipes/geo.pipe';
     VehicleSnapshotTableComponent,
     VehicleDualChartComponent,
     GeoPipe,
+    LinearGaugeComponent,
+    RadialGaugeComponent
   ],
   imports: [
     BrowserModule,

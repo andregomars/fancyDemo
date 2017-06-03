@@ -2,7 +2,7 @@
     <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
     <input #gb type="text" pInputText size="20" placeholder="Bus No.">
 </div>
-<p-dataTable [value]="data" class="table" [globalFilter]="gb">
+<p-dataTable [value]="data" [responsive]="true" class="table" [globalFilter]="gb">
     <p-column field="vname" header="Bus No." [sortable]="true">
        <ng-template let-col let-data="rowData" pTemplate="body">
            <a [routerLink]="['/vehicle', data[col.field]]">{{data[col.field]}}</a>

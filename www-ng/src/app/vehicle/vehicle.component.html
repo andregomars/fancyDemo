@@ -15,9 +15,55 @@
         <!-- Card Left -->
         <div class="card">
             <div class="card-header font-weight-bold">Gauges</div>
-            <div class="card-block">
-                <justgage [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc" min="0" max="100" class="app-justgage"></justgage>
-                <justgage [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed" min="0" max="65" class="app-justgage"></justgage>
+            <div class="card-block text-center">
+                <!--<justgage [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc" min="0" max="100" class="app-justgage"></justgage>-->
+                <radial-gauge
+                    units="SOC (%)"
+                    width="225"
+                    height="225"
+                    min-value="0"
+                    start-angle="90"
+                    ticks-angle="180"
+                    value-box="false"
+                    max-value="100"
+                    major-ticks="0,20,40,60,80,100"
+                    minor-ticks="0"
+                    stroke-ticks="true"
+                    highlights='[{"from": 80, "to": 100, "color": "rgba(200, 50, 50, .75)"}]'
+                    color-plate="#fff"
+                    border-shadow-width="0"
+                    borders="false"
+                    needle-type="arrow"
+                    needle-width="2"
+                    needle-circle-size="7"
+                    needle-circle-outer="true"
+                    needle-circle-inner="false"
+                    [attr.value]="lastVehicleStatus.soc"
+                ></radial-gauge>  
+                <!--<justgage [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed" min="0" max="65" class="app-justgage"></justgage>-->
+                <radial-gauge
+                    units="Speed (mph)"
+                    width="225"
+                    height="225"
+                    min-value="0"
+                    start-angle="90"
+                    ticks-angle="180"
+                    value-box="false"
+                    max-value="65"
+                    major-ticks="0,15,30,45,65"
+                    minor-ticks="0"
+                    stroke-ticks="true"
+                    highlights='[{"from": 45, "to": 65, "color": "rgba(200, 50, 50, .75)"}]'
+                    color-plate="#fff"
+                    border-shadow-width="0"
+                    borders="false"
+                    needle-type="arrow"
+                    needle-width="2"
+                    needle-circle-size="7"
+                    needle-circle-outer="true"
+                    needle-circle-inner="false"
+                    [attr.value]="lastVehicleStatus.speed"
+                ></radial-gauge>  
             </div>
         </div>
 
