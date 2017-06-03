@@ -17,6 +17,7 @@ export class DataRemoteService {
   private vehicleIdentities: Array<VehicleIdentity>;
   private URL_RemoteApiRoot: string = "http://52.33.60.220/api";
   private Endpoint_VehicleIdentities: string = "/VehicleIdentity";
+  private Endpoint_VehicleIdentitiesByLoginName: string = "/VehicleIdentity/LoginName";
   private Endpoint_VehicleStatusByVehicleName: string = "/VehicleStatus/GetByVehicleName";
   private Endpoint_AllVehicleStatusByFleetName: string = "/VehicleStatus/GetAllByFleetName";
   private Endpoint_RecentAllVehicleStatusByVehicleName: string = 
@@ -30,6 +31,7 @@ export class DataRemoteService {
 
 
   private URL_VehicleIdentities: string;
+  private URL_VehicleIdentitiesByLoginName: string;
   private URL_VehicleStatusByVehicleName: string;
   private URL_AllVehicleStatusByFleetName: string;
   private URL_RecentAllVehicleStatusByVehicleName: string;
@@ -45,6 +47,7 @@ export class DataRemoteService {
 
   private initURLEndpoints() {
     this.URL_VehicleIdentities = this.URL_RemoteApiRoot + this.Endpoint_VehicleIdentities;
+    this.URL_VehicleIdentitiesByLoginName = this.URL_RemoteApiRoot + this.Endpoint_VehicleIdentitiesByLoginName;
     this.URL_VehicleStatusByVehicleName = this.URL_RemoteApiRoot + this.Endpoint_VehicleStatusByVehicleName;
     this.URL_AllVehicleStatusByFleetName = this.URL_RemoteApiRoot + this.Endpoint_AllVehicleStatusByFleetName;
     this.URL_RecentAllVehicleStatusByVehicleName = 
@@ -57,12 +60,18 @@ export class DataRemoteService {
       this.URL_RemoteApiRoot + this.Endpoint_VehicleDailyUsageByDateScope;
   }
 
-  // api: $root/VehicleIdentities
   getVehicleIdentities$(): Observable<Array<VehicleIdentity>> {
     return this.http.get(this.URL_VehicleIdentities)
       .map(res => res.json())
       .catch(this.handleError);
   }
+
+ getVehicleIdentitiesByLoginName$(loginName: string): Observable<Array<VehicleIdentity>> {
+    return this.http.get(`${this.URL_VehicleIdentitiesByLoginName}/${loginName}`)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
 
   getFleetIdentities$(): Observable<Array<string>> {
     return this.http.get(this.URL_VehicleIdentities)

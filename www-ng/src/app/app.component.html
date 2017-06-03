@@ -1,10 +1,10 @@
 <div class="container-fluid" style="min-height:100%">
-  <div *ngIf="user == 'andre'; else elseBlock" class="row">
+  <div *ngIf="ids && ids.length > 0; else elseBlock" class="row">
     <div class="col-sm-2 p-0">
       <app-menu></app-menu>
     </div>
     <div class="col-sm-10 p-2">
-      <div>user: {{ user }}</div>
+      <!--<div>user: {{ user }}</div>-->
       <router-outlet></router-outlet>
     </div>
   </div>
