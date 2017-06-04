@@ -306,10 +306,10 @@ export class VehicleComponent implements OnInit {
 
     // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
     var labels = filtered_A.map(el => el.time);
-    var data_A = filtered_A.map(el => el.value);
-    var data_B = filtered_B.map(el => el.value);
-    var data_C = filtered_C.map(el => el.value);
-    var data_D = filtered_D.map(el => el.value);
+    var data_A = filtered_A.map(el => el.value.toFixed(2));
+    var data_B = filtered_B.map(el => el.value.toFixed(2));
+    var data_C = filtered_C.map(el => el.value.toFixed(2));
+    var data_D = filtered_D.map(el => el.value.toFixed(2));
 
     return {
       labels: labels,
@@ -353,8 +353,8 @@ export class VehicleComponent implements OnInit {
 
     // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
     var labels = filtered_A.map(el => el.time);
-    var data_A = filtered_A.map(el => el.value);
-    var data_B = filtered_B.map(el => el.value);
+    var data_A = filtered_A.map(el => el.value.toFixed(2));
+    var data_B = filtered_B.map(el => el.value.toFixed(2));
 
     return {
       labels: labels,
@@ -384,8 +384,8 @@ export class VehicleComponent implements OnInit {
 
     // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
     var labels = filtered_A.map(el => el.time);
-    var data_A = filtered_A.map(el => el.value);
-    var data_B = filtered_B.map(el => el.value);
+    var data_A = filtered_A.map(el => el.value.toFixed(2));
+    var data_B = filtered_B.map(el => el.value.toFixed(2));
 
     return {
       labels: labels,
@@ -417,8 +417,8 @@ export class VehicleComponent implements OnInit {
 
     // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
     var labels = filtered_A.map(el => el.time);
-    var data_A = filtered_A.map(el => el.value);
-    var data_B = filtered_B.map(el => el.value);
+    var data_A = filtered_A.map(el => el.value.toFixed(2));
+    var data_B = filtered_B.map(el => el.value.toFixed(2));
 
     return {
       labels: labels,

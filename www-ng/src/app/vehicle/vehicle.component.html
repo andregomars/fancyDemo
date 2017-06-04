@@ -10,13 +10,13 @@
 </div>
 
 <!-- 1st Line Section -->
-
-    <div class="card-deck m-2">
-        <!-- Card Left -->
-        <div class="card">
-            <div class="card-header font-weight-bold">Gauges</div>
-            <div class="card-block text-center">
-                <!--<justgage [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc" min="0" max="100" class="app-justgage"></justgage>-->
+<div class="card-deck m-1">
+    <!-- Card Left -->
+    <div class="card mb-1">
+        <div class="card-header font-weight-bold">Gauges</div>
+        <div class="card-block text-center">
+            <div>
+            <!--<justgage [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc" min="0" max="100" class="app-justgage"></justgage>-->
                 <radial-gauge
                     units="SOC (%)"
                     width="225"
@@ -40,7 +40,9 @@
                     needle-circle-inner="false"
                     [attr.value]="lastVehicleStatus.soc"
                 ></radial-gauge>  
-                <!--<justgage [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed" min="0" max="65" class="app-justgage"></justgage>-->
+            </div>
+            <!--<justgage [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed" min="0" max="65" class="app-justgage"></justgage>-->
+            <div>
                 <radial-gauge
                     units="Speed (mph)"
                     width="225"
@@ -66,91 +68,118 @@
                 ></radial-gauge>  
             </div>
         </div>
+    </div>
 
-        <!-- Card Center -->
-        <div class="card">
-            <div class="card-header font-weight-bold">Meters</div>
-            <div class="card-block">
-                <div class="row p-1">
-                    <div class="col">Voltage(V):
-                        <app-progressbar [value]="lastVehicleStatus.voltage" max="800"></app-progressbar>
-                    </div>
-                </div>
-                <div class="row p-1">
-                    <div class="col">Current(A):
-                        <app-progressbar [value]="lastVehicleStatus.current" min="0" max="120"></app-progressbar>
-                    </div>
-                </div>
-                <div class="row p-1">
-                    <div class="col">Low Temp(F):
-                        <app-progressbar [value]="lastVehicleStatus.temperaturelow" min="-40" max="220"></app-progressbar>
-                    </div>
-                </div>
-                <div class="row p-1">
-                    <div class="col">High Temp(F):
-                        <app-progressbar [value]="lastVehicleStatus.temperaturehigh" min="-40" max="220"></app-progressbar>
-                    </div>
-                </div>
-                <div class="row p-1">
-                    <div class="col">Range(Miles):
-                        <app-progressbar [value]="lastVehicleStatus.range | number: '1.2-2'" max="250"></app-progressbar>
-                    </div>
-                </div>
-                <div class="row p-1">
-                    <div class="col">Remaining(kWh):
-                        <app-progressbar [value]="lastVehicleStatus.remainingenergy  | number: '1.2-2'" max="60"></app-progressbar>
-                    </div>
-                </div>
-                <div class="row p-1 align-items-end">
-                    <div class="col-6"> Odometer(Miles): </div>
-                    <div class="col-5 app-scoreboard">
-                        {{lastVehicleStatus.mileage | number: '1.2-2'}}
-                    </div>
+    <!-- Card Center -->
+    <div class="card mb-1">
+        <div class="card-header font-weight-bold">Meters</div>
+        <div class="card-block">
+            <div class="row">
+                <div class="col">
+                    <div>Current (A):</div>
+                    <!--<app-progressbar [value]="lastVehicleStatus.current" min="0" max="120"></app-progressbar>-->
+                    <linear-gauge
+                        width="300"
+                        height="100"
+                        min-value="-400"
+                        max-value="400"
+                        major-ticks="[-400,-300,-200,-100,0,100,200,300,400]"
+                        minor-ticks="0"
+                        ticks-width="4"
+                        tick-side="left"
+                        number-side="left"
+                        needle-side="left"
+                        highlights='[ {"from": -400, "to": 0, "color": "rgba(0,0, 255, .3)"},
+                        {"from": 0, "to": 400, "color": "rgba(255, 0, 0, .3)"} ]'
+                        border-shadow-width="0"
+                        borders="false"
+                        border-radius="0"
+                        needle-type="arrow"
+                        needle-width="8"
+                        color-needle="#222"
+                        color-needle-end=""
+                        bar-stroke="0"
+                        bar-width="0"
+                        bar-begin-circle="false"
+                        [attr.value]="lastVehicleStatus.current"
+                        style="overflow-x:auto"></linear-gauge>   
                 </div>
             </div>
-        </div>
-
-        <!-- Card Right -->
-        <div class="card">
-            <div class="card-header font-weight-bold">Logs</div>
-            <div class="card-block">
-                <ul class="nav nav-tabs ">
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#tab-alert">Latest Alerts</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#tab-snapshot">Latest Snapshots</a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane app-tab-pane" id="tab-alert">
-                        <ul class="fa-ul" *ngIf="recentAlertList">
-                            <li *ngFor="let alert of recentAlertList">
-                                <i class="fa-li fa fa-exclamation-triangle"></i>{{alert.updated}} - {{alert.name}}
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="tab-pane active app-tab-pane" id="tab-snapshot">
-                        <ul class="fa-ul" *ngIf="recentStatusList">
-                            <li *ngFor="let status of recentStatusList">
-                                <i class="fa-li fa fa-camera"></i>{{status.updated}}
-                            </li>
-                        </ul>
-                    </div>
+            <div class="row px-1">
+                <div class="col">Voltage(V):
+                    <app-progressbar [value]="lastVehicleStatus.voltage" max="800"></app-progressbar>
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col">Low Temp(F):
+                    <app-progressbar [value]="lastVehicleStatus.temperaturelow" min="-40" max="220"></app-progressbar>
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col">High Temp(F):
+                    <app-progressbar [value]="lastVehicleStatus.temperaturehigh" min="-40" max="220"></app-progressbar>
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col">Range(Miles):
+                    <app-progressbar [value]="lastVehicleStatus.range | number: '1.2-2'" max="250"></app-progressbar>
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col">Remaining(kWh):
+                    <app-progressbar [value]="lastVehicleStatus.remainingenergy  | number: '1.2-2'" max="60"></app-progressbar>
+                </div>
+            </div>
+            <div class="row p-1 align-items-end">
+                <div class="col-6"> Odometer(Miles): </div>
+                <div class="col-5 app-scoreboard">
+                    {{lastVehicleStatus.mileage | number: '1.2-2'}}
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Card Right -->
+    <div class="card mb-1">
+        <div class="card-header font-weight-bold">Logs</div>
+        <div class="card-block">
+            <ul class="nav nav-tabs ">
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#tab-alert">Latest Alerts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#tab-snapshot">Latest Snapshots</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane app-tab-pane" id="tab-alert">
+                    <ul class="fa-ul" *ngIf="recentAlertList">
+                        <li *ngFor="let alert of recentAlertList">
+                            <i class="fa-li fa fa-exclamation-triangle"></i>{{alert.updated}} - {{alert.name}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-pane active app-tab-pane" id="tab-snapshot">
+                    <ul class="fa-ul" *ngIf="recentStatusList">
+                        <li *ngFor="let status of recentStatusList">
+                            <i class="fa-li fa fa-camera"></i>{{status.updated}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- 2nd Line Section -->
-<div class="card-deck m-2">
-    <div class="card">
+<!--<div class="card-deck m-2">
+    <div class="card w-25">
         <div class="card-header font-weight-bold">Last Snapshot</div>
         <div class="card-block">
             <app-vehicle-snapshot-table [data]="lastVehicleSnapshot"></app-vehicle-snapshot-table>
        </div>
     </div>
-    <div class="card w-50">
+    <div class="card w-75">
         <div class="card-header">
             <div class="row align-items-start">
                 <div class="col flex-first font-weight-bold">Charts</div>
@@ -169,10 +198,41 @@
                 <p-chart #chartChargingRunningStatus type="line" [options]="optionChargingRunningStatusChart"></p-chart>
         </div>
     </div>
+</div>-->
+<div class="row m-1">
+    <div class="col-12 col-lg-5 mb-1">
+        <div class="card" style="height:100%">
+            <div class="card-header font-weight-bold">Last Snapshot</div>
+            <div class="card-block">
+                <app-vehicle-snapshot-table [data]="lastVehicleSnapshot"></app-vehicle-snapshot-table>
+        </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-7 mb-1">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-start">
+                    <div class="col font-weight-bold">Charts</div>
+                    <div class="col text-center">
+                        <my-date-picker #datePicker [options]="optionDatePicker" (dateChanged)="onDateChanged($event)" placeholder="Select Date"></my-date-picker>
+                    </div>
+                    <div class="col text-right">
+                        <button type="button" class="btn btn-primary btn-sm" (click)="exportDualCharts()">Export Charts</button>
+                    </div>
+                </div>
+        </div>
+            <div #divDualCharts class="card-block">
+                    <app-vehicle-map *ngIf="recentStatusList" [items]="recentStatusList"></app-vehicle-map>
+                    <p-chart #chartSocRange type="line" [options]="optionSocRangeChart" ></p-chart>
+                    <p-chart #chartEstActualDistance type="line" [options]="optionEstActualDistanceChart"></p-chart>
+                    <p-chart #chartChargingRunningStatus type="line" [options]="optionChargingRunningStatusChart"></p-chart>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- 3rd Line Section -->
-<div class="card m-2">
+<div class="card m-1">
     <div class="card-header font-weight-bold">Analysis</div>
     <div class="card-block">
         <p-chart #chartComplex type="line" [options]="optionComplexChart"></p-chart>

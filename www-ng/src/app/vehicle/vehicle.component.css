@@ -25,3 +25,8 @@
   background-color: #F0F0F0
   ;
 }
+
+radial-gauge {
+  width: 100%;
+  overflow-x:auto;
+}
