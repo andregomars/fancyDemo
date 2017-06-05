@@ -13,19 +13,19 @@
 
 <!-- Year & Month Selection Section -->
 <div class="row p-2">
-  <div class="col-1 text-right">
+  <div class="col-2 col-md-1 text-right pb-1">
     <div class="text-primary">Year:</div>
   </div>
-  <div class="col-2 text-left">
+  <div class="col-10 col-md-2 text-left pb-1">
     <select [(ngModel)]="selectedYear" (change)="onSelect($event.target.value)" 
       class="form-control">
       <option *ngFor="let year of years" [value]="year">{{year}}</option>
     </select>
   </div>
-  <div class="col-1 text-right">
+  <div class="col-2 col-md-1 text-right">
     <div class="text-primary">Month:</div>
   </div>
-  <div class="col-8 text-left">
+  <div class="col-10 col-md-8 text-left" style="overflow-x:auto">
     <div class="btn-group" data-toggle="buttons">
       <ng-container *ngFor="let month of months; let i = index">
         <label *ngIf="i == months.length - 1; else elseMonthBlock" 
@@ -68,7 +68,7 @@
         <div class="col-2 text-right">
           <label>Options:</label>
         </div>
-        <div class="col-10 text-left">
+        <div class="col-10 text-left" style="overflow-x:auto">
           <div class="btn-group" data-toggle="buttons">
             <label *ngFor="let opt of options" class="btn btn-secondary" (click)="selectOption(opt)">
               <input type="radio"  autocomplete="off">{{ opt.name }}
@@ -76,7 +76,7 @@
           </div>
         </div>
       </div>
-      <div class="row pt-4">
+      <div class="row pt-4" style="overflow-x:auto">
         <p-chart #chartFleetMonthly type="horizontalBar" [data]="dataFleetMonthlyChart" 
           [options]="optionFleetMonthlyChart" width="960px" height="300px"></p-chart>
       </div>
