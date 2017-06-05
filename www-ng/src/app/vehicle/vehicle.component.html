@@ -50,35 +50,36 @@
             <div class="row">
                 <div class="col-0 col-lg-2"></div>
                 <div class="col-12 col-lg-8">
-                  <app-gauge [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed" 
-                    max="65"></app-gauge>
+                  <!--<app-gauge [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed" 
+                    max="65"></app-gauge>-->
+                     <!--<justgage [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed" min="0" max="65" class="app-justgage"></justgage>-->
+                    <radial-gauge
+                        units="Speed (mph)"
+                        width="225"
+                        height="225"
+                        min-value="0"
+                        start-angle="90"
+                        ticks-angle="180"
+                        value-box="false"
+                        max-value="65"
+                        major-ticks="0,15,30,45,65"
+                        minor-ticks="0"
+                        stroke-ticks="true"
+                        highlights='[{"from": 45, "to": 65, "color": "rgba(200, 50, 50, .75)"}]'
+                        color-plate="#fff"
+                        border-shadow-width="0"
+                        borders="false"
+                        needle-type="arrow"
+                        needle-width="2"
+                        needle-circle-size="7"
+                        needle-circle-outer="true"
+                        needle-circle-inner="false"
+                        [attr.value]="lastVehicleStatus.speed"
+                    ></radial-gauge>  
                 </div>
                 <div class="col-0 col-lg-2"></div>
             </div>
-            <!--<justgage [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed" min="0" max="65" class="app-justgage"></justgage>-->
-                <!--<radial-gauge
-                    units="Speed (mph)"
-                    width="225"
-                    height="225"
-                    min-value="0"
-                    start-angle="90"
-                    ticks-angle="180"
-                    value-box="false"
-                    max-value="65"
-                    major-ticks="0,15,30,45,65"
-                    minor-ticks="0"
-                    stroke-ticks="true"
-                    highlights='[{"from": 45, "to": 65, "color": "rgba(200, 50, 50, .75)"}]'
-                    color-plate="#fff"
-                    border-shadow-width="0"
-                    borders="false"
-                    needle-type="arrow"
-                    needle-width="2"
-                    needle-circle-size="7"
-                    needle-circle-outer="true"
-                    needle-circle-inner="false"
-                    [attr.value]="lastVehicleStatus.speed"
-                ></radial-gauge>  -->
+       
         </div>
     </div>
 
@@ -89,8 +90,8 @@
             <div class="row">
                 <div class="col">
                     <div>Current (A):</div>
-                    <app-progressbar [value]="lastVehicleStatus.current" min="0" max="120"></app-progressbar>
-                    <!--<linear-gauge
+                    <!--<app-progressbar [value]="lastVehicleStatus.current" min="0" max="120"></app-progressbar>-->
+                    <linear-gauge
                         width="300"
                         height="100"
                         min-value="-400"
@@ -114,7 +115,7 @@
                         bar-width="0"
                         bar-begin-circle="false"
                         [attr.value]="lastVehicleStatus.current"
-                        style="overflow-x:auto"></linear-gauge>   -->
+                        style="overflow-x:auto"></linear-gauge>   
                 </div>
             </div>
             <div class="row px-1">
@@ -224,11 +225,11 @@
         <div class="card">
             <div class="card-header">
                 <div class="row align-items-start">
-                    <div class="col font-weight-bold">Charts</div>
-                    <div class="col text-center">
+                    <div class="col-5 col-md-4 font-weight-bold">Charts</div>
+                    <div class="col-7 col-md-4 text-center">
                         <my-date-picker #datePicker [options]="optionDatePicker" (dateChanged)="onDateChanged($event)" placeholder="Select Date"></my-date-picker>
                     </div>
-                    <div class="col text-right">
+                    <div class="col-8 col-md-4 text-right">
                         <button type="button" class="btn btn-primary btn-sm" (click)="exportDualCharts()">Export Charts</button>
                     </div>
                 </div>
