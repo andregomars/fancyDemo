@@ -18,38 +18,35 @@
             <div class="row">
                 <div class="col-0 col-lg-2"></div>
                 <div class="col-12 col-lg-8">
-                    <app-gauge [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc" 
-                    max="100"></app-gauge>
+                    <!--<app-gauge [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc" 
+                    max="100" style="display:block"></app-gauge>-->
+                    <!--<justgage [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc" min="0" max="100" class="app-justgage"></justgage>-->
+                    <radial-gauge
+                        units="SOC (%)"
+                        width="225"
+                        height="225"
+                        min-value="0"
+                        start-angle="90"
+                        ticks-angle="180"
+                        value-box="false"
+                        max-value="100"
+                        major-ticks="0,20,40,60,80,100"
+                        minor-ticks="0"
+                        stroke-ticks="true"
+                        highlights='[{"from": 80, "to": 100, "color": "rgba(200, 50, 50, .75)"}]'
+                        color-plate="#fff"
+                        border-shadow-width="0"
+                        borders="false"
+                        needle-type="arrow"
+                        needle-width="2"
+                        needle-circle-size="7"
+                        needle-circle-outer="true"
+                        needle-circle-inner="false"
+                        [attr.value]="lastVehicleStatus.soc"
+                    ></radial-gauge>  
                 </div>
                 <div class="col-0 col-lg-2"></div>
             </div>
-            
-            <!--<justgage [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc" min="0" max="100" class="app-justgage"></justgage>-->
-                <!--<radial-gauge
-                    units="SOC (%)"
-                    width="225"
-                    height="225"
-                    min-value="0"
-                    start-angle="90"
-                    ticks-angle="180"
-                    value-box="false"
-                    max-value="100"
-                    major-ticks="0,20,40,60,80,100"
-                    minor-ticks="0"
-                    stroke-ticks="true"
-                    highlights='[{"from": 80, "to": 100, "color": "rgba(200, 50, 50, .75)"}]'
-                    color-plate="#fff"
-                    border-shadow-width="0"
-                    borders="false"
-                    needle-type="arrow"
-                    needle-width="2"
-                    needle-circle-size="7"
-                    needle-circle-outer="true"
-                    needle-circle-inner="false"
-                    [attr.value]="lastVehicleStatus.soc"
-                ></radial-gauge>  -->
-
-            <!--<justgage [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed" min="0" max="65" class="app-justgage"></justgage>-->
             <div class="row">
                 <div class="col-0 col-lg-2"></div>
                 <div class="col-12 col-lg-8">
@@ -58,6 +55,7 @@
                 </div>
                 <div class="col-0 col-lg-2"></div>
             </div>
+            <!--<justgage [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed" min="0" max="65" class="app-justgage"></justgage>-->
                 <!--<radial-gauge
                     units="Speed (mph)"
                     width="225"
