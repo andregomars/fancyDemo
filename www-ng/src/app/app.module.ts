@@ -40,6 +40,7 @@ import { VehicleMapComponent } from './vehicle/vehicle-map.component';
 import { VehicleSnapshotTableComponent } from './vehicle/vehicle-snapshot-table.component';
 import { VehicleDualChartComponent } from './vehicle/vehicle-dual-chart.component';
 import { GeoPipe } from './components/pipes/geo.pipe';
+import { ProgressMeterComponent } from './components/progressmeter/progress-meter.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { GeoPipe } from './components/pipes/geo.pipe';
     VehicleSnapshotTableComponent,
     VehicleDualChartComponent,
     GeoPipe,
+    ProgressMeterComponent,
   ],
   imports: [
     BrowserModule,

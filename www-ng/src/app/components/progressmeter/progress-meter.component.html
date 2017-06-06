@@ -1,0 +1,26 @@
+<div class="row no-gutters">
+ <div class="col-6 text-right">
+    <div class="progress" dir="rtl"
+      style="border-radius:.25rem 0rem 0rem .25rem"
+      [style.background-color]="degree < 0 ? 'silver':'#0275d8'">
+      <div class="progress-bar bg-primary text-right" 
+        [style.width]="degreeNegative">&nbsp;{{ degree < 0 ? '-' : '' }}</div>
+    </div>
+  </div>
+  <div class="col-6 text-left">
+    <div class="progress"
+      style="border-radius:0rem .25rem .25rem 0rem"
+      [style.background-color]="degree > 0 ? 'silver':'#f0ad4e'">
+      <div class="progress-bar bg-warning text-left"
+        [style.width]="degreePositive">&nbsp;{{ degree >= 0 ? degree : this.Math.abs(degree) }}</div>
+    </div>
+  </div>
+</div>
+<div class="row pmt-0">
+  <div class="col-6 text-left small text-muted">
+    {{ minDegree }}
+  </div>
+  <div class="col-6 text-right small text-muted">
+    {{ maxDegree }}
+  </div>
+</div>
