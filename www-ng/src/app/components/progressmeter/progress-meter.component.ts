@@ -11,6 +11,8 @@ export class ProgressMeterComponent implements OnInit, OnChanges {
   degreeNegative: string;
   degreePositive: string;
 
+  @Input() meterNegativeClass: string;
+  @Input() meterPositiveClass: string;
   @Input() degree: number = 0;
   @Input() minDegree: number = -100;
   @Input() maxDegree: number = 100;
@@ -30,8 +32,5 @@ export class ProgressMeterComponent implements OnInit, OnChanges {
       this.degree < 0 ? (Math.abs(this.degree * 100) / Math.abs(this.minDegree)).toFixed(0) + '%' : '0%';
     this.degreePositive = 
       this.degree > 0 ? (Math.abs(this.degree * 100) / Math.abs(this.maxDegree)).toFixed(0) + '%' : '0%';
-    
-    console.log(this.degreeNegative);
   }
-
 }

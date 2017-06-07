@@ -48,7 +48,9 @@
                     <div>Current (A):</div>
                     <!--<app-progressbar [value]="lastVehicleStatus.current" min="0" max="120"></app-progressbar>-->
                     <app-progress-meter [degree]="lastVehicleStatus.current"
-                        [minDegree]="-400" [maxDegree]="400"></app-progress-meter>
+                        minDegree=-400 maxDegree=400 
+                        meterNegativeClass="col-6"
+                        meterPositiveClass="col-6" ></app-progress-meter>
                 </div>
             </div>
             <div class="row px-1">
@@ -60,16 +62,18 @@
                 <div class="col">Low Temp(F):
                     <!--<app-progressbar [value]="lastVehicleStatus.temperaturelow" min="-40" max="220"></app-progressbar>-->
                     <app-progress-meter [degree]="lastVehicleStatus.temperaturelow"
-                        [minDegree]="-40" [maxDegree]="220"></app-progress-meter>
-
+                        minDegree=-40 maxDegree=220 
+                        meterNegativeClass="col-2"
+                        meterPositiveClass="col-10" ></app-progress-meter>
                 </div>
             </div>
             <div class="row p-1">
                 <div class="col">High Temp(F):
                     <!--<app-progressbar [value]="lastVehicleStatus.temperaturehigh" min="-40" max="220"></app-progressbar>-->
                     <app-progress-meter [degree]="lastVehicleStatus.temperaturehigh"
-                        [minDegree]="-40" [maxDegree]="220"></app-progress-meter>
-
+                        minDegree=-40 maxDegree=220 
+                        meterNegativeClass="col-2"
+                        meterPositiveClass="col-10" ></app-progress-meter>
                 </div>
             </div>
             <div class="row p-1">
