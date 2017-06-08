@@ -11,6 +11,7 @@ import { VehicleStatus } from '../models/vehicle-status';
 import { VehicleSnapshot } from '../models/vehicle-snapshot';
 import { VehicleAlert } from '../models/vehicle-alert';
 import { VehicleDailyUsage } from '../models/vehicle-daily-usage';
+import { FleetIdentity } from '../models/fleet-identity';
 
 @Injectable()
 export class DataRemoteService {
@@ -28,7 +29,7 @@ export class DataRemoteService {
     "/VehicleAlert/GetRecentAllByVehicleName";
   private Endpoint_VehicleDailyUsageByDateScope: string = 
     "/VehicleDailyUsage/GetByDateRange";
-
+  private Endpoint_FleetIdentities: string = "/FleetIdentity";
 
   private URL_VehicleIdentities: string;
   private URL_VehicleIdentitiesByLoginName: string;
@@ -39,6 +40,7 @@ export class DataRemoteService {
   private URL_WholeDayVehicleSnapshot: string;
   private URL_RecentAllVehicleAlertByVehicleName: string;
   private URL_VehicleDailyUsageByDateScope: string;
+  private URL_FleetIdentities: string;
 
   constructor(private http: Http)
   { 
@@ -58,6 +60,7 @@ export class DataRemoteService {
       this.URL_RemoteApiRoot + this.Endpoint_RecentAllVehicleAlertByVehicleName;
     this.URL_VehicleDailyUsageByDateScope = 
       this.URL_RemoteApiRoot + this.Endpoint_VehicleDailyUsageByDateScope;
+    this.URL_FleetIdentities = this.URL_RemoteApiRoot + this.Endpoint_FleetIdentities;
   }
 
   getVehicleIdentities$(): Observable<Array<VehicleIdentity>> {
@@ -73,12 +76,18 @@ export class DataRemoteService {
   }
 
 
-  getFleetIdentities$(): Observable<Array<string>> {
-    return this.http.get(this.URL_VehicleIdentities)
-      .map(res => res.json()
-        .map(v => v.fname)
-        .filter((el, i, arr) => arr.indexOf(el) === i)
-      )
+  // getFleetIdentities$(): Observable<Array<string>> {
+  //   return this.http.get(this.URL_VehicleIdentities)
+  //     .map(res => res.json()
+  //       .map(v => v.fname)
+  //       .filter((el, i, arr) => arr.indexOf(el) === i)
+  //     )
+  //     .catch(this.handleError);
+  // }
+
+  getFleetIdentities$(): Observable<Array<FleetIdentity>> {
+    return this.http.get(this.URL_FleetIdentities)
+      .map(res => res.json())
       .catch(this.handleError);
   }
 

@@ -4,16 +4,17 @@ import { VehicleIdentity } from '../models/vehicle-identity';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
+import { FleetIdentity } from '../models/fleet-identity';
+
 @Component({
   selector: 'app-fleet-selection',
   templateUrl: './fleet-selection.component.html',
   styleUrls: ['./fleet-selection.component.css'],
-  // encapsulation: ViewEncapsulation.Native
 })
 export class FleetSelectionComponent implements OnInit {
 
   fleets: string[];
-  fleets$: Observable<Array<string>>;
+  fleets$: Observable<Array<FleetIdentity>>;
 
   constructor(
     private dataService: DataService
@@ -21,12 +22,5 @@ export class FleetSelectionComponent implements OnInit {
 
   ngOnInit() {
     this.fleets$ = this.dataService.getAllFleetID$();
-    // this.dataService.getAllFleetID$().subscribe(data => this.fleets = data);
-    // this.fleets = 
-    //   this.dataService.getAllFleetID();
-    // let data = this.dataService.getAll();
-
-    // this.fleets = 
-      // data.map(el => el.fid).filter((el, i, arr) => arr.indexOf(el) === i);
   }
 }

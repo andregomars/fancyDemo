@@ -14,6 +14,7 @@ import { VehicleSnapshot } from '../models/vehicle-snapshot';
 import { VehicleIdentity } from '../models/vehicle-identity';
 import { VehicleAlert } from '../models/vehicle-alert';
 import { VehicleDailyUsage } from '../models/vehicle-daily-usage';
+import { FleetIdentity } from '../models/fleet-identity';
 
 @Injectable()
 export class DataService {
@@ -27,7 +28,7 @@ export class DataService {
     ) {
     }
 
-   getAllFleetID$(): Observable<Array<string>> {
+   getAllFleetID$(): Observable<Array<FleetIdentity>> {
       return this.dataService.getFleetIdentities$();
    }
 

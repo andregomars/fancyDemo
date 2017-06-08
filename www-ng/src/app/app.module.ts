@@ -81,7 +81,7 @@ import { ProgressMeterComponent } from './components/progressmeter/progress-mete
     JustgageModule,
     CookieModule.forRoot(),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAqZcZ_L6UIsGVHcDqWdu-GrsRSPcpWeqU'
+      apiKey: 'AIzaSyC2aUGq0zuZMLTgrUG72Wb4LX6nOA_Q4VM'
     })
   ],
   providers: [

@@ -11,6 +11,7 @@ import { Fleet } from '../models/fleet.model';
 import { VehicleStatus } from '../models/vehicle-status';
 import { VehicleIdentity } from '../models/vehicle-identity';
 import { DataRemoteService } from './data-remote.service';
+import { FleetIdentity } from '../models/fleet-identity';
 
 @Injectable()
 export class DataLocalService {
@@ -24,7 +25,7 @@ export class DataLocalService {
     ) {
     }
 
-   getAllFleetID$(): Observable<Array<string>> {
+   getAllFleetID$(): Observable<Array<FleetIdentity>> {
       return this.dataRemoteService.getFleetIdentities$();
    }
 
