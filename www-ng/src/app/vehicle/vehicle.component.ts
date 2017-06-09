@@ -34,8 +34,8 @@ export class VehicleComponent implements OnInit {
 
 
   optionDatePicker: IMyOptions;
-  //selectedDate: Date = moment().startOf('day').toDate(); 
-  selectedDate: Date = new Date(2017, 4, 3);  //test only
+  selectedDate: Date = moment().subtract(1, 'day').startOf('day').toDate(); 
+  // selectedDate: Date = new Date(2017, 4, 3);  //test only
 
 
   optionSocRangeChart: any;
@@ -124,6 +124,8 @@ export class VehicleComponent implements OnInit {
   }
 
   loadDualChartsData(): void {
+    console.log(this.vehicleName);
+    console.log(this.selectedDate);
     this.dataService.getVehicleWholeDaySnapshot$(this.vehicleName, this.selectedDate)
       .subscribe(data => {
         if (!data) return;
@@ -299,10 +301,10 @@ export class VehicleComponent implements OnInit {
 
 
   getChartDataComplex(list: VehicleSnapshot[]): any {
-    var filtered_A = list.filter(e => e.code === '1J');
-    var filtered_B = list.filter(e => e.code === '1F');
-    var filtered_C = list.filter(e => e.code === '2F');
-    var filtered_D = list.filter(e => e.code === '2G');
+    var filtered_A = list.filter(e => e.code === '2B'); //Energy
+    var filtered_B = list.filter(e => e.code === '2F'); //Voltage
+    var filtered_C = list.filter(e => e.code === '2E'); //Current
+    var filtered_D = list.filter(e => e.code === '2H'); //Highest Temperature
 
     // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
     var labels = filtered_A.map(el => el.time);
@@ -348,9 +350,10 @@ export class VehicleComponent implements OnInit {
   }
 
   getChartDataSOCEnergy(list: VehicleSnapshot[]): any {
-    var filtered_A = list.filter(e => e.code === '1E');
-    var filtered_B = list.filter(e => e.code === '1J');
-
+    var filtered_A = list.filter(e => e.code === '2A');
+    var filtered_B = list.filter(e => e.code === '2B');
+    console.log(list);
+    console.log(filtered_A);
     // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
     var labels = filtered_A.map(el => el.time);
     var data_A = filtered_A.map(el => el.value.toFixed(2));
@@ -379,8 +382,8 @@ export class VehicleComponent implements OnInit {
   }
 
   getChartDataEstActualDistance(list: VehicleSnapshot[]): any {
-    var filtered_A = list.filter(e => e.code === '2H');
-    var filtered_B = list.filter(e => e.code === '1H');
+    var filtered_A = list.filter(e => e.code === '2L');
+    var filtered_B = list.filter(e => e.code === '2L');
 
     // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
     var labels = filtered_A.map(el => el.time);
@@ -412,8 +415,8 @@ export class VehicleComponent implements OnInit {
   }
 
   getChargingRunningStatusData(list: VehicleSnapshot[]): any {
-    var filtered_A = list.filter(e => e.code === '1I');
-    var filtered_B = list.filter(e => e.code === '1K');
+    var filtered_A = list.filter(e => e.code === '2M');
+    var filtered_B = list.filter(e => e.code === '2U');
 
     // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
     var labels = filtered_A.map(el => el.time);

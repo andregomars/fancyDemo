@@ -10,7 +10,7 @@
     </p-column>
     <p-column field="soc" header="SOC" [sortable]="true">
         <ng-template let-col let-data="rowData" pTemplate="body">
-            <p-progressBar [value]="data[col.field]"></p-progressBar>
+            <p-progressBar [value]="data[col.field] | number:'1.0-1'"></p-progressBar>
         </ng-template>
     </p-column>
     <p-column field="status" header="Status" [sortable]="true"></p-column>
