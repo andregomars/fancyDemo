@@ -1,40 +1,34 @@
-
-    <div class="row no-gutters" >
-        <div class="col-6 col-md-4 col-lg-2 p-2 text-center" 
-          *ngFor="let row of items; let i = index" [ngSwitch]="row.status">
-            <!--not charging-->
-            <div *ngSwitchCase="0" class="card bg-bus-blue">
-                <div class="card-block">
-                    <p class="card-title">
-                        <a [routerLink]="['/vehicle', row.vname]">*&nbsp;{{row.vname}}&nbsp;*</a>
-                    </p>
-                    <div class="row no-gutters align-items-center">
-                        <div class="col flex-first"></div>
-                        <div class="col flex-unordered text-center">
-                            <h3>{{row.soc | number:'1.0-1'}}</h3>
-                        </div>
-                        <div class="col flex-last text-left">%</div>
-                    </div>
+<div class="row no-gutters">
+    <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-1 p-1 text-center small" *ngFor="let row of items; let i = index" [ngSwitch]="row.status">
+        <!--not charging-->
+        <div *ngSwitchCase="0" class="bg-bus-blue">
+            <div class="row">
+                <div class="col pt-3">
+                    <a [routerLink]="['/vehicle', row.vname]">*&nbsp;{{row.vname}}&nbsp;*</a>
                 </div>
             </div>
-            <!-- charging -->
-            <div *ngSwitchDefault class="card bg-bus-green">
-                <div class="card-block">
-                    <p class="card-title">
-                        <a [routerLink]="['/vehicle', row.vname]">*&nbsp;{{row.vname}}&nbsp;*</a>
-                    </p>
-                    <div class="row no-gutters align-items-center">
-                        <div class="col flex-first"></div>
-                        <div class="col flex-unordered text-center">
-                            <h3>{{row.soc | number:'1.0-1'}}</h3>
-                        </div>
-                        <div class="col flex-last text-left">%</div>
-                    </div>
+            <div class="row no-gutters align-items-center">
+                <div class="col flex-first"></div>
+                <div class="col flex-unordered text-center">
+                    <h3>{{row.soc | number:'1.0-1'}}</h3>
                 </div>
+                <div class="col flex-last text-left">%</div>
+            </div>
+        </div>
+        <!-- charging -->
+        <div *ngSwitchDefault class="bg-bus-green">
+            <div class="row">
+                <div class="col pt-3">
+                    <a [routerLink]="['/vehicle', row.vname]">*&nbsp;{{row.vname}}&nbsp;*</a>
+                </div>
+            </div>
+            <div class="row no-gutters align-items-center">
+                <div class="col flex-first"></div>
+                <div class="col flex-unordered text-center">
+                    <h4>{{row.soc | number:'1.0-1'}}</h4>
+                </div>
+                <div class="col flex-last text-left">%</div>
             </div>
         </div>
     </div>
-
-
-
-
+</div>

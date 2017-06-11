@@ -20,7 +20,7 @@ import { VehicleAlert } from '../models/vehicle-alert'
   moduleId: module.id,
   templateUrl: 'vehicle.component.html',
   styleUrls: ['vehicle.component.css'],
-  // encapsulation: ViewEncapsulation.Native
+  // encapsulation: ViewEncapsulation.None
 })
 export class VehicleComponent implements OnInit {
 
