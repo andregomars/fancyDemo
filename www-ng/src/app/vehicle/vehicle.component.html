@@ -177,8 +177,8 @@
                     </div>
                 </div>
         </div>
+            <app-vehicle-map *ngIf="recentStatusList" [items]="recentStatusList"></app-vehicle-map>
             <div #divDualCharts class="card-block">
-                    <app-vehicle-map *ngIf="recentStatusList" [items]="recentStatusList"></app-vehicle-map>
                     <p-chart #chartSocRange type="line" [options]="optionSocRangeChart" ></p-chart>
                     <p-chart #chartEstActualDistance type="line" [options]="optionEstActualDistanceChart"></p-chart>
                     <p-chart #chartChargingRunningStatus type="line" [options]="optionChargingRunningStatusChart"></p-chart>
