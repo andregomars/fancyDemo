@@ -113,6 +113,7 @@ export class VehicleComponent implements OnInit {
     this.dataService.getRecentVehicleStatusList$(this.vehicleName)
       .subscribe((data: Array<VehicleStatus>) => {
         this.recentStatusList = data;
+        console.log(this.recentStatusList);
       });
   }
 
@@ -219,7 +220,7 @@ export class VehicleComponent implements OnInit {
           time: {
             unit: 'minute',
             round: true,
-            max: '2017-05-03T23:45:36',
+            // max: '2017-05-03T23:45:36',
             tooltipFormat: 'HH:mm',
             displayFormats: {
               minute: 'HH:00'
@@ -352,8 +353,6 @@ export class VehicleComponent implements OnInit {
   getChartDataSOCEnergy(list: VehicleSnapshot[]): any {
     var filtered_A = list.filter(e => e.code === '2A');
     var filtered_B = list.filter(e => e.code === '2B');
-    console.log(list);
-    console.log(filtered_A);
     // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
     var labels = filtered_A.map(el => el.time);
     var data_A = filtered_A.map(el => el.value.toFixed(2));
@@ -462,7 +461,7 @@ export class VehicleComponent implements OnInit {
           time: {
             unit: 'minute',
             round: true,
-            max: '2017-05-03T23:45:36',
+            // max: '2017-05-03T23:45:36',
             tooltipFormat: 'HH:mm',
             displayFormats: {
               minute: 'HH:00'

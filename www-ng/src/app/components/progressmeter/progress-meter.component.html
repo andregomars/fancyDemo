@@ -2,16 +2,16 @@
  <div [ngClass]="meterNegativeClass">
     <div class="progress" dir="rtl"
       style="border-radius:.25rem 0rem 0rem .25rem"
-      [style.background-color]="degree < 0 ? '#d3d3d3':'#0275d8'">
-      <div class="progress-bar bg-primary text-right" 
+      [style.background-color]="degree < 0 ? '#d3d3d3':'#f0ad4e'">
+      <div class="progress-bar bg-warning text-right" 
         [style.width]="degreeNegative">&nbsp;{{ degree < 0 ? '-' : '' }}</div>
     </div>
   </div>
   <div [ngClass]="meterPositiveClass">
     <div class="progress"
       style="border-radius:0rem .25rem .25rem 0rem"
-      [style.background-color]="degree > 0 ? '#d3d3d3':'#f0ad4e'">
-      <div class="progress-bar bg-warning text-left"
+      [style.background-color]="degree > 0 ? '#d3d3d3':'#0275d8'">
+      <div class="progress-bar bg-primary text-left"
         [style.width]="degreePositive">&nbsp;{{ degree >= 0 ? degree : this.Math.abs(degree) }}</div>
     </div>
   </div>

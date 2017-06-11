@@ -4,7 +4,8 @@
     [streetViewControl]=false [zoomControl]=false>
   <agm-marker *ngFor="let m of statusList"
       [latitude]="m.lat | geo" [longitude]="m.lng | geo"
-      [label]="m.vname" [title]="m.vname" 
+      [title]="m.vname" 
+      [iconUrl]="'http://maps.google.com/mapfiles/ms/micons/red-dot.png'" 
       [markerDraggable]=false> 
   </agm-marker>
 </agm-map>
