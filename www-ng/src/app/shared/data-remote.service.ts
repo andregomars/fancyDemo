@@ -30,6 +30,7 @@ export class DataRemoteService {
   private Endpoint_VehicleDailyUsageByDateScope: string = 
     "/VehicleDailyUsage/GetByDateRange";
   private Endpoint_FleetIdentities: string = "/FleetIdentity";
+  private Endpoint_FleetIdentitiesByLoginName: string = "/FleetIdentity/LoginName";
 
   private URL_VehicleIdentities: string;
   private URL_VehicleIdentitiesByLoginName: string;
@@ -41,6 +42,7 @@ export class DataRemoteService {
   private URL_RecentAllVehicleAlertByVehicleName: string;
   private URL_VehicleDailyUsageByDateScope: string;
   private URL_FleetIdentities: string;
+  private URL_FleetIdentitiesByLoginName: string;
 
   constructor(private http: Http)
   { 
@@ -61,6 +63,8 @@ export class DataRemoteService {
     this.URL_VehicleDailyUsageByDateScope = 
       this.URL_RemoteApiRoot + this.Endpoint_VehicleDailyUsageByDateScope;
     this.URL_FleetIdentities = this.URL_RemoteApiRoot + this.Endpoint_FleetIdentities;
+    this.URL_FleetIdentitiesByLoginName = 
+      this.URL_RemoteApiRoot + this.Endpoint_FleetIdentitiesByLoginName;
   }
 
   getVehicleIdentities$(): Observable<Array<VehicleIdentity>> {
@@ -87,6 +91,12 @@ export class DataRemoteService {
 
   getFleetIdentities$(): Observable<Array<FleetIdentity>> {
     return this.http.get(this.URL_FleetIdentities)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+  getFleetIdentitiesByLoginName$(loginName: string): Observable<Array<FleetIdentity>> {
+    return this.http.get(`${this.URL_FleetIdentitiesByLoginName}/${loginName}`)
       .map(res => res.json())
       .catch(this.handleError);
   }

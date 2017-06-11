@@ -1,20 +1,20 @@
 <div class="container-fluid" style="min-height:100%">
-  <!--<div *ngIf="ids && ids.length > 0; else elseBlock" class="row">-->
-  <div class="row">
-    <div class="col-sm-2 p-0">
-      <app-menu></app-menu>
-    </div>
-    <div class="col-sm-10 p-2">
-      <!--<div>user: {{ user }}</div>-->
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-  <ng-template #elseBlock> 
+  <div *ngIf="ids && ids.length > 0; else blockAccessNotAllowed">
     <div class="row">
-      <div class="col text-center align-middle">
-        <h1>Access is not Allowed, please return to Home Page</h1>
+      <div class="col-sm-2 p-0">
+        <app-menu></app-menu>
+      </div>
+      <div class="col-sm-10 p-2">
+        <!--<div>user: {{ user }}</div>-->
+        <router-outlet></router-outlet>
       </div>
     </div>
-  </ng-template>
-</div>
-
+    <ng-template #blockAccessNotAllowed>
+      <div class="row">
+        <div class="col text-center align-middle">
+          <h1>Sorry, your access is not Allowed, please return to <a href="http://cloud.iocontrols.com/ioc">Home Page</a></h1>
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </ng-template>
+  </div>

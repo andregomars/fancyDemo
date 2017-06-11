@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie';
 import { DataService } from './shared/data.service';
-import { VehicleIdentity } from './models/vehicle-identity';
+import { FleetIdentity } from './models/fleet-identity';
 
 @Component ({
     moduleId: module.id,
@@ -10,8 +10,8 @@ import { VehicleIdentity } from './models/vehicle-identity';
 		styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  user: string;
-  ids: Array<VehicleIdentity>;
+  userLoginName: string;
+  ids: Array<FleetIdentity>;
 
   constructor(
     private cookie: CookieService,
@@ -19,9 +19,9 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.user = this.cookie.get('ioc_loggedin');
+    this.userLoginName = this.cookie.get('ioc_loggedin');
 
-    this.dataService.getVehicleIdentitiesByLoginName(this.user)
+    this.dataService.getFleetIdentitiesByLoginName(this.userLoginName)
       .subscribe(data => this.ids = data);
 
   }

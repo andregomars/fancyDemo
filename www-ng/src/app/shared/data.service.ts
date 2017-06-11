@@ -32,6 +32,10 @@ export class DataService {
       return this.dataService.getFleetIdentities$();
    }
 
+   getFleetIdentitiesByLoginName(loginName: string): Observable<Array<FleetIdentity>> {
+       return this.dataService.getFleetIdentitiesByLoginName$(loginName);
+   }
+
    getAllVehiclesData$(): Observable<Array<VehicleIdentity>> {
      return this.dataService.getVehicleIdentities$();
    }
