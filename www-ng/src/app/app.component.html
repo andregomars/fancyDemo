@@ -9,12 +9,15 @@
         <router-outlet></router-outlet>
       </div>
     </div>
-    <ng-template #blockAccessNotAllowed>
-      <div class="row">
-        <div class="col text-center align-middle">
-          <h1>Sorry, your access is not Allowed, please return to <a href="http://cloud.iocontrols.com/ioc">Home Page</a></h1>
-          <router-outlet></router-outlet>
-        </div>
-      </div>
-    </ng-template>
   </div>
+  <ng-template #blockAccessNotAllowed>
+    <div class="row">
+      <div class="col text-center align-middle">
+        <h1>Sorry, your access is not Allowed, please return to <a href="http://cloud.iocontrols.com/ioc">Home Page</a></h1>
+          <div [hidden]=true>
+            <router-outlet [hidden]=true></router-outlet>
+          </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
+import { CookieService } from 'ngx-cookie';
+
 import { DataService } from './data.service';
 import { VehicleIdentity } from '../models/vehicle-identity';
 
@@ -12,18 +14,15 @@ export class FleetTrackerService {
   private subject: Subject<string> = new Subject<string>();
 
   constructor(
+    private cookie: CookieService,
     private dataService: DataService
   ) { 
   }
 
   setFleetIDByVehicle(vname: string): void {
-    // this.vehicles = this.dataService.getAllVehiclesData();
-    // if (!this.vehicles) return;
-
-    // var vehicle = this.vehicles.find(v => v.vname === vname);
-    // this.fname = vehicle ? vehicle.fname : "";
-    // this.subject.next(this.fname);
-    this.dataService.getAllVehiclesData$()
+    var userLoginName = this.cookie.get('ioc_loggedin');
+    // this.dataService.getAllVehiclesData$()
+    this.dataService.getVehicleIdentitiesByLoginName$(userLoginName)
       .subscribe((data: Array<VehicleIdentity>) => {
         this.vehicles = data;
         var vehicle = data.find(v => v.vname === vname);
@@ -33,13 +32,9 @@ export class FleetTrackerService {
   }
 
   setFleetIDByFleet(fname: string): void {
-    // this.vehicles = this.dataService.getAllVehiclesData();
-    // if (!this.vehicles) return;
-
-    // console.log('fname refreshed: '+fname);
-    // this.fname = fname;
-    // this.subject.next(fname);
-    this.dataService.getAllVehiclesData$()
+    var userLoginName = this.cookie.get('ioc_loggedin');
+    // this.dataService.getAllVehiclesData$()
+    this.dataService.getVehicleIdentitiesByLoginName$(userLoginName)
       .subscribe((data: Array<VehicleIdentity>) => {
         this.vehicles = data;
         this.fname = fname;

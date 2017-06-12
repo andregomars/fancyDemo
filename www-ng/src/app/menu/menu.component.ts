@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MenuModule, MenuItem } from 'primeng/primeng';
+import { CookieService } from 'ngx-cookie';
+
 import { FleetTrackerService } from '../shared/fleet-tracker.service';
 import { DataService } from '../shared/data.service';
 import { VehicleIdentity } from '../models/vehicle-identity'
@@ -21,14 +23,17 @@ export class MenuComponent implements OnInit {
     vehicles: VehicleIdentity[];
 
     constructor(
+      private cookie: CookieService,
       private fleetTracker: FleetTrackerService,
       private dataService: DataService
     ){}
     
     ngOnInit() {
+      var userLoginName = this.cookie.get('ioc_loggedin');
       this.fleetTracker.getFleetID().subscribe(fname => 
         {
-          this.dataService.getAllVehiclesData$()
+          // this.dataService.getAllVehiclesData$()
+          this.dataService.getVehicleIdentitiesByLoginName$(userLoginName)
             .map(el => el.filter( v => v.fname === fname))
             .subscribe(vehicles => 
              { 
@@ -41,7 +46,7 @@ export class MenuComponent implements OnInit {
           this.loadDailyReportItem(fname);
         });
       
-      this.dataService.getAllVehiclesData$().subscribe(data =>
+      this.dataService.getVehicleIdentitiesByLoginName$(userLoginName).subscribe(data =>
         this.loadFleetItems(data)
       );
     }

@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.userLoginName = this.cookie.get('ioc_loggedin');
 
-    this.dataService.getFleetIdentitiesByLoginName(this.userLoginName)
+    this.dataService.getFleetIdentitiesByLoginName$(this.userLoginName)
       .subscribe(data => this.ids = data);
 
   }

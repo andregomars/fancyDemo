@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { DataService } from '../shared/data.service';
-import { VehicleIdentity } from '../models/vehicle-identity';
+import { CookieService } from 'ngx-cookie';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
+import { DataService } from '../shared/data.service';
 import { FleetIdentity } from '../models/fleet-identity';
 
 @Component({
@@ -13,14 +13,17 @@ import { FleetIdentity } from '../models/fleet-identity';
 })
 export class FleetSelectionComponent implements OnInit {
 
-  fleets: string[];
+  // fleets: string[];
   fleets$: Observable<Array<FleetIdentity>>;
 
   constructor(
+    private cookie: CookieService,
     private dataService: DataService
   ) { }
 
   ngOnInit() {
-    this.fleets$ = this.dataService.getAllFleetID$();
+    var userLoginName = this.cookie.get('ioc_loggedin');
+    // this.fleets$ = this.dataService.getAllFleetID$();
+    this.fleets$ = this.dataService.getFleetIdentitiesByLoginName$(userLoginName);
   }
 }

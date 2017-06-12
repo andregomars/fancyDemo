@@ -32,7 +32,7 @@ export class DataService {
       return this.dataService.getFleetIdentities$();
    }
 
-   getFleetIdentitiesByLoginName(loginName: string): Observable<Array<FleetIdentity>> {
+   getFleetIdentitiesByLoginName$(loginName: string): Observable<Array<FleetIdentity>> {
        return this.dataService.getFleetIdentitiesByLoginName$(loginName);
    }
 
@@ -40,7 +40,7 @@ export class DataService {
      return this.dataService.getVehicleIdentities$();
    }
 
-   getVehicleIdentitiesByLoginName(loginName: string): Observable<Array<VehicleIdentity>> {
+   getVehicleIdentitiesByLoginName$(loginName: string): Observable<Array<VehicleIdentity>> {
        return this.dataService.getVehicleIdentitiesByLoginName$(loginName);
    }
 
