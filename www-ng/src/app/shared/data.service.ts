@@ -82,6 +82,10 @@ export class DataService {
       return this.dataService.getVehicleDailyUsageByDateRange$(vname, beginDate, endDate);
     }
 
+    getVehicleDailyUsageByFleet$(fname: string, 
+      beginDate: Date, endDate: Date): Observable<Array<VehicleDailyUsage>> {
+      return this.dataService.getVehicleDailyUsageByFleet$(fname, beginDate, endDate);
+    }
 //     getAllFleetID(): Array<string> {
 //       var data = this.dataService.getFleetIdentities();
 //       return data;
@@ -137,79 +141,6 @@ export class DataService {
       return allVehiclesStatus.filter(s => s.fname === fname);
     }
 
-    // getVehicleStatusData(): any {
-    //     return [{
-    //         "TypeCode": "0E",
-    //         "Name": "Left Charge Gun",
-    //         "Value": "0 bit"
-    //     }, {
-    //         "TypeCode": "0E",
-    //         "Name": "Left Charge Gun",
-    //         "Value": "0 bit"
-    //     }, {
-    //         "TypeCode": "0F",
-    //         "Name": "Right Charge Gun",
-    //         "Value": "0 bit"
-    //     }, {
-    //         "TypeCode": "1D",
-    //         "Name": "Vehicle Speed",
-    //         "Value": "0 mph"
-    //     }, {
-    //         "TypeCode": "1E",
-    //         "Name": "SOC",
-    //         "Value": "68.7 %"
-    //     }, {
-    //         "TypeCode": "1F",
-    //         "Name": "Total Voltage",
-    //         "Value": "620 V"
-    //     }, {
-    //         "TypeCode": "2F",
-    //         "Name": "Total current",
-    //         "Value": "3.7 A"
-    //     }, {
-    //         "TypeCode": "1G",
-    //         "Name": "Lowest Battery Temp",
-    //         "Value": "82.4 F"
-    //     }, {
-    //         "TypeCode": "2G",
-    //         "Name": "Highest Battery Temp",
-    //         "Value": "95 F"
-    //     }, {
-    //         "TypeCode": "1H",
-    //         "Name": "Total Mileage",
-    //         "Value": "5647.2 miles"
-    //     }, {
-    //         "TypeCode": "2H",
-    //         "Name": "Range",
-    //         "Value": "105.6 miles"
-    //     }, {
-    //         "TypeCode": "1I",
-    //         "Name": "Charging Status",
-    //         "Value": "Initialization"
-    //     }, {
-    //         "TypeCode": "1J",
-    //         "Name": "kWh Usage",
-    //         "Value": "177.3 kWh"
-    //     }, {
-    //         "TypeCode": "1K",
-    //         "Name": "High Voltage",
-    //         "Value": "1 bit"
-    //     }, {
-    //         "TypeCode": "1L",
-    //         "Name": "Motor Input Voltage",
-    //         "Value": "608 V"
-    //     }, {
-    //         "TypeCode": "2L",
-    //         "Name": "Motor RPM",
-    //         "Value": "0 RPM"
-    //     }, {
-    //         "TypeCode": "1M",
-    //         "Name": "WAVE Status",
-    //         "Value": "N/A"
-    //     }]
-    // }
-
- 
     getBackwardDaysVehicleDailyMileage(backwardDays: number): any {
         return {
             labels: this.utility.getBackwardDateList(backwardDays, new Date()),

@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { IMyOptions, IMyDateRangeModel } from 'mydaterangepicker';
 import { DataTableModule, UIChart } from 'primeng/primeng';
 import * as Rx from 'rxjs/Rx';
+import * as moment from 'moment';
 let jsPDF = require("jspdf");
 let html2canvas = require("html2canvas");
 
@@ -63,7 +64,10 @@ export class MonthlyReportComponent implements OnInit {
     this.initMonthlyChartOption();
 
     this.selectedYear = new Date().getFullYear();
-    this.selectedMonth = new Date().getMonth();
+    this.selectedMonth = { 
+        name: moment().format('MMM'),
+        value: moment().startOf('month').toDate()
+      };
     this.loadFleet();
   }
 
@@ -104,7 +108,13 @@ export class MonthlyReportComponent implements OnInit {
 
   /*** Fleet Status Grid ***/
   private initFleetMonthlyData() {
-    this.dataFleetMonthly = this.dataService.getRandomMonthlyDataSetWithVehicles(this.vehicles);
+    // this.dataFleetMonthly = this.dataService.getRandomMonthlyDataSetWithVehicles(this.vehicles);
+    var beginDate = moment(this.selectedMonth.value).startOf('month').toDate();
+    var endDate = moment(this.selectedMonth.value).endOf('month').toDate();
+    
+    this.dataService.getVehicleDailyUsageByFleet$(this.fleetID, beginDate, endDate)
+      .subscribe(data => this.dataFleetMonthly = data);
+
   }
 
   /*** Fleet Alert Grid ***/

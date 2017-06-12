@@ -27,8 +27,8 @@ export class DataRemoteService {
   private Endpoint_WholeDayVehicleSnapshot: string = "/VehicleSnapshot/GetWholeDayByVehicleName";
   private Endpoint_RecentAllVehicleAlertByVehicleName: string = 
     "/VehicleAlert/GetRecentAllByVehicleName";
-  private Endpoint_VehicleDailyUsageByDateScope: string = 
-    "/VehicleDailyUsage/GetByDateRange";
+  private Endpoint_VehicleDailyUsageByDateScope: string = "/VehicleDailyUsage/GetByDateRange";
+  private Endpoint_VehicleDailyUsageByFleet: string = "/VehicleDailyUsage/GetByFleet";
   private Endpoint_FleetIdentities: string = "/FleetIdentity";
   private Endpoint_FleetIdentitiesByLoginName: string = "/FleetIdentity/LoginName";
 
@@ -41,6 +41,7 @@ export class DataRemoteService {
   private URL_WholeDayVehicleSnapshot: string;
   private URL_RecentAllVehicleAlertByVehicleName: string;
   private URL_VehicleDailyUsageByDateScope: string;
+  private URL_VehicleDailyUsageByFleet: string;
   private URL_FleetIdentities: string;
   private URL_FleetIdentitiesByLoginName: string;
 
@@ -62,6 +63,8 @@ export class DataRemoteService {
       this.URL_RemoteApiRoot + this.Endpoint_RecentAllVehicleAlertByVehicleName;
     this.URL_VehicleDailyUsageByDateScope = 
       this.URL_RemoteApiRoot + this.Endpoint_VehicleDailyUsageByDateScope;
+    this.URL_VehicleDailyUsageByFleet = 
+      this.URL_RemoteApiRoot + this.Endpoint_VehicleDailyUsageByFleet;
     this.URL_FleetIdentities = this.URL_RemoteApiRoot + this.Endpoint_FleetIdentities;
     this.URL_FleetIdentitiesByLoginName = 
       this.URL_RemoteApiRoot + this.Endpoint_FleetIdentitiesByLoginName;
@@ -144,6 +147,16 @@ export class DataRemoteService {
     var beginDay = moment(beginDate).startOf('day').format('YYYY-MM-DD');
     var endDay = moment(endDate).startOf('day').format('YYYY-MM-DD');
     return this.http.get(`${this.URL_VehicleDailyUsageByDateScope}/${vname}/${beginDay}/${endDay}`)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+  // date format: yyyy-mm-dd, e.g. 2017-05-03
+  getVehicleDailyUsageByFleet$(fname: string, 
+    beginDate: Date, endDate: Date): Observable<Array<VehicleDailyUsage>> {
+    var beginDay = moment(beginDate).startOf('day').format('YYYY-MM-DD');
+    var endDay = moment(endDate).startOf('day').format('YYYY-MM-DD');
+    return this.http.get(`${this.URL_VehicleDailyUsageByFleet}/${fname}/${beginDay}/${endDay}`)
       .map(res => res.json())
       .catch(this.handleError);
   }

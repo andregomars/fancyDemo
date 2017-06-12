@@ -1,7 +1,7 @@
  <!-- Header Section -->
 <div class="navbar text-center bg-faded mb-2">
   <div class="row no-gutters align-items-center">
-    <div class="col flex-first text-left">/ Montly Report</div>
+    <div class="col flex-first text-left">/ Monthly Report</div>
     <div class="col flex-unordered text-center">
       <h5> <i class="fa fa-flag"></i> {{ fleetID }} </h5>
     </div>
@@ -45,26 +45,21 @@
 <!-- Montly Total Table-->
 <div class="card-deck m-2">
   <div class="card">
-    <div class="card-header font-weight-bold">Montly Total</div>
+    <div class="card-header font-weight-bold">Monthly Total Data</div>
     <div class="card-block">
-      <p-dataTable [value]="dataFleetMonthly" class="table">
-        <p-column field="id" header="Bus No." [sortable]="true"></p-column>
-        <p-column field="socCharged" header="SOC Charged"></p-column>
-        <p-column field="socUsed" header="SOC Used"></p-column>
-        <p-column field="actualDistance" header="Actual Distance"></p-column>
-        <p-column field="socMile" header="SOC/Miles"></p-column>
-        <p-column field="mileSoc" header="Miles/SOC"></p-column>
-      </p-dataTable>
-    </div>
-  </div>
-</div>
-
-<!-- Chart Section -->
-<div #charts class="card-deck m-2">
-  <div class="card">
-    <div class="card-header font-weight-bold">Chart</div>
-    <div class="card-block">
-      <div class="row p-2">
+      <div class="row">
+        <div class="col">
+          <p-dataTable [value]="dataFleetMonthly" class="table">
+            <p-column field="id" header="Bus No." [sortable]="true"></p-column>
+            <p-column field="socCharged" header="SOC Charged"></p-column>
+            <p-column field="socUsed" header="SOC Used"></p-column>
+            <p-column field="actualDistance" header="Actual Distance"></p-column>
+            <p-column field="socMile" header="SOC/Miles"></p-column>
+            <p-column field="mileSoc" header="Miles/SOC"></p-column>
+          </p-dataTable>
+        </div>
+      </div>
+      <div class="row pt-4">
         <div class="col-2 text-right">
           <label>Options:</label>
         </div>
@@ -76,7 +71,7 @@
           </div>
         </div>
       </div>
-      <div class="row pt-4" style="overflow-x:auto">
+      <div class="row pt-2" style="overflow-x:auto">
         <p-chart #chartFleetMonthly type="horizontalBar" [data]="dataFleetMonthlyChart" 
           [options]="optionFleetMonthlyChart" width="960px" height="300px"></p-chart>
       </div>
@@ -87,7 +82,7 @@
 <!-- Montly Alert Table Section -->
 <div class="card-deck m-2">
   <div class="card">
-    <div class="card-header font-weight-bold">Monthly Alert</div>
+    <div class="card-header font-weight-bold">Monthly Total Alert</div>
     <div class="card-block">
         <p-dataTable [value]="dataFleetMonthlyAlert" class="table">
           <p-column field="id" header="Bus No." [sortable]="true"></p-column>
