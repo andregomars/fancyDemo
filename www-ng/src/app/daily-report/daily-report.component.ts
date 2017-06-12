@@ -61,7 +61,10 @@ export class DailyReportComponent implements OnInit {
   }
 
   private initYearsSelection(): void {
-    this.years = new Array(5).fill(this.thisYear).map((x, i)=>x-i);
+    //load years from 2017
+    var n = this.thisYear - 2016;
+    n = n < 1 ? 1 : n;
+    this.years = new Array(n).fill(this.thisYear).map((x, i)=>x-i);
     this.selectedYear = this.thisYear;
   }
 

@@ -3,7 +3,7 @@
     <p-column field="name" header="Name"></p-column>
     <p-column field="value" header="Value" [style]="{'width':'100px'}">
         <ng-template let-col let-row="rowData" pTemplate="body">
-            <div style="text-align:right">{{row[col.field] | number:'1.2-2'}}</div>
+            <div style="text-align:right">{{row[col.field] | number:'1.1-1'}}</div>
         </ng-template>
     </p-column>
 </p-dataTable>

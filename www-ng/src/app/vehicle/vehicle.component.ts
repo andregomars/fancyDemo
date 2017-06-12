@@ -113,7 +113,6 @@ export class VehicleComponent implements OnInit {
     this.dataService.getRecentVehicleStatusList$(this.vehicleName)
       .subscribe((data: Array<VehicleStatus>) => {
         this.recentStatusList = data;
-        console.log(this.recentStatusList);
       });
   }
 
@@ -125,8 +124,6 @@ export class VehicleComponent implements OnInit {
   }
 
   loadDualChartsData(): void {
-    console.log(this.vehicleName);
-    console.log(this.selectedDate);
     this.dataService.getVehicleWholeDaySnapshot$(this.vehicleName, this.selectedDate)
       .subscribe(data => {
         if (!data) return;
@@ -174,8 +171,8 @@ export class VehicleComponent implements OnInit {
     rightY = new YAxis("ActualDistance", "#565656", 0, 250);
     this.optionEstActualDistanceChart = this.getChartOptions(leftY, rightY);
 
-    leftY = new YAxis("ChargingStatus", "#4286f4", 0, 1);
-    rightY = new YAxis("RunningStatus", "#565656", 0, 800);
+    leftY = new YAxis("ChargingStatus", "#4286f4", 0, 10);
+    rightY = new YAxis("HighVoltageStatus", "#565656", 0, 1);
     this.optionChargingRunningStatusChart = this.getChartOptions(leftY, rightY);
   }
 
@@ -185,7 +182,7 @@ export class VehicleComponent implements OnInit {
       value: 0,
       title: "SOC(%)",
       symbol: "",
-      decimals: 0,
+      decimals: 1,
       startAnimationTime: 0,
       refreshAnimationTime: 0,
       pointer: false,
@@ -197,7 +194,7 @@ export class VehicleComponent implements OnInit {
       value: 0,
       title: "Speed(mph)",
       symbol: "",
-      decimals: 0,
+      decimals: 1,
       startAnimationTime: 0,
       refreshAnimationTime: 0,
       pointer: false,
@@ -309,10 +306,10 @@ export class VehicleComponent implements OnInit {
 
     // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
     var labels = filtered_A.map(el => el.time);
-    var data_A = filtered_A.map(el => el.value.toFixed(2));
-    var data_B = filtered_B.map(el => el.value.toFixed(2));
-    var data_C = filtered_C.map(el => el.value.toFixed(2));
-    var data_D = filtered_D.map(el => el.value.toFixed(2));
+    var data_A = filtered_A.map(el => el.value.toFixed(1));
+    var data_B = filtered_B.map(el => el.value.toFixed(1));
+    var data_C = filtered_C.map(el => el.value.toFixed(1));
+    var data_D = filtered_D.map(el => el.value.toFixed(1));
 
     return {
       labels: labels,
@@ -355,8 +352,8 @@ export class VehicleComponent implements OnInit {
     var filtered_B = list.filter(e => e.code === '2B');
     // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
     var labels = filtered_A.map(el => el.time);
-    var data_A = filtered_A.map(el => el.value.toFixed(2));
-    var data_B = filtered_B.map(el => el.value.toFixed(2));
+    var data_A = filtered_A.map(el => el.value.toFixed(1));
+    var data_B = filtered_B.map(el => el.value.toFixed(1));
 
     return {
       labels: labels,
@@ -386,8 +383,8 @@ export class VehicleComponent implements OnInit {
 
     // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
     var labels = filtered_A.map(el => el.time);
-    var data_A = filtered_A.map(el => el.value.toFixed(2));
-    var data_B = filtered_B.map(el => el.value.toFixed(2));
+    var data_A = filtered_A.map(el => el.value.toFixed(1));
+    var data_B = filtered_B.map(el => el.value.toFixed(1));
 
     return {
       labels: labels,
@@ -419,8 +416,8 @@ export class VehicleComponent implements OnInit {
 
     // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
     var labels = filtered_A.map(el => el.time);
-    var data_A = filtered_A.map(el => el.value.toFixed(2));
-    var data_B = filtered_B.map(el => el.value.toFixed(2));
+    var data_A = filtered_A.map(el => el.value.toFixed(1));
+    var data_B = filtered_B.map(el => el.value.toFixed(1));
 
     return {
       labels: labels,
@@ -437,7 +434,7 @@ export class VehicleComponent implements OnInit {
           type: 'line',
           label: 'High Voltage Status',
           data: data_B,
-          yAxisID: 'yRunningStatus',
+          yAxisID: 'yHighVoltageStatus',
           fill: false,
           pointRadius: 1,
           borderColor: '#565656',
@@ -468,6 +465,7 @@ export class VehicleComponent implements OnInit {
             }
           },
           ticks: {
+            beginAtZero: true,
             autoSkip: true,
             // autoSkipPadding: 4,
             maxTicksLimit: 24

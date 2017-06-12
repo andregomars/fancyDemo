@@ -20,8 +20,8 @@
                 <div class="col-12 col-lg-8">
                     <!--<app-gauge [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc" 
                     max="100" style="display:block"></app-gauge>-->
-                    <justgage [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc" 
-                        min="0" max="100" class="app-justgage"></justgage>
+                    <justgage [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc | number:'1.1-1'" 
+                         min=0 max=100 class="app-justgage"></justgage>
                 </div>
                 <div class="col-0 col-lg-2"></div>
             </div>
@@ -30,8 +30,8 @@
                 <div class="col-12 col-lg-8">
                   <!--<app-gauge [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed" 
                     max="65"></app-gauge>-->
-                     <justgage [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed" 
-                        min="0" max="65" class="app-justgage"></justgage>
+                     <justgage [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed"
+                        min=0 max=65 class="app-justgage"></justgage>
                 </div>
                 <div class="col-0 col-lg-2"></div>
             </div>
@@ -47,7 +47,7 @@
                 <div class="col">
                     <div>Current (A):</div>
                     <!--<app-progressbar [value]="lastVehicleStatus.current" min="0" max="120"></app-progressbar>-->
-                    <app-progress-meter [degree]="lastVehicleStatus.current | number:'1.0-1'"
+                    <app-progress-meter [degree]="lastVehicleStatus.current | number:'1.1-1'"
                         minDegree=-400 maxDegree=400 
                         meterNegativeClass="col-6"
                         meterPositiveClass="col-6" ></app-progress-meter>
@@ -55,13 +55,13 @@
             </div>
             <div class="row px-1">
                 <div class="col">Voltage(V):
-                    <app-progressbar [value]="lastVehicleStatus.voltage | number:'1.0-1'" max="800"></app-progressbar>
+                    <app-progressbar [value]="lastVehicleStatus.voltage | number:'1.1-1'" max="800"></app-progressbar>
                 </div>
             </div>
             <div class="row p-1">
                 <div class="col">Low Temp(F):
                     <!--<app-progressbar [value]="lastVehicleStatus.temperaturelow" min="-40" max="220"></app-progressbar>-->
-                    <app-progress-meter [degree]="lastVehicleStatus.temperaturelow | number:'1.0-1'"
+                    <app-progress-meter [degree]="lastVehicleStatus.temperaturelow | number:'1.1-1'"
                         minDegree=-40 maxDegree=220 
                         meterNegativeClass="col-2"
                         meterPositiveClass="col-10" ></app-progress-meter>
@@ -70,7 +70,7 @@
             <div class="row p-1">
                 <div class="col">High Temp(F):
                     <!--<app-progressbar [value]="lastVehicleStatus.temperaturehigh" min="-40" max="220"></app-progressbar>-->
-                    <app-progress-meter [degree]="lastVehicleStatus.temperaturehigh | number:'1.0-1'"
+                    <app-progress-meter [degree]="lastVehicleStatus.temperaturehigh | number:'1.1-1'"
                         minDegree=-40 maxDegree=220 
                         meterNegativeClass="col-2"
                         meterPositiveClass="col-10" ></app-progress-meter>
@@ -78,18 +78,18 @@
             </div>
             <div class="row p-1">
                 <div class="col">Range(Miles):
-                    <app-progressbar [value]="lastVehicleStatus.range | number: '1.0-1'" max="250"></app-progressbar>
+                    <app-progressbar [value]="lastVehicleStatus.range | number: '1.1-1'" max="250"></app-progressbar>
                 </div>
             </div>
             <div class="row p-1">
                 <div class="col">Remaining(kWh):
-                    <app-progressbar [value]="lastVehicleStatus.remainingenergy  | number: '1.0-1'" max="60"></app-progressbar>
+                    <app-progressbar [value]="lastVehicleStatus.remainingenergy  | number: '1.1-1'" max="60"></app-progressbar>
                 </div>
             </div>
             <div class="row p-1 align-items-end">
                 <div class="col-6"> Odometer(Miles): </div>
                 <div class="col-5 app-scoreboard">
-                    {{lastVehicleStatus.mileage | number: '1.0-1'}}
+                    {{lastVehicleStatus.mileage | number: '1.1-1'}}
                 </div>
             </div>
         </div>
