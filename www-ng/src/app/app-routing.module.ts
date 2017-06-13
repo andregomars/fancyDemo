@@ -1,7 +1,7 @@
 import { NgModule }      from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DrillComponent } from './drill/drill.component';
+// import { DrillComponent } from './drill/drill.component';
 import { FleetComponent } from './fleet/fleet.component';
 import { FleetSelectionComponent } from './fleet-selection/fleet-selection.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
@@ -11,7 +11,7 @@ import { MonthlyReportComponent } from './monthly-report/monthly-report.componen
 import { DailyReportComponent } from './daily-report/daily-report.component';
 
 const routes: Routes = [
-    { path: 'drill', component: DrillComponent },
+    // { path: 'drill', component: DrillComponent },
     { path: 'fleet', component: FleetSelectionComponent },
     { path: 'fleet/:fname', component: FleetComponent },
     { path: 'vehicle/:vname', component: VehicleComponent },

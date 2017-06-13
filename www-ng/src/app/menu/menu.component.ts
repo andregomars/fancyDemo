@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MenuModule, MenuItem } from 'primeng/primeng';
 import { CookieService } from 'ngx-cookie';
 
@@ -11,7 +11,6 @@ import { VehicleIdentity } from '../models/vehicle-identity'
   moduleId: module.id,
   templateUrl: 'menu.component.html',
   styleUrls: [ 'menu.component.css' ],
-  // encapsulation: ViewEncapsulation.None
 })
 export class MenuComponent implements OnInit {
 
@@ -22,6 +21,8 @@ export class MenuComponent implements OnInit {
     dailyReportItem: any[];
     vehicles: VehicleIdentity[];
 
+    @Input() show: boolean;
+
     constructor(
       private cookie: CookieService,
       private fleetTracker: FleetTrackerService,
@@ -30,6 +31,7 @@ export class MenuComponent implements OnInit {
     
     ngOnInit() {
       var userLoginName = this.cookie.get('ioc_loggedin');
+
       this.fleetTracker.getFleetID().subscribe(fname => 
         {
           // this.dataService.getAllVehiclesData$()

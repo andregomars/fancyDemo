@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -13,7 +13,8 @@ import { FleetIdentity } from '../models/fleet-identity';
 })
 export class FleetSelectionComponent implements OnInit {
 
-  // fleets: string[];
+  showFleets: boolean = false;
+  fleets: Array<FleetIdentity>;
   fleets$: Observable<Array<FleetIdentity>>;
 
   constructor(
@@ -23,7 +24,12 @@ export class FleetSelectionComponent implements OnInit {
 
   ngOnInit() {
     var userLoginName = this.cookie.get('ioc_loggedin');
-    // this.fleets$ = this.dataService.getAllFleetID$();
-    this.fleets$ = this.dataService.getFleetIdentitiesByLoginName$(userLoginName);
+    // this.fleets$ = this.dataService.getFleetIdentitiesByLoginName$(userLoginName);
+    this.dataService.getFleetIdentitiesByLoginName$(userLoginName)
+      .subscribe((data: Array<FleetIdentity>) => {
+        this.fleets = data;
+        if(data && data.length > 0) this.showFleets = true;
+      });
   }
+
 }
