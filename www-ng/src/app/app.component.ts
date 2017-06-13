@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie';
 import { DataService } from './shared/data.service';
 import { FleetIdentity } from './models/fleet-identity';
@@ -9,7 +9,7 @@ import { FleetIdentity } from './models/fleet-identity';
     templateUrl: 'app.component.html',
 		styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnChanges {
+export class AppComponent implements OnInit {
   userLoginName: string;
   ids: Array<FleetIdentity>;
   showMenu: boolean;
@@ -31,11 +31,5 @@ export class AppComponent implements OnInit, OnChanges {
 
   }
 
-  ngOnChanges(): void {
-  //   this.userLoginName = this.cookie.get('ioc_loggedin');
 
-  //   this.dataService.getFleetIdentitiesByLoginName$(this.userLoginName)
-  //     .subscribe(data => this.ids = data);
-
-  }
 }
