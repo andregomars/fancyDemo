@@ -35,8 +35,6 @@ export class VehicleComponent implements OnInit {
 
   optionDatePicker: IMyOptions;
   selectedDate: Date = moment().subtract(1, 'day').startOf('day').toDate(); 
-  // selectedDate: Date = new Date(2017, 4, 3);  //test only
-
 
   optionSocRangeChart: any;
   optionEstActualDistanceChart: any;
@@ -127,6 +125,7 @@ export class VehicleComponent implements OnInit {
     this.dataService.getVehicleWholeDaySnapshot$(this.vehicleName, this.selectedDate)
       .subscribe(data => {
         if (!data) return;
+
         this.chartSocRange.data = this.getChartDataSOCEnergy(data);
         this.chartEstActualDistance.data = this.getChartDataEstActualDistance(data);
         this.chartChargingRunningStatus.data = this.getChargingRunningStatusData(data);
@@ -215,19 +214,15 @@ export class VehicleComponent implements OnInit {
         xAxes: [{
           type: 'time',
           time: {
-            unit: 'minute',
-            round: true,
-            // max: '2017-05-03T23:45:36',
+            unit: 'hour',
             tooltipFormat: 'HH:mm',
+            min: moment(this.selectedDate).startOf('day'),
+            max: moment(this.selectedDate).add(1, 'day').startOf('day'),
             displayFormats: {
-              minute: 'HH:00'
+              hour: 'HH:mm'
             }
           },
-          ticks: {
-            autoSkip: true,
-            maxTicksLimit: 24
-          }
-        }],
+       }],
         yAxes: [{
           id: 'yEnergy',
           scaleLabel: {
@@ -292,10 +287,24 @@ export class VehicleComponent implements OnInit {
   onDateChanged(event: IMyDateModel) {
     if (event.jsdate) {
       this.selectedDate = event.jsdate;
+      this.resetChartsOptions();
       this.loadDualChartsData();
+      this.loadComplexChartData();
     }
   }
 
+  private resetChartsOptions(): void {
+    this.updateTimeScope(this.chartSocRange);
+    this.updateTimeScope(this.chartEstActualDistance);
+    this.updateTimeScope(this.chartChargingRunningStatus);
+    this.updateTimeScope(this.chartComplex);
+  }
+
+  private updateTimeScope(chart: UIChart): void {
+    chart.options.scales.xAxes[0].time.min = moment(this.selectedDate).startOf('day');
+    chart.options.scales.xAxes[0].time.max = 
+      moment(this.selectedDate).add(1, 'day').startOf('day');
+  }
 
 
   getChartDataComplex(list: VehicleSnapshot[]): any {
@@ -448,7 +457,6 @@ export class VehicleComponent implements OnInit {
       animation: {
         duration: 0
       },
-      // responsive: false,
       hover: {
         animationDuration: 0
       },
@@ -456,21 +464,15 @@ export class VehicleComponent implements OnInit {
         xAxes: [{
           type: 'time',
           time: {
-            unit: 'minute',
-            round: true,
-            // max: '2017-05-03T23:45:36',
+            unit: 'hour',
             tooltipFormat: 'HH:mm',
+            min: moment(this.selectedDate).startOf('day'),
+            max: moment(this.selectedDate).add(1, 'day').startOf('day'),
             displayFormats: {
-              minute: 'HH:00'
+              hour: 'HH:mm'
             }
           },
-          ticks: {
-            beginAtZero: true,
-            autoSkip: true,
-            // autoSkipPadding: 4,
-            maxTicksLimit: 24
-          }
-        }],
+       }],
         yAxes: [{
           id: 'y' + leftY.label,
           scaleLabel: {
