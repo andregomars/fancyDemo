@@ -9,7 +9,11 @@ export class VehicleDailyUsage {
     public soccharged: number,
     public socused: number,
     public energycharged: number,
-    public energyused: number
+    public energyused: number,
+    public soc_mile: number, 
+    public mile_soc: number, 
+    public energy_mile: number, 
+    public mile_energy: number 
  ) {}
 }
 

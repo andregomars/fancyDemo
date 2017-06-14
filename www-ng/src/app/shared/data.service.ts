@@ -86,6 +86,12 @@ export class DataService {
       beginDate: Date, endDate: Date): Observable<Array<VehicleDailyUsage>> {
       return this.dataService.getVehicleDailyUsageByFleet$(fname, beginDate, endDate);
     }
+
+    getVehicleDailyUsageDaysSummaryByFleet$(fname: string, 
+      beginDate: Date, endDate: Date): Observable<Array<VehicleDailyUsage>> {
+      return this.dataService.getVehicleDailyUsageDaysSummaryByFleet$(fname, beginDate, endDate);
+    }
+
 //     getAllFleetID(): Array<string> {
 //       var data = this.dataService.getFleetIdentities();
 //       return data;

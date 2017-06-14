@@ -12,7 +12,9 @@ import { VehicleIdentity } from '../models/vehicle-identity';
 import { UtilityService } from '../shared/utility.service';
 import { Vehicle } from '../models/vehicle.model';
 import { Fleet } from '../models/fleet.model';
+import { VehicleDailyUsage } from '../models/vehicle-daily-usage';
 import { FleetTrackerService } from '../shared/fleet-tracker.service';
+
 
 @Component({
   selector: 'app-monthly-report',
@@ -36,11 +38,15 @@ export class MonthlyReportComponent implements OnInit {
 
 
   options: any[] = [
-    { key: 'socCharged', name: 'SOC Charged' },
-    { key: 'socUsed', name: 'SOC Used' },
-    { key: 'actualDistance', name: 'Actual Distance' },
-    { key: 'socMile', name: 'SOC/Miles' },
-    { key: 'mileSoc', name: 'Miles/SOC' }
+    { key: 'soccharged', name: 'SOC Charged' },
+    { key: 'socused', name: 'SOC Used' },
+    { key: 'mileage', name: 'Actual Distance' },
+    { key: 'soc_mile', name: 'SOC/Miles' },
+    { key: 'mile_soc', name: 'Miles/SOC' },
+    { key: 'energycharged', name: 'kWh Charged' },
+    { key: 'energyused', name: 'kWh Used' },
+    { key: 'energy_mile', name: 'kWh/Miles' },
+    { key: 'mile_energy', name: 'Miles/kWh' }
   ];
   optionSelected: any = this.options[0];
 
@@ -48,6 +54,8 @@ export class MonthlyReportComponent implements OnInit {
   @ViewChild("charts")
   charts: ElementRef;
 
+  // @ViewChild("tableFleetMonthly")
+  // tableFleetMonthly: DataTableModule;
   @ViewChild("chartFleetMonthly")
   chartFleetMonthly: UIChart;
 
@@ -88,11 +96,10 @@ export class MonthlyReportComponent implements OnInit {
   }
 
   selectMonth(month: any): void {
-    this.selectedMonth = month.value;
-    this.initFleetMonthlyData();
-    this.initMonthlyChartData();
-    this.updateMonthlyChartData();
+    this.selectedMonth = month;
 
+    this.loadData();
+    this.updateMonthlyChartData();
   }
 
   private initData(): void {
@@ -100,20 +107,22 @@ export class MonthlyReportComponent implements OnInit {
       .subscribe((data: Array<VehicleIdentity>) => {
         this.vehicles = data.map(v => new Vehicle(v.vname));
 
-        this.initFleetMonthlyData();
-        this.initMonthlyChartData();
+        this.loadData();
         this.initFleetMonthlyAlertData();
       });
   }
 
-  /*** Fleet Status Grid ***/
-  private initFleetMonthlyData() {
-    // this.dataFleetMonthly = this.dataService.getRandomMonthlyDataSetWithVehicles(this.vehicles);
+  private loadData() {
     var beginDate = moment(this.selectedMonth.value).startOf('month').toDate();
     var endDate = moment(this.selectedMonth.value).endOf('month').toDate();
     
-    this.dataService.getVehicleDailyUsageByFleet$(this.fleetID, beginDate, endDate)
-      .subscribe(data => this.dataFleetMonthly = data);
+    this.dataService.getVehicleDailyUsageDaysSummaryByFleet$(this.fleetID, beginDate, endDate)
+      .subscribe(data => { 
+        //monthly table data
+        this.dataFleetMonthly = data;
+        //monthly chart data
+        this.loadMonthlyChartData();
+      });
 
   }
 
@@ -147,13 +156,20 @@ export class MonthlyReportComponent implements OnInit {
     this.resetChartDefaultOptions(this.optionFleetMonthlyChart);
   }
 
-  private initMonthlyChartData(): void {
+  private loadMonthlyChartData(): void {
+    var labels = [];
+    var data = [];
+    if (this.dataFleetMonthly && this.dataFleetMonthly[0])
+    {
+      labels = this.dataFleetMonthly.map(v => v.vname);
+      data = this.dataFleetMonthly.map(v => v[this.optionSelected.key]);
+    }
     this.chartFleetMonthly.data = {
-      labels: this.dataFleetMonthly.map(v => v.id),
+      labels: labels,
       datasets: [
         {
           label: this.optionSelected.name,
-          data: this.dataFleetMonthly.map(v => v[this.optionSelected.key]),
+          data: data,
           backgroundColor: '#4bc0c0',
           borderColor: '#4bc0c0',
           borderWidth: 1
@@ -164,9 +180,11 @@ export class MonthlyReportComponent implements OnInit {
   }
 
   private updateMonthlyChartData(): void {
+   if (this.dataFleetMonthly && this.dataFleetMonthly[0]) {
+      this.chartFleetMonthly.data.datasets[0].data =
+        this.dataFleetMonthly.map(v => v[this.optionSelected.key]);
+   }
     this.chartFleetMonthly.data.datasets[0].label = this.optionSelected.name;
-    this.chartFleetMonthly.data.datasets[0].data =
-      this.dataFleetMonthly.map(v => v[this.optionSelected.key]);
     this.chartFleetMonthly.refresh();
   }
 

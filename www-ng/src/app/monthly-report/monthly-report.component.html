@@ -50,20 +50,24 @@
       <div class="row">
         <div class="col">
           <p-dataTable [value]="dataFleetMonthly" class="table">
-            <p-column field="id" header="Bus No." [sortable]="true"></p-column>
-            <p-column field="socCharged" header="SOC Charged"></p-column>
-            <p-column field="socUsed" header="SOC Used"></p-column>
-            <p-column field="actualDistance" header="Actual Distance"></p-column>
-            <p-column field="socMile" header="SOC/Miles"></p-column>
-            <p-column field="mileSoc" header="Miles/SOC"></p-column>
+            <p-column field="vname" header="Bus No." [sortable]="true"></p-column>
+            <p-column field="soccharged" header="SOC Charged"></p-column>
+            <p-column field="socused" header="SOC Used"></p-column>
+            <p-column field="mileage" header="Actual Distance"></p-column>
+            <p-column field="soc_mile" header="SOC/Miles"></p-column>
+            <p-column field="mile_soc" header="Miles/SOC"></p-column>
+            <p-column field="energycharged" header="Energy Charged"></p-column>
+            <p-column field="energyused" header="Energy Used"></p-column>
+            <p-column field="energy_mile" header="kWh/Miles"></p-column>
+            <p-column field="mile_energy" header="Miles/kWh"></p-column>
           </p-dataTable>
         </div>
       </div>
       <div class="row pt-4">
-        <div class="col-2 text-right">
+        <div class="col-1 text-right">
           <label>Options:</label>
         </div>
-        <div class="col-10 text-left" style="overflow-x:auto">
+        <div class="col-11 text-left" style="overflow-x:auto">
           <div class="btn-group" data-toggle="buttons">
             <label *ngFor="let opt of options" class="btn btn-secondary" (click)="selectOption(opt)">
               <input type="radio"  autocomplete="off">{{ opt.name }}
