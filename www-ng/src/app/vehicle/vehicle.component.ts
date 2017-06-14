@@ -357,8 +357,8 @@ export class VehicleComponent implements OnInit {
   }
 
   getChartDataSOCEnergy(list: VehicleSnapshot[]): any {
-    var filtered_A = list.filter(e => e.code === '2A');
-    var filtered_B = list.filter(e => e.code === '2B');
+    var filtered_A = list.filter(e => e.code === '2A');  //SOC
+    var filtered_B = list.filter(e => e.code === '2B');  //Battery Energy
     // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
     var labels = filtered_A.map(el => el.time);
     var data_A = filtered_A.map(el => el.value.toFixed(1));
@@ -387,13 +387,14 @@ export class VehicleComponent implements OnInit {
   }
 
   getChartDataEstActualDistance(list: VehicleSnapshot[]): any {
-    var filtered_A = list.filter(e => e.code === '2L');
-    var filtered_B = list.filter(e => e.code === '2L');
+    var filtered_Range = list.filter(e => e.code === '2L');  //Range
+    var filtered_Mileage = list.filter(e => e.code === '2K');  //Total Mileage
+    var filtered_ZZ = list.filter(e => e.code === 'ZZ');  //Last Day Mileage, one or none record only
+    var lastDayMileage = filtered_ZZ ? filtered_ZZ[0].value : 0;
 
-    // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
-    var labels = filtered_A.map(el => el.time);
-    var data_A = filtered_A.map(el => el.value.toFixed(1));
-    var data_B = filtered_B.map(el => el.value.toFixed(1));
+    var labels = filtered_Range.map(el => el.time);
+    var data_A = filtered_Range.map(el => el.value.toFixed(1));
+    var data_B = filtered_Mileage.map(el => (el.value - lastDayMileage).toFixed(1));
 
     return {
       labels: labels,
