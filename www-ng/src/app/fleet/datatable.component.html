@@ -13,7 +13,14 @@
             <p-progressBar [value]="data[col.field] | number:'1.0-1'"></p-progressBar>
         </ng-template>
     </p-column>
-    <p-column field="status" header="Status" [sortable]="true"></p-column>
+    <p-column field="status" header="Status" [sortable]="true">
+        <ng-template let-col let-data="rowData" pTemplate="body">
+            <p *ngIf="data[col.field] == 1; else statusElse">Charging</p>
+        </ng-template>
+        <ng-template #statusElse>
+            <p>Uncharging</p>
+        </ng-template>
+    </p-column>
     <p-column field="range" header="Range" [sortable]="true">
         <ng-template let-col let-data="rowData" pTemplate="body">
             {{data[col.field] | number:'1.1-1'}}
