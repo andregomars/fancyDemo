@@ -101,7 +101,6 @@ export class AnalysisDailyComponent implements OnInit {
         this.vehicleName = vname;
         this.fleetTracker.setFleetIDByVehicle(vname);
         this.fleetName = this.fleetTracker.fname;
-        console.log(this.fleetTracker.fname);
 
         let endDate = moment(this.today).startOf('day').toDate();
         let beginDate = moment(this.today).subtract(this.backDays, 'days').startOf('day').toDate();
@@ -128,7 +127,7 @@ export class AnalysisDailyComponent implements OnInit {
 
   private buildMileageChartData(list: VehicleDailyUsage[]): any {
     var labels = list.map(el => moment(el.date).format('MM/DD'));
-    var data = list.map(el => el.mileage).map(x => x.toFixed(2));
+    var data = list.map(el => el.mileage).map(x => x.toFixed(1));
     return {
       labels: labels,
       datasets: [
