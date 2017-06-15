@@ -34,7 +34,8 @@ export class VehicleComponent implements OnInit {
 
 
   optionDatePicker: IMyOptions;
-  selectedDate: Date = moment().subtract(1, 'day').startOf('day').toDate(); 
+  // selectedDate: Date = moment().subtract(1, 'day').startOf('day').toDate(); 
+  selectedDate: Date = moment().startOf('day').toDate(); 
 
   optionSocRangeChart: any;
   optionEstActualDistanceChart: any;
