@@ -119,6 +119,10 @@ export class MenuComponent implements OnInit {
     private loadDailyReportItem(fname: string): void {
       this.dailyReportItem = ['/dailyreport', fname];
     }
+
+    refresh(): void {
+      window.location.reload();
+    }
 }
 
 /* loaded data examples
