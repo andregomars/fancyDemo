@@ -60,6 +60,8 @@ export class DailyReportComponent implements OnInit {
       .subscribe((data: Array<VehicleIdentity>) => {
         //init data of vehicle buttons
         this.vehicles = data.map(v => new Vehicle(v.vname));
+        this.vehiclesSelected = JSON.parse(JSON.stringify(this.vehicles));
+        this.loadVehicleLogs();
       });
   }
 
@@ -73,6 +75,7 @@ export class DailyReportComponent implements OnInit {
 
   private initMonthButtons(): void {
     this.months = this.utility.getMonthsByYear(this.thisYear);
+    this.monthSelected = moment().startOf('month').toDate();
   }
 
   onSelect(year: number): void {
