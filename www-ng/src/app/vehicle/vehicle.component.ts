@@ -391,7 +391,7 @@ export class VehicleComponent implements OnInit {
     var filtered_Range = list.filter(e => e.code === '2L');  //Range
     var filtered_Mileage = list.filter(e => e.code === '2K');  //Total Mileage
     var filtered_ZZ = list.filter(e => e.code === 'ZZ');  //Last Day Mileage, one or none record only
-    var lastDayMileage = filtered_ZZ ? filtered_ZZ[0].value : 0;
+    var lastDayMileage = (filtered_ZZ && filtered_ZZ[0]) ? filtered_ZZ[0].value : 0;
 
     var labels = filtered_Range.map(el => el.time);
     var data_A = filtered_Range.map(el => el.value.toFixed(1));

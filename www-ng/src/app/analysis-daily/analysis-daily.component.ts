@@ -23,7 +23,6 @@ export class AnalysisDailyComponent implements OnInit {
 
   fleetName: string;
   vehicleName: string;
-//   today: Date = new Date(2017, 4, 3);
   today: Date = new Date();
   backDays: number = 13;
   ratioDGE: number = 0.027
@@ -119,15 +118,13 @@ export class AnalysisDailyComponent implements OnInit {
         if (!data) return;
         this.chartMileage.data = this.buildMileageChartData(data);
         this.chartMileage.reinit();
-         // this.chartMileage.data.labels = newData.labels;
-          // this.chartMileage.data.datasets[0].data = newData.data; 
-          // this.chartMileage.refresh();
        });
   }
 
   private buildMileageChartData(list: VehicleDailyUsage[]): any {
     var labels = list.map(el => moment(el.date).format('MM/DD'));
-    var data = list.map(el => el.mileage).map(x => x.toFixed(1));
+    var data = list.map(el => el.mileage.toFixed(1));
+
     return {
       labels: labels,
       datasets: [
@@ -150,16 +147,13 @@ export class AnalysisDailyComponent implements OnInit {
 
  private initMileageChartOption(): void {
     this.optionMileageChart = {
-      // responsive: false,
-      // maintainAspectRatio: true,
       legend: {
         display: false
       },
       scales: {
         yAxes: [{
           ticks: {
-            min: 0,
-            max: 200
+            beginAtZero: true
           }
         }]
       }
@@ -188,8 +182,9 @@ export class AnalysisDailyComponent implements OnInit {
           position: 'left',
           ticks: {
             fontColor: '#4bc0c0',
-            min: 0,
-            max: 200
+            beginAtZero: true
+            // min: 0,
+            // max: 200
           }
         }, {
           id: 'ySocUsed',
@@ -202,8 +197,9 @@ export class AnalysisDailyComponent implements OnInit {
           position: 'right',
           ticks: {
             fontColor: '#565656',
-            min: 0,
-            max: 200
+            beginAtZero: true
+            // min: 0,
+            // max: 200
           }
         }, {
           id: 'yEnergyCharged',
@@ -216,8 +212,9 @@ export class AnalysisDailyComponent implements OnInit {
           position: 'right',
           ticks: {
             fontColor: '#4286f4',
-            min: 0,
-            max: 600
+            beginAtZero: true
+            // min: 0,
+            // max: 600
           }
         }, {
           id: 'yEnergyUsed',
@@ -230,8 +227,9 @@ export class AnalysisDailyComponent implements OnInit {
           position: 'right',
           ticks: {
             fontColor: '#f47d41',
-            min: 0,
-            max: 600
+            beginAtZero: true
+            // min: 0,
+            // max: 600
           }
         }]
       }
@@ -243,6 +241,7 @@ export class AnalysisDailyComponent implements OnInit {
     this.dataService.getVehicleDailyUsageByDateRange$(this.vehicleName, beginDate, endDate)
       .subscribe(data => {
         if (!data) return;
+        console.log(data);
         this.chartSocEnergy.data = this.buildSocEnergyChartData(data);
         this.chartSocEnergy.reinit();
        });
@@ -252,8 +251,8 @@ export class AnalysisDailyComponent implements OnInit {
     var labels = list.map(el => moment(el.date).format('MM/DD'));
     var dataSocCharged = list.map(el => el.soccharged);
     var dataSocUsed = list.map(el => el.socused);
-    var dataEnergyCharged = list.map(el => el.energycharged).map(x => x.toFixed(2));
-    var dataEnergyUsed = list.map(el => el.energyused).map(x => x.toFixed(2));
+    var dataEnergyCharged = list.map(el => el.energycharged.toFixed(1));
+    var dataEnergyUsed = list.map(el => el.energyused.toFixed(1));
 
     return {
       labels: labels,
@@ -311,8 +310,9 @@ export class AnalysisDailyComponent implements OnInit {
           position: 'left',
           ticks: {
             fontColor: '#4bc0c0',
-            min: 0,
-            max: 10
+            beginAtZero: true
+            // min: 0,
+            // max: 10
           }
         }, {
           id: 'yMileageSoc',
@@ -325,8 +325,9 @@ export class AnalysisDailyComponent implements OnInit {
           position: 'right',
           ticks: {
             fontColor: '#565656',
-            min: 0,
-            max: 10
+            beginAtZero: true
+            // min: 0,
+            // max: 10
           }
         }, {
           id: 'yMileageEnergy',
@@ -339,8 +340,9 @@ export class AnalysisDailyComponent implements OnInit {
           position: 'right',
           ticks: {
             fontColor: '#4286f4',
-            min: 0,
-            max: 10
+            beginAtZero: true
+            // min: 0,
+            // max: 10
           }
         }, {
           id: 'yEnergyMileage',
@@ -353,8 +355,9 @@ export class AnalysisDailyComponent implements OnInit {
           position: 'right',
           ticks: {
             fontColor: '#f47d41',
-            min: 0,
-            max: 10
+            beginAtZero: true
+            // min: 0,
+            // max: 10
           }
         }]
       }
@@ -373,10 +376,10 @@ export class AnalysisDailyComponent implements OnInit {
 
   private buildSocMileageEnergyChartData(list: VehicleDailyUsage[]): any {
     var labels = list.map(el => moment(el.date).format('MM/DD'));
-    var dataSocMileage = list.map(el => el.mileage != 0? el.socused/el.mileage : 10 ).map(x => x.toFixed(2));
-    var dataMileageSoc = list.map(el => el.socused != 0? el.mileage/el.socused : 10 ).map(x => x.toFixed(2));
-    var dataMileageEnergy = list.map(el => el.energyused != 0? el.mileage/el.energyused : 10 ).map(x => x.toFixed(2));
-    var dataEnergyMileage = list.map(el => el.mileage != 0? el.energyused/el.mileage : 10 ).map(x => x.toFixed(2));
+    var dataSocMileage = list.map(el => el.mileage != 0? el.socused/el.mileage : 0 ).map(x => x.toFixed(2));
+    var dataMileageSoc = list.map(el => el.socused != 0? el.mileage/el.socused : 0 ).map(x => x.toFixed(2));
+    var dataMileageEnergy = list.map(el => el.energyused != 0? el.mileage/el.energyused : 0 ).map(x => x.toFixed(2));
+    var dataEnergyMileage = list.map(el => el.mileage != 0? el.energyused/el.mileage : 0 ).map(x => x.toFixed(2));
 
     return {
       labels: labels,
@@ -442,8 +445,9 @@ export class AnalysisDailyComponent implements OnInit {
           position: 'left',
           ticks: {
             fontColor: '#4bc0c0',
-            min: 0,
-            max: 2
+            beginAtZero: true
+            // min: 0,
+            // max: 2
           }
         }, {
           id: 'yNOx',
@@ -456,8 +460,9 @@ export class AnalysisDailyComponent implements OnInit {
           position: 'right',
           ticks: {
             fontColor: '#565656',
-            min: 0,
-            max: 2
+            beginAtZero: true
+            // min: 0,
+            // max: 2
           }
         }, {
           id: 'yROG',
@@ -470,8 +475,9 @@ export class AnalysisDailyComponent implements OnInit {
           position: 'right',
           ticks: {
             fontColor: '#4286f4',
-            min: 0,
-            max: 1
+            beginAtZero: true
+            // min: 0,
+            // max: 1
           }
         }, {
           id: 'yPM25',
@@ -484,8 +490,9 @@ export class AnalysisDailyComponent implements OnInit {
           position: 'right',
           ticks: {
             fontColor: '#f47d41',
-            min: 0,
-            max: 1
+            beginAtZero: true
+            // min: 0,
+            // max: 1
           }
         }, {
           id: 'yPM10',
@@ -498,8 +505,9 @@ export class AnalysisDailyComponent implements OnInit {
           position: 'right',
           ticks: {
             fontColor: '#FFCE56',
-            min: 0,
-            max: 1
+            beginAtZero: true
+            // min: 0,
+            // max: 1
           }
         }]
       }

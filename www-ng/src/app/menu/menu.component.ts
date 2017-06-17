@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuModule, MenuItem } from 'primeng/primeng';
 import { CookieService } from 'ngx-cookie';
 
@@ -24,6 +25,7 @@ export class MenuComponent implements OnInit {
     @Input() show: boolean;
 
     constructor(
+      private router: Router,
       private cookie: CookieService,
       private fleetTracker: FleetTrackerService,
       private dataService: DataService
@@ -120,9 +122,6 @@ export class MenuComponent implements OnInit {
       this.dailyReportItem = ['/dailyreport', fname];
     }
 
-    refresh(): void {
-      window.location.reload();
-    }
 }
 
 /* loaded data examples
