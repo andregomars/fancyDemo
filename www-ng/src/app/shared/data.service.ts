@@ -14,6 +14,7 @@ import { VehicleSnapshot } from '../models/vehicle-snapshot';
 import { VehicleIdentity } from '../models/vehicle-identity';
 import { VehicleAlert } from '../models/vehicle-alert';
 import { VehicleDailyUsage } from '../models/vehicle-daily-usage';
+import { VehicleDailyFile } from '../models/vehicle-daily-file';
 import { FleetIdentity } from '../models/fleet-identity';
 
 @Injectable()
@@ -92,6 +93,15 @@ export class DataService {
       return this.dataService.getVehicleDailyUsageDaysSummaryByFleet$(fname, beginDate, endDate);
     }
 
+    getVehicleDailyFileList$(vnames: string, 
+      beginDate: Date, endDate: Date): Observable<Array<VehicleDailyFile>> {
+      return this.dataService.getVehicleDailyFileList$(vnames, beginDate, endDate);
+    }
+
+    getVehicleDailyFileStreamUrl$(fileId: number): Observable<string> {
+      return this.dataService.getVehicleDailyFileStreamUrl$(fileId);
+    }
+    
 //     getAllFleetID(): Array<string> {
 //       var data = this.dataService.getFleetIdentities();
 //       return data;

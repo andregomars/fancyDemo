@@ -11,6 +11,7 @@ import { VehicleStatus } from '../models/vehicle-status';
 import { VehicleSnapshot } from '../models/vehicle-snapshot';
 import { VehicleAlert } from '../models/vehicle-alert';
 import { VehicleDailyUsage } from '../models/vehicle-daily-usage';
+import { VehicleDailyFile } from '../models/vehicle-daily-file';
 import { FleetIdentity } from '../models/fleet-identity';
 
 @Injectable()
@@ -30,6 +31,8 @@ export class DataRemoteService {
   private Endpoint_VehicleDailyUsageByDateScope: string = "/VehicleDailyUsage/GetByDateRange";
   private Endpoint_VehicleDailyUsageByFleet: string = "/VehicleDailyUsage/GetByFleet";
   private Endpoint_VehicleDailyUsageDaysSummaryByFleet: string = "/VehicleDailyUsage/GetDaysSummaryByFleet";
+  private Endpoint_VehicleDailyFileList: string = "/VehicleDailyFile/GetFileList";
+  private Endpoint_VehicleDailyFileStream: string = "/VehicleDailyFile/GetFileStream";
   private Endpoint_FleetIdentities: string = "/FleetIdentity";
   private Endpoint_FleetIdentitiesByLoginName: string = "/FleetIdentity/LoginName";
 
@@ -44,6 +47,8 @@ export class DataRemoteService {
   private URL_VehicleDailyUsageByDateScope: string;
   private URL_VehicleDailyUsageByFleet: string;
   private URL_VehicleDailyUsageDaysSummaryByFleet: string;
+  private URL_VehicleDailyFileList: string;
+  private URL_VehicleDailyFileStream: string;
   private URL_FleetIdentities: string;
   private URL_FleetIdentitiesByLoginName: string;
 
@@ -67,6 +72,8 @@ export class DataRemoteService {
       this.URL_RemoteApiRoot + this.Endpoint_VehicleDailyUsageByDateScope;
     this.URL_VehicleDailyUsageByFleet = 
       this.URL_RemoteApiRoot + this.Endpoint_VehicleDailyUsageByFleet;
+    this.URL_VehicleDailyFileList = this.URL_RemoteApiRoot + this.Endpoint_VehicleDailyFileList;
+    this.URL_VehicleDailyFileStream = this.URL_RemoteApiRoot + this.Endpoint_VehicleDailyFileStream;
     this.URL_VehicleDailyUsageDaysSummaryByFleet = 
       this.URL_RemoteApiRoot + this.Endpoint_VehicleDailyUsageDaysSummaryByFleet;
     this.URL_FleetIdentities = this.URL_RemoteApiRoot + this.Endpoint_FleetIdentities;
@@ -175,6 +182,22 @@ export class DataRemoteService {
       .catch(this.handleError);
   }
 
+  // names: "1231,2345,3370"
+  // date format: yyyy-mm-dd, e.g. 2017-05-03
+  getVehicleDailyFileList$(vnames: string, 
+    beginDate: Date, endDate: Date): Observable<Array<VehicleDailyFile>> {
+    var beginDay = moment(beginDate).startOf('day').format('YYYY-MM-DD');
+    var endDay = moment(endDate).startOf('day').format('YYYY-MM-DD');
+    return this.http.get(`${this.URL_VehicleDailyFileList}/${vnames}/${beginDay}/${endDay}`)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+  getVehicleDailyFileStreamUrl$(fileId: number): Observable<string> {
+    return this.http.get(`${this.URL_VehicleDailyFileStream}/${fileId}`)
+      .map(res => res.url)
+      .catch(this.handleError);
+  }
 
 /*
   getVehicleIdentities(): Array<VehicleIdentity> {

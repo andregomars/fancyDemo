@@ -54,19 +54,37 @@
 </div>
 <div class="row text-center p-2">
   <div class="col">
-    <p-dataTable [value]="vehicleLogs" class="table">
-      <p-column field="id" header="Bus No." [sortable]="true"></p-column>
-      <p-column field="date" header="Date" [sortable]="true"></p-column>
-      <p-column header="File Name">
-        <ng-template let-row="rowData" pTemplate="body">
-          {{row.fileName}}_{{row.id}}
+    <p-dataTable [value]="vehicleLogs" class="table" [responsive]=true>
+      <p-column field="filetime" header="File Time">
+        <ng-template let-col let-data="rowData" pTemplate="body">
+            {{data[col.field] | date:'MM/dd/yyyy'}}
         </ng-template>
       </p-column>
-      <p-column header="Download">
-        <ng-template let-row="rowData" pTemplate="body">
-          <button type="submit" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#requestModal">
+      <p-column field="vname" header="Bus No." [sortable]="true"></p-column>
+      <p-column field="filename" header="File Name">
+        <ng-template let-col let-data="rowData" pTemplate="body">
+            {{data[col.field]}}
+        </ng-template>
+      </p-column>
+      <p-column field="begintime" header="Start Time">
+        <ng-template let-col let-data="rowData" pTemplate="body">
+            {{data[col.field] | date:'MM/dd/yyyy HH:mm:ss'}}
+        </ng-template>
+      </p-column>
+      <p-column field="endtime" header="End Time">
+        <ng-template let-col let-data="rowData" pTemplate="body">
+            {{data[col.field] | date:'MM/dd/yyyy HH:mm:ss'}}
+        </ng-template>
+      </p-column>
+      <p-column field="fileid" header="Download">
+        <ng-template let-col let-data="rowData" pTemplate="body">
+          <!--<button type="submit" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#requestModal">
                <i class="fa fa-cloud-download fa-lg">&nbsp;</i>
-            </button>
+          </button>-->
+          <button type="button" class="btn btn-secondary btn-sm" 
+            (click)="download(data[col.field])">
+               <i class="fa fa-cloud-download fa-lg"></i>
+          </button>
         </ng-template>
       </p-column>
     </p-dataTable>

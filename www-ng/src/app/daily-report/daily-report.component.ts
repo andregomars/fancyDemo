@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import * as Rx from 'rxjs/Rx';
+import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 
 import { UtilityService } from '../shared/utility.service';
 import { DataService } from '../shared/data.service';
 import { Vehicle } from '../models/vehicle.model';
 import { VehicleIdentity } from '../models/vehicle-identity';
+import { VehicleDailyFile } from '../models/vehicle-daily-file';
 import { FleetTrackerService } from '../shared/fleet-tracker.service';
 
 
@@ -25,7 +27,8 @@ export class DailyReportComponent implements OnInit {
   months: any[];
   vehicles: Vehicle[] = [];
   monthSelected: Date;
-  vehicleLogs: any[] = [];
+  // vehicleLogs: any[] = [];
+  vehicleLogs: VehicleDailyFile[] = new Array<VehicleDailyFile>();
   
   constructor(
     private utility: UtilityService,
@@ -77,10 +80,19 @@ export class DailyReportComponent implements OnInit {
   }
 
   private loadVehicleLogs(): void {
-    if (this.vehiclesSelected.length === 0 || !this.monthSelected) 
+   if (this.vehiclesSelected.length === 0 || !this.monthSelected) 
       this.vehicleLogs = [];
-    else
-      this.vehicleLogs = this.dataService.getLogsInMonthOfDateByVehicles(this.vehiclesSelected, this.monthSelected);
+    else {
+      // this.vehicleLogs = this.dataService.getLogsInMonthOfDateByVehicles(this.vehiclesSelected, this.monthSelected);
+      var vnames = this.vehiclesSelected.map(r => r.id).toString();
+      var beginDate = moment(this.monthSelected).startOf('month').toDate();
+      var endDate = moment(this.monthSelected).endOf('month').startOf('day').toDate();
+
+      this.dataService.getVehicleDailyFileList$(vnames, beginDate, endDate)
+        .subscribe((data: VehicleDailyFile[]) => {
+          this.vehicleLogs = data;
+        });
+    }
   }
 
   private selectVehicle(vehicle: Vehicle): void {
@@ -97,5 +109,14 @@ export class DailyReportComponent implements OnInit {
   private selectMonth(month: any): void {
     this.monthSelected = month.value;
     this.loadVehicleLogs();
+  }
+
+  download($fileId: string): void {
+    console.log($fileId);
+    this.dataService.getVehicleDailyFileStreamUrl$(+$fileId)
+      .subscribe((url: string) => {
+        console.log(url);
+        window.location.assign(url);
+      });
   }
 }
