@@ -57,7 +57,7 @@
     <p-dataTable [value]="vehicleLogs" class="table" [responsive]=true>
       <p-column field="filetime" header="File Time">
         <ng-template let-col let-data="rowData" pTemplate="body">
-            {{data[col.field] | date:'MM/dd/yyyy'}}
+            {{data[col.field] | ndate:'MM/DD/YYYY'}}
         </ng-template>
       </p-column>
       <p-column field="vname" header="Bus No." [sortable]="true"></p-column>
@@ -68,12 +68,12 @@
       </p-column>
       <p-column field="begintime" header="Start Time">
         <ng-template let-col let-data="rowData" pTemplate="body">
-            {{data[col.field] | date:'MM/dd/yyyy HH:mm:ss'}}
+            {{data[col.field] | ndate:'MM/DD/YYYY HH:mm:ss'}}
         </ng-template>
       </p-column>
       <p-column field="endtime" header="End Time">
         <ng-template let-col let-data="rowData" pTemplate="body">
-            {{data[col.field] | date:'MM/dd/yyyy HH:mm:ss'}}
+            {{data[col.field] | ndate:'MM/DD/YYYY HH:mm:ss'}}
         </ng-template>
       </p-column>
       <p-column field="fileid" header="Download">
