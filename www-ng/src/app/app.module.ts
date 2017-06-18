@@ -41,6 +41,7 @@ import { VehicleSnapshotTableComponent } from './vehicle/vehicle-snapshot-table.
 import { VehicleDualChartComponent } from './vehicle/vehicle-dual-chart.component';
 import { GeoPipe } from './components/pipes/geo.pipe';
 import { ProgressMeterComponent } from './components/progressmeter/progress-meter.component';
+import { NeutralDatePipe } from './components/pipes/neutral-date.pipe';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { ProgressMeterComponent } from './components/progressmeter/progress-mete
     VehicleDualChartComponent,
     GeoPipe,
     ProgressMeterComponent,
+    NeutralDatePipe,
   ],
   imports: [
     BrowserModule,
