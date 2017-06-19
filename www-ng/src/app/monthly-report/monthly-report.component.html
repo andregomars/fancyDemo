@@ -51,6 +51,52 @@
         <div class="col">
           <p-dataTable [value]="dataFleetMonthly" class="table">
             <p-column field="vname" header="Bus No." [sortable]="true"></p-column>
+            <p-column field="soccharged" header="SOC Charged">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+            <p-column field="socused" header="SOC Used">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+            <p-column field="mileage" header="Actual Distance">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+            <p-column field="soc_mile" header="SOC/Miles">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+            <p-column field="mile_soc" header="Miles/SOC">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+            <p-column field="energycharged" header="Energy Charged">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+            <p-column field="energyused" header="Energy Used">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+            <p-column field="energy_mile" header="kWh/Miles">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+            <p-column field="mile_energy" header="Miles/kWh">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+<!--
             <p-column field="soccharged" header="SOC Charged"></p-column>
             <p-column field="socused" header="SOC Used"></p-column>
             <p-column field="mileage" header="Actual Distance"></p-column>
@@ -59,7 +105,7 @@
             <p-column field="energycharged" header="Energy Charged"></p-column>
             <p-column field="energyused" header="Energy Used"></p-column>
             <p-column field="energy_mile" header="kWh/Miles"></p-column>
-            <p-column field="mile_energy" header="Miles/kWh"></p-column>
+            <p-column field="mile_energy" header="Miles/kWh"></p-column>-->
           </p-dataTable>
         </div>
       </div>

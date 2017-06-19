@@ -23,12 +23,12 @@
     </p-column>
     <p-column field="range" header="Range" [sortable]="true">
         <ng-template let-col let-data="rowData" pTemplate="body">
-            {{data[col.field] | number:'1.1-1'}}
+            {{data[col.field] | number:'1.0-1'}}
         </ng-template>
     </p-column>
     <p-column field="mileage" header="Odometer" [sortable]="true">
       <ng-template let-col let-data="rowData" pTemplate="body">
-            {{data[col.field] | number:'1.1-1'}}
+            {{data[col.field] | number:'1.0-1'}}
       </ng-template>
     </p-column>
     <p-column field="updated" header="Updated">
