@@ -9,14 +9,27 @@
   </div>
 </div>
 
+<!-- Vehicle Selection Alert Section -->
+<div class="row pt-2">
+  <div class="col text-left">
+    <div class="alert alert-warning alert-dismissible 
+      fade show">
+      <button type="button" class="close" data-dismiss="alert">
+        <span>&times;</span>
+      </button>
+      Please select vehicle number and month first.
+      </div>
+  </div>
+ </div>
+
 <!-- Vehicle Selection Section -->
-<div class="row p-2">
+<div class="row px-2">
   <div class="col-2 col-md-1 text-right">
     <div class="text-primary">Vehicle:</div>
   </div>
   <div class="col-10 col-md-11 text-left">
     <div class="btn-group" data-toggle="buttons">
-      <label *ngFor="let vehicle of vehicles" class="btn btn-secondary active" (click)="selectVehicle(vehicle)">
+      <label *ngFor="let vehicle of vehicles" class="btn btn-secondary" (click)="selectVehicle(vehicle)">
           <input type="checkbox" autocomplete="off">{{ vehicle.id  }}
         </label>
     </div>

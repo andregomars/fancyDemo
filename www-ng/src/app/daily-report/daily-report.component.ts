@@ -60,7 +60,7 @@ export class DailyReportComponent implements OnInit {
       .subscribe((data: Array<VehicleIdentity>) => {
         //init data of vehicle buttons
         this.vehicles = data.map(v => new Vehicle(v.vname));
-        this.vehiclesSelected = JSON.parse(JSON.stringify(this.vehicles));
+        // this.vehiclesSelected = JSON.parse(JSON.stringify(this.vehicles));
         this.loadVehicleLogs();
       });
   }
