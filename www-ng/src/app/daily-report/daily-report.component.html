@@ -27,7 +27,7 @@
   <div class="col-2 col-md-1 text-right">
     <div class="text-primary">Vehicle:</div>
   </div>
-  <div class="col-10 col-md-11 text-left">
+  <div class="col-10 col-md-11 text-left" style="overflow-x:auto">
     <div class="btn-group" data-toggle="buttons">
       <label *ngFor="let vehicle of vehicles" class="btn btn-secondary" (click)="selectVehicle(vehicle)">
           <input type="checkbox" autocomplete="off">{{ vehicle.id  }}
