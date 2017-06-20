@@ -67,8 +67,8 @@
 </div>
 <div class="row text-center p-2">
   <div class="col">
-    <p-dataTable [value]="vehicleLogs" class="table" [responsive]=true>
-      <p-column field="filetime" header="File Time">
+    <p-dataTable [value]="vehicleLogs" class="table" [responsive]="true">
+      <p-column field="filetime" header="File Time" [sortable]="true">
         <ng-template let-col let-data="rowData" pTemplate="body">
             {{data[col.field] | ndate:'MM/DD/YYYY'}}
         </ng-template>
