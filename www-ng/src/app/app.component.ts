@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Title }     from '@angular/platform-browser';
+
 import { CookieService } from 'ngx-cookie';
 import { DataService } from './shared/data.service';
 import { FleetIdentity } from './models/fleet-identity';
@@ -17,9 +19,11 @@ export class AppComponent implements OnInit {
   constructor(
     private cookie: CookieService,
     private dataService: DataService,
+    private title: Title
   ) { }
 
   ngOnInit(): void {
+    this.title.setTitle("Hams - I/O Controls");
     this.userLoginName = this.cookie.get('ioc_loggedin');
 
     this.dataService.getFleetIdentitiesByLoginName$(this.userLoginName)

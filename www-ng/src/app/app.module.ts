@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { APP_BASE_HREF } from '@angular/common';
 
 import { NgModule } from '@angular/core';
@@ -88,6 +88,7 @@ import { NeutralDatePipe } from './components/pipes/neutral-date.pipe';
   ],
   providers: [
     // { provide: APP_BASE_HREF, useValue : '/ioc/index.php/hams/' },
+    Title,
     UtilityService,
     DataRemoteService,
     DataService,
