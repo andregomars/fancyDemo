@@ -19,6 +19,15 @@ const routes: Routes = [
     { path: 'vehiclealert/:vname', component: AnalysisAlertComponent },
     { path: 'monthlyreport/:fname', component: MonthlyReportComponent },
     { path: 'dailyreport/:fname', component: DailyReportComponent },
+
+    { path: 'ioc/index.php/fleet', component: FleetSelectionComponent },
+    { path: 'ioc/index.php/fleet/:fname', component: FleetComponent },
+    { path: 'ioc/index.php/vehicle/:vname', component: VehicleComponent },
+    { path: 'ioc/index.php/vehicledaily/:vname', component: AnalysisDailyComponent },
+    { path: 'ioc/index.php/vehiclealert/:vname', component: AnalysisAlertComponent },
+    { path: 'ioc/index.php/monthlyreport/:fname', component: MonthlyReportComponent },
+    { path: 'ioc/index.php/dailyreport/:fname', component: DailyReportComponent },
+
     { path: '', redirectTo: '/fleet', pathMatch: 'full' }
 ];
 
