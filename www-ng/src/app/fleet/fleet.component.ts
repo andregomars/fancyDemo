@@ -47,7 +47,7 @@ export class FleetComponent implements OnInit, OnDestroy {
         this.fleetTracker.setFleetIDByFleet(this.fname);
       });
     
-    this.timerSub = Observable.timer(30000, 30000)
+    this.timerSub = Observable.timer(60000, 60000)
       .subscribe(() => {
         this.dataService.getVehiclesStatusByFleet$(this.fname)
           .subscribe((statusList: Array<VehicleStatus>) => {
