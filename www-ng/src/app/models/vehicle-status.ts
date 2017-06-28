@@ -19,6 +19,7 @@ export class VehicleStatus {
     public temperaturelow: number,
     public speed: number,
     public remainingenergy: number,
+    public actualdistance: number,
     public updated: Date
   ) {}
 }
