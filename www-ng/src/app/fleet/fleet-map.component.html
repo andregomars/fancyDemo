@@ -2,7 +2,7 @@
     && statusList[0].lat != 0 && statusList[0].lng != 0" 
     [latitude]="statusList[0].lat | geo" 
     [longitude]="statusList[0].lng | geo" [zoom]=10 
-    [streetViewControl]=false [zoomControl]=false>
+    [streetViewControl]=false [zoomControl]=true>
   <agm-marker *ngFor="let m of statusList"
       [latitude]="m.lat | geo" [longitude]="m.lng | geo"
       [label]="m.vname" [title]="m.vname" 
