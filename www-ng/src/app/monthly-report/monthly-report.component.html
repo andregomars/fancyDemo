@@ -96,16 +96,6 @@
                   {{data[col.field] | number:'1.0-1'}}
               </ng-template>
             </p-column>
-<!--
-            <p-column field="soccharged" header="SOC Charged"></p-column>
-            <p-column field="socused" header="SOC Used"></p-column>
-            <p-column field="mileage" header="Actual Distance"></p-column>
-            <p-column field="soc_mile" header="SOC/Miles"></p-column>
-            <p-column field="mile_soc" header="Miles/SOC"></p-column>
-            <p-column field="energycharged" header="Energy Charged"></p-column>
-            <p-column field="energyused" header="Energy Used"></p-column>
-            <p-column field="energy_mile" header="kWh/Miles"></p-column>
-            <p-column field="mile_energy" header="Miles/kWh"></p-column>-->
           </p-dataTable>
         </div>
       </div>
@@ -123,7 +113,7 @@
       </div>
       <div class="row pt-2" style="overflow-x:auto">
         <p-chart #chartFleetMonthly type="horizontalBar" [data]="dataFleetMonthlyChart" 
-          [options]="optionFleetMonthlyChart" width="960px" height="300px"></p-chart>
+          [options]="optionFleetMonthlyChart" width="960px" ></p-chart>
       </div>
     </div>
   </div>

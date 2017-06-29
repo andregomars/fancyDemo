@@ -49,7 +49,7 @@ export class AnalysisAlertComponent implements OnInit {
     // Vehicle Alert
     this.initVehicleAlertDateRangePicker();
     this.initVehicleAlertChartOption();
-    this.initVehicleAlertChartData();
+
 
     // Fleet Alert
     this.initFleetAlertDateRangePicker();
@@ -165,17 +165,12 @@ export class AnalysisAlertComponent implements OnInit {
         this.vehicleID = vname;
         this.fleetTracker.setFleetIDByVehicle(vname);
         this.fleetID = this.fleetTracker.fname;
-        this.initFleetAlertChartData();
-        // this.dataService.getAllVehiclesData$()
-        //   .map(el => el.find(v => v.vname === vname))
-        //   .map(v => v.fname)
-        //   .subscribe(fname => { 
-        //     this.fleetID = fname
 
-        //     this.initFleetAlertChartData();
-
-        // });
-
+        if (this.fleetID.toUpperCase() == "AVTA")
+        {
+          this.initVehicleAlertChartData();
+          this.initFleetAlertChartData();
+        }
     });
   }
 

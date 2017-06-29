@@ -108,7 +108,10 @@ export class MonthlyReportComponent implements OnInit {
         this.vehicles = data.map(v => new Vehicle(v.vname));
 
         this.loadData();
-        this.initFleetMonthlyAlertData();
+        if (this.fleetID.toUpperCase() == "AVTA")
+        {
+          this.initFleetMonthlyAlertData();
+        }
       });
   }
 
