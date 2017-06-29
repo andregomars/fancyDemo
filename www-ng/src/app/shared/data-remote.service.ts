@@ -24,6 +24,7 @@ export class DataRemoteService {
   private Endpoint_AllVehicleStatusByFleetName: string = "/VehicleStatus/GetAllByFleetName";
   private Endpoint_RecentAllVehicleStatusByVehicleName: string = 
     "/VehicleStatus/GetRecentAllByVehicleName";
+  private Endpoint_WholeDayVehicleStatus: string = "/VehicleStatus/GetWholeDayByVehicleName";
   private Endpoint_VehicleSnapshotByVehicleName: string = "/VehicleSnapshot/GetByVehicleName";
   private Endpoint_WholeDayVehicleSnapshot: string = "/VehicleSnapshot/GetWholeDayByVehicleName";
   private Endpoint_RecentAllVehicleAlertByVehicleName: string = 
@@ -41,6 +42,7 @@ export class DataRemoteService {
   private URL_VehicleStatusByVehicleName: string;
   private URL_AllVehicleStatusByFleetName: string;
   private URL_RecentAllVehicleStatusByVehicleName: string;
+  private URL_WholeDayVehicleStatus: string;
   private URL_VehicleSnapshotByVehicleName: string;
   private URL_WholeDayVehicleSnapshot: string;
   private URL_RecentAllVehicleAlertByVehicleName: string;
@@ -64,6 +66,7 @@ export class DataRemoteService {
     this.URL_AllVehicleStatusByFleetName = this.URL_RemoteApiRoot + this.Endpoint_AllVehicleStatusByFleetName;
     this.URL_RecentAllVehicleStatusByVehicleName = 
       this.URL_RemoteApiRoot + this.Endpoint_RecentAllVehicleStatusByVehicleName;
+    this.URL_WholeDayVehicleStatus = this.URL_RemoteApiRoot + this.Endpoint_WholeDayVehicleStatus;
     this.URL_VehicleSnapshotByVehicleName = this.URL_RemoteApiRoot + this.Endpoint_VehicleSnapshotByVehicleName;
     this.URL_WholeDayVehicleSnapshot = this.URL_RemoteApiRoot + this.Endpoint_WholeDayVehicleSnapshot;
     this.URL_RecentAllVehicleAlertByVehicleName = 
@@ -129,6 +132,13 @@ export class DataRemoteService {
 
   getRecentAllVehicleStatusByVehicleName$(vname: string): Observable<Array<VehicleStatus>> {
     return this.http.get(`${this.URL_RecentAllVehicleStatusByVehicleName}/${vname}`)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+  getWholeDayVehicleStatus$(vname: string, date: Date): Observable<Array<VehicleStatus>> {
+    var dateOnly: string = moment(date).format('YYYY-MM-DD');
+    return this.http.get(`${this.URL_WholeDayVehicleStatus}/${vname}/${dateOnly}`)
       .map(res => res.json())
       .catch(this.handleError);
   }

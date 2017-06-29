@@ -54,7 +54,12 @@ export class DataService {
    getRecentVehicleStatusList$(vname: string): Observable<Array<VehicleStatus>> {
        return this.dataService.getRecentAllVehicleStatusByVehicleName$(vname);
    }
- 
+
+    getVehicleWholeDayStatus$(vname: string, date: Date): Observable<Array<VehicleStatus>> {
+        return this.dataService.getWholeDayVehicleStatus$(vname, date);
+    }
+
+
    getRecentVehicleAlertList$(vname: string): Observable<Array<VehicleAlert>> {
        return this.dataService.getRecentAllVehicleAlertByVehicleName$(vname);
    }
