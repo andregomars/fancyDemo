@@ -403,6 +403,7 @@ export class VehicleComponent implements OnInit {
           yAxisID: 'ySOC',
           fill: false,
           pointRadius: 1,
+          spanGaps: false,
           borderColor: '#4286f4'
         }, {
           label: 'kWh',
@@ -410,6 +411,7 @@ export class VehicleComponent implements OnInit {
           yAxisID: 'ykWh',
           fill: false,
           pointRadius: 1,
+          spanGaps: false,
           borderColor: '#565656',
         }
       ]
@@ -467,6 +469,9 @@ export class VehicleComponent implements OnInit {
     var dataChargingStatus = list.map(x => x.status.toFixed(1));
     var dataHighVoltageStatus = list.map(x => x.voltage.toFixed(1));
 
+    console.log(dataChargingStatus);
+    console.log(dataHighVoltageStatus);
+
     return {
       labels: labels,
       datasets: [
@@ -519,12 +524,13 @@ export class VehicleComponent implements OnInit {
             labelString: leftY.label,
             fontColor: leftY.color
           },
-          type: 'linear',
+          // type: 'linear',
           position: 'left',
           ticks: {
             fontColor: leftY.color,
-            max: leftY.max,
-            min: leftY.min
+            beginAtZero: true
+            // max: leftY.max,
+            // min: leftY.min
           }
         }, {
           id: 'y' + rightY.label,
@@ -533,12 +539,13 @@ export class VehicleComponent implements OnInit {
             labelString: rightY.label,
             fontColor: rightY.color
           },
-          type: 'linear',
+          // type: 'linear',
           position: 'right',
           ticks: {
             fontColor: rightY.color,
-            max: rightY.max,
-            min: rightY.min
+            beginAtZero: true
+            // max: rightY.max,
+            // min: rightY.min
           }
         }]
       }

@@ -171,6 +171,7 @@ export class UtilityService {
       let temperaturelow: number = _.random(80, 220, false);
       let speed: number = _.random(0, 65, false);
       let remainingenergy: number = _.random(0, 60, false);
+      let actualdistance: number = _.random(0, 200, false);
       let updated: Date = moment().subtract(_.random(300,3600), 'seconds').toDate(); 
       // let updated: string = moment().subtract(_.random(300,3600), 'seconds').format('MM/DD/YYYY hh:mm:ss'); 
       let lat: number = 40.734593;
@@ -178,7 +179,7 @@ export class UtilityService {
 
       return new VehicleStatus(vehicle.vid, vehicle.vname, vehicle.fid, vehicle.fname, 
         lat, lng, 0, 0, 0, soc, status, range, mileage, voltage, current, 
-        temperaturehigh, temperaturelow, speed, remainingenergy, updated);
+        temperaturehigh, temperaturelow, speed, remainingenergy, actualdistance, updated);
     }
 
   //*** private helper methods ***
