@@ -19,20 +19,22 @@
             <div class="row">
                 <div class="col-0 col-lg-2"></div>
                 <div class="col-12 col-lg-8">
-                    <!--<app-gauge [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc" 
-                    max="100" style="display:block"></app-gauge>-->
-                    <justgage [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc | number:'1.0-1'" 
-                         min=0 max=100 class="app-justgage"></justgage>
+                    <!--<justgage [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc | number:'1.0-1'" 
+                         min=0 max=100 class="app-justgage"></justgage>-->
+                    <app-chart-gauge [value]="lastVehicleStatus.soc | number:'1.0-1'" 
+                        [max]="100" title="SOC(%)"></app-chart-gauge>
                 </div>
                 <div class="col-0 col-lg-2"></div>
             </div>
-            <div class="row">
+            <div class="row mt-4">
                 <div class="col-0 col-lg-2"></div>
                 <div class="col-12 col-lg-8">
                   <!--<app-gauge [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed" 
                     max="65"></app-gauge>-->
-                     <justgage [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed"
-                        min=0 max=65 class="app-justgage"></justgage>
+                     <!--<justgage [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed"
+                        min=0 max=65 class="app-justgage"></justgage>-->
+                    <app-chart-gauge [value]="lastVehicleStatus.speed | number:'1.0-1'" 
+                        [max]="65" title="Speed(mph)"></app-chart-gauge>
                 </div>
                 <div class="col-0 col-lg-2"></div>
             </div>

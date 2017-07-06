@@ -1,0 +1,20 @@
+
+<canvas baseChart width="180" height="180"
+  [colors]="colors"
+  [datasets]="datasets"
+  [options]="options"
+  chartType="doughnut" 
+  style="display:inline;"></canvas>
+<div style="margin-top:-80px;font-size:32px;font-weight:bold">{{value}}</div>
+<div>
+  <div class="row">
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col text-left">0</div>
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col text-right">{{max}}</div>
+    <div class="col"></div>
+    <div class="col"></div>
+  </div>
+</div>

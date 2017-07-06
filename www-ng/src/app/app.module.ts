@@ -12,6 +12,7 @@ import { JustgageModule } from 'angular2-justgage';
 import { CookieModule } from 'ngx-cookie';
 import './shared/rxjs-extensions';
 import './shared/vendor';
+import { ChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +24,7 @@ import { DataCardsComponent } from './fleet/datacards.component';
 import { MenuComponent } from './menu/menu.component';
 import { ProgressBarComponent } from './components/progressbar/progressbar.component';
 import { GaugeComponent } from './components/gauge/gauge.component';
+import { ChartGaugeComponent } from './components/chart-gauge/chart-gauge.component';
 import { AgmCoreModule } from '@agm/core';
 
 import { UtilityService } from './shared/utility.service';
@@ -64,6 +66,7 @@ import { NeutralDatePipe } from './components/pipes/neutral-date.pipe';
     VehicleMapComponent,
     VehicleSnapshotTableComponent,
     VehicleDualChartComponent,
+    ChartGaugeComponent,
     GeoPipe,
     ProgressMeterComponent,
     NeutralDatePipe,
@@ -81,6 +84,7 @@ import { NeutralDatePipe } from './components/pipes/neutral-date.pipe';
     TieredMenuModule,
     MegaMenuModule,
     JustgageModule,
+    ChartsModule,
     CookieModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC2aUGq0zuZMLTgrUG72Wb4LX6nOA_Q4VM'
