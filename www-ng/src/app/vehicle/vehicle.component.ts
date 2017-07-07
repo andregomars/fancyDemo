@@ -31,7 +31,6 @@ export class VehicleComponent implements OnInit {
   optionGaugeSOC: any;
   optionGaugeSpeed: any;
 
-
   optionDatePicker: IMyOptions;
   // selectedDate: Date = moment().subtract(1, 'day').startOf('day').toDate(); 
   selectedDate: Date = moment().startOf('day').toDate(); 
@@ -138,31 +137,6 @@ export class VehicleComponent implements OnInit {
         this.chartComplex.reinit();
       });
   }
-
-
-  // loadDualChartsData(): void {
-  //   this.dataService.getVehicleWholeDaySnapshot$(this.vehicleName, this.selectedDate)
-  //     .subscribe(data => {
-  //       if (!data) return;
-
-  //       this.chartSocRange.data = this.getChartDataSOCEnergy(data);
-  //       this.chartEstActualDistance.data = this.getChartDataEstActualDistance(data);
-  //       this.chartChargingRunningStatus.data = this.getChargingRunningStatusData(data);
-
-  //       this.chartSocRange.reinit();
-  //       this.chartEstActualDistance.reinit();
-  //       this.chartChargingRunningStatus.reinit();
-  //     });
-  // }
-
-  // loadComplexChartData(): void {
-  //   this.dataService.getVehicleWholeDaySnapshot$(this.vehicleName, this.selectedDate)
-  //     .subscribe(data => {
-  //       if (!data) return;
-  //       this.chartComplex.data = this.getChartDataComplex(data);
-  //       this.chartComplex.reinit();
-  //     });
-  // }
 
   getDefaultVehicleStatus(): VehicleStatus {
     return new VehicleStatus(0, '', 0, '', 34.134330, 117.928273, 0, 0, 0, 0, 0, 0, 0,
@@ -326,19 +300,6 @@ export class VehicleComponent implements OnInit {
       moment(this.selectedDate).add(1, 'day').startOf('day');
   }
 
-
-  // getChartDataComplex(list: VehicleSnapshot[]): any {
-  //   var filtered_A = list.filter(e => e.code === '2B'); //Energy
-  //   var filtered_B = list.filter(e => e.code === '2F'); //Voltage
-  //   var filtered_C = list.filter(e => e.code === '2E'); //Current
-  //   var filtered_D = list.filter(e => e.code === '2H'); //Highest Temperature
-
-  //   // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
-  //   var labels = filtered_A.map(el => el.time);
-  //   var data_A = filtered_A.map(el => el.value.toFixed(1));
-  //   var data_B = filtered_B.map(el => el.value.toFixed(1));
-  //   var data_C = filtered_C.map(el => el.value.toFixed(1));
-  //   var data_D = filtered_D.map(el => el.value.toFixed(1));
   getChartDataComplex(list: VehicleStatus[]): any {
     var labels = list.map(x => x.updated);
     var dataEnergy = list.map(x => x.remainingenergy.toFixed(1));
@@ -382,13 +343,6 @@ export class VehicleComponent implements OnInit {
     }
   }
 
-  // getChartDataSOCEnergy(list: VehicleSnapshot[]): any {
-  //   var filtered_A = list.filter(e => e.code === '2A');  //SOC
-  //   var filtered_B = list.filter(e => e.code === '2B');  //Battery Energy
-  //   // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
-  //   var labels = filtered_A.map(el => el.time);
-  //   var data_A = filtered_A.map(el => el.value.toFixed(1));
-  //   var data_B = filtered_B.map(el => el.value.toFixed(1));
   getChartDataSOCEnergy(list: VehicleStatus[]): any {
     var labels = list.map(x => x.updated);
     var dataSoc = list.map(x => x.soc.toFixed(1));
@@ -403,7 +357,6 @@ export class VehicleComponent implements OnInit {
           yAxisID: 'ySOC',
           fill: false,
           pointRadius: 1,
-          spanGaps: false,
           borderColor: '#4286f4'
         }, {
           label: 'kWh',
@@ -411,22 +364,12 @@ export class VehicleComponent implements OnInit {
           yAxisID: 'ykWh',
           fill: false,
           pointRadius: 1,
-          spanGaps: false,
           borderColor: '#565656',
         }
       ]
     }
   }
 
-  // getChartDataEstActualDistance(list: VehicleSnapshot[]): any {
-  //   var filtered_Range = list.filter(e => e.code === '2L');  //Range
-  //   var filtered_Mileage = list.filter(e => e.code === '2K');  //Total Mileage
-  //   var filtered_ZZ = list.filter(e => e.code === 'ZZ');  //Last Day Mileage, one or none record only
-  //   var lastDayMileage = (filtered_ZZ && filtered_ZZ[0]) ? filtered_ZZ[0].value : 0;
-
-  //   var labels = filtered_Range.map(el => el.time);
-  //   var data_A = filtered_Range.map(el => el.value.toFixed(1));
-  //   var data_B = filtered_Mileage.map(el => (el.value - lastDayMileage).toFixed(1));
   getChartDataEstActualDistance(list: VehicleStatus[]): any {
     var labels = list.map(x => x.updated);
     var dataRange = list.map(x => x.range.toFixed(1));
@@ -436,7 +379,6 @@ export class VehicleComponent implements OnInit {
       labels: labels,
       datasets: [
         {
-          type: 'line',
           label: 'Range',
           data: dataRange,
           yAxisID: 'yRange',
@@ -444,7 +386,6 @@ export class VehicleComponent implements OnInit {
           pointRadius: 1,
           borderColor: '#4286f4'
         }, {
-          type: 'line',
           label: 'Actual Distance',
           data: dataMileage,
           yAxisID: 'yActualDistance',
@@ -456,21 +397,10 @@ export class VehicleComponent implements OnInit {
     }
   }
 
-  // getChargingRunningStatusData(list: VehicleSnapshot[]): any {
-  //   var filtered_A = list.filter(e => e.code === '2M');
-  //   var filtered_B = list.filter(e => e.code === '2U');
-
-  //   // var labels = filtered_A.map(el => moment(el.time).format('hh:mm'));
-  //   var labels = filtered_A.map(el => el.time);
-  //   var data_A = filtered_A.map(el => el.value.toFixed(1));
-  //   var data_B = filtered_B.map(el => el.value.toFixed(1));
   getChargingRunningStatusData(list: VehicleStatus[]): any {
     var labels = list.map(x => x.updated);
     var dataChargingStatus = list.map(x => x.status.toFixed(1));
     var dataHighVoltageStatus = list.map(x => x.voltage.toFixed(1));
-
-    console.log(dataChargingStatus);
-    console.log(dataHighVoltageStatus);
 
     return {
       labels: labels,
@@ -524,13 +454,10 @@ export class VehicleComponent implements OnInit {
             labelString: leftY.label,
             fontColor: leftY.color
           },
-          // type: 'linear',
           position: 'left',
           ticks: {
             fontColor: leftY.color,
             beginAtZero: true
-            // max: leftY.max,
-            // min: leftY.min
           }
         }, {
           id: 'y' + rightY.label,
@@ -539,13 +466,10 @@ export class VehicleComponent implements OnInit {
             labelString: rightY.label,
             fontColor: rightY.color
           },
-          // type: 'linear',
           position: 'right',
           ticks: {
             fontColor: rightY.color,
             beginAtZero: true
-            // max: rightY.max,
-            // min: rightY.min
           }
         }]
       }
