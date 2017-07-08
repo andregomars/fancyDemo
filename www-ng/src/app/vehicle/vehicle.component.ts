@@ -476,6 +476,10 @@ export class VehicleComponent implements OnInit {
     };
   }
 
+  selectStatus(status: VehicleStatus): void {
+    this.lastVehicleStatus = status;
+  }
+
   exportDualCharts(): void {
     html2canvas(this.divDualCharts.nativeElement, {
       onrendered: function (canvas) {

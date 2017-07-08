@@ -5,7 +5,6 @@
         <div class="col flex-unordered text-center">
             <h5> <i class="fa fa-bus"></i> {{lastVehicleStatus.fname}} / {{lastVehicleStatus.vname}} </h5>
         </div>
-        <!--<div class="col flex-last text-left">{{lastVehicleStatus.updated | date:'MM/dd/yy, HH:mm:ss'}}</div>-->
         <div class="col flex-last text-left">{{lastVehicleStatus.updated | ndate:'MM/DD/YYYY HH:mm:ss'}}</div>
     </div>
 </div>
@@ -19,9 +18,7 @@
             <div class="row">
                 <div class="col-0 col-lg-2"></div>
                 <div class="col-12 col-lg-8">
-                    <!--<justgage [options]="optionGaugeSOC" [value]="lastVehicleStatus.soc | number:'1.0-1'" 
-                         min=0 max=100 class="app-justgage"></justgage>-->
-                    <app-chart-gauge [value]="lastVehicleStatus.soc | number:'1.0-1'" 
+                   <app-chart-gauge [value]="lastVehicleStatus.soc | number:'1.0-1'" 
                         [max]="100" title="SOC(%)"></app-chart-gauge>
                 </div>
                 <div class="col-0 col-lg-2"></div>
@@ -29,16 +26,11 @@
             <div class="row mt-4">
                 <div class="col-0 col-lg-2"></div>
                 <div class="col-12 col-lg-8">
-                  <!--<app-gauge [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed" 
-                    max="65"></app-gauge>-->
-                     <!--<justgage [options]="optionGaugeSpeed" [value]="lastVehicleStatus.speed"
-                        min=0 max=65 class="app-justgage"></justgage>-->
                     <app-chart-gauge [value]="lastVehicleStatus.speed | number:'1.0-1'" 
                         [max]="65" title="Speed(mph)"></app-chart-gauge>
                 </div>
                 <div class="col-0 col-lg-2"></div>
             </div>
-       
         </div>
     </div>
 
@@ -49,7 +41,6 @@
             <div class="row">
                 <div class="col">
                     <div>Current (A):</div>
-                    <!--<app-progressbar [value]="lastVehicleStatus.current" min="0" max="120"></app-progressbar>-->
                     <app-progress-meter [degree]="lastVehicleStatus.current | number:'1.0-1'"
                         minDegree=-400 maxDegree=400 
                         meterNegativeClass="col-6"
@@ -63,7 +54,6 @@
             </div>
             <div class="row p-1">
                 <div class="col">Low Temp(F):
-                    <!--<app-progressbar [value]="lastVehicleStatus.temperaturelow" min="-40" max="220"></app-progressbar>-->
                     <app-progress-meter [degree]="lastVehicleStatus.temperaturelow | number:'1.0-1'"
                         minDegree=-40 maxDegree=220 
                         meterNegativeClass="col-2"
@@ -72,7 +62,6 @@
             </div>
             <div class="row p-1">
                 <div class="col">High Temp(F):
-                    <!--<app-progressbar [value]="lastVehicleStatus.temperaturehigh" min="-40" max="220"></app-progressbar>-->
                     <app-progress-meter [degree]="lastVehicleStatus.temperaturehigh | number:'1.0-1'"
                         minDegree=-40 maxDegree=220 
                         meterNegativeClass="col-2"
@@ -121,7 +110,10 @@
                 <div class="tab-pane active app-tab-pane" id="tab-snapshot">
                     <ul class="fa-ul" *ngIf="recentStatusList">
                         <li *ngFor="let status of recentStatusList">
-                            <i class="fa-li fa fa-camera"></i>{{status.updated | ndate:'MM/DD/YYYY HH:mm:ss'}}
+                            <i class="fa-li fa fa-camera"></i>
+                            <button class="btn btn-link p-0" (click)="selectStatus(status);false">
+                                {{status.updated | ndate:'MM/DD/YYYY HH:mm:ss'}}
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -131,33 +123,6 @@
 </div>
 
 <!-- 2nd Line Section -->
-<!--<div class="card-deck m-2">
-    <div class="card w-25">
-        <div class="card-header font-weight-bold">Last Snapshot</div>
-        <div class="card-block">
-            <app-vehicle-snapshot-table [data]="lastVehicleSnapshot"></app-vehicle-snapshot-table>
-       </div>
-    </div>
-    <div class="card w-75">
-        <div class="card-header">
-            <div class="row align-items-start">
-                <div class="col flex-first font-weight-bold">Charts</div>
-                <div class="col flex-unordered text-center">
-                    <my-date-picker #datePicker [options]="optionDatePicker" (dateChanged)="onDateChanged($event)" placeholder="Select Date"></my-date-picker>
-                </div>
-                <div class="col flex-last text-right">
-                    <button type="button" class="btn btn-primary btn-sm" (click)="exportDualCharts()">Export Charts</button>
-                </div>
-            </div>
-       </div>
-        <div #divDualCharts class="card-block">
-                <app-vehicle-map *ngIf="recentStatusList" [items]="recentStatusList"></app-vehicle-map>
-                <p-chart #chartSocRange type="line" [options]="optionSocRangeChart" ></p-chart>
-                <p-chart #chartEstActualDistance type="line" [options]="optionEstActualDistanceChart"></p-chart>
-                <p-chart #chartChargingRunningStatus type="line" [options]="optionChargingRunningStatusChart"></p-chart>
-        </div>
-    </div>
-</div>-->
 <div class="row m-1">
     <div class="col-12 col-lg-4 mb-1">
         <div class="card" style="height:100%">
