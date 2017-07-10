@@ -8,7 +8,6 @@ import { DataTableModule, ProgressBarModule,
         ChartModule, MegaMenuModule, TieredMenuModule } from 'primeng/primeng';
 import { MyDatePickerModule } from 'mydatepicker';
 import { MyDateRangePickerModule } from 'mydaterangepicker';
-import { JustgageModule } from 'angular2-justgage';
 import { CookieModule } from 'ngx-cookie';
 import './shared/rxjs-extensions';
 import './shared/vendor';
@@ -23,9 +22,9 @@ import { DataTableComponent } from './fleet/datatable.component';
 import { DataCardsComponent } from './fleet/datacards.component';
 import { MenuComponent } from './menu/menu.component';
 import { ProgressBarComponent } from './components/progressbar/progressbar.component';
-import { GaugeComponent } from './components/gauge/gauge.component';
 import { ChartGaugeComponent } from './components/chart-gauge/chart-gauge.component';
 import { AgmCoreModule } from '@agm/core';
+import { AgmClustererModule } from '@agm/clusterer/clusterer.module';
 
 import { UtilityService } from './shared/utility.service';
 import { DataRemoteService } from './shared/data-remote.service';
@@ -55,7 +54,6 @@ import { NeutralDatePipe } from './components/pipes/neutral-date.pipe';
     DataCardsComponent,
     MenuComponent,
     ProgressBarComponent,
-    GaugeComponent,
     AnalysisDailyComponent,
     AnalysisAlertComponent,
     MonthlyReportComponent,
@@ -83,15 +81,14 @@ import { NeutralDatePipe } from './components/pipes/neutral-date.pipe';
     MyDateRangePickerModule,
     TieredMenuModule,
     MegaMenuModule,
-    JustgageModule,
     ChartsModule,
     CookieModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC2aUGq0zuZMLTgrUG72Wb4LX6nOA_Q4VM'
-    })
+    }),
+    AgmClustererModule
   ],
   providers: [
-    // { provide: APP_BASE_HREF, useValue : '/ioc/index.php/hams/' },
     Title,
     UtilityService,
     DataRemoteService,

@@ -5,9 +5,6 @@
     <h3>Log in user: {{user}}</h3>
 </div>
 <div class="m-2">
-    <justgage class="h-25 w-25 p-3" [options]="optionGauge" [value]="88" [max]="100"></justgage>
-</div>
-<div class="m-2">
     <my-date-picker [options]="optionDatePicker"
                 (dateChanged)="onDateChanged($event)" 
                 placeholder="Select Date"></my-date-picker>

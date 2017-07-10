@@ -10,6 +10,11 @@ export class FleetMapComponent implements OnInit {
   @Input("items")
   statusList: Array<VehicleStatus>;
 
+  clusterIcon: string = 
+    "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m";
+  markerIcon: string = 
+    "http://cloud.iocontrols.com/online2017/hams/images/mapicon/oi_map_marker.yellow.46px.png";
+
   ngOnInit() {
 
   }
