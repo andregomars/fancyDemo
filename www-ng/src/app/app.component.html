@@ -1,10 +1,9 @@
 <div class="container-fluid" style="min-height:100%">
   <div class="row">
-    <div class="col col-sm-2 p-0 collapse show" id="menu">
+    <div class="col-sm-2 p-0 collapse show" id="menu">
       <app-menu data-parent="#menu" [show]="showMenu"></app-menu>
     </div>
-    <div class="col p-2">
-      <a href="#menu" data-toggle="collapse"><i class="fa fa-navicon fa-lg"></i></a>
+    <div class="col-sm-10 p-2">
       <router-outlet></router-outlet>
     </div>
   </div>

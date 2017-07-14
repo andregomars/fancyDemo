@@ -106,6 +106,10 @@ export class DataService {
     getVehicleDailyFileStreamUrl$(fileId: number): Observable<string> {
       return this.dataService.getVehicleDailyFileStreamUrl$(fileId);
     }
+
+    postSmsRequest$(vname: string): void {
+        this.dataService.postSmsRequest$(vname);
+    }
     
 //     getAllFleetID(): Array<string> {
 //       var data = this.dataService.getFleetIdentities();

@@ -38,9 +38,10 @@
         </ng-template>
     </p-column>
     <p-column header="Action">
-        <ng-template let-row="rowData" pTemplate="body">
+        <ng-template let-data="rowData" pTemplate="body">
             <button title="SMS Request" type="button" 
               class="btn btn-primary btn-sm" 
+              (click) = "addRequest(data)"
                 data-toggle="modal" data-target="#requestModal">
                 Request
             </button>

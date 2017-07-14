@@ -20,6 +20,7 @@ export class VehicleStatus {
     public speed: number,
     public remainingenergy: number,
     public actualdistance: number,
+    public highvoltagestatus: number, 
     public updated: Date
   ) {}
 }

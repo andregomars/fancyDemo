@@ -179,7 +179,7 @@ export class UtilityService {
 
       return new VehicleStatus(vehicle.vid, vehicle.vname, vehicle.fid, vehicle.fname, 
         lat, lng, 0, 0, 0, soc, status, range, mileage, voltage, current, 
-        temperaturehigh, temperaturelow, speed, remainingenergy, actualdistance, updated);
+        temperaturehigh, temperaturelow, speed, remainingenergy, actualdistance, 0, updated);
     }
 
   //*** private helper methods ***
