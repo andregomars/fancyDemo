@@ -139,7 +139,7 @@ export class VehicleComponent implements OnInit {
   }
 
   getDefaultVehicleStatus(): VehicleStatus {
-    return new VehicleStatus(0, '', 0, '', 34.134330, 117.928273, 0, 0, 0, 0, 0, 0, 0,
+    return new VehicleStatus(0, '', 0, '', 'bus', 34.134330, 117.928273, 0, 0, 0, 0, 0, 0, 0,
       0, 0, -40, -40, 0, 0, 0, 0, new Date());
   }
 

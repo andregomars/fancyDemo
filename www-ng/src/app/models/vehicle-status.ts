@@ -4,6 +4,7 @@ export class VehicleStatus {
     public vname: string,
     public fid: number,
     public fname: string,
+    public vtype: string = "bus",
     public lat: number,
     public lng: number,
     public axisx: number,
