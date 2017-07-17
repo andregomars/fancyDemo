@@ -177,7 +177,8 @@ export class UtilityService {
       let lat: number = 40.734593;
       let lng: number = -73.994646;
 
-      return new VehicleStatus(vehicle.vid, vehicle.vname, vehicle.fid, vehicle.fname, 
+      return new VehicleStatus('00000000-0000-0000-0000-000000000000',
+        vehicle.vid, vehicle.vname, vehicle.fid, vehicle.fname, 
         'bus', lat, lng, 0, 0, 0, soc, status, range, mileage, voltage, current, 
         temperaturehigh, temperaturelow, speed, remainingenergy, actualdistance, 0, updated);
     }

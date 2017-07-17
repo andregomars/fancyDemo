@@ -79,6 +79,10 @@ export class DataService {
         return this.dataService.getVehicleSnapshot$(vname);
     }
 
+    getVehicleSnapshotByDataId$(dataId: string): Observable<Array<VehicleSnapshot>> {
+        return this.dataService.getVehicleSnapshotByDataId$(dataId);
+    }
+
     getVehicleWholeDaySnapshot$(vname: string, date: Date): Observable<Array<VehicleSnapshot>> {
         return this.dataService.getWholeDayVehicleSnapshot$(vname, date);
     }

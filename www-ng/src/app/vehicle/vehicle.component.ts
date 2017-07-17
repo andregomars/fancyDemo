@@ -27,7 +27,7 @@ export class VehicleComponent implements OnInit {
   lastVehicleStatus: VehicleStatus = this.getDefaultVehicleStatus();
   recentStatusList: Array<VehicleStatus>;
   recentAlertList: Array<VehicleAlert>;
-  lastVehicleSnapshot: Array<VehicleSnapshot>;
+  vehicleSnapshot: Array<VehicleSnapshot>;
   optionGaugeSOC: any;
   optionGaugeSpeed: any;
 
@@ -98,12 +98,14 @@ export class VehicleComponent implements OnInit {
   loadLastVehicleSnapshot(): void {
     this.dataService.getVehicleSnapshot$(this.vehicleName)
       .subscribe((data: Array<VehicleSnapshot>) => {
-        if (data.length > 0) {
-          data.push(new VehicleSnapshot('AX', 'AxisX', 0.14, 'degree', new Date()));
-          data.push(new VehicleSnapshot('AY', 'AxisY', 0.03, 'degree', new Date()));
-          data.push(new VehicleSnapshot('AZ', 'AxisZ', 0.00, 'degree', new Date()));
-        }
-        this.lastVehicleSnapshot = data;
+         this.vehicleSnapshot = data;
+      });
+  }
+
+  loadVehicleSnapshotByDataId(dataId: string): void {
+    this.dataService.getVehicleSnapshotByDataId$(dataId)
+      .subscribe((data: Array<VehicleSnapshot>) => {
+         this.vehicleSnapshot = data;
       });
   }
 
@@ -139,7 +141,7 @@ export class VehicleComponent implements OnInit {
   }
 
   getDefaultVehicleStatus(): VehicleStatus {
-    return new VehicleStatus(0, '', 0, '', 'bus', 34.134330, 117.928273, 0, 0, 0, 0, 0, 0, 0,
+    return new VehicleStatus('00000000-0000-0000-0000-000000000000', 0, '', 0, '', 'bus', 34.134330, 117.928273, 0, 0, 0, 0, 0, 0, 0,
       0, 0, -40, -40, 0, 0, 0, 0, new Date());
   }
 
@@ -478,6 +480,7 @@ export class VehicleComponent implements OnInit {
 
   selectStatus(status: VehicleStatus): void {
     this.lastVehicleStatus = status;
+    this.loadVehicleSnapshotByDataId(status.dataId);
   }
 
   exportDualCharts(): void {

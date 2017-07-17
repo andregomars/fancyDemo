@@ -26,6 +26,7 @@ export class DataRemoteService {
     "/VehicleStatus/GetRecentAllByVehicleName";
   private Endpoint_WholeDayVehicleStatus: string = "/VehicleStatus/GetWholeDayByVehicleName";
   private Endpoint_VehicleSnapshotByVehicleName: string = "/VehicleSnapshot/GetByVehicleName";
+  private Endpoint_VehicleSnapshotByDataId: string = "/VehicleSnapshot/GetByDataId";
   private Endpoint_WholeDayVehicleSnapshot: string = "/VehicleSnapshot/GetWholeDayByVehicleName";
   private Endpoint_RecentAllVehicleAlertByVehicleName: string = 
     "/VehicleAlert/GetRecentAllByVehicleName";
@@ -45,6 +46,7 @@ export class DataRemoteService {
   private URL_RecentAllVehicleStatusByVehicleName: string;
   private URL_WholeDayVehicleStatus: string;
   private URL_VehicleSnapshotByVehicleName: string;
+  private URL_VehicleSnapshotByDataId: string;
   private URL_WholeDayVehicleSnapshot: string;
   private URL_RecentAllVehicleAlertByVehicleName: string;
   private URL_VehicleDailyUsageByDateScope: string;
@@ -70,6 +72,7 @@ export class DataRemoteService {
       this.URL_RemoteApiRoot + this.Endpoint_RecentAllVehicleStatusByVehicleName;
     this.URL_WholeDayVehicleStatus = this.URL_RemoteApiRoot + this.Endpoint_WholeDayVehicleStatus;
     this.URL_VehicleSnapshotByVehicleName = this.URL_RemoteApiRoot + this.Endpoint_VehicleSnapshotByVehicleName;
+    this.URL_VehicleSnapshotByDataId = this.URL_RemoteApiRoot + this.Endpoint_VehicleSnapshotByDataId;
     this.URL_WholeDayVehicleSnapshot = this.URL_RemoteApiRoot + this.Endpoint_WholeDayVehicleSnapshot;
     this.URL_RecentAllVehicleAlertByVehicleName = 
       this.URL_RemoteApiRoot + this.Endpoint_RecentAllVehicleAlertByVehicleName;
@@ -138,6 +141,12 @@ export class DataRemoteService {
 
   getVehicleSnapshot$(vname: string): Observable<Array<VehicleSnapshot>> {
     return this.http.get(`${this.URL_VehicleSnapshotByVehicleName}/${vname}`)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+  getVehicleSnapshotByDataId$(dataId: string): Observable<Array<VehicleSnapshot>> {
+    return this.http.get(`${this.URL_VehicleSnapshotByDataId}/${dataId}`)
       .map(res => res.json())
       .catch(this.handleError);
   }

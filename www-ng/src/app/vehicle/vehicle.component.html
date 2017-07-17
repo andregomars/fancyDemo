@@ -126,9 +126,9 @@
 <div class="row m-1">
     <div class="col-12 col-lg-4 mb-1">
         <div class="card" style="height:100%">
-            <div class="card-header font-weight-bold">Last Snapshot</div>
+            <div class="card-header font-weight-bold">Snapshot</div>
             <div class="card-block">
-                <app-vehicle-snapshot-table [data]="lastVehicleSnapshot"></app-vehicle-snapshot-table>
+                <app-vehicle-snapshot-table [data]="vehicleSnapshot"></app-vehicle-snapshot-table>
             </div>
         </div>
     </div>
@@ -145,7 +145,8 @@
                     </div>
                 </div>
         </div>
-            <app-vehicle-map *ngIf="recentStatusList" [items]="recentStatusList"></app-vehicle-map>
+            <app-vehicle-map *ngIf="recentStatusList" 
+                [items]="recentStatusList" [selectedStatus]="lastVehicleStatus"></app-vehicle-map>
             <div #divDualCharts class="card-block">
                     <p-chart #chartSocRange type="line" [options]="optionSocRangeChart" ></p-chart>
                     <p-chart #chartEstActualDistance type="line" [options]="optionEstActualDistanceChart"></p-chart>

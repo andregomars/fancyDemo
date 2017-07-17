@@ -1,5 +1,6 @@
 export class VehicleStatus {
   constructor(
+    public dataId: string,
     public vid: number,
     public vname: string,
     public fid: number,

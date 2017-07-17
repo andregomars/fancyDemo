@@ -1,12 +1,13 @@
 <agm-map *ngIf="statusList && statusList.length > 0 
-  && statusList[0].lat != 0 && statusList[0].lng != 0" 
-    [latitude]="statusList[0].lat | geo" 
-    [longitude]="statusList[0].lng | geo" [zoom]=12 
+  && selectedStatus && selectedStatus.lat != 0 
+  && selectedStatus.lng != 0" 
+    [latitude]="selectedStatus.lat | geo" 
+    [longitude]="selectedStatus.lng | geo" [zoom]=12 
     [streetViewControl]=false [zoomControl]=true>
   <agm-marker 
-      [latitude]="statusList[0].lat | geo" 
-      [longitude]="statusList[0].lng | geo"
-      [label]="'V'" [title]="statusList[0].vname" 
+      [latitude]="selectedStatus.lat | geo" 
+      [longitude]="selectedStatus.lng | geo"
+      [label]="'V'" [title]="selectedStatus.vname" 
       [markerDraggable]=false> 
   </agm-marker>
   <agm-polyline [polylineDraggable]=false 

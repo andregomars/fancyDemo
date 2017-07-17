@@ -10,6 +10,9 @@ export class VehicleMapComponent implements OnInit {
   @Input("items")
   statusList: Array<VehicleStatus>;
 
+  @Input("selectedStatus")
+  selectedStatus: VehicleStatus;
+
   ngOnInit() {
   }
 
