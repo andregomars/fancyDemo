@@ -8,8 +8,14 @@ import { VehicleStatus } from '../models/vehicle-status';
   styleUrls: ['datacards.component.css']
 })
 export class DataCardsComponent {
-    @Input() 
-    items: Array<VehicleStatus>;
+  @Input() 
+  items: Array<VehicleStatus>;
+
+  getCardBgImgClass(vtype: string, color: string): string {
+    if (vtype == null || vtype.length === 0 )
+      vtype = "bus";
+    return `bg-${vtype.toLowerCase()}-${color}`;
+  }
 
 }
 
