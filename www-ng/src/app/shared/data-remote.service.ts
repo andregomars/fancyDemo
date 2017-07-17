@@ -17,7 +17,7 @@ import { FleetIdentity } from '../models/fleet-identity';
 @Injectable()
 export class DataRemoteService {
   private vehicleIdentities: Array<VehicleIdentity>;
-  private URL_RemoteApiRoot: string = "http://52.33.60.220/api";
+  private URL_RemoteApiRoot: string = "http://52.35.12.17/api";
   private Endpoint_VehicleIdentities: string = "/VehicleIdentity";
   private Endpoint_VehicleIdentitiesByLoginName: string = "/VehicleIdentity/LoginName";
   private Endpoint_VehicleStatusByVehicleName: string = "/VehicleStatus/GetByVehicleName";
