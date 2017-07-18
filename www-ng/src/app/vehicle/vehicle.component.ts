@@ -375,7 +375,7 @@ export class VehicleComponent implements OnInit {
   getChartDataEstActualDistance(list: VehicleStatus[]): any {
     var labels = list.map(x => x.updated);
     var dataRange = list.map(x => x.range.toFixed(1));
-    var dataMileage = list.map(x => x.mileage.toFixed(1));
+    var dataMileage = list.map(x => x.actualdistance.toFixed(1));
 
     return {
       labels: labels,
@@ -402,7 +402,7 @@ export class VehicleComponent implements OnInit {
   getChargingRunningStatusData(list: VehicleStatus[]): any {
     var labels = list.map(x => x.updated);
     var dataChargingStatus = list.map(x => x.status.toFixed(1));
-    var dataHighVoltageStatus = list.map(x => x.voltage.toFixed(1));
+    var dataHighVoltageStatus = list.map(x => x.highvoltagestatus.toFixed(1));
 
     return {
       labels: labels,
