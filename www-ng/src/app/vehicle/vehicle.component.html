@@ -10,7 +10,7 @@
 </div>
 
 <!-- 1st Line Section -->
-<div class="card-deck m-1">
+<div class="card-deck mt-1">
     <!-- Card Left -->
     <div class="card mb-1">
         <div class="card-header font-weight-bold">Gauges</div>
@@ -119,9 +119,17 @@
 </div>
 
 <!-- 2nd Line Section -->
-<div class="row m-1">
+<div class="row mt-1">
     <div class="col-12 col-lg-4 mb-1">
-        <div class="card" style="height:100%">
+        <div class="card mb-2">
+            <div class="card-header font-weight-bold">Routes</div>
+            <div class="card-block p-0">
+                <app-vehicle-map *ngIf="recentStatusList" 
+                    [items]="recentStatusList" [selectedStatus]="lastVehicleStatus"></app-vehicle-map>
+            </div>
+        </div>
+        <!-- <div class="card mb-3" style="height:100%">  -->
+         <div class="card"> 
             <div class="card-header font-weight-bold">Snapshot</div>
             <div class="card-block">
                 <app-vehicle-snapshot-table [data]="vehicleSnapshot"></app-vehicle-snapshot-table>
@@ -140,10 +148,8 @@
                         <button type="button" class="btn btn-primary btn-sm" (click)="exportDualCharts()">Export Charts</button>
                     </div>
                 </div>
-        </div>
-            <app-vehicle-map *ngIf="recentStatusList" 
-                [items]="recentStatusList" [selectedStatus]="lastVehicleStatus"></app-vehicle-map>
-            <div #divDualCharts class="card-block">
+            </div>
+           <div #divDualCharts class="card-block">
                     <p-chart #chartSocRange type="line" [options]="optionSocRangeChart" ></p-chart>
                     <p-chart #chartEstActualDistance type="line" [options]="optionEstActualDistanceChart"></p-chart>
                     <p-chart #chartChargingRunningStatus type="line" [options]="optionChargingRunningStatusChart"></p-chart>
@@ -153,7 +159,7 @@
 </div>
 
 <!-- 3rd Line Section -->
-<div class="card m-1">
+<div class="card mt-1">
     <div class="card-header font-weight-bold">Analysis</div>
     <div class="card-block">
         <p-chart #chartComplex type="line" [options]="optionComplexChart"></p-chart>
