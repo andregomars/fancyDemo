@@ -9,16 +9,17 @@ import { AnalysisDailyComponent } from './analysis-daily/analysis-daily.componen
 import { AnalysisAlertComponent } from './analysis-alert/analysis-alert.component';
 import { MonthlyReportComponent } from './monthly-report/monthly-report.component';
 import { DailyReportComponent } from './daily-report/daily-report.component';
+import { AuthGuardService } from './shared/auth-guard.service';
 
 const routes: Routes = [
     // { path: 'drill', component: DrillComponent },
     { path: 'fleet', component: FleetSelectionComponent },
-    { path: 'fleet/:fname', component: FleetComponent },
-    { path: 'vehicle/:vname', component: VehicleComponent },
-    { path: 'vehicledaily/:vname', component: AnalysisDailyComponent },
-    { path: 'vehiclealert/:vname', component: AnalysisAlertComponent },
-    { path: 'monthlyreport/:fname', component: MonthlyReportComponent },
-    { path: 'dailyreport/:fname', component: DailyReportComponent },
+    { path: 'fleet/:fname', component: FleetComponent, canActivate: [AuthGuardService] },
+    { path: 'vehicle/:vname', component: VehicleComponent, canActivate: [AuthGuardService] },
+    { path: 'vehicledaily/:vname', component: AnalysisDailyComponent, canActivate: [AuthGuardService] },
+    { path: 'vehiclealert/:vname', component: AnalysisAlertComponent, canActivate: [AuthGuardService] },
+    { path: 'monthlyreport/:fname', component: MonthlyReportComponent, canActivate: [AuthGuardService] },
+    { path: 'dailyreport/:fname', component: DailyReportComponent, canActivate: [AuthGuardService] },
 
     { path: 'ioc/index.php/fleet', component: FleetSelectionComponent },
     { path: 'ioc/index.php/fleet/:fname', component: FleetComponent },
@@ -33,6 +34,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ],
+  providers: [ AuthGuardService ],
   exports: [ RouterModule ]
 })
 export class AppRoutingModule { }

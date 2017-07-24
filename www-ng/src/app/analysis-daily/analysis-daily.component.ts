@@ -241,7 +241,6 @@ export class AnalysisDailyComponent implements OnInit {
     this.dataService.getVehicleDailyUsageByDateRange$(this.vehicleName, beginDate, endDate)
       .subscribe(data => {
         if (!data) return;
-        console.log(data);
         this.chartSocEnergy.data = this.buildSocEnergyChartData(data);
         this.chartSocEnergy.reinit();
        });
