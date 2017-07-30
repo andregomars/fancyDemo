@@ -23,32 +23,33 @@ export class AuthGuardService implements CanActivate {
     var userLoggedIn = this.cookie.get('ioc_loggedin');
     if (userLoggedIn === null ) return false;
 
-    var url: string = state.url.toUpperCase();
     //get last segment of url 
     //e.g. index.php/hams/fleet/{id} or /vehicle/{id}
-    var id: string = url.substr(url.lastIndexOf('/') + 1).toUpperCase(); 
-
+    var id: string = state.url.substr(state.url.lastIndexOf('/') + 1).toUpperCase(); 
     if (userLoggedIn !== this.user) {
       this.dataService.getVehicleIdentitiesByLoginName$(userLoggedIn)
         .map((data: VehicleIdentity[]) => {
           if(this.isQualifiedVehicleOrFleet(data, id)) {
             this.user = userLoggedIn;
             this.vehicles = data;
-            return true;
+            this.router.navigate([state.url]);
+            return Observable.of(true);
           }
           else {
             this.user = null;
             this.vehicles = null;
-            return true;
+            return Observable.of(false);
           }
-        }).first();
+        }).first().subscribe();
+    }
+    else {
+      return true;
     }
 
   }
 
   //check at least one of the vehicle name or fleet name matches
   isQualifiedVehicleOrFleet(vehicles: VehicleIdentity[], id: string): boolean {
-          console.log('call me');
     var filteredVehicles = vehicles.filter(x => x.fname === id || x.vname === id);
     return filteredVehicles.length > 0;
   }
