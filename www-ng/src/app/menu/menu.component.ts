@@ -18,8 +18,9 @@ export class MenuComponent implements OnInit {
     fleetItems : MenuItem[];
     vehicleItems : MenuItem[];
     alertItems : MenuItem[];
-    monthlyReportItem: any[];
     dailyReportItem: any[];
+    monthlyReportItem: any[];
+    dailyLogItem: any[];
     vehicles: VehicleIdentity[];
 
     @Input() show: boolean;
@@ -46,8 +47,9 @@ export class MenuComponent implements OnInit {
                 this.loadAlertAnalysisItems();
              });
 
-          this.loadMonthlyReportItem(fname);
           this.loadDailyReportItem(fname);
+          this.loadMonthlyReportItem(fname);
+          this.loadDailyLogItem(fname);
         });
       
       this.dataService.getVehicleIdentitiesByLoginName$(userLoginName).subscribe(data =>
@@ -75,25 +77,6 @@ export class MenuComponent implements OnInit {
       this.fleetItems = fLinks;
     }
 
-    // private loadFleetItems(): void {
-    //   var data = this.dataService.getAllVehiclesData();
-    //   var fleetIDs = this.dataService.getAllFleetID();
-    //   if (!fleetIDs || !data) return;
-
-    //   console.log('here');
-    //   var fLinks = fleetIDs.map(fid => { 
-    //     var vLinks = data.filter( el => el.fid === fid ).map(v => {
-    //       return { label: v.vid, routerLink: ['/vehicle', v.vid]}
-    //     });
-    //     return {
-    //       label: fid,
-    //       routerLink: ['/fleet', fid],
-    //       items: vLinks 
-    //     };
-    //   });
-    //   this.fleetItems = fLinks;
-    // }
-
     private loadDailyAnalysisItems(): void {
       var vLinks = this.vehicles.map(v => {
         return {
@@ -114,12 +97,16 @@ export class MenuComponent implements OnInit {
       this.alertItems = vLinks;
     }
 
+    private loadDailyReportItem(fname: string): void {
+      this.dailyReportItem = ['/dailyreport', fname];
+    }
+
     private loadMonthlyReportItem(fname: string): void {
       this.monthlyReportItem = ['/monthlyreport', fname];
     }
 
-    private loadDailyReportItem(fname: string): void {
-      this.dailyReportItem = ['/dailyreport', fname];
+    private loadDailyLogItem(fname: string): void {
+      this.dailyLogItem = ['/dailylog', fname];
     }
 
 }

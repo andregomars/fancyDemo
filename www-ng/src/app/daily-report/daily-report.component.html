@@ -1,125 +1,121 @@
-<!-- Header Section -->
+ <!-- Header Section -->
 <div class="navbar text-center bg-faded mb-2">
   <div class="row no-gutters align-items-center">
-    <div class="col flex-first text-left">/ Daily Logged Data</div>
+    <div class="col flex-first text-left">/ Daily Report</div>
     <div class="col flex-unordered text-center">
       <h5> <i class="fa fa-flag"></i> {{ fleetID }} </h5>
     </div>
-    <div class="col flex-last text-left"></div>
-  </div>
-</div>
-
-<!-- Vehicle Selection Alert Section -->
-<div class="row pt-2">
-  <div class="col text-left">
-    <div class="alert alert-warning alert-dismissible 
-      fade show">
-      <button type="button" class="close" data-dismiss="alert">
-        <span>&times;</span>
-      </button>
-      Please select vehicle number and month first.
-      </div>
-  </div>
- </div>
-
-<!-- Vehicle Selection Section -->
-<div class="row px-2">
-  <div class="col-2 col-md-1 text-right">
-    <div class="text-primary">Vehicle:</div>
-  </div>
-  <div class="col-10 col-md-11 text-left" style="overflow-x:auto">
-    <div class="btn-group" data-toggle="buttons">
-      <label *ngFor="let vehicle of vehicles" class="btn btn-secondary" (click)="selectVehicle(vehicle)">
-          <input type="checkbox" autocomplete="off">{{ vehicle.id  }}
-        </label>
+    <div class="col flex-last text-right">
+      <button type="button" class="btn btn-primary btn-sm text-center" (click)="exportCharts()">Export Charts</button>
     </div>
   </div>
 </div>
 
-<!-- Year & Month Selection Section -->
-<div class="row p-2 align-items-center">
-  <div class="col-2 col-md-1 text-right pb-1">
-    <div class="text-primary">Year:</div>
-  </div>
-  <div class="col-10 col-md-2 text-left pb-1">
-    <select [(ngModel)]="selectedYear" (change)="onSelect($event.target.value)" class="form-control">
-        <option *ngFor="let year of years" [value]="year">{{year}}</option>
-      </select>
-  </div>
-  <div class="col-2 col-md-1 text-right">
-    <div class="text-primary">Month:</div>
-  </div>
-  <div class="col-10 col-md-8 text-left" style="overflow-x:auto">
-    <div class="btn-group" data-toggle="buttons">
-      <ng-container *ngFor="let month of months; let i = index">
-        <label *ngIf="i == months.length -1; else elseMonthBlock" 
-          class="btn btn-secondary active" (click)="selectMonth(month)">
-          <input type="radio"  autocomplete="off">{{ month.name }}
-        </label>
-        <ng-template #elseMonthBlock>
-          <label class="btn btn-secondary" (click)="selectMonth(month)">
-            <input type="radio"  autocomplete="off">{{ month.name }}
-          </label>
-        </ng-template>
-      </ng-container>
+<!-- Montly Total Table-->
+<div class="card-deck m-2">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-1 col-md-4"></div>
+        <div class="col-11 col-md-4 text-center text-primary"><h5>Daily Total Data</h5></div>
+        <div class="col-12 col-md-4 text-left">
+          <my-date-picker [options]="optionDatePicker" 
+            (dateChanged)="onDateChanged($event)" placeholder="Select Date">
+          </my-date-picker>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-<div class="row text-center p-2">
-  <div class="col">
-    <p-dataTable [value]="vehicleLogs" class="table" [responsive]="true">
-      <p-column field="filetime" header="File Time" [sortable]="true">
-        <ng-template let-col let-data="rowData" pTemplate="body">
-            {{data[col.field] | ndate:'MM/DD/YYYY'}}
-        </ng-template>
-      </p-column>
-      <p-column field="vname" header="Bus No." [sortable]="true"></p-column>
-      <p-column field="filename" header="File Name">
-        <ng-template let-col let-data="rowData" pTemplate="body">
-            {{data[col.field]}}
-        </ng-template>
-      </p-column>
-      <p-column field="begintime" header="Start Time">
-        <ng-template let-col let-data="rowData" pTemplate="body">
-            {{data[col.field] | ndate:'MM/DD/YYYY HH:mm:ss'}}
-        </ng-template>
-      </p-column>
-      <p-column field="endtime" header="End Time">
-        <ng-template let-col let-data="rowData" pTemplate="body">
-            {{data[col.field] | ndate:'MM/DD/YYYY HH:mm:ss'}}
-        </ng-template>
-      </p-column>
-      <p-column field="fileid" header="Download">
-        <ng-template let-col let-data="rowData" pTemplate="body">
-          <!--<button type="submit" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#requestModal">
-               <i class="fa fa-cloud-download fa-lg">&nbsp;</i>
-          </button>-->
-          <button type="button" class="btn btn-secondary btn-sm" 
-            (click)="download(data[col.field])">
-               <i class="fa fa-cloud-download fa-lg"></i>
-          </button>
-        </ng-template>
-      </p-column>
-    </p-dataTable>
+    <div class="card-block">
+      <div class="row">
+        <div class="col">
+          <p-dataTable [value]="dataFleetMonthly" class="table">
+            <p-column field="vname" header="Bus No." [sortable]="true"></p-column>
+            <p-column field="soccharged" header="SOC Charged">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+            <p-column field="socused" header="SOC Used">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+            <p-column field="mileage" header="Actual Distance">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+            <p-column field="soc_mile" header="SOC/Miles">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+            <p-column field="mile_soc" header="Miles/SOC">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+            <p-column field="energycharged" header="Energy Charged">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+            <p-column field="energyused" header="Energy Used">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+            <p-column field="energy_mile" header="kWh/Miles">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+            <p-column field="mile_energy" header="Miles/kWh">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                  {{data[col.field] | number:'1.0-1'}}
+              </ng-template>
+            </p-column>
+          </p-dataTable>
+        </div>
+      </div>
+      <div class="row pt-4">
+        <div class="col-1 text-right">
+          <label>Options:</label>
+        </div>
+        <div class="col-11 text-left" style="overflow-x:auto">
+          <div class="btn-group" data-toggle="buttons">
+            <label *ngFor="let opt of options" class="btn btn-secondary" (click)="selectOption(opt)">
+              <input type="radio"  autocomplete="off">{{ opt.name }}
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-2" style="overflow-x:auto">
+        <p-chart #chartFleetMonthly type="horizontalBar" [data]="dataFleetMonthlyChart" 
+          [options]="optionFleetMonthlyChart" width="960px" ></p-chart>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- Table output Section -->
-<div class="modal fade" id="requestModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Info</h5>
-        <button type="button" class="close" data-dismiss="modal">
-          <span>&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Download successfully.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
+<!-- Montly Alert Table Section -->
+<div class="card-deck m-2">
+  <div class="card">
+    <div class="card-header font-weight-bold">Daily Total Alert</div>
+    <div class="card-block">
+        <p-dataTable [value]="dataFleetMonthlyAlert" class="table">
+          <p-column field="id" header="Bus No." [sortable]="true"></p-column>
+          <p-column field="chargingStoped" header="Charging Stoped"></p-column>
+          <p-column field="slowCharging" header="Slow Charging"></p-column>
+          <p-column field="batteryOverhead" header="Battery Overhead"></p-column>
+          <p-column field="malfuncCharging" header="Charging System Malfunction"></p-column>
+          <p-column field="malfuncPowerBattery" header="Power Battery Malfunction"></p-column>
+          <p-column field="batteryLeaking" header="Battery Leaking"></p-column>
+          <p-column field="malfuncElectricalMotor" header="Electrical Motor Malfunction"></p-column>
+          <p-column field="malfuncABS" header="ABS Malfunction"></p-column>
+        </p-dataTable>
     </div>
   </div>
 </div>
+
+ 

@@ -32,9 +32,9 @@ import { DataService } from './shared/data.service';
 import { FleetTrackerService } from './shared/fleet-tracker.service';
 import { AnalysisDailyComponent } from './analysis-daily/analysis-daily.component';
 import { AnalysisAlertComponent } from './analysis-alert/analysis-alert.component';
-import { MonthlyReportComponent } from './monthly-report/monthly-report.component';
-import { VehicleDailyLogComponent } from './vehicle-daily-log/vehicle-daily-log.component';
 import { DailyReportComponent } from './daily-report/daily-report.component';
+import { MonthlyReportComponent } from './monthly-report/monthly-report.component';
+import { DailyLogComponent } from './daily-log/daily-log.component';
 import { FleetSelectionComponent } from './fleet-selection/fleet-selection.component';
 import { FleetMapComponent } from './fleet/fleet-map.component';
 import { VehicleMapComponent } from './vehicle/vehicle-map.component';
@@ -56,9 +56,9 @@ import { NeutralDatePipe } from './components/pipes/neutral-date.pipe';
     ProgressBarComponent,
     AnalysisDailyComponent,
     AnalysisAlertComponent,
-    MonthlyReportComponent,
-    VehicleDailyLogComponent,
     DailyReportComponent,
+    MonthlyReportComponent,
+    DailyLogComponent,
     FleetSelectionComponent,
     FleetMapComponent,
     VehicleMapComponent,

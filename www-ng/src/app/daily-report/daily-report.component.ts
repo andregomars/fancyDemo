@@ -1,14 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { IMyOptions, IMyDateModel } from 'mydatepicker';
+import { DataTableModule, UIChart } from 'primeng/primeng';
 import * as Rx from 'rxjs/Rx';
 import * as moment from 'moment';
-import { Observable } from 'rxjs/Observable';
+let jsPDF = require("jspdf");
+let html2canvas = require("html2canvas");
 
-import { UtilityService } from '../shared/utility.service';
 import { DataService } from '../shared/data.service';
-import { Vehicle } from '../models/vehicle.model';
 import { VehicleIdentity } from '../models/vehicle-identity';
-import { VehicleDailyFile } from '../models/vehicle-daily-file';
+import { UtilityService } from '../shared/utility.service';
+import { Vehicle } from '../models/vehicle.model';
+import { Fleet } from '../models/fleet.model';
+import { VehicleDailyUsage } from '../models/vehicle-daily-usage';
 import { FleetTrackerService } from '../shared/fleet-tracker.service';
 
 
@@ -20,16 +24,42 @@ import { FleetTrackerService } from '../shared/fleet-tracker.service';
 export class DailyReportComponent implements OnInit {
 
   fleetID: string;
-  private vehiclesSelected: Vehicle[] = [];
+  vehicles: Array<Vehicle>;
+  dataFleetMonthly: Array<any>;
+  dataFleetMonthlyAlert: Array<any>;
+  optionFleetMonthlyChart: any;
+  dataFleetMonthlyChart: any;
+  
+  selectedDate: Date;
   thisYear: number = new Date().getFullYear();
   selectedYear: number;
+  selectedMonth: any;
   years: number[];
   months: any[];
-  vehicles: Vehicle[] = [];
-  monthSelected: Date;
-  // vehicleLogs: any[] = [];
-  vehicleLogs: VehicleDailyFile[] = new Array<VehicleDailyFile>();
-  
+
+
+  options: any[] = [
+    { key: 'soccharged', name: 'SOC Charged' },
+    { key: 'socused', name: 'SOC Used' },
+    { key: 'mileage', name: 'Actual Distance' },
+    { key: 'soc_mile', name: 'SOC/Miles' },
+    { key: 'mile_soc', name: 'Miles/SOC' },
+    { key: 'energycharged', name: 'kWh Charged' },
+    { key: 'energyused', name: 'kWh Used' },
+    { key: 'energy_mile', name: 'kWh/Miles' },
+    { key: 'mile_energy', name: 'Miles/kWh' }
+  ];
+  optionSelected: any = this.options[0];
+
+  //child views
+  @ViewChild("charts")
+  charts: ElementRef;
+
+  // @ViewChild("tableFleetMonthly")
+  // tableFleetMonthly: DataTableModule;
+  @ViewChild("chartFleetMonthly")
+  chartFleetMonthly: UIChart;
+
   constructor(
     private utility: UtilityService,
     private route: ActivatedRoute,
@@ -38,88 +68,151 @@ export class DailyReportComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initYearsSelection();
-    this.initMonthButtons();
+    this.initMonthlyChartOption();
 
+    this.selectedDate = new Date();
+    this.selectedYear = new Date().getFullYear();
+    this.selectedMonth = { 
+        name: moment().format('MMM'),
+        value: moment().startOf('month').toDate()
+      };
     this.loadFleet();
   }
 
-  private loadFleet(): void {
-    this.route.params
-      .switchMap((params: Params) => Rx.Observable.of(params["fname"]))
-      .subscribe((fname: string) => { 
-        this.fleetID = fname;
-        this.fleetTracker.setFleetIDByFleet(fname);
-
-        this.initData();
-      });
-  }
-
-  private initData() {
-    this.dataService.getVehiclesStatusByFleet$(this.fleetID)
-      .subscribe((data: Array<VehicleIdentity>) => {
-        //init data of vehicle buttons
-        this.vehicles = data.map(v => new Vehicle(v.vname));
-        // this.vehiclesSelected = JSON.parse(JSON.stringify(this.vehicles));
-        this.loadVehicleLogs();
-      });
-  }
-
-  private initYearsSelection(): void {
-    //load years from 2017
-    var n = this.thisYear - 2016;
-    n = n < 1 ? 1 : n;
-    this.years = new Array(n).fill(this.thisYear).map((x, i)=>x-i);
-    this.selectedYear = this.thisYear;
-  }
-
-  private initMonthButtons(): void {
-    this.months = this.utility.getMonthsByYear(this.thisYear);
-    this.monthSelected = moment().startOf('month').toDate();
+  onDateChanged(event: IMyDateModel): void {
+    if (event.jsdate) {
+      this.selectedDate = event.jsdate;
+      this.loadData();
+      this.updateMonthlyChartData();
+    }
   }
 
   onSelect(year: number): void {
     this.months = this.utility.getMonthsByYear(year);
   }
 
-  private loadVehicleLogs(): void {
-   if (this.vehiclesSelected.length === 0 || !this.monthSelected) 
-      this.vehicleLogs = [];
-    else {
-      // this.vehicleLogs = this.dataService.getLogsInMonthOfDateByVehicles(this.vehiclesSelected, this.monthSelected);
-      var vnames = this.vehiclesSelected.map(r => r.id).toString();
-      var beginDate = moment(this.monthSelected).startOf('month').toDate();
-      var endDate = moment(this.monthSelected).endOf('month').startOf('day').toDate();
+  private initData(): void {
+    this.dataService.getVehiclesStatusByFleet$(this.fleetID)
+      .subscribe((data: Array<VehicleIdentity>) => {
+        this.vehicles = data.map(v => new Vehicle(v.vname));
 
-      this.dataService.getVehicleDailyFileList$(vnames, beginDate, endDate)
-        .subscribe((data: VehicleDailyFile[]) => {
-          this.vehicleLogs = data;
-        });
-    }
-  }
-
-  private selectVehicle(vehicle: Vehicle): void {
-    let vIndex = this.vehiclesSelected.findIndex(v => v.id === vehicle.id);
-    if(vIndex < 0) {
-      this.vehiclesSelected.push(vehicle);
-    }
-    else {
-      this.vehiclesSelected.splice(vIndex, 1);
-    }
-    this.loadVehicleLogs();
-  }
-
-  private selectMonth(month: any): void {
-    this.monthSelected = month.value;
-    this.loadVehicleLogs();
-  }
-
-  download($fileId: string): void {
-    console.log($fileId);
-    this.dataService.getVehicleDailyFileStreamUrl$(+$fileId)
-      .subscribe((url: string) => {
-        console.log(url);
-        window.location.assign(url);
+        this.loadData();
+        if (this.fleetID.toUpperCase() == "AVTA")
+        {
+          this.initFleetMonthlyAlertData();
+        }
       });
+  }
+
+  private loadData() {
+    var beginDate = moment(this.selectedDate).startOf('day').toDate();
+    var endDate = moment(beginDate).add(1, 'days').toDate();
+    
+    this.dataService.getVehicleDailyUsageDaysSummaryByFleet$(this.fleetID, beginDate, endDate)
+      .subscribe(data => { 
+        //monthly table data
+        this.dataFleetMonthly = data;
+        //monthly chart data
+        this.loadMonthlyChartData();
+      });
+
+  }
+
+  /*** Fleet Alert Grid ***/
+  private initFleetMonthlyAlertData() {
+    this.dataFleetMonthlyAlert = 
+      this.dataService.getRandomMonthlyAlertSummaryByFleet(this.fleetID, this.vehicles);
+  }
+
+  /*** Bar Chart ***/
+  selectOption(option: any): void {
+    this.optionSelected = option;
+    this.updateMonthlyChartData();
+  }
+
+  private initMonthlyChartOption(): void {
+    this.optionFleetMonthlyChart = {
+      responsive: false,
+      maintainAspectRatio: true,
+      scales: {
+        xAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      },
+      legend: {
+        display: false
+      }
+    };
+    this.resetChartDefaultOptions(this.optionFleetMonthlyChart);
+  }
+
+  private loadMonthlyChartData(): void {
+    var labels = [];
+    var data = [];
+    if (this.dataFleetMonthly && this.dataFleetMonthly[0])
+    {
+      labels = this.dataFleetMonthly.map(v => v.vname);
+      data = this.dataFleetMonthly.map(v => v[this.optionSelected.key]);
+    }
+    this.chartFleetMonthly.data = {
+      labels: labels,
+      datasets: [
+        {
+          label: this.optionSelected.name,
+          data: data,
+          backgroundColor: '#4bc0c0',
+          borderColor: '#4bc0c0',
+          borderWidth: 1
+        }
+      ]
+    };
+    this.chartFleetMonthly.reinit();
+  }
+
+  private updateMonthlyChartData(): void {
+   if (this.dataFleetMonthly && this.dataFleetMonthly[0]) {
+      this.chartFleetMonthly.data.datasets[0].data =
+        this.dataFleetMonthly.map(v => v[this.optionSelected.key]);
+   }
+    this.chartFleetMonthly.data.datasets[0].label = this.optionSelected.name;
+    this.chartFleetMonthly.refresh();
+  }
+
+  /*** Common Section ***/
+  private loadFleet(): void {
+    this.route.params
+      .switchMap((params: Params) => Rx.Observable.of(params["fname"]))
+      .subscribe((fname: string) => { 
+        this.fleetID = fname;
+        this.fleetTracker.setFleetIDByFleet(fname);
+        this.initData();
+      });
+  }
+
+  private resetChartDefaultOptions(option: any): void {
+    option.animation = {
+      duration: 0
+    };
+    option.hover = {
+      animationDuration: 0
+    };
+    option.responsive = false;
+    option.maintainAspectRatio = true;
+    option.legend = {
+      onClick: (e) => e.stopPropagation()
+    };
+  }
+
+  exportCharts(): void {
+    html2canvas(this.charts.nativeElement, {
+      onrendered: function (canvas) {
+        const contentDataURL = canvas.toDataURL("image/png");
+        let pdf = new jsPDF("landscape");
+        pdf.addImage(contentDataURL, "PNG", 10, 10);
+        pdf.save("Vehicle.DualCharts.pdf");
+      }
+    })
   }
 }
