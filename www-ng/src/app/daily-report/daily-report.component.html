@@ -1,4 +1,4 @@
- <!-- Header Section -->
+   <!-- Header Section -->
 <div class="navbar text-center bg-faded mb-2">
   <div class="row no-gutters align-items-center">
     <div class="col flex-first text-left">/ Daily Report</div>
@@ -6,7 +6,8 @@
       <h5> <i class="fa fa-flag"></i> {{ fleetID }} </h5>
     </div>
     <div class="col flex-last text-right">
-      <button type="button" class="btn btn-primary btn-sm text-center" (click)="exportCharts()">Export Charts</button>
+      <button type="button" class="btn btn-primary btn-sm text-center" 
+        (click)="dtDailyTotal.exportCSV()">Export</button>
     </div>
   </div>
 </div>
@@ -28,7 +29,7 @@
     <div class="card-block">
       <div class="row">
         <div class="col">
-          <p-dataTable [value]="dataFleetMonthly" class="table">
+          <p-dataTable #dtDailyTotal [value]="dataFleetMonthly" class="table">
             <p-column field="vname" header="Bus No." [sortable]="true"></p-column>
             <p-column field="soccharged" header="SOC Charged">
               <ng-template let-col let-data="rowData" pTemplate="body">

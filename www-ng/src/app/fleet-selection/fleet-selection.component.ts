@@ -24,7 +24,6 @@ export class FleetSelectionComponent implements OnInit {
 
   ngOnInit() {
     var userLoginName = this.cookie.get('ioc_loggedin');
-    // this.fleets$ = this.dataService.getFleetIdentitiesByLoginName$(userLoginName);
     this.dataService.getFleetIdentitiesByLoginName$(userLoginName)
       .subscribe((data: Array<FleetIdentity>) => {
         this.fleets = data;
