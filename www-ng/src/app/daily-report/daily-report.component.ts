@@ -36,7 +36,9 @@ export class DailyReportComponent implements OnInit {
   selectedMonth: any;
   years: number[];
   months: any[];
-
+  optionDatePicker: IMyOptions = {
+    dateFormat: 'mm/dd/yyyy',
+  };
 
   options: any[] = [
     { key: 'soccharged', name: 'SOC Charged' },
