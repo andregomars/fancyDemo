@@ -31,6 +31,7 @@ export class DailyReportComponent implements OnInit {
   dataFleetMonthlyChart: any;
   
   selectedDate: Date;
+  selectedDay: string;
   thisYear: number = new Date().getFullYear();
   selectedYear: number;
   selectedMonth: any;
@@ -73,6 +74,7 @@ export class DailyReportComponent implements OnInit {
     this.initMonthlyChartOption();
 
     this.selectedDate = new Date();
+    this.selectedDay = moment(this.selectedDate).format('YYYYMMDD');
     this.selectedYear = new Date().getFullYear();
     this.selectedMonth = { 
         name: moment().format('MMM'),
@@ -84,6 +86,7 @@ export class DailyReportComponent implements OnInit {
   onDateChanged(event: IMyDateModel): void {
     if (event.jsdate) {
       this.selectedDate = event.jsdate;
+      this.selectedDay = moment(this.selectedDate).format('YYYYMMDD');
       this.loadData();
       this.updateMonthlyChartData();
     }

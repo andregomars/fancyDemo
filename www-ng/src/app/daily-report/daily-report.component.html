@@ -29,7 +29,7 @@
     <div class="card-block">
       <div class="row">
         <div class="col">
-          <p-dataTable #dtDailyTotal [value]="dataFleetMonthly" class="table">
+          <p-dataTable #dtDailyTotal [exportFilename]="selectedDay" [value]="dataFleetMonthly" class="table">
             <p-column field="vname" header="Bus No." [sortable]="true"></p-column>
             <p-column field="soccharged" header="SOC Charged">
               <ng-template let-col let-data="rowData" pTemplate="body">
