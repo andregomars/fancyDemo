@@ -1,4 +1,5 @@
 www/wp-content/debug.log
+www/error_log
 www/wp-content/uploads/bb-plugin/
 npm-debug.log
 data
