@@ -1,23 +1,23 @@
 version: '3'
 services:
-  nginx_demo:
+  web:
     image: nginx.demo
     volumes:
       - ./www/:/var/www/html
     ports:
       - "80:80"
-    links:
-      - php_demo
-  php_demo:
+    depends_on:
+      - db
+  php:
     image: php.demo
     volumes:
       - ./www/:/var/www/html
     ports:
       - "9000:9000"
-    links:
-      - mysql_demo
-  mysql_demo:
-    image: mysql.demo
+    depends_on:
+      - db
+  db:
+    image: mariadb.demo
     volumes:
       - ./data/:/var/lib/mysql
     environment:
