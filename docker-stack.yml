@@ -3,7 +3,7 @@ services:
   web:
     image: nginx.demo
     volumes:
-      - ./www/:/var/www/html
+      - ./wordpress:/var/www/html
     ports:
       - "80:80"
     depends_on:
@@ -11,7 +11,7 @@ services:
   php:
     image: php.demo
     volumes:
-      - ./www/:/var/www/html
+      - ./wordpress:/var/www/html
     ports:
       - "9000:9000"
     depends_on:
@@ -19,7 +19,7 @@ services:
   db:
     image: mariadb.demo
     volumes:
-      - ./data/:/var/lib/mysql
+      - ./mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: wp
       MYSQL_DATABASE: wp
