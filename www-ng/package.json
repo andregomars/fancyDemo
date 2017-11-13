@@ -14,7 +14,8 @@
     "//postbuild": "cp -rf ./dist/assets /c/inetpub/wwwroot/ioc/wp-includes/. && cp ./dist/*.js /c/inetpub/wwwroot/ioc/wp-includes/assets/scripts",
     "publish": "ng build --prod -vc false -oh none",
     "postpublish": "cp -rf ./dist/assets /c/IO_Online_2016/ioc/wp-includes/. && cp ./dist/*.js /c/IO_Online_2016/ioc/wp-includes/assets/scripts",
-    "postbuild": "cp ./dist/*.js ./../www/wp-includes/js/hams/ && cp ./dist/*.css ./../www/wp-includes/css/hams/ && cp -r ./dist/assets/styles/* ./../www/wp-includes/css/hams/",
+    "postbuild": "cp -rf ./dist/assets ./../www2/wp-includes/. && cp ./dist/*.js ./../www2/wp-includes/assets/scripts",
+    "//original//postbuild": "cp ./dist/*.js ./../www/wp-includes/js/hams/ && cp ./dist/*.css ./../www/wp-includes/css/hams/ && cp -r ./dist/assets/styles/* ./../www/wp-includes/css/hams/",
     "////postbuild": "cp ./dist/*.js /c/inetpub/wwwroot/ioc/wp-includes/js/hams/ && cp ./dist/*.css /c/inetpub/wwwroot/ioc/wp-includes/css/hams/ && cp -r ./dist/assets/styles/ /c/inetpub/wwwroot/ioc/wp-includes/css/hams/styles/"
   },
   "private": true,
