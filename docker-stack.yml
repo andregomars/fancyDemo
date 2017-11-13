@@ -3,23 +3,26 @@ services:
   web:
     image: nginx.demo
     volumes:
-      - ./wordpress:/var/www/html
+      - ~/projects/fancyDemo/www2:/var/www/html
     ports:
       - "80:80"
     depends_on:
+      - php
       - db
   php:
-    image: php.demo
+    image: php.demo 
     volumes:
-      - ./wordpress:/var/www/html
+      - ~/projects/fancyDemo/www2:/var/www/html
     ports:
       - "9000:9000"
     depends_on:
       - db
   db:
-    image: mariadb.demo
+    image: mariadb:10.2.10
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ~/projects/fancyDemo/data:/var/lib/mysql
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: wp
       MYSQL_DATABASE: wp
