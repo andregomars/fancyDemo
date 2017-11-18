@@ -23,13 +23,13 @@
 define('DB_NAME', 'wp');
 
 /** MySQL database username */
-define('DB_USER', 'iocdbo');
+define('DB_USER', 'wp');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'iocdbo123!@#');
+define('DB_PASSWORD', 'wp');
 
 /** MySQL hostname */
-define('DB_HOST', 'mariains.cn4matndiw5d.us-west-2.rds.amazonaws.com');
+define('DB_HOST', 'db');
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8mb4');
