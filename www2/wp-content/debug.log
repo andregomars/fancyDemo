@@ -1,1 +1,0 @@
-[13-Nov-2017 06:05:20 UTC] WP_Community_Events::maybe_log_events_response: Valid response received. Details: {"api_url":"https:\/\/api.wordpress.org\/events\/1.0\/","request_args":{"body":{"number":5,"ip":"10.255.0.0","locale":"en_US","timezone":"America\/Los_Angeles"}},"response_code":200,"response_body":{"location":{"ip":"172.115.51.187"},"events":"6 events trimmed."}}
