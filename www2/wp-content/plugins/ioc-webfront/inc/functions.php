@@ -25,17 +25,16 @@ function remove_admin_bar_links() {
  * manage custom cookies
  */
 add_action('wp_login', 'add_custom_cookie_admin');
-function add_custom_cookie_admin() {
+function add_custom_cookie_admin( $user_login ) {
   // setcookie('your_cookie_name', 'cookie value', time() + 86400, '/'); // expire in a day
   $secure = is_ssl();
-  $expire = 0;
-  $http_only = false;
-  $ioc_auth_cookie = '';
-  $user = get_userdata($user_id);
+  //$ioc_auth_cookie = 'andregomars';
+  /*$user = get_userdata($user_id);
   if ( $user ) {
     $ioc_auth_cookie = $user->user_login;
   }
-  setcookie(IOC_LOGGED_IN_COOKIE, $ioc_auth_cookie, $expire, "/", COOKIE_DOMAIN, $secure, $http_only);
+  */
+  setcookie(IOC_LOGGED_IN_COOKIE, $user_login, 0, "/", COOKIE_DOMAIN, $secure, false);
 }
 
 add_action('wp_logout', 'remove_custom_cookie_admin');
