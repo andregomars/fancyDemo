@@ -1,5 +1,7 @@
 <?php 
 
+// include_once( ABSPATH . 'wp-includes/pluggable.php' );
+
 /**
  * remove wp logo, updates, comments from admin bar in the top
  */
@@ -17,4 +19,27 @@ function remove_admin_bar_links() {
     $wp_admin_bar->remove_menu('updates');          // Remove the updates link
     $wp_admin_bar->remove_menu('comments');         // Remove the comments link
     // $
+}
+
+/**
+ * manage custom cookies
+ */
+add_action('wp_login', 'add_custom_cookie_admin');
+function add_custom_cookie_admin() {
+  // setcookie('your_cookie_name', 'cookie value', time() + 86400, '/'); // expire in a day
+  $secure = is_ssl();
+  $expire = 0;
+  $http_only = false;
+  $ioc_auth_cookie = '';
+  $user = get_userdata($user_id);
+  if ( $user ) {
+    $ioc_auth_cookie = $user->user_login;
+  }
+  setcookie(IOC_LOGGED_IN_COOKIE, $ioc_auth_cookie, $expire, "/", COOKIE_DOMAIN, $secure, $http_only);
+}
+
+add_action('wp_logout', 'remove_custom_cookie_admin');
+function remove_custom_cookie_admin() {
+  // setcookie('your_cookie_name', '', time() - 3600);
+  setcookie( IOC_LOGGED_IN_COOKIE,        ' ', time() - YEAR_IN_SECONDS, "/",   COOKIE_DOMAIN );
 }

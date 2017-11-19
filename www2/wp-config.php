@@ -81,6 +81,10 @@ define('WP_DEBUG', true);
 define('WP_DEBUG_LOG', true);
 define('AUTOMATIC_UPDATER_DISABLED', true );
 
+//by andre
+define('IOC_LOGGED_IN_COOKIE', 'ioc_loggedin');
+//by andre end
+
 /* That's all, stop editing! Happy blogging. */
 
 /** Absolute path to the WordPress directory. */
