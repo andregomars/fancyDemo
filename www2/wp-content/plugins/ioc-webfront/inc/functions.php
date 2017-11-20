@@ -10,6 +10,7 @@ add_action( 'wp_before_admin_bar_render', 'remove_admin_bar_links' );
 function remove_admin_bar_links() {
     global $wp_admin_bar;
     $wp_admin_bar->remove_menu('wp-logo');          // Remove the WordPress logo
+    $wp_admin_bar->remove_menu('dashboard');          // Remove the WordPress dashboard
     // $wp_admin_bar->remove_menu('about');            // Remove the about WordPress link
     // $wp_admin_bar->remove_menu('wporg');            // Remove the WordPress.org link
     // $wp_admin_bar->remove_menu('documentation');    // Remove the WordPress documentation link
