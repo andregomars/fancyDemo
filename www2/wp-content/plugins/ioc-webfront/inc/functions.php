@@ -1,6 +1,7 @@
 <?php 
 
-// include_once( ABSPATH . 'wp-includes/pluggable.php' );
+remove_action( 'tgmpa_register', 'sydney_recommend_plugin' );
+remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
 
 /**
  * remove wp logo, updates, comments from admin bar in the top
@@ -20,6 +21,63 @@ function remove_admin_bar_links() {
     $wp_admin_bar->remove_menu('comments');         // Remove the comments link
     // $
 }
+
+add_action('login_head', 'custom_login_logo');
+function custom_login_logo() {
+	echo '<style type="text/css">
+			h1 a { background-image: url(http://cloud.iocontrols.com/ioc/wp-content/themes/sydney/images/logo.login.png) !important;  }
+	</style>';
+}
+
+add_action( 'admin_menu', 'remove_menus' );
+function remove_menus(){
+  
+  remove_menu_page( 'index.php' );                  //Dashboard
+  remove_menu_page( 'jetpack' );                    //Jetpack* 
+  remove_menu_page( 'edit.php' );                   //Posts
+  //remove_menu_page( 'upload.php' );                 //Media
+  //remove_menu_page( 'edit.php?post_type=page' );    //Pages
+  remove_menu_page( 'edit-comments.php' );          //Comments
+  //remove_menu_page( 'themes.php' );                 //Appearance
+  //remove_menu_page( 'plugins.php' );                //Plugins
+  //remove_menu_page( 'users.php' );                  //Users
+  remove_menu_page( 'tools.php' );                  //Tools
+  //remove_menu_page( 'options-general.php' );        //Settings
+  
+}
+
+/*
+ * replace login logo link and tooltip
+*/
+add_filter('login_headerurl','loginpage_custom_link');
+function loginpage_custom_link() {
+	return get_site_url();
+}
+
+add_filter('login_headertitle', 'change_title_on_logo');
+function change_title_on_logo() {
+	return get_bloginfo('name');
+}
+
+/*
+ * remove help tab in admin page right up corner
+ */
+add_action( 'admin_head', 'hide_update_notice_to_all_but_admin_users', 998 );
+function hide_update_notice_to_all_but_admin_users()
+{
+    remove_action( 'admin_notices', 'update_nag', 3 );
+}
+
+
+/*
+ * remove help tab in admin page right up coner
+ */
+function remove_help($old_help, $screen_id, $screen){
+    $screen->remove_help_tabs();
+    return $old_help;
+}
+add_filter( 'contextual_help', 'remove_help', 999, 3 );
+
 
 /**
  * manage custom cookies
