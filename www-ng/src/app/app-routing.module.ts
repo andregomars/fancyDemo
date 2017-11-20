@@ -23,14 +23,14 @@ const routes: Routes = [
     { path: 'monthlyreport/:fname', component: MonthlyReportComponent, canActivate: [AuthGuardService] },
     { path: 'dailylog/:fname', component: DailyLogComponent, canActivate: [AuthGuardService] },
 
-    { path: 'ioc/index.php/fleet', component: FleetSelectionComponent },
-    { path: 'ioc/index.php/fleet/:fname', component: FleetComponent },
-    { path: 'ioc/index.php/vehicle/:vname', component: VehicleComponent },
-    { path: 'ioc/index.php/vehicledaily/:vname', component: AnalysisDailyComponent },
-    { path: 'ioc/index.php/vehiclealert/:vname', component: AnalysisAlertComponent },
-    { path: 'ioc/index.php/dailyreport/:fname', component: DailyReportComponent },
-    { path: 'ioc/index.php/monthlyreport/:fname', component: MonthlyReportComponent },
-    { path: 'ioc/index.php/dailylog/:fname', component: DailyLogComponent },
+    { path: 'index.php/fleet', component: FleetSelectionComponent },
+    { path: 'index.php/fleet/:fname', component: FleetComponent },
+    { path: 'index.php/vehicle/:vname', component: VehicleComponent },
+    { path: 'index.php/vehicledaily/:vname', component: AnalysisDailyComponent },
+    { path: 'index.php/vehiclealert/:vname', component: AnalysisAlertComponent },
+    { path: 'index.php/dailyreport/:fname', component: DailyReportComponent },
+    { path: 'index.php/monthlyreport/:fname', component: MonthlyReportComponent },
+    { path: 'index.php/dailylog/:fname', component: DailyLogComponent },
 
     { path: '', redirectTo: '/fleet', pathMatch: 'full' }
 ];
