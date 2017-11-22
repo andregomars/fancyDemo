@@ -16,5 +16,5 @@ RUN apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
 # RUN docker-php-ext-install mysqli iconv gd mbstring fileinfo curl xmlreader xmlwriter spl ftp mysqli
 
 # VOLUME /var/www/html
-# RUN chown -R www-data:www-data /var/www/html
+RUN chown -R www-data:www-data /var/www/html
 # RUN chmod -R g+w .
