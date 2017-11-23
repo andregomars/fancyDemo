@@ -83,6 +83,9 @@ define('AUTOMATIC_UPDATER_DISABLED', true );
 
 //by andre
 define('IOC_LOGGED_IN_COOKIE', 'ioc_loggedin');
+
+define( 'DBI_AWS_ACCESS_KEY_ID', ' AKIAIEVEQDGUO4BYO37Q' );
+define( 'DBI_AWS_SECRET_ACCESS_KEY', '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' );
 //by andre end
 
 /* That's all, stop editing! Happy blogging. */
