@@ -21,7 +21,7 @@
 		
 	<footer id="colophon" class="site-footer" role="contentinfo">
 		<div class="site-info container">
-			Copyright &copy; 2016-<?php date('Y')?> I/O Controls Corporation
+			Copyright &copy; 2016-<?php echo date('Y')?> I/O Controls Corporation
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
 
