@@ -166,7 +166,7 @@ export class VehicleComponent implements OnInit {
     this.optionEstActualDistanceChart = this.getChartOptions(leftY, rightY);
 
     leftY = new YAxis("ChargingStatus", "#4286f4", 0, 10);
-    rightY = new YAxis("HighVoltageStatus", "#565656", 0, 1);
+    rightY = new YAxis("HighVoltageStatus", "#565656", 0, 1, 1);
     this.optionChargingRunningStatusChart = this.getChartOptions(leftY, rightY);
   }
 
@@ -459,6 +459,8 @@ export class VehicleComponent implements OnInit {
           position: 'left',
           ticks: {
             fontColor: leftY.color,
+            stepSize: leftY.stepSize,
+            max: leftY.max,
             beginAtZero: true
           }
         }, {
@@ -471,6 +473,8 @@ export class VehicleComponent implements OnInit {
           position: 'right',
           ticks: {
             fontColor: rightY.color,
+            stepSize: rightY.stepSize,
+            max: rightY.max,
             beginAtZero: true
           }
         }]

@@ -111,7 +111,7 @@ export class DailyReportComponent implements OnInit {
 
   private loadData() {
     var beginDate = moment(this.selectedDate).startOf('day').toDate();
-    var endDate = moment(beginDate).add(1, 'days').toDate();
+    var endDate = beginDate; 
     
     this.dataService.getVehicleDailyUsageDaysSummaryByFleet$(this.fleetID, beginDate, endDate)
       .subscribe(data => { 
