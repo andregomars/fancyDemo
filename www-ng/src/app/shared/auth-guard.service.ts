@@ -50,7 +50,7 @@ export class AuthGuardService implements CanActivate {
 
   //check at least one of the vehicle name or fleet name matches
   isQualifiedVehicleOrFleet(vehicles: VehicleIdentity[], id: string): boolean {
-    var filteredVehicles = vehicles.filter(x => x.fname === id || x.vname === id);
+    var filteredVehicles = vehicles.filter(x => x.fname.toUpperCase() === id || x.vname.toUpperCase() === id);
     return filteredVehicles.length > 0;
   }
 
