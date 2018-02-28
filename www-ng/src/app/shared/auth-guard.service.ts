@@ -11,7 +11,7 @@ import { VehicleIdentity } from '../models/vehicle-identity';
 @Injectable()
 export class AuthGuardService implements CanActivate {
 
-  user: string;
+  user = 'default';
   vehicles: VehicleIdentity[];
 
   constructor(private router: Router,
