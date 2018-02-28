@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { DataService } from '../shared/data.service';
 import { FleetTrackerService } from '../shared/fleet-tracker.service';
 import { VehicleStatus } from '../models/vehicle-status';
+import { FleetIdentity } from '../models/fleet-identity';
 
 @Component({
   moduleId: module.id,
@@ -14,39 +15,48 @@ import { VehicleStatus } from '../models/vehicle-status';
 })
 export class FleetComponent implements OnInit, OnDestroy {
   // layout of "table" or "cards" by default
-	viewComponent:string = "table";
+  viewComponent = 'table';
   data: Array<VehicleStatus>;
   fname: string;
   timerSub: Subscription;
+  fleet$: Observable<FleetIdentity>;
 
   constructor (
     private route: ActivatedRoute,
     private fleetTracker: FleetTrackerService,
     private dataService: DataService
   ) {}
-  
+
   ngOnInit() {
     this.getFleet();
+    this.getFleetRemark();
   }
-  
+
   ngOnDestroy() {
-    if (this.timerSub) 
+    if (this.timerSub) {
       this.timerSub.unsubscribe();
+    }
+  }
+
+  getFleetRemark(): void {
+    this.fleet$ = this.route.params
+      .map((params: Params) => params['fname'])
+      .concatMap((fname: string) =>
+        this.dataService.getFleetIdentityByFleetName$(fname))
   }
 
   getFleet(): void {
     this.route.params
-      .switchMap((params: Params) =>  
-        { 
-          this.fname = params["fname"];
+      .switchMap((params: Params) => {
+          this.fname = params['fname'];
           return this.dataService.getVehiclesStatusByFleet$(this.fname);
         }
       )
-      .subscribe((statusList: Array<VehicleStatus>) => { 
+      .subscribe((statusList: Array<VehicleStatus>) => {
         this.data = statusList;
         this.fleetTracker.setFleetIDByFleet(this.fname);
       });
-    
+
     this.timerSub = Observable.timer(60000, 60000)
       .subscribe(() => {
         this.dataService.getVehiclesStatusByFleet$(this.fname)

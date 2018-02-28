@@ -37,6 +37,7 @@ export class DataRemoteService {
   private Endpoint_VehicleDailyFileStream: string = "/VehicleDailyFile/GetFileStream";
   private Endpoint_FleetIdentities: string = "/FleetIdentity";
   private Endpoint_FleetIdentitiesByLoginName: string = "/FleetIdentity/LoginName";
+  private Endpoint_FleetIdentityByFleetName: string = "/FleetIdentity/FleetName";
   private Endpoint_AddSMSRequest: string = "/CoreSms";
 
   private URL_VehicleIdentities: string;
@@ -56,6 +57,7 @@ export class DataRemoteService {
   private URL_VehicleDailyFileStream: string;
   private URL_FleetIdentities: string;
   private URL_FleetIdentitiesByLoginName: string;
+  private URL_FleetIdentityByFleetName: string;
   private URL_AddSMSRequest: string;
 
   constructor(private http: Http)
@@ -87,6 +89,8 @@ export class DataRemoteService {
     this.URL_FleetIdentities = this.URL_RemoteApiRoot + this.Endpoint_FleetIdentities;
     this.URL_FleetIdentitiesByLoginName = 
       this.URL_RemoteApiRoot + this.Endpoint_FleetIdentitiesByLoginName;
+    this.URL_FleetIdentityByFleetName = 
+      this.URL_RemoteApiRoot + this.Endpoint_FleetIdentityByFleetName;
     this.URL_AddSMSRequest = this.URL_RemoteApiRoot + this.Endpoint_AddSMSRequest;
   }
 
@@ -104,6 +108,12 @@ export class DataRemoteService {
 
   getFleetIdentities$(): Observable<Array<FleetIdentity>> {
     return this.http.get(this.URL_FleetIdentities)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+  getFleetIdentityByFleetName$(fname: string): Observable<FleetIdentity> {
+    return this.http.get(`${this.URL_FleetIdentityByFleetName}/${fname}`)
       .map(res => res.json())
       .catch(this.handleError);
   }

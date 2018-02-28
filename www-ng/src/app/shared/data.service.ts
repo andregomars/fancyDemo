@@ -33,6 +33,10 @@ export class DataService {
       return this.dataService.getFleetIdentities$();
    }
 
+   getFleetIdentityByFleetName$(fname: string): Observable<FleetIdentity> {
+       return this.dataService.getFleetIdentityByFleetName$(fname);
+   }
+
    getFleetIdentitiesByLoginName$(loginName: string): Observable<Array<FleetIdentity>> {
        return this.dataService.getFleetIdentitiesByLoginName$(loginName);
    }
