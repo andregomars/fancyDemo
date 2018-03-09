@@ -5,8 +5,8 @@ import { IMyOptions, IMyDateModel } from 'mydatepicker';
 import * as Rx from 'rxjs/Rx';
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
-let jsPDF = require("jspdf");
-let html2canvas = require("html2canvas");
+const jsPDF = require('jspdf');
+const html2canvas = require('html2canvas');
 
 import { DataService } from '../shared/data.service';
 import { VehicleIdentity } from '../models/vehicle-identity';
@@ -32,28 +32,28 @@ export class VehicleComponent implements OnInit {
   optionGaugeSpeed: any;
 
   optionDatePicker: IMyOptions;
-  // selectedDate: Date = moment().subtract(1, 'day').startOf('day').toDate(); 
-  selectedDate: Date = moment().startOf('day').toDate(); 
+  // selectedDate: Date = moment().subtract(1, 'day').startOf('day').toDate();
+  selectedDate: Date = moment().startOf('day').toDate();
 
   optionSocRangeChart: any;
   optionEstActualDistanceChart: any;
   optionChargingRunningStatusChart: any;
   optionComplexChart: any;
 
-  @ViewChild("divDualCharts")
+  @ViewChild('divDualCharts')
   divDualCharts: ElementRef;
 
-  @ViewChild("datePicker")
+  @ViewChild('datePicker')
   datePicker: UIChart;
 
-  @ViewChild("chartSocRange")
+  @ViewChild('chartSocRange')
   chartSocRange: UIChart
-  @ViewChild("chartEstActualDistance")
+  @ViewChild('chartEstActualDistance')
   chartEstActualDistance: UIChart;
-  @ViewChild("chartChargingRunningStatus")
+  @ViewChild('chartChargingRunningStatus')
   chartChargingRunningStatus: UIChart;
 
-  @ViewChild("chartComplex")
+  @ViewChild('chartComplex')
   chartComplex: UIChart;
 
 
@@ -73,7 +73,7 @@ export class VehicleComponent implements OnInit {
 
   initData(): void {
     this.route.params
-      .switchMap((params: Params) => Rx.Observable.of(params["vname"]))
+      .switchMap((params: Params) => Rx.Observable.of(params['vname']))
       .subscribe(vname => {
         this.vehicleName = vname;
         this.fleetTracker.setFleetIDByVehicle(vname);
@@ -126,7 +126,9 @@ export class VehicleComponent implements OnInit {
   loadChartsData(): void {
     this.dataService.getVehicleWholeDayStatus$(this.vehicleName, this.selectedDate)
       .subscribe(data => {
-        if (!data) return;
+        if (!data) {
+          return
+        };
 
         this.chartSocRange.data = this.getChartDataSOCEnergy(data);
         this.chartEstActualDistance.data = this.getChartDataEstActualDistance(data);
@@ -147,18 +149,18 @@ export class VehicleComponent implements OnInit {
 
   setDatePicker(): void {
     this.optionDatePicker = {
-      dateFormat: "mm/dd/yyyy",
-      width: "200px",
-      height: "23px",
+      dateFormat: 'mm/dd/yyyy',
+      width: '200px',
+      height: '23px',
       editableDateField: false,
       openSelectorOnInputClick: true,
-      selectionTxtFontSize: "12px"
+      selectionTxtFontSize: '12px'
     }
   }
 
   setDualChartsOptions(): void {
-    var leftY = new YAxis("SOC", "#4286f4", 0, 200);
-    var rightY = new YAxis("kWh", "#565656", 0, 600);
+    let leftY = new YAxis("SOC", "#4286f4", 0, 200);
+    let rightY = new YAxis("kWh", "#565656", 0, 600);
     this.optionSocRangeChart = this.getChartOptions(leftY, rightY);
 
     leftY = new YAxis("Range", "#4286f4", 0, 300);
@@ -298,16 +300,20 @@ export class VehicleComponent implements OnInit {
 
   private updateTimeScope(chart: UIChart): void {
     chart.options.scales.xAxes[0].time.min = moment(this.selectedDate).startOf('day');
-    chart.options.scales.xAxes[0].time.max = 
+    chart.options.scales.xAxes[0].time.max =
       moment(this.selectedDate).add(1, 'day').startOf('day');
   }
 
   getChartDataComplex(list: VehicleStatus[]): any {
-    var labels = list.map(x => x.updated);
-    var dataEnergy = list.map(x => x.remainingenergy.toFixed(1));
-    var dataVoltage = list.map(x => x.voltage.toFixed(1));
-    var dataCurrent = list.map(x => x.current.toFixed(1));
-    var dataTempHigh = list.map(x => x.temperaturehigh.toFixed(1));
+    const labels = list.map(x => x.updated);
+    const dataEnergy = list.map(x => x.remainingenergy === 0 ? null : x.remainingenergy.toFixed(1));
+    const dataVoltage = list.map(x => x.voltage === 0 ? null : x.voltage.toFixed(1));
+    const dataCurrent = list.map(x => x.current === 0 ? null : x.current.toFixed(1));
+    const dataTempHigh = list.map(x => x.temperaturehigh === 0 ? null : x.temperaturehigh.toFixed(1));
+    // const dataEnergy = list.map(x => x.remainingenergy.toFixed(1));
+    // const dataVoltage = list.map(x => x.voltage.toFixed(1));
+    // const dataCurrent = list.map(x => x.current.toFixed(1));
+    // const dataTempHigh = list.map(x => x.temperaturehigh.toFixed(1));
 
     return {
       labels: labels,
@@ -346,9 +352,11 @@ export class VehicleComponent implements OnInit {
   }
 
   getChartDataSOCEnergy(list: VehicleStatus[]): any {
-    var labels = list.map(x => x.updated);
-    var dataSoc = list.map(x => x.soc.toFixed(1));
-    var dataEnergy = list.map(x => x.remainingenergy.toFixed(1));
+    const labels = list.map(x => x.updated);
+    const dataSoc = list.map(x => x.soc === 0 ? null : x.soc.toFixed(1));
+    const dataEnergy = list.map(x => x.remainingenergy === 0 ? null : x.remainingenergy.toFixed(1));
+    // const dataSoc = list.map(x => x.soc.toFixed(1));
+    // const dataEnergy = list.map(x => x.remainingenergy.toFixed(1));
 
     return {
       labels: labels,
@@ -373,9 +381,12 @@ export class VehicleComponent implements OnInit {
   }
 
   getChartDataEstActualDistance(list: VehicleStatus[]): any {
-    var labels = list.map(x => x.updated);
-    var dataRange = list.map(x => x.range.toFixed(1));
-    var dataMileage = list.map(x => x.actualdistance.toFixed(1));
+    const labels = list.map(x => x.updated);
+    const dataRange = list.map(x => x.range === 0 ? null : x.range.toFixed(1));
+    const dataMileage = list.map(x => x.actualdistance === 0 ? null : x.range.toFixed(1));
+    // const dataRange = list.map(x => x.range.toFixed(1));
+    // const dataMileage = list.map(x => x.actualdistance.toFixed(1));
+
 
     return {
       labels: labels,
@@ -400,9 +411,11 @@ export class VehicleComponent implements OnInit {
   }
 
   getChargingRunningStatusData(list: VehicleStatus[]): any {
-    var labels = list.map(x => x.updated);
-    var dataChargingStatus = list.map(x => x.status.toFixed(1));
-    var dataHighVoltageStatus = list.map(x => x.highvoltagestatus.toFixed(1));
+    const labels = list.map(x => x.updated);
+    const dataChargingStatus = list.map(x => x.status === 0 ? null : x.status.toFixed(1));
+    const dataHighVoltageStatus = list.map(x => x.highvoltagestatus === 0 ? null : x.highvoltagestatus.toFixed(1));
+    // const dataChargingStatus = list.map(x => x.status.toFixed(1));
+    // const dataHighVoltageStatus = list.map(x => x.highvoltagestatus.toFixed(1));
 
     return {
       labels: labels,
@@ -490,10 +503,10 @@ export class VehicleComponent implements OnInit {
   exportDualCharts(): void {
     html2canvas(this.divDualCharts.nativeElement, {
       onrendered: function (canvas) {
-        const contentDataURL = canvas.toDataURL("image/png");
-        let pdf = new jsPDF();
-        pdf.addImage(contentDataURL, "PNG", 20, 0);
-        pdf.save("Vehicle.DualCharts.pdf");
+        const contentDataURL = canvas.toDataURL('image/png');
+        const pdf = new jsPDF();
+        pdf.addImage(contentDataURL, 'PNG', 20, 0);
+        pdf.save('Vehicle.DualCharts.pdf');
       }
     })
   }
