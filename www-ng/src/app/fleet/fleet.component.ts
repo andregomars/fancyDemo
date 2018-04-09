@@ -8,6 +8,7 @@ import { DataService } from '../shared/data.service';
 import { FleetTrackerService } from '../shared/fleet-tracker.service';
 import { VehicleStatus } from '../models/vehicle-status';
 import { FleetIdentity } from '../models/fleet-identity';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   moduleId: module.id,
@@ -17,6 +18,7 @@ export class FleetComponent implements OnInit, OnDestroy {
   // layout of "table" or "cards" by default
   viewComponent = 'table';
   data: Array<VehicleStatus>;
+  defaultLocation = { lat: 34.055597, lng: -118.233437 };
   fname: string;
   timerSub: Subscription;
   fleet$: Observable<FleetIdentity>;
@@ -54,6 +56,7 @@ export class FleetComponent implements OnInit, OnDestroy {
       )
       .subscribe((statusList: Array<VehicleStatus>) => {
         this.data = statusList;
+        this.defaultLocation = this.getDefaultLocation(statusList);
         this.fleetTracker.setFleetIDByFleet(this.fname);
       });
 
@@ -62,14 +65,30 @@ export class FleetComponent implements OnInit, OnDestroy {
         this.dataService.getVehiclesStatusByFleet$(this.fname)
           .subscribe((statusList: Array<VehicleStatus>) => {
             this.data = statusList;
+            this.defaultLocation = this.getDefaultLocation(statusList);
           });
       });
  }
 
-  // toggleView(view: string) {
-  //   console.log('toggled view is: '+view);
-  //   this.viewComponent = view;
-  // }
+ getDefaultLocation(statusList: Array<VehicleStatus>): any {
+   let loc = this.defaultLocation;
+
+   if (!statusList || statusList.length < 1) {
+     return loc;
+   }
+
+   for (const status of statusList) {
+     if (status.lat === 0.0 && status.lng === 0.0) {
+        continue;
+     } else {
+        loc = { lat: status.lat, lng: status.lng };
+        break;
+     }
+   }
+
+   return loc;
+ }
+
 
   toggleView() {
     this.viewComponent = this.viewComponent === 'table' ? 'cards' : 'table';

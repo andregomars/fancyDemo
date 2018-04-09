@@ -19,7 +19,7 @@
 <!-- Google Map Secton -->
 <div *ngIf="data && data.length > 0" class="card m-2 p-0">
     <div class="card-block p-0">
-        <app-fleet-map [items]="data"></app-fleet-map>
+        <app-fleet-map [items]="data" [center] = "defaultLocation"></app-fleet-map>
     </div>
 </div>
 

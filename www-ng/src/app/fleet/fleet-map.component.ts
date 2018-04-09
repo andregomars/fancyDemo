@@ -6,14 +6,17 @@ import { VehicleStatus } from '../models/vehicle-status';
   templateUrl: './fleet-map.component.html',
   styleUrls: ['./fleet-map.component.css']
 })
-export class FleetMapComponent implements OnInit { 
-  @Input("items")
-  statusList: Array<VehicleStatus>;
+export class FleetMapComponent implements OnInit {
+  @Input('items')
+  items: Array<VehicleStatus>;
 
-  clusterIcon: string = 
-    "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m";
-  markerIcon: string = 
-    "http://cloud.iocontrols.com/online2017/hams/images/mapicon/oi_map_marker.yellow.46px.png";
+  @Input('center')
+  center: any;
+
+  clusterIcon =
+    'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m';
+  markerIcon =
+    'http://cloud.iocontrols.com/online2017/hams/images/mapicon/oi_map_marker.yellow.46px.png';
 
   ngOnInit() {
 

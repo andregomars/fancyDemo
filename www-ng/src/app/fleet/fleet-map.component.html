@@ -1,10 +1,10 @@
-<agm-map *ngIf="statusList && statusList.length > 0 
-    && statusList[0].lat != 0 && statusList[0].lng != 0" 
-    [latitude]="statusList[0].lat | geo" 
-    [longitude]="statusList[0].lng | geo" [zoom]=10 
+<agm-map *ngIf="items && items.length > 0 
+    && center.lat != 0 && center.lng != 0" 
+    [latitude]="center.lat | geo" 
+    [longitude]="center.lng | geo" [zoom]=10 
     [streetViewControl]=false [zoomControl]=true>
   <agm-cluster [imagePath]="clusterIcon"> 
-    <agm-marker *ngFor="let m of statusList"
+    <agm-marker *ngFor="let m of items"
         [latitude]="m.lat | geo" [longitude]="m.lng | geo"
         [label]="m.vname" [title]="m.vname" 
         [iconUrl]="markerIcon" 
