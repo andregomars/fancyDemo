@@ -18,7 +18,8 @@ export class FleetComponent implements OnInit, OnDestroy {
   // layout of "table" or "cards" by default
   viewComponent = 'table';
   data: Array<VehicleStatus>;
-  defaultLocation = { lat: 34.055597, lng: -118.233437 };
+  defaultLocation = { lat: 0, lng: 0 };
+  center: any;
   fname: string;
   timerSub: Subscription;
   fleet$: Observable<FleetIdentity>;
@@ -56,7 +57,8 @@ export class FleetComponent implements OnInit, OnDestroy {
       )
       .subscribe((statusList: Array<VehicleStatus>) => {
         this.data = statusList;
-        this.defaultLocation = this.getDefaultLocation(statusList);
+        this.center = this.getDefaultLocation(statusList);
+        console.log(this.center);
         this.fleetTracker.setFleetIDByFleet(this.fname);
       });
 
@@ -65,7 +67,7 @@ export class FleetComponent implements OnInit, OnDestroy {
         this.dataService.getVehiclesStatusByFleet$(this.fname)
           .subscribe((statusList: Array<VehicleStatus>) => {
             this.data = statusList;
-            this.defaultLocation = this.getDefaultLocation(statusList);
+            this.center = this.getDefaultLocation(statusList);
           });
       });
  }
