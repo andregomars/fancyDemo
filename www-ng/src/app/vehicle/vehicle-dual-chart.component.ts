@@ -31,7 +31,7 @@ export class VehicleDualChartComponent implements OnInit {
     if (this.snapshotList$)
       this.snapshotList$.subscribe(list => { 
         console.log("subed!");
-        let leftY = new YAxis("SOC", "#4bc0c0", 0, 100);
+        let leftY = new YAxis("SOC", "#4bc0c0", 0, 120);
         let rightY = new YAxis("kWh", "#565656", 0, 600);
         if (list && list.length > 1)
         {
