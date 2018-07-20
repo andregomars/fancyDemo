@@ -49,7 +49,7 @@
                 </div>
             </div>
             <div class="row p-1">
-                <div class="col">Low Temp(F):
+                <div class="col">Low Temp({{ lastVehicleStatus.fname | measure:'temperature' }}):
                     <app-progress-meter [degree]="lastVehicleStatus.temperaturelow | number:'1.0-1'"
                         minDegree=-40 maxDegree=220 
                         meterNegativeClass="col-2"
@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="row p-1">
-                <div class="col">High Temp(F):
+                <div class="col">High Temp({{ lastVehicleStatus.fname | measure:'temperature' }}):
                     <app-progress-meter [degree]="lastVehicleStatus.temperaturehigh | number:'1.0-1'"
                         minDegree=-40 maxDegree=220 
                         meterNegativeClass="col-2"
@@ -65,7 +65,7 @@
                 </div>
             </div>
             <div class="row p-1">
-                <div class="col">Range(Miles):
+                <div class="col">Range({{ lastVehicleStatus.fname | measure:'distance' }}):
                     <app-progressbar [value]="lastVehicleStatus.range | number: '1.0-1'" max="250"></app-progressbar>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                 </div>
             </div>
             <div class="row p-1 align-items-end">
-                <div class="col-6"> Odometer(Miles): </div>
+                <div class="col-6"> Odometer({{ lastVehicleStatus.fname | measure:'distance' }}): </div>
                 <div class="col-5 app-scoreboard">
                     {{lastVehicleStatus.mileage | number: '1.0-1'}}
                 </div>
