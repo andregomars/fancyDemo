@@ -1,7 +1,7 @@
 <agm-map *ngIf="items && items.length > 0 
     && center.lat != 0 && center.lng != 0" 
     [latitude]="center.lat | geo" 
-    [longitude]="center.lng | geo" [zoom]=10 
+    [longitude]="center.lng | geo" [zoom]=11 
     [streetViewControl]=false [zoomControl]=true>
   <agm-cluster [imagePath]="clusterIcon"> 
     <agm-marker *ngFor="let m of items"

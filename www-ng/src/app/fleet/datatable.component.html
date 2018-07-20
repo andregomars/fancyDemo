@@ -33,18 +33,8 @@
     </p-column>
     <p-column field="updated" header="Updated">
       <ng-template let-col let-data="rowData" pTemplate="body">
-            <!--{{data[col.field] | date:'HH:mm:ss'}}-->
-            {{data[col.field] | ndate:'HH:mm:ss'}}
-        </ng-template>
-    </p-column>
-    <p-column header="Action">
-        <ng-template let-data="rowData" pTemplate="body">
-            <button title="SMS Request" type="button" 
-              class="btn btn-primary btn-sm" 
-              (click) = "addRequest(data)"
-                data-toggle="modal" data-target="#requestModal">
-                Request
-            </button>
+            <!--{{data[col.field] | date:'MM/dd/yyyy HH:mm:ss'}}-->
+            {{data[col.field] | date:'MM/dd/yyyy HH:mm:ss'}}
         </ng-template>
     </p-column>
 </p-dataTable>
