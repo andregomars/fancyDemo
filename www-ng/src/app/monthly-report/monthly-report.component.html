@@ -66,12 +66,13 @@
                   {{data[col.field] | number:'1.0-1'}}
               </ng-template>
             </p-column>
-            <p-column field="soc_mile" header="SOC/Miles">
+            <!-- <p-column field="soc_mile" header="SOC/Miles"> -->
+            <p-column field="soc_mile" header="{{ fleetID | measure:'SOC/Miles':'SOC/km' }}">
               <ng-template let-col let-data="rowData" pTemplate="body">
                   {{data[col.field] | number:'1.0-1'}}
               </ng-template>
             </p-column>
-            <p-column field="mile_soc" header="Miles/SOC">
+            <p-column field="mile_soc" header="{{ fleetID | measure:'Miles/SOC':'SOC/km' }}">
               <ng-template let-col let-data="rowData" pTemplate="body">
                   {{data[col.field] | number:'1.0-1'}}
               </ng-template>
@@ -86,12 +87,12 @@
                   {{data[col.field] | number:'1.0-1'}}
               </ng-template>
             </p-column>
-            <p-column field="energy_mile" header="kWh/Miles">
+            <p-column field="energy_mile" header="{{ fleetID | measure:'kWh/Miles':'kWh/km' }}">
               <ng-template let-col let-data="rowData" pTemplate="body">
                   {{data[col.field] | number:'1.0-1'}}
               </ng-template>
             </p-column>
-            <p-column field="mile_energy" header="Miles/kWh">
+            <p-column field="mile_energy" header="{{ fleetID | measure:'Miles/kWh':'km/kWh' }}">
               <ng-template let-col let-data="rowData" pTemplate="body">
                   {{data[col.field] | number:'1.0-1'}}
               </ng-template>

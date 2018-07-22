@@ -4,8 +4,8 @@ import { IMyOptions, IMyDateModel } from 'mydatepicker';
 import { DataTableModule, UIChart } from 'primeng/primeng';
 import * as Rx from 'rxjs/Rx';
 import * as moment from 'moment';
-let jsPDF = require("jspdf");
-let html2canvas = require("html2canvas");
+const jsPDF = require('jspdf');
+const html2canvas = require('html2canvas');
 
 import { DataService } from '../shared/data.service';
 import { VehicleIdentity } from '../models/vehicle-identity';
@@ -29,7 +29,7 @@ export class DailyReportComponent implements OnInit {
   dataFleetMonthlyAlert: Array<any>;
   optionFleetMonthlyChart: any;
   dataFleetMonthlyChart: any;
-  
+
   selectedDate: Date;
   selectedDay: string;
   thisYear: number = new Date().getFullYear();
@@ -52,15 +52,27 @@ export class DailyReportComponent implements OnInit {
     { key: 'energy_mile', name: 'kWh/Miles' },
     { key: 'mile_energy', name: 'Miles/kWh' }
   ];
+
+  optionsInMetric: any[] = [
+    { key: 'soccharged', name: 'SOC Charged' },
+    { key: 'socused', name: 'SOC Used' },
+    { key: 'mileage', name: 'Actual Distance' },
+    { key: 'soc_mile', name: 'SOC/km' },
+    { key: 'mile_soc', name: 'km/SOC' },
+    { key: 'energycharged', name: 'kWh Charged' },
+    { key: 'energyused', name: 'kWh Used' },
+    { key: 'energy_mile', name: 'kWh/km' },
+    { key: 'mile_energy', name: 'km/kWh' }
+  ];
   optionSelected: any = this.options[0];
 
-  //child views
-  @ViewChild("charts")
+  // child views
+  @ViewChild('charts')
   charts: ElementRef;
 
   // @ViewChild("tableFleetMonthly")
   // tableFleetMonthly: DataTableModule;
-  @ViewChild("chartFleetMonthly")
+  @ViewChild('chartFleetMonthly')
   chartFleetMonthly: UIChart;
 
   constructor(
@@ -76,7 +88,7 @@ export class DailyReportComponent implements OnInit {
     this.selectedDate = new Date();
     this.selectedDay = moment(this.selectedDate).format('YYYYMMDD');
     this.selectedYear = new Date().getFullYear();
-    this.selectedMonth = { 
+    this.selectedMonth = {
         name: moment().format('MMM'),
         value: moment().startOf('month').toDate()
       };
@@ -102,22 +114,25 @@ export class DailyReportComponent implements OnInit {
         this.vehicles = data.map(v => new Vehicle(v.vname));
 
         this.loadData();
-        if (this.fleetID.toUpperCase() == "AVTA")
-        {
+        if (this.fleetID.toUpperCase() === 'AVTA') {
           this.initFleetMonthlyAlertData();
+        }
+
+        if (this.fleetID.toUpperCase() === 'STAT') {
+          this.options = this.optionsInMetric;
         }
       });
   }
 
   private loadData() {
-    var beginDate = moment(this.selectedDate).startOf('day').toDate();
-    var endDate = beginDate; 
-    
+    const beginDate = moment(this.selectedDate).startOf('day').toDate();
+    const endDate = beginDate;
+
     this.dataService.getVehicleDailyUsageDaysSummaryByFleet$(this.fleetID, beginDate, endDate)
-      .subscribe(data => { 
-        //monthly table data
+      .subscribe(data => {
+        // monthly table data
         this.dataFleetMonthly = data;
-        //monthly chart data
+        // monthly chart data
         this.loadMonthlyChartData();
       });
 
@@ -125,7 +140,7 @@ export class DailyReportComponent implements OnInit {
 
   /*** Fleet Alert Grid ***/
   private initFleetMonthlyAlertData() {
-    this.dataFleetMonthlyAlert = 
+    this.dataFleetMonthlyAlert =
       this.dataService.getRandomMonthlyAlertSummaryByFleet(this.fleetID, this.vehicles);
   }
 
@@ -154,10 +169,9 @@ export class DailyReportComponent implements OnInit {
   }
 
   private loadMonthlyChartData(): void {
-    var labels = [];
-    var data = [];
-    if (this.dataFleetMonthly && this.dataFleetMonthly[0])
-    {
+    let labels = [];
+    let data = [];
+    if (this.dataFleetMonthly && this.dataFleetMonthly[0]) {
       labels = this.dataFleetMonthly.map(v => v.vname);
       data = this.dataFleetMonthly.map(v => v[this.optionSelected.key]);
     }
@@ -188,8 +202,8 @@ export class DailyReportComponent implements OnInit {
   /*** Common Section ***/
   private loadFleet(): void {
     this.route.params
-      .switchMap((params: Params) => Rx.Observable.of(params["fname"]))
-      .subscribe((fname: string) => { 
+      .switchMap((params: Params) => Rx.Observable.of(params['fname']))
+      .subscribe((fname: string) => {
         this.fleetID = fname;
         this.fleetTracker.setFleetIDByFleet(fname);
         this.initData();
@@ -213,10 +227,10 @@ export class DailyReportComponent implements OnInit {
   exportCharts(): void {
     html2canvas(this.charts.nativeElement, {
       onrendered: function (canvas) {
-        const contentDataURL = canvas.toDataURL("image/png");
-        let pdf = new jsPDF("landscape");
-        pdf.addImage(contentDataURL, "PNG", 10, 10);
-        pdf.save("Vehicle.DualCharts.pdf");
+        const contentDataURL = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('landscape');
+        pdf.addImage(contentDataURL, 'PNG', 10, 10);
+        pdf.save('Vehicle.DualCharts.pdf');
       }
     })
   }

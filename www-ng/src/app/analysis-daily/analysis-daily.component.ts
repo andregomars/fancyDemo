@@ -5,12 +5,11 @@ import * as moment from 'moment';
 import { UIChart } from 'primeng/primeng';
 import * as Rx from 'rxjs/Rx';
 
-let jsPDF = require("jspdf");
-let html2canvas = require("html2canvas");
+const jsPDF = require('jspdf');
+const html2canvas = require('html2canvas');
 
 import { DataService } from '../shared/data.service';
 import { VehicleDailyUsage } from '../models/vehicle-daily-usage';
-import { VehicleIdentity } from '../models/vehicle-identity';
 import { FleetTrackerService } from '../shared/fleet-tracker.service';
 
 
@@ -24,38 +23,38 @@ export class AnalysisDailyComponent implements OnInit {
   fleetName: string;
   vehicleName: string;
   today: Date = new Date();
-  backDays: number = 13;
-  ratioDGE: number = 0.027
-  factor: number = 907200;
+  backDays = 13;
+  ratioDGE = 0.027
+  factor = 907200;
 
-  //Daily Mileage Chart properties
+  // Daily Mileage Chart properties
   optionMileageDateRangePicker: IMyOptions;
   optionMileageChart: any;
 
-  //SOC & Energy Chart properties
+  // SOC & Energy Chart properties
   optionSocEnergyDateRangePicker: IMyOptions;
   optionSocEnergyChart: any;
 
-  //SOC, Mileage & Energy Chart properties
+  // SOC, Mileage & Energy Chart properties
   optionSocMileageEnergyDateRangePicker: IMyOptions;
   optionSocMileageEnergyChart: any
 
-  //Emission Reduction Chart properties 
+  // Emission Reduction Chart properties
   optionEmissionReductionDateRangePicker: IMyOptions;
   optionEmissionReductionChart: any;
 
-  //child views
-  @ViewChild("chartsP1")
+  // child views
+  @ViewChild('chartsP1')
   chartsP1: ElementRef;
-   @ViewChild("chartsP2")
+  @ViewChild('chartsP2')
   chartsP2: ElementRef;
-  @ViewChild("chartMileage")
+  @ViewChild('chartMileage')
   chartMileage: UIChart;
-  @ViewChild("chartSocEnergy")
+  @ViewChild('chartSocEnergy')
   chartSocEnergy: UIChart;
-  @ViewChild("chartSocMileageEnergy")
+  @ViewChild('chartSocMileageEnergy')
   chartSocMileageEnergy: UIChart;
-  @ViewChild("chartEmissionReduction")
+  @ViewChild('chartEmissionReduction')
   chartEmissionReduction: UIChart;
 
 
@@ -72,11 +71,11 @@ export class AnalysisDailyComponent implements OnInit {
   }
 
   private initDatePicker(): void {
-    var optionDateRangePickerDefault = {
-      dateFormat: "mm/dd/yyyy",
-      width: "200px",
-      height: "23px",
-      selectionTxtFontSize: "12px",
+    const optionDateRangePickerDefault = {
+      dateFormat: 'mm/dd/yyyy',
+      width: '200px',
+      height: '23px',
+      selectionTxtFontSize: '12px',
       editableDateRangeField: false,
       alignSelectorRight: true
     };
@@ -95,14 +94,14 @@ export class AnalysisDailyComponent implements OnInit {
 
   private initChartsData(): void {
     this.route.params
-      .switchMap((params: Params) => Rx.Observable.of(params["vname"]))
+      .switchMap((params: Params) => Rx.Observable.of(params['vname']))
       .subscribe(vname => {
         this.vehicleName = vname;
         this.fleetTracker.setFleetIDByVehicle(vname);
         this.fleetName = this.fleetTracker.fname;
 
-        let endDate = moment(this.today).startOf('day').toDate();
-        let beginDate = moment(this.today).subtract(this.backDays, 'days').startOf('day').toDate();
+        const endDate = moment(this.today).startOf('day').toDate();
+        const beginDate = moment(this.today).subtract(this.backDays, 'days').startOf('day').toDate();
 
         this.loadMileageChartData(beginDate, endDate);
         this.loadSocEnergyChartData(beginDate, endDate);
@@ -115,15 +114,17 @@ export class AnalysisDailyComponent implements OnInit {
   private loadMileageChartData(beginDate: Date, endDate: Date): void {
     this.dataService.getVehicleDailyUsageByDateRange$(this.vehicleName, beginDate, endDate)
       .subscribe(data => {
-        if (!data) return;
+        if (!data) {
+          return
+        };
         this.chartMileage.data = this.buildMileageChartData(data);
         this.chartMileage.reinit();
        });
   }
 
   private buildMileageChartData(list: VehicleDailyUsage[]): any {
-    var labels = list.map(el => moment(el.date).format('MM/DD'));
-    var data = list.map(el => el.mileage.toFixed(1));
+    const labels = list.map(el => moment(el.date).format('MM/DD'));
+    const data = list.map(el => el.mileage.toFixed(1));
 
     return {
       labels: labels,
@@ -240,23 +241,25 @@ export class AnalysisDailyComponent implements OnInit {
   private loadSocEnergyChartData(beginDate: Date, endDate: Date): void {
     this.dataService.getVehicleDailyUsageByDateRange$(this.vehicleName, beginDate, endDate)
       .subscribe(data => {
-        if (!data) return;
+        if (!data) {
+          return
+        };
         this.chartSocEnergy.data = this.buildSocEnergyChartData(data);
         this.chartSocEnergy.reinit();
        });
   }
 
   private buildSocEnergyChartData(list: VehicleDailyUsage[]): any {
-    var labels = list.map(el => moment(el.date).format('MM/DD'));
-    var dataSocCharged = list.map(el => el.soccharged);
-    var dataSocUsed = list.map(el => el.socused);
-    var dataEnergyCharged = list.map(el => el.energycharged.toFixed(1));
-    var dataEnergyUsed = list.map(el => el.energyused.toFixed(1));
+    const labels = list.map(el => moment(el.date).format('MM/DD'));
+    const dataSocCharged = list.map(el => el.soccharged);
+    const dataSocUsed = list.map(el => el.socused);
+    const dataEnergyCharged = list.map(el => el.energycharged.toFixed(1));
+    const dataEnergyUsed = list.map(el => el.energyused.toFixed(1));
 
     return {
       labels: labels,
       datasets: [{
-        label: "SOC charged",
+        label: 'SOC charged',
         data: dataSocCharged,
         yAxisID: 'ySocCharged',
         fill: true,
@@ -264,21 +267,21 @@ export class AnalysisDailyComponent implements OnInit {
         borderColor: '#4bc0c0',
         borderWidth: 1
       }, {
-        label: "SOC used",
-        data: dataSocUsed, 
+        label: 'SOC used',
+        data: dataSocUsed,
         AxisID: 'ySocUsed',
         backgroundColor: '#565656',
         borderColor: '#565656',
         borderWidth: 1
       }, {
-        label: "Energy charged",
+        label: 'Energy charged',
         data: dataEnergyCharged,
         yAxisID: 'yEnergyCharged',
         backgroundColor: '#4286f4',
         borderColor: '#4286f4',
         borderWidth: 1
       }, {
-        label: "Energy used",
+        label: 'Energy used',
         data: dataEnergyUsed,
         yAxisID: 'yEnergyUsed',
         backgroundColor: '#f47d41',
@@ -367,46 +370,48 @@ export class AnalysisDailyComponent implements OnInit {
   private loadSocMileageEnergyData(beginDate: Date, endDate: Date): void {
     this.dataService.getVehicleDailyUsageByDateRange$(this.vehicleName, beginDate, endDate)
       .subscribe(data => {
-        if (!data) return;
+        if (!data) {
+          return
+        };
         this.chartSocMileageEnergy.data = this.buildSocMileageEnergyChartData(data);
         this.chartSocMileageEnergy.reinit();
        });
   }
 
   private buildSocMileageEnergyChartData(list: VehicleDailyUsage[]): any {
-    var labels = list.map(el => moment(el.date).format('MM/DD'));
-    var dataSocMileage = list.map(el => el.mileage != 0? el.socused/el.mileage : 0 ).map(x => x.toFixed(2));
-    var dataMileageSoc = list.map(el => el.socused != 0? el.mileage/el.socused : 0 ).map(x => x.toFixed(2));
-    var dataMileageEnergy = list.map(el => el.energyused != 0? el.mileage/el.energyused : 0 ).map(x => x.toFixed(2));
-    var dataEnergyMileage = list.map(el => el.mileage != 0? el.energyused/el.mileage : 0 ).map(x => x.toFixed(2));
+    const labels = list.map(el => moment(el.date).format('MM/DD'));
+    const dataSocMileage = list.map(el => el.mileage !== 0 ? el.socused / el.mileage : 0 ).map(x => x.toFixed(2));
+    const dataMileageSoc = list.map(el => el.socused !== 0 ? el.mileage / el.socused : 0 ).map(x => x.toFixed(2));
+    const dataMileageEnergy = list.map(el => el.energyused !== 0 ? el.mileage / el.energyused : 0 ).map(x => x.toFixed(2));
+    const dataEnergyMileage = list.map(el => el.mileage !== 0 ? el.energyused / el.mileage : 0 ).map(x => x.toFixed(2));
 
     return {
       labels: labels,
       datasets: [{
-        label: "SOC/Mileage",
-        data: dataSocMileage, 
+        label: 'SOC/Mileage',
+        data: dataSocMileage,
         yAxisID: 'ySocMileage',
         fill: true,
         backgroundColor: '#4bc0c0',
         borderColor: '#4bc0c0',
         borderWidth: 1
       }, {
-        label: "Mileage/SOC",
-        data: dataMileageSoc, 
+        label: 'Mileage/SOC',
+        data: dataMileageSoc,
         yAxisID: 'yMileageSoc',
         backgroundColor: '#565656',
         borderColor: '#565656',
         borderWidth: 1
       }, {
-        label: "Mileage/Energy",
-        data: dataMileageEnergy, 
+        label: 'Mileage/Energy',
+        data: dataMileageEnergy,
         yAxisID: 'yMileageEnergy',
         backgroundColor: '#4286f4',
         borderColor: '#4286f4',
         borderWidth: 1
       }, {
-        label: "Energy/Mileage",
-        data: dataEnergyMileage, 
+        label: 'Energy/Mileage',
+        data: dataEnergyMileage,
         yAxisID: 'yEnergyMileage',
         backgroundColor: '#f47d41',
         borderColor: '#f47d41',
@@ -517,24 +522,26 @@ export class AnalysisDailyComponent implements OnInit {
   private loadEmissionReductionChartData(beginDate: Date, endDate: Date): void {
     this.dataService.getVehicleDailyUsageByDateRange$(this.vehicleName, beginDate, endDate)
       .subscribe(data => {
-        if (!data) return;
+        if (!data) {
+          return
+        };
         this.chartEmissionReduction.data = this.buildEmissionReductionChartData(data);
         this.chartEmissionReduction.reinit();
        });
   }
 
   private buildEmissionReductionChartData(list: VehicleDailyUsage[]): any {
-    var labels = list.map(el => moment(el.date).format('MM/DD'));
-    var dataDGE = list.map(el => el.energyused * this.ratioDGE).map(x => x.toFixed(4));
-    var dataNOx = list.map(el => el.energyused * this.ratioDGE * 3.44 / this.factor * 1000000).map(x => x.toFixed(4));
-    var dataROG = list.map(el => el.energyused * this.ratioDGE * 0.18 / this.factor * 1000000).map(x => x.toFixed(4));
-    var dataPM25 = list.map(el => el.energyused * this.ratioDGE * 0.136 / this.factor * 1000000).map(x => x.toFixed(4));
-    var dataPM10 = list.map(el => el.energyused * this.ratioDGE * 0.15 / this.factor * 1000000).map(x => x.toFixed(4));
+    const labels = list.map(el => moment(el.date).format('MM/DD'));
+    const dataDGE = list.map(el => el.energyused * this.ratioDGE).map(x => x.toFixed(4));
+    const dataNOx = list.map(el => el.energyused * this.ratioDGE * 3.44 / this.factor * 1000000).map(x => x.toFixed(4));
+    const dataROG = list.map(el => el.energyused * this.ratioDGE * 0.18 / this.factor * 1000000).map(x => x.toFixed(4));
+    const dataPM25 = list.map(el => el.energyused * this.ratioDGE * 0.136 / this.factor * 1000000).map(x => x.toFixed(4));
+    const dataPM10 = list.map(el => el.energyused * this.ratioDGE * 0.15 / this.factor * 1000000).map(x => x.toFixed(4));
 
     return {
       labels: labels,
       datasets: [{
-        label: "DGE",
+        label: 'DGE',
         data: dataDGE,
         yAxisID: 'yDGE',
         fill: true,
@@ -542,28 +549,28 @@ export class AnalysisDailyComponent implements OnInit {
         borderColor: '#4bc0c0',
         borderWidth: 1
       }, {
-        label: "NOx",
-        data: dataNOx, 
+        label: 'NOx',
+        data: dataNOx,
         yAxisID: 'yNOx',
         backgroundColor: '#565656',
         borderColor: '#565656',
         borderWidth: 1
       }, {
-        label: "ROG",
+        label: 'ROG',
         data: dataROG,
         yAxisID: 'yROG',
         backgroundColor: '#4286f4',
         borderColor: '#4286f4',
         borderWidth: 1
       }, {
-        label: "PM2.5",
+        label: 'PM2.5',
         data: dataPM25,
         yAxisID: 'yPM25',
         backgroundColor: '#f47d41',
         borderColor: '#f47d41',
         borderWidth: 1
       }, {
-        label: "PM10",
+        label: 'PM10',
         data: dataPM10,
         yAxisID: 'yPM10',
         backgroundColor: '#FFCE51',
@@ -583,33 +590,24 @@ export class AnalysisDailyComponent implements OnInit {
     option.hover = {
       animationDuration: 0
     };
-    // option.responsive = false;
-    // option.maintainAspectRatio = true;
-    // option.scales.xAxes = [{
-    //   ticks: {
-    //     callback: function (value, index, values) {
-    //       return moment(value).format('MM/DD');
-    //     }
-    //   }
-    // }];
   }
 
   exportCharts(): void {
-    //print page by page
+    // print page by page
     html2canvas(this.chartsP1.nativeElement, {
       onrendered: function (canvas) {
-        const contentDataURL = canvas.toDataURL("image/png");
-        let pdf = new jsPDF("landscape");
-        pdf.addImage(contentDataURL, "PNG", 10, 5);
-        pdf.save("DailyAnalysis.P1.pdf");
+        const contentDataURL = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('landscape');
+        pdf.addImage(contentDataURL, 'PNG', 10, 5);
+        pdf.save('DailyAnalysis.P1.pdf');
       },
     });
     html2canvas(this.chartsP2.nativeElement, {
       onrendered: function (canvas) {
-        const contentDataURL = canvas.toDataURL("image/png");
-        let pdf = new jsPDF("landscape");
-        pdf.addImage(contentDataURL, "PNG", 10, 5);
-        pdf.save("DailyAnalysis.P2.pdf");
+        const contentDataURL = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('landscape');
+        pdf.addImage(contentDataURL, 'PNG', 10, 5);
+        pdf.save('DailyAnalysis.P2.pdf');
       },
     });
   }
